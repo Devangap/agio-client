@@ -21,7 +21,7 @@ function Home() {
     }, []);
 
     return (
-        <div>Home</div>
+        <div>DashBoard</div>
     );
 }
 
