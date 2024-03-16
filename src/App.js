@@ -1,9 +1,9 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
-import Login from './pages/Login';
-import Register from './pages/Register';
+import Login from './pages/TraLogin';
+import Register from './pages/TraRegister';
 import { Toaster } from 'react-hot-toast';
-import Home from './pages/Home';
+import TraHome from './pages/TraHome';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
 
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={< Register/>} />
-          <Route path='/home' element={< Home/>} />
+          <Route path='/home' element={< TraHome/>} />
         </Routes>
       </BrowserRouter>
       

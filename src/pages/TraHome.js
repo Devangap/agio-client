@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 
-function Home() {
+function TraHome() {
 
     const getData = async () => {
         try {
@@ -25,4 +25,4 @@ function Home() {
     );
 }
 
-export default Home;
+export default TraHome;

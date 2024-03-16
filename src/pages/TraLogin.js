@@ -4,7 +4,7 @@ import {Link, useNavigate }from 'react-router-dom'
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
-function Login() {
+function TraLogin() {
 const navigate = useNavigate();
     const onFinish = async(values) =>{
         try {
@@ -48,4 +48,4 @@ const navigate = useNavigate();
   )
 }
 
-export default Login
+export default TraLogin

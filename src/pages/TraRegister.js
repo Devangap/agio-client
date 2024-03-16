@@ -3,7 +3,7 @@ import {Button, Form ,  Input} from 'antd'
 import {Link, useNavigate }from 'react-router-dom'
 import axios from "axios";
 import toast from 'react-hot-toast';
-function Register() {
+function TraRegister() {
     const navigate = useNavigate();
     const onFinish = async(values) =>{
         try {
@@ -48,4 +48,4 @@ function Register() {
   )
 }
 
-export default Register
+export default TraRegister
