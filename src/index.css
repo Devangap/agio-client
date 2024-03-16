@@ -79,3 +79,23 @@ label{
     border-bottom-left-radius: 10px;
 
 }
+
+/*Main registration*/
+
+.mainreg{
+    height :100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.box{
+    box-shadow: 0 0 2px gray;
+    border-radius: 10px;
+    background-color: #FAFAFA;
+    
+
+}
+.main_login_form{
+    width : 1000px;
+}
