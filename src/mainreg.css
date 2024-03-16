@@ -1,0 +1,102 @@
+.mainreg{
+    height :100vh;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+.box{
+    box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
+    border-radius: 20px;
+    background-color: #FAFAFA;
+    
+
+}
+.main_login_form{
+    width : 950px;
+    
+    
+}
+
+input{
+    border-radius: 10px !important;
+    border: 1px solid rgba(128, 128, 128, 0.521);
+    height: 40px !important;
+    width :400px !important
+    
+}
+input:hover{
+    outline: none;
+    box-shadow: none !important;
+    border: 1px solid #F7934C !important;
+
+}
+input:focus{
+    outline: none;
+    box-shadow: none !important;
+    border: 1px solid gray !important;
+}
+label{
+    font-size: 16px !important;
+    color: black;
+}
+.primary-button{
+    background-color: #F7B05B !important;
+    border-color: #1F1300 !important;
+    height: 40px !important;
+    width: 300px !important;
+    align-items: center !important;
+    color:#000000 !important;
+    font-size: 16px !important;
+    font-weight: bold; 
+    border-radius: 10px !important;
+    margin-top: 30px !important;
+    justify-content: center !important;
+}
+.title{
+    color: #1F1300;
+    margin-top: 20px;
+    margin-left: 20px;
+}
+.form-row {
+    display: flex;
+    align-items: center;
+}
+
+.css-dev-only-do-not-override-1drr2mu {
+    
+}
+.ant-form-item-control-input-content{
+    
+}
+.form-item {
+    margin-right: 20px; /* Add some space between form items */
+}
+.date{
+    width: 400px;
+    height: 40px;
+}
+.item{
+    margin-right: 60px;
+    margin-left: 30px;
+}
+.shift{
+    width: 400px !important;
+    height: 40px !important;
+    border-radius: 10px !important;
+
+}
+
+.number{
+    width: 200px !important;
+    height: 40px !important;
+
+}
+.Button-cons{
+    display: flex;
+    justify-content: center;
+
+}
+.address{
+    width : 1000px;
+}
