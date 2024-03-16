@@ -1,0 +1,82 @@
+.main {
+    padding: 20px;
+    height: 100%;
+}
+
+.sidebar {
+    background-color: #CC5803;
+    border-radius: 5px;
+    box-shadow: 0 0 2px gray;
+    margin-right: 20px;
+    min-height: 100%;
+    padding: 10px;
+    width: 350px;
+}
+
+.content {
+    width: 100%;
+    height: 100%;
+}
+
+.header {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 2px gray;
+    margin-bottom: 20px;
+    height: 10vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px; /* Ensures content is not flush against edges */
+}
+.logo{
+    height: 140px;
+    width: 220px;
+    margin-left: 20px;
+    
+}
+
+.body {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 2px gray;
+    height: 80vh;
+    width: 100%;
+}
+
+.menu {
+    margin-top: 100px;
+    padding: 0 10px;
+}
+
+.menu-item {
+    margin-top: 30px;
+}
+
+.menu-item a, .menu-item i {
+    color: rgba(255, 255, 255, 0.727);
+    text-decoration: none;
+    font-size: 18px;
+}
+
+.menu-item i {
+    margin-right: 15px;
+}
+
+.active-menu-item {
+    color: white;
+    background-color: rgb(66, 34, 2) !important;
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.layout-action-icon-container {
+    display: flex;
+    align-items: center;
+}
+
+.layout-action-icon {
+    font-size: 24px; /* Adjust size as needed */
+    color: #333; /* Adjust color as needed */
+}
