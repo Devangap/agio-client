@@ -18,6 +18,7 @@ function Main_login() {
   <div className="main_login_form box p-3">
     <h3 className='title'>Login</h3>
     <Form layout='vertical' onFinish={onFinish}>
+<<<<<<< Updated upstream
       <div className="form-row">
         <div className="item">
           <Form.Item label='Full Name' name='name'>
@@ -30,6 +31,9 @@ function Main_login() {
           </Form.Item>
         </div>
       </div>
+=======
+      
+>>>>>>> Stashed changes
       <div className="form-row">
         <div className="item">
           <Form.Item label='Username' name='username'>
@@ -42,6 +46,7 @@ function Main_login() {
           </Form.Item>
         </div>
       </div>
+<<<<<<< Updated upstream
       <div className="form-row">
         <div className="item">
           <Form.Item label='Job Title' name='jobRole'>
@@ -78,6 +83,9 @@ function Main_login() {
       <div className="Button-cons">
         <Button className='primary-button my-2' htmlType='submit'>REGISTER</Button>
       </div>
+=======
+    
+>>>>>>> Stashed changes
     </Form>
   </div>
 </div>
