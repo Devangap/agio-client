@@ -60,9 +60,13 @@ label{
     justify-content: center;
     background-color: #1f1300df;
 }
+
 .authentication-form{
     width: 400px;
+    
+    
 }
+
 
 .authentication .card-title{
     font-size: 1.5rem;
