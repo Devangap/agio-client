@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import Layout from '../components/Layout';
+
 
 
 
@@ -23,9 +23,9 @@ function Home() {
         getData();
     }, []);
 
-    return <Layout>
-        <h1>Homooepage</h1>
-    </Layout>
+    return (
+        <div>Home</div>
+    )
 }
 
 export default Home;
