@@ -14,9 +14,13 @@ function Main_login() {
   const onFinish = async(values) =>{
     console.log('Recieved values of form', values);
     try {
-        const response = await axios.post('/api/user/Main_login', values);
+        const response = await axios.post('/api/employee/Main_login', values);
         if(response.data.success){
             toast.success(response.data.message);
+            toast("Redirecting to home page");
+            localStorage.setItem("token", response.data.data);
+            navigate("/")
+
            
             
         }else{
@@ -46,12 +50,12 @@ function Main_login() {
      
       <div className = 'login'>
       <div className = 'field'>
-          <Form.Item label='Username' name='username'>
+          <Form.Item label='Username' name='username_log'>
             <Input placeholder='Username' />
           </Form.Item>
           </div>
          
-          <Form.Item label='Password' name='password'>
+          <Form.Item label='Password' name='password_log'>
             <Input placeholder='Password' />
           </Form.Item>
           
