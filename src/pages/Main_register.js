@@ -16,7 +16,7 @@ function Main_register() {
       const response = await axios.post('/api/user/Main_register', values);
       if(response.data.success){
           toast.success(response.data.message);
-          toast("Redirecting to login Page");
+         
           
       }else{
           toast.error(response.data.message);
