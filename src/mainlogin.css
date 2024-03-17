@@ -1,20 +1,21 @@
-.mainreg{
+.mainlog{
     height :100vh;
     display:flex;
     align-items: center;
     justify-content: center;
     
 }
-.box{
+.box_log{
     box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
     border-radius: 20px;
     background-color: #FAFAFA;
     
 
 }
-.main_login_form{
+.main_login_form_log{
     width : 950px;
-    height: 700px;
+    height:450px;
+    
     
     
 }
@@ -54,50 +55,37 @@ label{
     margin-top: 30px !important;
     justify-content: center !important;
 }
-.title{
+.title_log{
     color: #1F1300;
-    margin-top: 20px;
-    margin-left: 20px;
-}
-.form-row {
-    display: flex;
-    align-items: center;
+   margin-top: -375px;
+    margin-left: 450px;
+    margin-bottom: 40px;
 }
 
-.css-dev-only-do-not-override-1drr2mu {
+
+
+.Button-conslog{
+   margin-top: 30px;
+   margin-left: 500px;
+
+}
+
+.login{
+    margin-left:450px;
     
 }
-.ant-form-item-control-input-content{
-    
+.field{
+    margin-bottom: 30px !important;
 }
-.form-item {
-    margin-right: 20px; /* Add some space between form items */
-}
-.date{
-    width: 400px;
-    height: 40px;
-}
-.item{
-    margin-right: 60px;
-    margin-left: 30px;
-}
-.shift{
-    width: 400px !important;
-    height: 40px !important;
-    border-radius: 10px !important;
-
+.login_image {
+    margin-right: 40px !important; 
+    justify-content: left;
 }
 
-.number{
-    width: 200px !important;
-    height: 40px !important;
-
-}
-.Button-cons{
-    display: flex;
-    justify-content: center;
-
-}
-.address{
-    width : 1000px;
+.login_image img {
+    margin-top: 10px;
+    max-width: 350px;
+    height: 400px;
+    border-radius: 10px;
+    margin-right:40px ;
 }
