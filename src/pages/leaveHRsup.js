@@ -36,11 +36,11 @@ function LeaveHRsup() {
   return <AnnLayout>
   <div className="annform">
   <div className="AnnHRSup_form box p-3">
-    <h3 className='title'>Create an Announcement</h3>
+    <h3 className='title'>Leave Submission Form</h3>
     <Form layout='vertical' onFinish={onFinish}>
       <div className="form-row">
       <div className="item">
-          <Form.Item label='Announcement Title' name='anntitle'>
+          <Form.Item label='Employee Name' name='anntitle'>
             <Input placeholder='Announcement Title' />
           </Form.Item>
         </div>
@@ -49,13 +49,13 @@ function LeaveHRsup() {
       
       <div className="form-row">
       <div className="item">
-          <Form.Item label="Upload Date" name="uploaddate">
+          <Form.Item label="Leave date" name="uploaddate">
             <DatePicker className="date" />
           </Form.Item>
         </div>
         <div className="item">
           <Form.Item name="Type" label="Type">
-            <Select className="Type" placeholder="Select announcement type">
+            <Select className="Type" placeholder="Select leave type">
               <Option value="General">General</Option>
               <Option value="Specific">Specific</Option>
             </Select>
