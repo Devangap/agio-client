@@ -30,7 +30,7 @@ function DriverRegister() {
             <input name='email' placeholder='Enter Email' type='email'/>
             <label htmlFor='experiance'>Work Experience</label>
             <input name='experiance'  type='text'/>
-            <button type='submit'>REGISTER</button>
+            <button className="btn" type='submit'>REGISTER</button>
           </form>
         </div>
       </div>
