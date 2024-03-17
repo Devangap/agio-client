@@ -3,8 +3,6 @@ import pic from './image/Cigars.jpg';
 import '../TraStyle/driverF.css';
 import logo from '../pages/image/agio.jpg'
 
-
-
 function DriverRegister() {
   return (
     
@@ -16,7 +14,7 @@ function DriverRegister() {
             <img src={logo} id='lg' /></div>
         </div>
         <div className='rightSide'>
-          <form id='register-form' method='POST'>
+          <form id='register-form' >
             <h1>Create Driver Account</h1>
             <label htmlFor='name'>First Name</label>
             <input name='name' placeholder='Enter First Name' type='text'/>

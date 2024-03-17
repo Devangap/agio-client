@@ -5,6 +5,7 @@ import Register from './pages/TraRegister';
 import { Toaster } from 'react-hot-toast';
 import TraHome from './pages/TraHome';
 import DriverRegister from './pages/DriverRegister';
+import VehicleRegister from './pages/VehicleRegister';
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
           <Route path='/register' element={< Register/>} />
           <Route path='/home' element={< TraHome/>} />
           <Route path='/dregister' element={< DriverRegister/>} />
+          <Route path='/vregister' element={< VehicleRegister/>} />
+          
         </Routes>
       </BrowserRouter>
       
