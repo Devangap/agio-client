@@ -8,7 +8,7 @@ function Home() {
 
     const getData = async () => {
         try {
-            const response = await axios.post('/api/user/get-user-info-by-id', {} , {
+            const response = await axios.post('/api/employee/get-employee-info-by-id', {} , {
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('token')
                 },
