@@ -13,7 +13,7 @@ function Main_register() {
   const onFinish = async(values) => {
     console.log('Recieved values of form', values);
     try {
-      const response = await axios.post('/api/user/Main_register', values);
+      const response = await axios.post('/api/employee/Main_register', values);
       if(response.data.success){
           toast.success(response.data.message);
          

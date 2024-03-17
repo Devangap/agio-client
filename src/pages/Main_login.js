@@ -2,17 +2,35 @@ import React from 'react'
 import {Button, Form ,  Input,Select, DatePicker } from 'antd'
 import '../mainlogin.css';
 import loginImage from '/Users/dev/Documents/GitHub/agio-client/src/Images/login.jpg';
-
-
+import {Link, useNavigate }from 'react-router-dom'
+import axios from "axios";
+import toast from 'react-hot-toast';
 
 
 function Main_login() {
   const { Option } = Select;
+  const navigate = useNavigate();
 
-  const onFinish = values =>{
+  const onFinish = async(values) =>{
     console.log('Recieved values of form', values);
+    try {
+        const response = await axios.post('/api/user/Main_login', values);
+        if(response.data.success){
+            toast.success(response.data.message);
+           
+            
+        }else{
+            toast.error(response.data.message);
+  
+        }
+        
+    } catch (error) {
+        toast.error("Something went wrong");
+    }
+       
 
   }
+  
   
   return (
     <div className="mainlog">
