@@ -1,9 +1,9 @@
 import React from 'react'
 import {Button, Form ,  Input,Select, DatePicker,message,Upload } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
-import AnnLayout from '../pages/AnnLayout';
+import AnnLayout from './AnnLayout';
 
-function AnnHRsup() {
+function LeaveHRsup() {
 
   const{Option} = Select;
 
@@ -90,4 +90,4 @@ function AnnHRsup() {
 </AnnLayout>
 } 
 
-export default AnnHRsup
+export default LeaveHRsup
