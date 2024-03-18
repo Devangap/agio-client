@@ -5,7 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import { Toaster } from 'react-hot-toast';
 import Home from './pages/Home';
-import LeaveHRsup from './pages/LeaveHRsup';
+import LeaveHRsup from './pages/leaveHRsup';
 import Main_login from './pages/Main_login';
 import AnnHRsup from './pages/AnnHRsup';
 
