@@ -1,14 +1,31 @@
 import React from 'react'
+import axios from 'axios';
 import {Button, Form ,  Input,Select, DatePicker,message,Upload } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
 import AnnLayout from '../pages/AnnLayout';
+import toast from 'react-hot-toast';
 
 function AnnHRsup() {
 
   const{Option} = Select;
 
-  const onFinish = values =>{
+  const onFinish = async(values) =>{
     console.log('Recieved values of form', values);
+
+    try {
+      const response = await axios.post('/api/annWorkouts/AnnHRsup', values);
+      if(response.data.success){
+          toast.success(response.data.message);
+         
+          
+      }else{
+          toast.error(response.data.message);
+
+      }
+      
+  } catch (error) {
+      toast.error("Something went wrong");
+  }
 
   }
 
