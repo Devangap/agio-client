@@ -8,13 +8,14 @@ import Register from './pages/TraRegister';
 
 import { Toaster } from 'react-hot-toast';
 import TraHome from './pages/TraHome';
-import DriverRegister from './pages/DriverRegister';
-import VehicleRegister from './pages/VehicleRegister';
+
 
 import Home from './pages/Home';
 import LeaveHRsup from './pages/leaveHRsup';
 import Main_login from './pages/Main_login';
 import AnnHRsup from './pages/AnnHRsup';
+import TraDriverRegister from './pages/TraDriverRegister';
+import TraVehicleRegister from './pages/TraVehicleRegister';
 
 
 
@@ -35,8 +36,8 @@ function App() {
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
           <Route path='/home' element={< TraHome/>} />
-          <Route path='/dregister' element={< DriverRegister/>} />
-          <Route path='/vregister' element={< VehicleRegister/>} />
+          <Route path='/dregister' element={<TraDriverRegister />} />
+          <Route path='/vregister' element={< TraVehicleRegister/>} />
           
       
           
