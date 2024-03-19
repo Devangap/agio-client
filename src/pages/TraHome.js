@@ -1,14 +1,11 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 
-
-
-
-function Home() {
+function TraHome() {
 
     const getData = async () => {
         try {
-            const response = await axios.post('/api/employee/get-employee-info-by-id', {} , {
+            const response = await axios.post('/api/user/get-user-info-by-id', {} , {
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('token')
                 },
@@ -24,8 +21,8 @@ function Home() {
     }, []);
 
     return (
-        <div>Home</div>
-    )
+        <div>DashBoard</div>
+    );
 }
 
-export default Home;
+export default TraHome;
