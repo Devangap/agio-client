@@ -4,7 +4,7 @@ import axios from 'axios';
 
 
 
-function Home() {
+function Main_home() {
 
     const getData = async () => {
         try {
@@ -24,8 +24,8 @@ function Home() {
     }, []);
 
     return (
-        <div>Home</div>
+        <div>Main Home Page</div>
     )
 }
 
-export default Home;
+export default Main_home;
