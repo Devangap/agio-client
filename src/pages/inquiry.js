@@ -14,7 +14,11 @@ function Inquiry() {
   return (
     <div className="inquiry-container">
       <div className="image-container">
+<<<<<<< HEAD
        
+=======
+        {/* <img src={require('../images/cigar.webp')} alt="background Image" /> */}
+>>>>>>> c12b56f5d858ad3e31a997f77f5e89559b34f5d8
       </div>
       <div className="form-container">
         <div className="main_form box p-3">
