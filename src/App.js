@@ -7,6 +7,7 @@ import TraHome from './pages/TraHome';
 import DriverRegister from './pages/DriverRegister';
 import VehicleRegister from './pages/VehicleRegister';
 import DVpage from './pages/DVpage';
+import Home from './pages/Home';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path='/dregister' element={< DriverRegister/>} />
           <Route path='/vregister' element={< VehicleRegister/>} />
           <Route path='/dvpage' element={< DVpage/>} />
+          <Route path='/' element={< Home/>} />
           
         </Routes>
       </BrowserRouter>
