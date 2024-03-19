@@ -1,17 +1,17 @@
-.content{
+.t1content{
     width: 100%;
     height: 100vh;
     display: flex;
     background-color:#3d2602 ;
 }
-.content .leftSide{
+.t1content .t1leftSide{
     height: 100%;
     flex: 50%;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
 
-    .logo{
+    .t1logo{
         height: 3rem;
         width: 5rem;
         #lg{
@@ -26,7 +26,7 @@
     }
  
 }
-.content .rightSide{
+.t1content .t1rightSide{
     height: 100%;
     flex: 50%;
     display: flex;
@@ -36,7 +36,7 @@
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
 }
-.content .rightSide h1{
+.t1content .t1rightSide h1{
     font-family: "Lato", sans-serif;
   font-weight: bolder;
   font-style:normal;
@@ -70,7 +70,7 @@ input::placeholder{
 
     font-weight: 500;
     font-family: "Lato", sans-serif;
-    background-color: #FAF7F3;
+    
     
 
 }
@@ -84,7 +84,7 @@ form label{
     font-weight: bold;
     
 }
-.btn{
+.t1btn{
     margin-top: 30px;
     font-family: "Lato", sans-serif;
     width: 140px;

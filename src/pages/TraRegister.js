@@ -3,7 +3,7 @@ import {Button, Form ,  Input} from 'antd'
 import {Link, useNavigate }from 'react-router-dom'
 import axios from "axios";
 import toast from 'react-hot-toast';
-import Header from './Header';
+
 
 function TraRegister() {
     const navigate = useNavigate();
@@ -26,8 +26,7 @@ function TraRegister() {
 
   return (
 
-    <div className='serch-header'>
-        <Header />
+    
     <div className='authentication'>
         
        
@@ -53,7 +52,7 @@ function TraRegister() {
         </div>
 
     </div>
-    </div>
+   
   )
 }
 
