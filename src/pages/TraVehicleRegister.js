@@ -1,17 +1,10 @@
 import React from 'react'
-import pic from './image/Cigars.jpg';
-import '../TraStyle/vehicleF.css'
-import logo from '../pages/image/agio.jpg'
 
-function VehicleRegister() {
+
+function TraVehicleRegister() {
   return (
     <div className='content'>
-        <div className='leftSide'
-          style={{ backgroundImage: `url(${pic})` }}
-          >
-            <div className='logo'>
-            <img src={logo} id='lg' /></div>
-        </div>
+        
         <div className='rightSide'>
           <form id='register-form' >
             <h1>Create Vehicle Account</h1>
@@ -53,4 +46,4 @@ function VehicleRegister() {
   )
 }
 
-export default VehicleRegister
+export default TraVehicleRegister

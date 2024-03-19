@@ -13,8 +13,9 @@ function Inquiry() {
   
   return (
     <div className="inquiry-container">
-      <div className="iimage-container">
-        <img src={require('../images/cigar.webp')} alt="background Image" />
+
+      <div className="image-container">
+
       </div>
       <div className="iform-container">
         <div className="imain_form box p-3">
