@@ -9,7 +9,7 @@ function Layout({ children }) {
     const userMenu = [
         {
             name: 'Home',
-            path: '/',
+            path: '/AnnHRsup',
             icon: 'ri-home-line',
         },
         {
