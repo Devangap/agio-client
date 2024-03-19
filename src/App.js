@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 import TraHome from './pages/TraHome';
 import DriverRegister from './pages/DriverRegister';
 import VehicleRegister from './pages/VehicleRegister';
+import DVpage from './pages/DVpage';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/home' element={< TraHome/>} />
           <Route path='/dregister' element={< DriverRegister/>} />
           <Route path='/vregister' element={< VehicleRegister/>} />
+          <Route path='/dvpage' element={< DVpage/>} />
           
         </Routes>
       </BrowserRouter>
