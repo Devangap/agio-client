@@ -2,7 +2,7 @@ import React from 'react';
 import '../Annlayout.css';
 import { Link, useLocation } from 'react-router-dom';
 
-function Layout({ children }) {
+function TraLayout({ children }) {
     const location = useLocation();//no collapsed there is the phto in ur phonr
                                    //user is defined in the phto so 1:59:39 
     
@@ -13,7 +13,7 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: 'Announcements',
+            name: 'Booking Service',
             path: '/announcements',
             icon: 'ri-survey-line',
         },
@@ -23,7 +23,6 @@ function Layout({ children }) {
             icon: 'ri-calendar-line',
         },
         {
-
             name: 'Profile',
             path: '/profile',
             icon: 'ri-account-box-line',
@@ -89,4 +88,4 @@ function Layout({ children }) {
     );
 }
 
-export default Layout;
+export default TraLayout;
