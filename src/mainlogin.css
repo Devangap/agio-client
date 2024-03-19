@@ -1,18 +1,18 @@
-.Mmainlog{
+.mainlog{
     height :100vh;
     display:flex;
     align-items: center;
     justify-content: center;
     
 }
-.Mbox_log{
+.box_log{
     box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
     border-radius: 20px;
     background-color: #FAFAFA;
     
 
 }
-.Mmain_login_form_log{
+.main_login_form_log{
     width : 950px;
     height:450px;
     
