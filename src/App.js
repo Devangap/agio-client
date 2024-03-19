@@ -10,7 +10,7 @@ import { Toaster } from 'react-hot-toast';
 import TraHome from './pages/TraHome';
 import DriverRegister from './pages/DriverRegister';
 import VehicleRegister from './pages/VehicleRegister';
-import DVpage from './pages/DVpage';
+
 import Home from './pages/Home';
 import LeaveHRsup from './pages/leaveHRsup';
 import Main_login from './pages/Main_login';
@@ -44,7 +44,7 @@ function App() {
           <Route path='/home' element={< TraHome/>} />
           <Route path='/dregister' element={< DriverRegister/>} />
           <Route path='/vregister' element={< VehicleRegister/>} />
-          <Route path='/dvpage' element={< DVpage/>} />
+          
       
           
 
