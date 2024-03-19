@@ -4,7 +4,8 @@ import {Link, useNavigate }from 'react-router-dom'
 import toast from 'react-hot-toast';
 import axios from 'axios';
 
-function Login() {
+
+function TraLogin() {
 const navigate = useNavigate();
     const onFinish = async(values) =>{
         try {
@@ -25,6 +26,7 @@ const navigate = useNavigate();
     }
 
   return (
+    
     <div className='authentication'>
         <div className='authentication-form card p-3' >
             <h1 className='card-title'>Welcome Back</h1>
@@ -45,7 +47,8 @@ const navigate = useNavigate();
         </div>
 
     </div>
+    
   )
 }
 
-export default Login
+export default TraLogin

@@ -57,15 +57,20 @@ label{
 }
 
 /*authentication pages */
+
+
 .authentication{
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: #1f1300df;
+    background-color: #ffffff;
 }
+
 .authentication-form{
     width: 400px;
+    background-color: #faf7f387;  
+    
 }
 
 .authentication .card-title{

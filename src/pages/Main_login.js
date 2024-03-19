@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Form ,  Input,Select, DatePicker } from 'antd'
 import '../mainlogin.css';
-import loginImage from '/Users/dev/Documents/GitHub/agio-client/src/Images/login.jpg';
+import loginImage from '../Images/login.jpg';
 import {Link, useNavigate }from 'react-router-dom'
 import axios from "axios";
 import toast from 'react-hot-toast';
