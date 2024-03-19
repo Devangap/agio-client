@@ -1,18 +1,10 @@
 import React from 'react';
-import pic from './image/Cigars.jpg';
-import '../TraStyle/driverF.css';
-import logo from '../pages/image/agio.jpg'
 
 function DriverRegister() {
   return (
     
       <div className='t1content'>
-        <div className='t1leftSide'
-          style={{ backgroundImage: `url(${pic})` }}
-          >
-            <div className='t1logo'>
-            <img src={logo} id='lg' /></div>
-        </div>
+        
         <div className='t1rightSide'>
           <form id='register-form' >
             <h1>Create Driver Account</h1>

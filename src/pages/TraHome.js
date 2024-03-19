@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
+import Layout from '../components/Layout';
+import annlayout from '../pages/AnnLayout'
 
 function TraHome() {
 
@@ -20,9 +22,9 @@ function TraHome() {
         getData();
     }, []);
 
-    return (
-        <div>DashBoard</div>
-    );
+    return <Layout>
+        
+        </Layout>;
 }
 
 export default TraHome;
