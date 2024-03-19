@@ -19,6 +19,7 @@ import AnnHRsup from './pages/AnnHRsup';
 
 
 
+
 function App() {
   return (
     <div >
@@ -34,12 +35,14 @@ function App() {
           <Route path='/AnnHRsup' element={< AnnHRsup/>} />
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
+
           <Route path='/home' element={< TraHome/>} />
           <Route path='/dregister' element={< DriverRegister/>} />
           <Route path='/vregister' element={< VehicleRegister/>} />
           <Route path='/dvpage' element={< DVpage/>} />
       
           
+
 
         </Routes>
 
