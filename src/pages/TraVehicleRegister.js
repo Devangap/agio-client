@@ -1,7 +1,7 @@
 import React from 'react'
 
 
-function VehicleRegister() {
+function TraVehicleRegister() {
   return (
     <div className='content'>
         
@@ -46,4 +46,4 @@ function VehicleRegister() {
   )
 }
 
-export default VehicleRegister
+export default TraVehicleRegister
