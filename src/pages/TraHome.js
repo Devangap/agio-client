@@ -24,7 +24,7 @@ function TraHome() {
 
     return <TraLayout>
         <div className='Main_header'>
-        <h1>WELCOME OUR ANGIO TRANSPORT SERVICE</h1>
+        <h1>WELCOME OUR ANGIO TRANSPORT </h1>
         </div>
     </TraLayout>;
 }
