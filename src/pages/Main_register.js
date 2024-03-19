@@ -1,6 +1,8 @@
 import React from 'react'
 import {Button, Form ,  Input,Select, DatePicker } from 'antd'
 import '../mainreg.css';
+import axios from "axios";
+import toast from 'react-hot-toast';
 
 
 
@@ -8,11 +10,24 @@ import '../mainreg.css';
 function Main_register() {
   const { Option } = Select;
 
-  const onFinish = values =>{
+  const onFinish = async(values) => {
     console.log('Recieved values of form', values);
+    try {
+      const response = await axios.post('/api/employee/Main_register', values);
+      if(response.data.success){
+          toast.success(response.data.message);
+         
+          
+      }else{
+          toast.error(response.data.message);
 
+      }
+      
+  } catch (error) {
+      toast.error("Something went wrong");
   }
-  
+     
+  };
   return (
     <div className="mainreg">
   <div className="main_login_form box p-3">
@@ -20,7 +35,7 @@ function Main_register() {
     <Form layout='vertical' onFinish={onFinish}>
       <div className="form-row">
         <div className="item">
-          <Form.Item label='Full Name' name='name'>
+          <Form.Item label='Full Name' name='fname'>
             <Input placeholder='Full name' />
           </Form.Item>
         </div>
@@ -32,12 +47,12 @@ function Main_register() {
       </div>
       <div className="form-row">
         <div className="item">
-          <Form.Item label='Username' name='username'>
+          <Form.Item label='Username' name='username_log'>
             <Input placeholder='Username' />
           </Form.Item>
         </div>
         <div className="item">
-          <Form.Item label='Password' name='password'>
+          <Form.Item label='Password' name='password_log'>
             <Input placeholder='Password' />
           </Form.Item>
         </div>
