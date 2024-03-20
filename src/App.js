@@ -22,13 +22,28 @@ import TraVehicleRegister from './pages/TraVehicleRegister';
 
 
 import Inquiry from './pages/inquiry';
+import { useSelector } from 'react-redux';
 
 
 
 function App() {
+  const{loading} = useSelector(state => state.alerts);
   return (
     <div >
       <BrowserRouter>
+<<<<<<< Updated upstream
+      <div className = "spinner-parent">
+      <div class="spinner-border" role="status">
+  
+</div>
+      </div>
+=======
+      {loading && (<div className = "spinner-parent">
+      <div class="spinner-border" role="status">
+  
+</div>
+      </div>)}
+>>>>>>> Stashed changes
       <Toaster position='top-center' reverseOrder={false} />
         <Routes>
           <Route path='/Main_Register' element={<Main_register />} />

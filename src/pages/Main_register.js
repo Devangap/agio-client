@@ -3,17 +3,22 @@ import {Button, Form ,  Input,Select, DatePicker } from 'antd'
 import '../mainreg.css';
 import axios from "axios";
 import toast from 'react-hot-toast';
-
+import { useSelector,useDispatch } from 'react-redux';
+import { showLoading, hideLoading } from '../redux/empalerts.js';
 
 
 
 function Main_register() {
   const { Option } = Select;
+  const dispatch = useDispatch();
+
 
   const onFinish = async(values) => {
     console.log('Recieved values of form', values);
     try {
+      dispatch(showLoading());
       const response = await axios.post('/api/employee/Main_register', values);
+      dispatch(hideLoading());
       if(response.data.success){
           toast.success(response.data.message);
          
@@ -24,6 +29,7 @@ function Main_register() {
       }
       
   } catch (error) {
+    dispatch(hideLoading());
       toast.error("Something went wrong");
   }
      

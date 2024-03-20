@@ -5,14 +5,19 @@ import loginImage from '../Images/login.jpg';
 import {Link, useNavigate }from 'react-router-dom'
 import axios from "axios";
 import toast from 'react-hot-toast';
-
+import { useSelector,useDispatch } from 'react-redux';
+import { showLoading, hideLoading } from '../redux/empalerts';
 
 function Main_login() {
   const { Option } = Select;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  
 
   const onFinish = async(values) =>{
+    dispatch(showLoading());
     console.log('Recieved values of form', values);
+    dispatch(hideLoading());
     try {
         const response = await axios.post('/api/employee/Main_login', values);
         if(response.data.success){
@@ -29,6 +34,7 @@ function Main_login() {
         }
         
     } catch (error) {
+      dispatch(hideLoading());
         toast.error("Something went wrong");
     }
        

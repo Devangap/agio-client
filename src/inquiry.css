@@ -5,14 +5,14 @@
     justify-content: center;
     
 }
-.box{
+.ibox{
     box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
     border-radius: 20px;
     background-color: #FAFAFA;
     
 
 }
-.main_form{
+.imain_form{
     width : 750px;
     height: 850px;
     
@@ -25,12 +25,12 @@
     
 
 }
-.image-container{
+.iimage-container{
     flex: 1px;
     overflow: hidden;
     position: relative;
 }
-.image-container img {
+.iimage-container img {
     width: 1000px;
     height: 1000px;
     object-fit: cover;
@@ -60,7 +60,7 @@ label{
     font-size: 16px !important;
     color: black;
 }
-.primary-button{
+.iprimary-button{
     background-color: #F7B05B !important;
     border-color: #1F1300 !important;
     height: 40px !important;
@@ -73,44 +73,44 @@ label{
     margin-top: 30px !important;
     justify-content: center !important;
 }
-.title{
+.ititle{
     color: #1F1300;
     margin-top: 100px;
     margin-left: 20px;
 }
-.form-row {
+.iform-row {
     display: flex;
     align-items: center;
 }
 
-.form-item {
+.iform-item {
     margin-right: 20px; 
 }
-.date{
+.idate{
     width: 400px;
     height: 40px;
 }
-.item{
+.iitem{
     margin-right: 60px;
     margin-left: 30px;
 }
-.shift{
+.ishift{
     width: 400px !important;
     height: 40px !important;
     border-radius: 10px !important;
 
 }
 
-.number{
+.inumber{
     width: 200px !important;
     height: 40px !important;
 
 }
-.Button-cons{
+.iButton-cons{
     display: flex;
     justify-content: center;
 
 }
-.describe{
+.idescribe{
     width : 500px;
 }
