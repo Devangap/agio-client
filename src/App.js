@@ -31,11 +31,19 @@ function App() {
   return (
     <div >
       <BrowserRouter>
+<<<<<<< Updated upstream
       <div className = "spinner-parent">
       <div class="spinner-border" role="status">
   
 </div>
       </div>
+=======
+      {loading && (<div className = "spinner-parent">
+      <div class="spinner-border" role="status">
+  
+</div>
+      </div>)}
+>>>>>>> Stashed changes
       <Toaster position='top-center' reverseOrder={false} />
         <Routes>
           <Route path='/Main_Register' element={<Main_register />} />
