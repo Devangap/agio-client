@@ -24,6 +24,7 @@ import TraVehicleRegister from './pages/TraVehicleRegister';
 import Inquiry from './pages/inquiry';
 import UniformOrderForm from './pages/UniformOrder';
 import CompManagerView from './pages/CompManagerView';
+import OrderModify from './pages/OrderModify';
 
 
 
@@ -50,6 +51,7 @@ function App() {
 
           <Route path='/UniformOrder' element={<UniformOrderForm/>} />
           <Route path='/CompManagerView' element={<CompManagerView/>}/>
+          <Route path='/OrderModify' element={<OrderModify/>}/>
           
       
           
