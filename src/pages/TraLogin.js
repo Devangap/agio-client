@@ -54,9 +54,11 @@ const navigate = useNavigate();
           </div>
       
       <div className="Button-conslog">
-        <Button className='primary-button my-2' htmlType='submit'>REGISTER</Button>
+      <Button className='primary-button my-2' htmlType='submit'>LOGIN</Button> 
+      
         <div className='anchor mt-2'>
-        <Link  to='/register' className='anchor mt-2'>CLICK HERE TO LOGIN</Link> 
+        <Link  to='/register' className='anchor mt-2'>CLICK HERE TO REGISTER</Link> 
+
         </div>
       </div>
       

@@ -4,7 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 
 function TraLayout({ children }) {
     const location = useLocation();//no collapsed there is the phto in ur phonr
-                                   //user is defined in the phto so 1:59:39 
+      //user is defined in the phto so 1:59:39 
     
     const userMenu = [
         {

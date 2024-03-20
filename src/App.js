@@ -3,8 +3,6 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 import Main_register from './pages/Main_register';
 
-import Login from './pages/TraLogin';
-import Register from './pages/TraRegister';
 
 import { Toaster } from 'react-hot-toast';
 import TraHome from './pages/TraHome';
@@ -16,6 +14,10 @@ import Main_login from './pages/Main_login';
 import AnnHRsup from './pages/AnnHRsup';
 import TraDriverRegister from './pages/TraDriverRegister';
 import TraVehicleRegister from './pages/TraVehicleRegister';
+import TraProtectedRoute from './components/TraProtectedRoute';
+import TraPublicRoute from './components/TraPublicRoute';
+import TraLogin from './pages/TraLogin';
+import TraRegister from './pages/TraRegister';
 
 
 
@@ -28,14 +30,15 @@ function App() {
         <Routes>
           <Route path='/Main_Register' element={<Main_register />} />
           <Route path='/Main_Login' element={<Main_login />} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={< Register/>} />
+
 
           <Route path='/' element={< Home/>} />
           <Route path='/AnnHRsup' element={< AnnHRsup/>} />
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
-          <Route path='/home' element={< TraHome/>} />
+          <Route path='/home' element={<TraProtectedRoute><TraHome /></TraProtectedRoute>} />
+          <Route path='/login' element={<TraPublicRoute><TraLogin /></TraPublicRoute>} />
+          <Route path='/register' element={<TraRegister />} />
           <Route path='/dregister' element={<TraDriverRegister />} />
           <Route path='/vregister' element={< TraVehicleRegister/>} />
           

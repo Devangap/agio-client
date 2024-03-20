@@ -58,9 +58,9 @@ function TraRegister() {
           </div>
       
       <div className="t3Button-conslog">
-        <Button className='t3primary-button my-2' htmlType='submit'>REGISTER</Button>
+      <Button className='primary-button my-2' htmlType='submit'>REGISTER</Button>
         <div className='t3anchor mt-2'>
-        <Link  to='/register' className='t3anchor mt-2'>CLICK HERE TO LOGIN</Link> 
+        <Link  to='/login' className='anchor mt-2'>CLICK HERE TO LOGIN</Link> 
         </div>
       </div>
       

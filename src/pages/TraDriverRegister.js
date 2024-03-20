@@ -3,7 +3,7 @@ import {Button, Form ,  Input,Select, DatePicker } from 'antd'
 import '../mainreg.css';
 import axios from "axios";
 import toast from 'react-hot-toast';
-import TraLayout from './TraLayout'
+import TraLayout from '../components/TraLayout'
 
 
 
