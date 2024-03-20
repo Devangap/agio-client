@@ -6,8 +6,8 @@ import axios from 'axios';
 import { setUser } from '../redux/userSlice';
 import { hideLoading, showLoading } from '../redux/empalerts';
 
-function ProtectedRoute({ children }) {
-    const user = useSelector((state) => state.user);
+const ProtectedRoute = (props )  =>{
+    const {user} = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -20,15 +20,17 @@ function ProtectedRoute({ children }) {
                 }
             });
             dispatch(hideLoading());
-            if (!response.data.success) {
+            if (response.data.success) {
                 dispatch(setUser(response.data.data));
                 
             }else{
+                localStorage.removeItem('token');
                 navigate('/Main_login');
 
             }
         } catch (error) {
             dispatch(hideLoading());
+            localStorage.removeItem('token');
             navigate('/Main_login');
         }
     };
@@ -37,10 +39,15 @@ function ProtectedRoute({ children }) {
         if (!user) {
             getUser();
         }
-    }, [user]);
+    }, []);
 
     if (localStorage.getItem('token')) {
-        return children;
+        return(
+        <div>
+            {props.children}
+
+        </div>
+        );
     } else {
         return <Navigate to="/Main_login" />;
     }
