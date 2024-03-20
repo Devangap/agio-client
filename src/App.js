@@ -23,6 +23,8 @@ import TraVehicleRegister from './pages/TraVehicleRegister';
 
 import Inquiry from './pages/inquiry';
 import { useSelector } from 'react-redux';
+import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
 
 
 
@@ -31,28 +33,20 @@ function App() {
   return (
     <div >
       <BrowserRouter>
-<<<<<<< Updated upstream
-      <div className = "spinner-parent">
-      <div class="spinner-border" role="status">
-  
-</div>
-      </div>
-=======
       {loading && (<div className = "spinner-parent">
       <div class="spinner-border" role="status">
   
 </div>
       </div>)}
->>>>>>> Stashed changes
       <Toaster position='top-center' reverseOrder={false} />
         <Routes>
-          <Route path='/Main_Register' element={<Main_register />} />
-          <Route path='/Main_Login' element={<Main_login />} />
+          <Route path='/Main_Register' element={<PublicRoute><Main_register /></PublicRoute>} />
+          <Route path='/Main_Login' element={<PublicRoute><Main_login /></PublicRoute>} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={< Register/>} />
 
 
-          <Route path='/' element={< Home/>} />
+          <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
           <Route path='/AnnHRsup' element={< AnnHRsup/>} />
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 

@@ -17,7 +17,7 @@ function Main_login() {
   const onFinish = async(values) =>{
     dispatch(showLoading());
     console.log('Recieved values of form', values);
-    dispatch(hideLoading());
+   
     try {
         const response = await axios.post('/api/employee/Main_login', values);
         if(response.data.success){
@@ -34,8 +34,11 @@ function Main_login() {
         }
         
     } catch (error) {
-      dispatch(hideLoading());
+      
         toast.error("Something went wrong");
+    }
+    finally{
+      dispatch(hideLoading());
     }
        
 
