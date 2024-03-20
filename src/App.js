@@ -22,13 +22,20 @@ import TraVehicleRegister from './pages/TraVehicleRegister';
 
 
 import Inquiry from './pages/inquiry';
+import { useSelector } from 'react-redux';
 
 
 
 function App() {
+  const{loading} = useSelector(state => state.alerts);
   return (
     <div >
       <BrowserRouter>
+      <div className = "spinner-parent">
+      <div class="spinner-border" role="status">
+  
+</div>
+      </div>
       <Toaster position='top-center' reverseOrder={false} />
         <Routes>
           <Route path='/Main_Register' element={<Main_register />} />
