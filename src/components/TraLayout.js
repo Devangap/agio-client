@@ -33,40 +33,8 @@ function TraLayout({ children }) {
         },
         
     ];
-    const adminMenu = [
-        {
-            name: 'Home',
-            path: '/',
-            icon: 'ri-home-line',
-        },
-        {
-            name: 'Drivers Details',
-            path: '/driver',
-            icon: 'ri-home-line',
-        },
-        {
-            name: 'Users Details',
-            path: '/user',
-            icon: 'ri-home-line',
-        },
-        {
-            name: 'Vehicle Details',
-            path: '/vehicle',
-            icon: 'ri-home-line',
-        },
-        {
-            name: 'Profile',
-            path: '/profile',
-            icon: 'ri-account-box-line',
-        },
-        {
-            name: 'Logout',
-            path: '/logout',
-            icon: 'ri-logout-box-line',
-        },
-    ];
 
-    const menuToBeRendered = user?.isAdmin? adminMenu:userMenu;
+    const menuToBeRendered = userMenu;
 
     return (
         <div className='main'>
@@ -80,6 +48,7 @@ function TraLayout({ children }) {
                         {userMenu.map((menu, index) => {
                             const isActive = location.pathname === menu.path;
                             return (
+
                                 <div key={index} className={`d-flex menu-item ${isActive ? 'active-menu-item' : ''}`}>
                                     <i className={menu.icon}></i>
                                     <Link to={menu.path}>{menu.name}</Link>

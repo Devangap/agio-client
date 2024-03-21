@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import annlayout from '../pages/AnnLayout'
+
 import TraLayout from '../components/TraLayout';
 
 function TraHome() {
