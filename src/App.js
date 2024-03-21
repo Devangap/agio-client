@@ -11,7 +11,7 @@ import TraHome from './pages/TraHome';
 
 
 import Home from './pages/Home';
-import profile from './pages/profile';
+
 import LeaveHRsup from './pages/leaveHRsup';
 import Main_login from './pages/Main_login';
 
