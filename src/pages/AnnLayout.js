@@ -2,6 +2,7 @@ import React from 'react';
 import '../Annlayout.css';
 import { Link, useLocation } from 'react-router-dom';
 
+
 function Layout({ children }) {
     const location = useLocation();//no collapsed there is the phto in ur phonr
                                    //user is defined in the phto so 1:59:39 
