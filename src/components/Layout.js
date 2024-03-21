@@ -81,7 +81,7 @@ function Layout({ children }) {
                         <div>
                            </div>
                         <div className='layout-action-icon-container'>
-                            <i className="ri-notification-line layout-action-icon mr-100 "></i>
+                            <i className="ri-notification-line layout-action-icon mr 3px "></i>
                           
                             <Link className="anchor" to ='/'>{user?.username}</Link>
                             

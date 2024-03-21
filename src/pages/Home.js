@@ -24,7 +24,7 @@ function Home() {
     }, []);
 
     return <Layout>
-        <h1>DEVVVVV</h1>
+        <h1></h1>
         
     
     </Layout>
