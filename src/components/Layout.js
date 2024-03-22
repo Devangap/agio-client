@@ -71,6 +71,110 @@ function Layout({ children }) {
         },
         
     ];
+    const Annhrsupmenu = [
+        {
+            name: 'Home',
+            path: '/',
+            icon: 'ri-home-line',
+        },
+        {
+            name: ' Announcements',
+            path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Calendar',
+            path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Profile',
+            path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+        
+    ];
+    const leavemenu = [
+        {
+            name: 'Home',
+            path: '/',
+            icon: 'ri-home-line',
+        },
+        {
+            name: ' leave',
+            path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+       
+    ];
+    const logisticmenu = [
+        {
+            name: 'Home',
+            path: '/',
+            icon: 'ri-home-line',
+        },
+        {
+            name: ' transport',
+            path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+       
+    ];
+    const uniformmenu = [
+        {
+            name: 'Home',
+            path: '/',
+            icon: 'ri-home-line',
+        },
+        {
+            name: ' uniform ',
+            path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+       
+    ];
+    const inquirymenu = [
+        {
+            name: 'Home',
+            path: '/',
+            icon: 'ri-home-line',
+        },
+        {
+            name: ' Inquiry ',
+            path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+       
+    ];
+    const insuarancemenu = [
+        {
+            name: 'Home',
+            path: '/',
+            icon: 'ri-home-line',
+        },
+        {
+            name: ' Insuarance ',
+            path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+       
+    ];
+    const performancemenu = [
+        {
+            name: 'Home',
+            path: '/',
+            icon: 'ri-home-line',
+        },
+        {
+            name: 'Performance',
+            path: '/perf',
+            icon: 'ri-home-line',
+        },
+      
+    ];
+    
+    
+    
 
     let menuToBeRendered = userMenu;
 
@@ -79,6 +183,22 @@ function Layout({ children }) {
     } else if (user?.isDoctor) {
         menuToBeRendered = doctorMenu;
     }
+else if (user?.isAnnHrsup) {
+    menuToBeRendered = Annhrsupmenu ;
+}else if (user?.isLeaveHrsup) {
+    menuToBeRendered = leavemenu ;
+}else if (user?.islogisticsMan) {
+    menuToBeRendered = logisticmenu ;
+}else if (user?.isuniform) {
+    menuToBeRendered = uniformmenu ;
+}else if (user?.isinsu) {
+    menuToBeRendered = insuarancemenu ;
+}else if (user?.isinquiry) {
+    menuToBeRendered = inquirymenu  ;
+}else if (user?.isperfomace) {
+    menuToBeRendered = performancemenu ;
+}
+
 
 useEffect(() => {
     // Check for authentication status on component mount
