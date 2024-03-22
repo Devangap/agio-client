@@ -3,8 +3,13 @@ import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input, DatePicker } from 'antd';
 import AnnLayout from '../pages/AnnLayout';
 import Anndisplay from '../Anndisplay.css';
+import { useNavigate } from 'react-router-dom';
+
 
 function AnnDisplay() {
+    const navigate = useNavigate();
+    
+
     const [announcements, setAnnouncements] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentAnnouncement, setCurrentAnnouncement] = useState(null); 
@@ -74,7 +79,7 @@ function AnnDisplay() {
             key: 'action',
             render: (_, record) => (
                 <>
-                    <Button type="primary" className="update" onClick={() => handleUpdate(record._id)}>Update</Button>
+                    <Button type="primary" className="update" onClick={() => navigate(`/AnnUpdate/${record._id}`)}>Update</Button>
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
                 </>
             ),
