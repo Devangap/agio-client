@@ -11,12 +11,14 @@ import TraHome from './pages/TraHome';
 
 
 import Home from './pages/Home';
+
 import LeaveHRsup from './pages/leaveHRsup';
 import Main_login from './pages/Main_login';
 
 import AnnHRsup from './pages/AnnHRsup';
 import TraDriverRegister from './pages/TraDriverRegister';
 import TraVehicleRegister from './pages/TraVehicleRegister';
+import meddash from './pages/meddash';
 
 
 
@@ -44,6 +46,8 @@ function App() {
           <Route path='/Main_Login' element={<PublicRoute><Main_login /></PublicRoute>} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={< Register/>} />
+          <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
+          
 
 
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
