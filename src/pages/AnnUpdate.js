@@ -15,7 +15,7 @@ function AnnUpdate() {
   useEffect(() => {
     const fetchAnnouncement = async () => {
       try {
-        const response = await axios.get(`/api/annWorkouts/AnnHRsup/${id}`);
+        const response = await axios.get(`/api/annWorkouts/getAnnHRsup2/${id}`);
         if (response.data.success) {
           const data = response.data.announcement;
           form.setFieldsValue({
