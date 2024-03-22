@@ -1,14 +1,25 @@
 import React from 'react';
 import '../Annlayout.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../redux/userSlice';
+import  { useEffect } from 'react';
 
 function Layout({ children }) {
 
     const {user} = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+    
     const navigate = useNavigate()
     const location = useLocation();//no collapsed there is the phto in ur phonr
                                    //user is defined in the phto so 1:59:39 
+
+                                   const handleLogout = () => {
+                                    localStorage.clear();
+                                    dispatch(setUser(null)); // Clear user state in Redux store
+                                    navigate('/Main_login');
+                                };
+                                                          
     
     const userMenu = [
         {
@@ -47,7 +58,35 @@ function Layout({ children }) {
         
     ];
 
-const menuToBeRendered = user?.isAdmin? adminMenu:userMenu;
+    const doctorMenu = [
+        {
+            name: 'Home',
+            path: '/',
+            icon: 'ri-home-line',
+        },
+        {
+            name: ' Doctor Profile',
+            path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+        
+    ];
+
+    let menuToBeRendered = userMenu;
+
+    if (user?.isAdmin) {
+        menuToBeRendered = adminMenu;
+    } else if (user?.isDoctor) {
+        menuToBeRendered = doctorMenu;
+    }
+
+useEffect(() => {
+    // Check for authentication status on component mount
+    if (!localStorage.getItem('token')) {
+        navigate('/Main_login');
+    }
+}, [navigate]);
+
 
     return (
         <div className='main'>
@@ -58,24 +97,25 @@ const menuToBeRendered = user?.isAdmin? adminMenu:userMenu;
                         
                     </div>
                     <div className='menu'>
-                        {userMenu.map((menu, index) => {
+                    {menuToBeRendered.map((menu, index) => {
                             const isActive = location.pathname === menu.path;
                             return (
                                 <div key={index} className={`d-flex menu-item ${isActive ? 'active-menu-item' : ''}`}>
                                     <i className={menu.icon}></i>
                                     <Link to={menu.path}>{menu.name}</Link>
-                                </div>
-                            );
-                        })}
-                        <div  className={`d-flex menu-item `} onClick= {() => {
-                            localStorage.clear()
-                            navigate('/Main_login')
-                        }
+                                   
 
-                        } >
-                                    <i className='ri-logout-circle-line'></i>
-                                    <Link to='Main_login'>Logout</Link>
                                 </div>
+                                 
+                            );
+                            
+                            
+                        })}
+                         
+                        <div className={`d-flex menu-item `} onClick={handleLogout}>
+                            <i className='ri-logout-circle-line'></i>
+                            <Link to='Main_login'>Logout</Link>
+                        </div>
                     </div>
                 </div>
                 <div className='content'>
