@@ -11,6 +11,7 @@ import TraHome from './pages/TraHome';
 
 
 import Home from './pages/Home';
+
 import LeaveHRsup from './pages/leaveHRsup';
 import Main_login from './pages/Main_login';
 
@@ -19,27 +20,39 @@ import AnnDisplay from './pages/AnnDisplay';
 import AnnUpdate from './pages/AnnUpdate';
 import TraDriverRegister from './pages/TraDriverRegister';
 import TraVehicleRegister from './pages/TraVehicleRegister';
+import meddash from './pages/meddash';
 
 
 
 
 import Inquiry from './pages/inquiry';
+import { useSelector } from 'react-redux';
+import ProtectedRoute from './components/ProtectedRoute';
+import PublicRoute from './components/PublicRoute';
 
 
 
 function App() {
+  const{loading} = useSelector(state => state.alerts);
   return (
     <div >
       <BrowserRouter>
+      {loading && (<div className = "spinner-parent">
+      <div class="spinner-border" role="status">
+  
+</div>
+      </div>)}
       <Toaster position='top-center' reverseOrder={false} />
         <Routes>
-          <Route path='/Main_Register' element={<Main_register />} />
-          <Route path='/Main_Login' element={<Main_login />} />
+          <Route path='/Main_Register' element={<PublicRoute><Main_register /></PublicRoute>} />
+          <Route path='/Main_Login' element={<PublicRoute><Main_login /></PublicRoute>} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={< Register/>} />
+          <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
+          
 
 
-          <Route path='/' element={< Home/>} />
+          <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
           <Route path='/AnnHRsup' element={< AnnHRsup/>} />
           <Route path='/AnnDisplay' element={< AnnDisplay/>} />
           <Route path='/AnnUpdate/:id' element={< AnnUpdate/>} />

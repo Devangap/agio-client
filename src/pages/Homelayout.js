@@ -1,9 +1,10 @@
 import React from 'react';
 import '../Annlayout.css';
 import { Link, useLocation } from 'react-router-dom';
-
-
+import { useSelector } from 'react-redux';
 function Layout({ children }) {
+    const user = useSelector((state) => state.user);
+    
     const location = useLocation();//no collapsed there is the phto in ur phonr
                                    //user is defined in the phto so 1:59:39 
     
@@ -15,7 +16,7 @@ function Layout({ children }) {
         },
         {
             name: 'Announcements',
-            path: '/AnnDisplay',
+            path: '/announcements',
             icon: 'ri-survey-line',
         },
         {
@@ -80,6 +81,7 @@ function Layout({ children }) {
                            </div>
                         <div className='layout-action-icon-container'>
                             <i className="ri-notification-line layout-action-icon"></i>
+                            <Link className="anchor" to='/'>{user.username}</Link>
                         </div>
                     </div>
                     <div className='body'>{children}</div>
