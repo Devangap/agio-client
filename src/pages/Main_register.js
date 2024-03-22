@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from 'react-hot-toast';
 import { useSelector,useDispatch } from 'react-redux';
 import { showLoading, hideLoading } from '../redux/empalerts.js';
+import Layout from '../components/Layout.js';
 
 
 
@@ -35,7 +36,8 @@ function Main_register() {
      
   };
   return (
-    <div className="mainreg">
+    <Layout>
+    <div className="mainreg mt-10" >
   <div className="main_login_form box p-3">
     <h3 className='title'>Employee Registration Form</h3>
     <Form layout='vertical' onFinish={onFinish}>
@@ -102,6 +104,7 @@ function Main_register() {
     </Form>
   </div>
 </div>
+</Layout>
   )
 }
 
