@@ -16,6 +16,8 @@ import LeaveHRsup from './pages/leaveHRsup';
 import Main_login from './pages/Main_login';
 
 import AnnHRsup from './pages/AnnHRsup';
+import AnnDisplay from './pages/AnnDisplay';
+import AnnUpdate from './pages/AnnUpdate';
 import TraDriverRegister from './pages/TraDriverRegister';
 import TraVehicleRegister from './pages/TraVehicleRegister';
 import meddash from './pages/meddash';
@@ -52,6 +54,8 @@ function App() {
 
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
           <Route path='/AnnHRsup' element={< AnnHRsup/>} />
+          <Route path='/AnnDisplay' element={< AnnDisplay/>} />
+          <Route path='/AnnUpdate/:id' element={< AnnUpdate/>} />
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
 

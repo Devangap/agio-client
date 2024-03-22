@@ -15,7 +15,7 @@ function Layout({ children }) {
         },
         {
             name: 'Announcements',
-            path: '/announcements',
+            path: '/AnnDisplay',
             icon: 'ri-survey-line',
         },
         {
