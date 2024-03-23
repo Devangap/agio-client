@@ -42,6 +42,11 @@ function Layout({ children }) {
             path: '/profile',
             icon: 'ri-account-box-line',
         },
+        {
+            name: 'Transport',
+            path: '/register',
+            icon: 'ri-account-box-line',
+        },
        
     ];
     const adminMenu = [
@@ -114,7 +119,12 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: ' transport',
+            name: ' Transport',
+            path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Userdetails',
             path: '/profile',
             icon: 'ri-account-box-line',
         },

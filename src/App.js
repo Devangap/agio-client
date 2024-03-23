@@ -33,6 +33,9 @@ import Inquiry from './pages/inquiry';
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
+import TraBooking from './pages/TraBooking';
+import TraBookingDisplay from './pages/TraBookingDisplay';
+import TraBookingUpdate from './pages/TraBookingUpdate';
 
 
 
@@ -69,14 +72,16 @@ function App() {
 
 
 
-          <Route path='/home' element={< TraHome/>} />
-
+        
+            /*transport  Navigation*/
           <Route path='/home' element={<TraProtectedRoute><TraHome /></TraProtectedRoute>} />
           <Route path='/login' element={<TraPublicRoute><TraLogin /></TraPublicRoute>} />
-          <Route path='/register' element={<TraRegister />} />
-
+          <Route path='/register' element={<ProtectedRoute><TraRegister /></ProtectedRoute>} />
           <Route path='/dregister' element={<TraDriverRegister />} />
           <Route path='/vregister' element={< TraVehicleRegister/>} />
+          <Route path='/TraBooking' element={<TraBooking/>} />
+          <Route path='/TraBookingDisplay' element={< TraBookingDisplay />} />
+          <Route path='/TraBookingUpdate' element={< TraBookingUpdate />} />
           
       
           
