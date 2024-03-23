@@ -51,8 +51,8 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: ' Admin Profile',
-            path: '/profile',
+            name: 'Employee Registration ',
+            path: '/Main_register',
             icon: 'ri-account-box-line',
         },
         
