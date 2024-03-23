@@ -3,7 +3,7 @@ export const alertSlice = createSlice(
     {
         name: "alerts",
         initialState : {
-            loading : false
+            loading :false
         },
         reducers : {
             showLoading: (state) => {
@@ -18,4 +18,4 @@ export const alertSlice = createSlice(
     }
 );
 
-export const {showLoading, hideLoading} = alertsSlice.actions;
+export const {showLoading, hideLoading} = alertSlice.actions;
