@@ -1,19 +1,31 @@
 import React from 'react';
 import { Button, Form, Input, DatePicker } from 'antd';
 import '../inquiry.css';
-import Layout from './inquiryLayout';
+import Layout from '../components/Layout';
 import axios from "axios";
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function Inquiry() {
+  const navigate = useNavigate();
 
   const onFinish = async (values) => {
     console.log('Received values of form:', values);
     try {
       const response = await axios.post('/api/inquiry/inquiry', values);
-      console.log('Response:', response.data);
-    } catch (error) {
-      console.error('Error submitting inquiry:', error);
-    }
+      if(response.data.success){
+          toast.success(response.data.message);
+          navigate('/');
+         
+          
+      }else{
+          toast.error(response.data.message);
+
+      }
+      
+  } catch (error) {
+      toast.error("Something went wrong");
+  }
   };
 
   return (

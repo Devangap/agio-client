@@ -69,7 +69,7 @@ function App() {
 
 
         
-          <Route path='/inquiry' element ={<Inquiry/>} />
+          <Route path='/inquiry' element ={<ProtectedRoute><Inquiry/></ProtectedRoute>} />
 
         </Routes>
 
