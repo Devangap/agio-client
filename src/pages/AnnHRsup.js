@@ -4,8 +4,10 @@ import {Button, Form ,  Input,Select, DatePicker,message,Upload } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
 import AnnLayout from '../pages/AnnLayout';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 function AnnHRsup() {
+  const navigate = useNavigate();
 
   const{Option} = Select;
 
@@ -16,6 +18,7 @@ function AnnHRsup() {
       const response = await axios.post('/api/annWorkouts/AnnHRsup', values);
       if(response.data.success){
           toast.success(response.data.message);
+          navigate('/AnnDisplay');
          
           
       }else{

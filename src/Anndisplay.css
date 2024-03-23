@@ -1,0 +1,15 @@
+/* Anndisplay.css */
+
+.update {
+    margin-right: 16px; /* Adjust the gap as desired */
+    background-color: #FFC15E;
+    border-color: #F7934C; /* Ensure border color matches background to maintain visual consistency */
+}
+
+.update:hover, .update:focus {
+    background-color: #CA9220; /* Darker shade for hover/focus */
+    border-color: #CA9220;
+}
+
+
+
