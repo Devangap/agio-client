@@ -51,8 +51,7 @@ function App() {
 
           <Route path='/Main_Register' element={<ProtectedRoute><Main_register /></ProtectedRoute>} />
           <Route path='/Main_Login' element={<PublicRoute><Main_login /></PublicRoute>} />
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={< Register/>} />
+        
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
           
 

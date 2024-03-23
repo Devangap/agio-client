@@ -23,7 +23,7 @@ function Layout({ children }) {
             path: '/calendar',
             icon: 'ri-calendar-line',
         },
-
+{
      
             name: 'Profile',
             path: '/profile',

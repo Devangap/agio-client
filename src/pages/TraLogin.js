@@ -3,7 +3,7 @@ import {Button, Form ,  Input} from 'antd'
 import {Link, useNavigate }from 'react-router-dom'
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import loginImage from './image/Cigars.jpg';
+import loginImage from '../Images/Cigars.jpg';
 import "../TraRegister.css"
 
 
