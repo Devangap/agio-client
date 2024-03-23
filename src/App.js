@@ -22,9 +22,13 @@ import TraVehicleRegister from './pages/TraVehicleRegister';
 
 
 import Inquiry from './pages/inquiry';
+import InsClaimSubmit from './pages/InsClaimSubmit';
+
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
+
+
 
 
 
@@ -62,6 +66,8 @@ function App() {
 
         
           <Route path='/inquiry' element ={<Inquiry/>} />
+
+          <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
 
         </Routes>
 
