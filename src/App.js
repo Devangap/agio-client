@@ -3,8 +3,6 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 import Main_register from './pages/Main_register';
 
-import Login from './pages/TraLogin';
-import Register from './pages/TraRegister';
 
 import { Toaster } from 'react-hot-toast';
 import TraHome from './pages/TraHome';
@@ -20,8 +18,14 @@ import AnnDisplay from './pages/AnnDisplay';
 import AnnUpdate from './pages/AnnUpdate';
 import TraDriverRegister from './pages/TraDriverRegister';
 import TraVehicleRegister from './pages/TraVehicleRegister';
+
 import meddash from './pages/meddash';
 
+
+import TraProtectedRoute from './components/TraProtectedRoute';
+import TraPublicRoute from './components/TraPublicRoute';
+import TraLogin from './pages/TraLogin';
+import TraRegister from './pages/TraRegister';
 
 
 
@@ -44,12 +48,18 @@ function App() {
       </div>)}
       <Toaster position='top-center' reverseOrder={false} />
         <Routes>
+
           <Route path='/Main_Register' element={<ProtectedRoute><Main_register /></ProtectedRoute>} />
           <Route path='/Main_Login' element={<PublicRoute><Main_login /></PublicRoute>} />
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={< Register/>} />
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
           
+
+          <Route path='/Main_Register' element={<Main_register />} />
+          <Route path='/Main_Login' element={<Main_login />} />
+
+
 
 
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
@@ -59,7 +69,13 @@ function App() {
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
 
+
           <Route path='/home' element={< TraHome/>} />
+
+          <Route path='/home' element={<TraProtectedRoute><TraHome /></TraProtectedRoute>} />
+          <Route path='/login' element={<TraPublicRoute><TraLogin /></TraPublicRoute>} />
+          <Route path='/register' element={<TraRegister />} />
+
           <Route path='/dregister' element={<TraDriverRegister />} />
           <Route path='/vregister' element={< TraVehicleRegister/>} />
           

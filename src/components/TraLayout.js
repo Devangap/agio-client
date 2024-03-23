@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../Annlayout.css';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-function Layout({ children }) {
+function TraLayout({ children }) {
+    const [collapsed, setCollapsed] = useState(false);
+    const {user} = useSelector((state) => state.user);
+    const navigate = useNavigate();
     const location = useLocation();//no collapsed there is the phto in ur phonr
-                                   //user is defined in the phto so 1:59:39 
+      //user is defined in the phto so 1:59:39 
     
     const userMenu = [
         {
@@ -13,7 +17,7 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: 'Announcements',
+            name: 'Booking Service',
             path: '/announcements',
             icon: 'ri-survey-line',
         },
@@ -27,31 +31,10 @@ function Layout({ children }) {
             path: '/profile',
             icon: 'ri-account-box-line',
         },
-        {
-            name: 'Logout',
-            path: '/logout',
-            icon: 'ri-logout-box-line',
-        },
-    ];
-    const adminMenu = [
-        {
-            name: 'Home',
-            path: '/',
-            icon: 'ri-home-line',
-        },
-        {
-            name: 'Profile',
-            path: '/profile',
-            icon: 'ri-account-box-line',
-        },
-        {
-            name: 'Logout',
-            path: '/logout',
-            icon: 'ri-logout-box-line',
-        },
+        
     ];
 
-    //const menuToBeRendered = user.isAdmin? adminMenu:userMenu;
+    const menuToBeRendered = userMenu;
 
     return (
         <div className='main'>
@@ -65,20 +48,30 @@ function Layout({ children }) {
                         {userMenu.map((menu, index) => {
                             const isActive = location.pathname === menu.path;
                             return (
+
                                 <div key={index} className={`d-flex menu-item ${isActive ? 'active-menu-item' : ''}`}>
                                     <i className={menu.icon}></i>
                                     <Link to={menu.path}>{menu.name}</Link>
                                 </div>
                             );
                         })}
+                        <div className={`d-flex menu-item `} onClick={() =>{
+                            localStorage.clear()
+                            navigate('/login')
+
+                        }}>
+                                    <i className='ri-logout-box-line'></i>
+                                    <Link to='/login'>Logout</Link>
+                                </div>
                     </div>
                 </div>
                 <div className='content'>
                     <div className='header'>
                         <div>
                            </div>
-                        <div className='layout-action-icon-container'>
-                            <i className="ri-notification-line layout-action-icon"></i>
+                        <div className='layout-action-icon-container align-items-center px-4'>
+                            <i className="ri-notification-line layout-action-icon px-3"></i>
+                            <Link className='anchor' to='/profile'>{user?.name}</Link>
                         </div>
                     </div>
                     <div className='body'>{children}</div>
@@ -88,4 +81,4 @@ function Layout({ children }) {
     );
 }
 
-export default Layout;
+export default TraLayout;
