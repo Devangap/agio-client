@@ -31,9 +31,7 @@ import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
-import UniformOrderForm from './pages/UniformOrder';
-import CompManagerView from './pages/CompManagerView';
-import OrderModify from './pages/OrderModify';
+
 
 
 
@@ -69,9 +67,6 @@ function App() {
           <Route path='/dregister' element={<TraDriverRegister />} />
           <Route path='/vregister' element={< TraVehicleRegister/>} />
 
-          <Route path='/UniformOrder' element={<UniformOrderForm/>} />
-          <Route path='/CompManagerView' element={<CompManagerView/>}/>
-          <Route path='/OrderModify' element={<OrderModify/>}/>
           
       
           
