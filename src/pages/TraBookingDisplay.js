@@ -47,20 +47,15 @@ function TraBookingDisplay() {
     const columns = [
         {
             title: 'Employee Name',
-            dataIndex: 'empname',
-            key: 'empname',
+            dataIndex: 'EmpName',
+            key: 'EmpName',
         },
         {
             title: 'Employee Email',
-            dataIndex: 'empemail',
-            key: 'empemail',
+            dataIndex: 'EmpEmail',
+            key: 'EmpEmail',
         },
-        {
-            title: 'Booking Date',
-            dataIndex: 'bookingdate',
-            key: 'bookingdate',
-            render: (text) => new Date(text).toLocaleDateString(),
-        },
+
         {
             title: 'Type',
             dataIndex: 'Type',
@@ -68,9 +63,16 @@ function TraBookingDisplay() {
         },
         
         {
+            title: 'Booking Date',
+            dataIndex: 'bookingdate',
+            key: 'bookingdate',
+            render: (text) => new Date(text).toLocaleDateString(),
+        },
+        
+        {
             title: 'Description',
-            dataIndex: 'Description',
-            key: 'Description',
+            dataIndex: 'Details',
+            key: 'Details',
         },
         {
             title: 'Action',
@@ -84,8 +86,8 @@ function TraBookingDisplay() {
         },
     ];
 
-    const showModal = (booking) => {
-        setCurrentbooking(booking);
+    const showModal = (Booking) => {
+        setCurrentbooking(Booking);
         setIsModalVisible(true);
     };
     const handleUpdate = async (values) => {
