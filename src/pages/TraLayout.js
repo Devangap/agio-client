@@ -2,7 +2,6 @@ import React from 'react';
 import '../Annlayout.css';
 import { Link, useLocation } from 'react-router-dom';
 
-
 function Layout({ children }) {
     const location = useLocation();//no collapsed there is the phto in ur phonr
                                    //user is defined in the phto so 1:59:39 
@@ -10,12 +9,12 @@ function Layout({ children }) {
     const userMenu = [
         {
             name: 'Home',
-            path: '/AnnHRsup',
+            path: '/',
             icon: 'ri-home-line',
         },
         {
             name: 'Announcements',
-            path: '/AnnDisplay',
+            path: '/announcements',
             icon: 'ri-survey-line',
         },
         {
@@ -23,7 +22,7 @@ function Layout({ children }) {
             path: '/calendar',
             icon: 'ri-calendar-line',
         },
-        { 
+        {
             name: 'Profile',
             path: '/profile',
             icon: 'ri-account-box-line',

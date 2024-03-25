@@ -3,23 +3,18 @@ import {Button, Form ,  Input,Select, DatePicker } from 'antd'
 import '../mainreg.css';
 import axios from "axios";
 import toast from 'react-hot-toast';
-import { useSelector,useDispatch } from 'react-redux';
-import { showLoading, hideLoading } from '../redux/empalerts.js';
-import Layout from '../components/Layout.js';
+import TraLayout from './TraLayout'
 
 
 
-function Main_register() {
+
+function TraDriverRegister() {
   const { Option } = Select;
-  const dispatch = useDispatch();
-
 
   const onFinish = async(values) => {
     console.log('Recieved values of form', values);
     try {
-      dispatch(showLoading());
       const response = await axios.post('/api/employee/Main_register', values);
-      dispatch(hideLoading());
       if(response.data.success){
           toast.success(response.data.message);
          
@@ -30,14 +25,12 @@ function Main_register() {
       }
       
   } catch (error) {
-    dispatch(hideLoading());
       toast.error("Something went wrong");
   }
      
   };
-  return (
-    <Layout>
-    <div className="mainreg mt-10" >
+  return <TraLayout>
+    <div className="mainreg">
   <div className="main_login_form box p-3">
     <h3 className='title'>Employee Registration Form</h3>
     <Form layout='vertical' onFinish={onFinish}>
@@ -104,8 +97,7 @@ function Main_register() {
     </Form>
   </div>
 </div>
-</Layout>
-  )
+  </TraLayout>
 }
 
-export default Main_register
+export default TraDriverRegister

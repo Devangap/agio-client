@@ -1,6 +1,7 @@
 import React from 'react';
-import '../Annlayout.css';
+import '../leaveLayout.css';
 import { Link, useLocation } from 'react-router-dom';
+
 
 
 function Layout({ children }) {
@@ -10,12 +11,12 @@ function Layout({ children }) {
     const userMenu = [
         {
             name: 'Home',
-            path: '/AnnHRsup',
+            path: '/',
             icon: 'ri-home-line',
         },
         {
-            name: 'Announcements',
-            path: '/AnnDisplay',
+            name: 'Leaves',
+            path: '/leaves',
             icon: 'ri-survey-line',
         },
         {
@@ -23,7 +24,7 @@ function Layout({ children }) {
             path: '/calendar',
             icon: 'ri-calendar-line',
         },
-        { 
+        {
             name: 'Profile',
             path: '/profile',
             icon: 'ri-account-box-line',
