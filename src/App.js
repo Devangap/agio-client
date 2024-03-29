@@ -21,6 +21,8 @@ import AnnUpdate from './pages/AnnUpdate';
 import TraDriverRegister from './pages/TraDriverRegister';
 import TraVehicleRegister from './pages/TraVehicleRegister';
 import meddash from './pages/meddash';
+import LeaveEmp from './pages/leaveEmp';
+import LeaveEmpform from './pages/leaveEmpform';
 
 
 
@@ -53,6 +55,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={< Register/>} />
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
+          <Route path='/LeaveEmp' element={<ProtectedRoute><LeaveEmp /></ProtectedRoute>} />
+          <Route path='/LeaveEmpform' element={<ProtectedRoute><LeaveEmpform /></ProtectedRoute>} />
           
 
 

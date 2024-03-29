@@ -34,7 +34,7 @@ function Layout({ children }) {
         },
         {
             name: 'Leave',
-            path: '/calendar',
+            path: '/leaveEmp',
             icon: 'ri-calendar-line',
         },
         {
