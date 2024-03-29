@@ -6,6 +6,7 @@
     
 }
 .leave_formbox {
+    
     box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
     border-radius: 20px;
     background-color: #FAFAFA;
@@ -78,7 +79,7 @@ label{
     width: 400px;
     height: 40px;
 }
-.item{
+.leave_item{
     margin-right: 60px;
     margin-left: 30px;
 }
@@ -98,5 +99,9 @@ label{
 .address{
     width : 1000px;
 }
-
-
+.leavet{
+   
+    height: 40px !important;
+    width :400px !important;
+    margin-bottom:40px !important;
+}
