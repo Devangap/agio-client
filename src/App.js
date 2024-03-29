@@ -36,6 +36,8 @@ import PublicRoute from './components/PublicRoute';
 import TraBooking from './pages/TraBooking';
 import TraBookingDisplay from './pages/TraBookingDisplay';
 import TraBookingUpdate from './pages/TraBookingUpdate';
+import TraVehicleDetails from './pages/TraVehicleDetails';
+import TraDriverDetailsDisplay from './pages/TraDriverDetailsDisplay';
 
 
 
@@ -82,6 +84,8 @@ function App() {
           <Route path='/TraBooking' element={<TraBooking/>} />
           <Route path='/TraBookingDisplay' element={< TraBookingDisplay />} />
           <Route path='/TraBookingUpdate' element={< TraBookingUpdate />} />
+          <Route path='/TravehicleDisplay' element={< TraVehicleDetails />} />
+          <Route path='/TraDriverDisplay' element={< TraDriverDetailsDisplay />} />
           
       
           

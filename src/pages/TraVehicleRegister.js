@@ -45,7 +45,7 @@ function TraVehicleRegister() {
         <div className="form-row">
         <div className="item">
         <Form.Item name="Type" label="Type">
-              <Select className="Type" placeholder="Select Vehicle type">
+              <Select className="Vehicle Type" placeholder="Select Vehicle type">
                 <Option value="General">Bus</Option>
                 <Option value="Specific">Van</Option>
               </Select>

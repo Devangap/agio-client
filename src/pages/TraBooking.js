@@ -58,7 +58,7 @@ function TraBooking() {
         </div>
         <div className="item">
           <Form.Item name="Type" label="Type">
-            <Select className="Type" placeholder="Select announcement type">
+            <Select className="Type" placeholder="Select Vehicle type">
               <Option value="General">Bus</Option>
               <Option value="Specific">Van</Option>
             </Select>
