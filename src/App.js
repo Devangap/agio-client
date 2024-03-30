@@ -53,9 +53,9 @@ function App() {
 
 
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
-          <Route path='/AnnHRsup' element={< AnnHRsup/>} />
-          <Route path='/AnnDisplay' element={< AnnDisplay/>} />
-          <Route path='/AnnUpdate/:id' element={< AnnUpdate/>} />
+          <Route path='/AnnHRsup' element={<ProtectedRoute><AnnHRsup/></ProtectedRoute>} />
+          <Route path='/AnnDisplay' element={<ProtectedRoute><AnnDisplay/></ProtectedRoute>} />
+          <Route path='/AnnUpdate/:id' element={<ProtectedRoute><AnnUpdate/></ProtectedRoute>} />
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
 
