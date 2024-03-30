@@ -20,7 +20,12 @@ function LeaveEmpform() {
         console.log('Received values of form', values);
         try {
             dispatch(showLoading());
-            const response = await axios.post('/api/employee/Main_register', {...values , userId : user._id,});
+            const response = await axios.post('/api/employee/leaveEmpform', {...values , userId : user._id,}
+           , {headers:{
+            Authorization :`Bearer ${localStorage.getItem("token")}`,
+           },
+
+            });
             dispatch(hideLoading());
             if(response.data.success){
                 navigate("/leaveEmp")
