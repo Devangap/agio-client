@@ -18,7 +18,7 @@ function TraDriverRegister() {
       const response = await axios.post('/api/TransportRoute/Driveregister', values);
       if(response.data.success){
           toast.success(response.data.message);
-          navigate('/TraDriverDisplay');
+          navigate('/TraDriverDetailsDisplay');
          
           
       }else{

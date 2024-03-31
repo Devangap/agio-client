@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import store from './redux/store';
 import empstore from './redux/empstore';
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={empstore}>
@@ -14,6 +15,7 @@ root.render(
     </Provider>
 
 );
+
 
 // ReactDOM.render(
 //   <React.StrictMode>

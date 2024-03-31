@@ -9,19 +9,20 @@ function TraDriverDetailsDisplay() {
     const navigate = useNavigate();
     
 
-    const [booking, setbooking] = useState([]);
+    const [Dregister, setDregister] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [currentbooking, setCurrentbooking] = useState(null); 
+    const [currentDregister, setCurrentDregister] = useState(null); 
 
 
-    const fetchbooking = async () => {
+    const fetchDregister = async () => {
         try {
-            const response = await axios.get('/api/TransportRoute/getTraBooking');
-            // Assuming response.data.announcements is an array of announcements
-            // Add a unique key (e.g., id) to each announcement for the Table component
-            const dataWithKey = response.data.booking.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
-            setbooking(dataWithKey);
+            const response = await axios.get('/api/TransportRoute/getDrivers');
+            // Assuming response.data.bookings is an array of bookings
+            // Add a unique key (e.g., _id) to each booking for the Table component
+            const dataWithKey = response.data.bookings.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
+            setDregister(dataWithKey);
         } catch (error) {
+            console.error(error);
             message.error("Failed to fetch Booking");
         }
     };
@@ -30,15 +31,15 @@ function TraDriverDetailsDisplay() {
 
     useEffect(() => {
         
-        fetchbooking();
+        fetchDregister();
     }, []);
 
     
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/api/TransportRoute/deletebookings/${id}`);
-            setbooking(prev => prev.filter(item => item._id !== id));
+            await axios.delete(`/api/TransportRoute/deleteDriver/${id}`);
+            setDregister(prev => prev.filter(item => item._id !== id));
             message.success('Booking deleted successfully');
         } catch (error) {
             message.error('Failed to delete Booking');
@@ -80,26 +81,26 @@ function TraDriverDetailsDisplay() {
             key: 'action',
             render: (_, record) => (
                 <>
-                    <Button type="primary" className="update" onClick={() => navigate(`/TraBookingUpdate/${record._id}`)}>Update</Button>
+                    <Button type="primary" className="update" onClick={() => navigate(`/TraDriverUpdate/${record._id}`)}>Update</Button>
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
                 </>
             ),
         },
     ];
 
-    const showModal = (Booking) => {
-        setCurrentbooking(Booking);
+    const showModal = (Dregister) => {
+        setCurrentDregister(Dregister);
         setIsModalVisible(true);
     };
     const handleUpdate = async (values) => {
         try {
             // Assuming you have the Booking ID in currentBooking._id
-            const response = await axios.put(`/api/TransportRoute/updateTraBooking/${currentbooking._id}`, values);
+            const response = await axios.put(`/api/TransportRoute/updateTraDriver/${currentDregister._id}`, values);
             if (response.data.success) {
                 message.success('Booking updated successfully');
                 setIsModalVisible(false);
                 // Refresh the Booking list to reflect the update
-                fetchbooking();
+                fetchDregister();
             } else {
                 message.error(response.data.message);
             }
@@ -111,7 +112,7 @@ function TraDriverDetailsDisplay() {
 
   return (
     <AnnLayout>
-    <Table dataSource={booking} columns={columns} />
+    <Table dataSource={Dregister} columns={columns} />
     <Modal
 title="Update Booking"
 open={isModalVisible}
@@ -120,7 +121,7 @@ footer={null} // Use null here to not use the default Ok and Cancel buttons
 >
 <Form
 layout="vertical"
-initialValues={{ ...currentbooking }}
+initialValues={{ ...currentDregister }}
 onFinish={handleUpdate}
 >
 <Form.Item

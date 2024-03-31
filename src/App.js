@@ -38,6 +38,7 @@ import TraBookingDisplay from './pages/TraBookingDisplay';
 import TraBookingUpdate from './pages/TraBookingUpdate';
 import TraVehicleDetails from './pages/TraVehicleDetails';
 import TraDriverDetailsDisplay from './pages/TraDriverDetailsDisplay';
+import TraDriverDetailsUpdate from './pages/TraDriverDetailsUpdate';
 
 
 
@@ -86,6 +87,7 @@ function App() {
           <Route path='/TraBookingUpdate' element={< TraBookingUpdate />} />
           <Route path='/TravehicleDisplay' element={< TraVehicleDetails />} />
           <Route path='/TraDriverDetailsDisplay' element={< TraDriverDetailsDisplay />} />
+          <Route path='/TraDriverUpdate' element={<TraDriverDetailsUpdate/>} />
           
       
           
