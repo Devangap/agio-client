@@ -23,7 +23,7 @@ import TraVehicleRegister from './pages/TraVehicleRegister';
 import meddash from './pages/meddash';
 import LeaveEmp from './pages/leaveEmp';
 import LeaveEmpform from './pages/leaveEmpform';
-
+import Main_Notifications from './pages/Main_Notifications';
 
 
 
@@ -32,6 +32,7 @@ import Inquiry from './pages/inquiry';
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
+
 
 
 
@@ -57,7 +58,7 @@ function App() {
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
           <Route path='/LeaveEmp' element={<ProtectedRoute><LeaveEmp /></ProtectedRoute>} />
           <Route path='/LeaveEmpform' element={<ProtectedRoute><LeaveEmpform /></ProtectedRoute>} />
-          
+          <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
 
 
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />

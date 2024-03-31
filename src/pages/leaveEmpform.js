@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { useDispatch ,useSelector} from 'react-redux';
 import { showLoading ,hideLoading} from '../redux/empalerts';
+import { setUser } from '../redux/userSlice';
 
 function LeaveEmpform() {
     const { RangePicker } = DatePicker;
@@ -16,11 +17,28 @@ function LeaveEmpform() {
     const navigate = useNavigate();
     const {user} = useSelector((state) => state.user);
    const dispatch = useDispatch();
+   const getData = async () => {
+    try {
+        const response = await axios.post('/api/employee/get-employee-info-by-id', {} , {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+        });
+        console.log(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+};
+
+useEffect(() => {
+    getData();
+}, []);
     const onFinish = async (values) => {
         console.log('Received values of form', values);
         try {
             dispatch(showLoading());
-            const response = await axios.post('/api/employee/leaveEmpform', {...values , userId : user._id,}
+            const response = await axios.post('/api/employee/leaveEmpform', {...values , userid : user?.userid,}
+           
            , {headers:{
             Authorization :`Bearer ${localStorage.getItem("token")}`,
            },
@@ -41,6 +59,7 @@ function LeaveEmpform() {
             toast.error("Something went wrong");
         }
     };
+    console.log(user?.userid);
 
     return (
         <div className="leaveform">

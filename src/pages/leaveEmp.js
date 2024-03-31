@@ -14,7 +14,7 @@ function LeaveEmp() {
 
     const fetchData = async () => {
         try {
-            const response = await axios.get('/api/leave/getleave', {
+            const response = await axios.get('/api/employee/getleave', {
                 headers: {
                     Authorization: 'Bearer ' + localStorage.getItem('token')
                 },
