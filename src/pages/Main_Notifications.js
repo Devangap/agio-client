@@ -15,7 +15,37 @@ function Main_Notifications() {
     const markAllAsSeen = async()=>{
         try {
             dispatch(showLoading());
-            const response = await axios.post('/api/employee/mark_all_seen', {userid : user?.userid});
+            const response = await axios.post('/api/employee/mark_all_seen', {userid : user?.userid},{
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                },
+            });
+            dispatch(hideLoading());
+            if(response.data.success){
+                toast.success(response.data.message);
+               
+                
+            }else{
+                toast.error(response.data.message);
+      
+            }
+            
+        } catch (error) {
+          dispatch(hideLoading());
+            toast.error("Something went wrong");
+        }
+           
+
+
+    };
+    const deleteall = async()=>{
+        try {
+            dispatch(showLoading());
+            const response = await axios.post('/api/employee/delete_all_notifications', {userid : user?.userid},{
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                },
+            });
             dispatch(hideLoading());
             if(response.data.success){
                 toast.success(response.data.message);
@@ -41,7 +71,7 @@ function Main_Notifications() {
         <Tabs.TabPane tab = 'Unread' key = {0} >
             <div className = 'n-felx justify-content-end' >
             <h4>Unread</h4>
-                <h7 className = "anchor"onClick ={() => markAllAsSeen}>Mark all as read</h7>
+            <h7 className="anchor" onClick={markAllAsSeen}>Mark all as read</h7>
             </div>
             {user?.unseenNotifications .map((notification) =>(
                 <div className = "card p-7" onClick = {() => navigate("/leavehrsupreq")}>
@@ -55,9 +85,18 @@ function Main_Notifications() {
         </Tabs.TabPane>
         <Tabs.TabPane tab = 'Read' key = {1} >
         <div className = 'n_felx justify-content-end' >
-                <h7 className = "anchor">Clear All</h7>
+        <h4>Read</h4>
+                <h7 className = "anchor"onClick={deleteall}>Clear All</h7>
             </div>
-            <h4>Read</h4>
+            {user?.seenNotifications .map((notification) =>(
+                <div className = "card p-7" onClick = {() => navigate("/leavehrsupreq")}>
+                    <div className = "card-text">{notification.message}</div>
+
+                </div>
+
+            ) )}
+           
+            
 
         </Tabs.TabPane>
 
