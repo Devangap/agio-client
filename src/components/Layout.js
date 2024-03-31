@@ -38,6 +38,11 @@ function Layout({ children }) {
             icon: 'ri-calendar-line',
         },
         {
+            name: "Appointments",
+            path: "/medical-appointments",
+            icon: "ri-file-list-line",
+          },
+        {
             name: 'Uniform',
             path: '/profile',
             icon: 'ri-account-box-line',
@@ -60,17 +65,23 @@ function Layout({ children }) {
 
     const doctorMenu = [
         {
-            name: 'Home',
-            path: '/',
-            icon: 'ri-home-line',
+          name: "Home",
+          path: "/",
+          icon: "ri-home-line",
         },
+    
         {
-            name: ' Doctor Profile',
-            path: '/profile',
-            icon: 'ri-account-box-line',
+          name: "Parameters",
+          path: "/parameters",
+          icon: "ri-list-settings-line",
         },
-        
-    ];
+    
+        {
+          name: "Profile",
+          path: "/profile",
+          icon: "ri-user-line",
+        },
+      ];
     const Annhrsupmenu = [
         {
             name: 'Home',
