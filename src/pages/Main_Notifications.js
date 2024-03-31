@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { showLoading,hideLoading } from '../redux/empalerts';
 import toast from 'react-hot-toast';
+import { setUser } from '../redux/userSlice';
 
 function Main_Notifications() {
     const{user} = useSelector((state) => state.user);
@@ -15,10 +16,16 @@ function Main_Notifications() {
     const markAllAsSeen = async()=>{
         try {
             dispatch(showLoading());
-            const response = await axios.post('/api/employee/mark_all_seen', {userid : user?.userid});
+            const response = await axios.post('/api/employee/mark_all_seen', {userid : user?.userid},{
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                },
+            }
+            );
             dispatch(hideLoading());
             if(response.data.success){
                 toast.success(response.data.message);
+                dispatch(setUser(response.data.data));
                
                 
             }else{
