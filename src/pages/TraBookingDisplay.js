@@ -86,8 +86,8 @@ function TraBookingDisplay() {
         },
     ];
 
-    const showModal = (Booking) => {
-        setCurrentbooking(Booking);
+    const showModal = (booking) => {
+        setCurrentbooking(booking);
         setIsModalVisible(true);
     };
     const handleUpdate = async (values) => {

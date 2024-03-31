@@ -16,10 +16,10 @@ function TraVehicleRegister() {
       console.log('Recieved values of form', values);
   
       try {
-        const response = await axios.post('/api/TransportRoute/TraBooking', values);
+        const response = await axios.post('/api/TransportRoute/Vehicleregister', values);
         if(response.data.success){
             toast.success(response.data.message);
-            navigate('/TraBookingDisplay');
+            navigate('/TravehicleDisplay');
            
             
         }else{
@@ -46,8 +46,8 @@ function TraVehicleRegister() {
         <div className="item">
         <Form.Item name="Type" label="Type">
               <Select className="Vehicle Type" placeholder="Select Vehicle type">
-                <Option value="General">Bus</Option>
-                <Option value="Specific">Van</Option>
+                <Option value="bus">Bus</Option>
+                <Option value="van">Van</Option>
               </Select>
             </Form.Item>
           </div>
@@ -68,13 +68,13 @@ function TraVehicleRegister() {
         </div>
         <div className="form-row">
           <div className="item">
-          <Form.Item name="Licence Details" label="Licence Details">
+          <Form.Item name="LicenceDetails" label="Licence Details">
             <Input.TextArea className='Description' />
           </Form.Item>
           </div>
         </div>
         <div className="item">
-          <Form.Item name="Owner Details" label="Owner Details">
+          <Form.Item name="OwnerDetails" label="Owner Details">
             <Input.TextArea className='Description' />
           </Form.Item>
         </div>

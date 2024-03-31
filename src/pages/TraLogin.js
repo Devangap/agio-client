@@ -49,7 +49,7 @@ const navigate = useNavigate();
          
           <Form.Item label="Password" name='password'>
                     <Input placeholder='password' type='password'/>
-                </Form.Item>
+          </Form.Item>
           
           </div>
       

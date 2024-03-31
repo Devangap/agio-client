@@ -15,10 +15,10 @@ function TraDriverRegister() {
     console.log('Recieved values of form', values);
 
     try {
-      const response = await axios.post('/api/TransportRoute/TraBooking', values);
+      const response = await axios.post('/api/TransportRoute/Driveregister', values);
       if(response.data.success){
           toast.success(response.data.message);
-          navigate('/TraBookingDisplay');
+          navigate('/TraDriverDisplay');
          
           
       }else{
@@ -53,11 +53,11 @@ function TraDriverRegister() {
           </Form.Item>
         </div>
         <div className="item">
-          <Form.Item name="Work Expereance" label="Work Expereance">
+          <Form.Item name="WorkExpereance" label="Work Expereance">
             <Select className="Type" placeholder="Select Work Expereance">
-              <Option value="General">0-5 years</Option>
-              <Option value="Specific">6-10 years</Option>
-              <Option value="Specific">above 10 years</Option>
+              <Option value="year0-5">0-5 years</Option>
+              <Option value="year6-10">6-10 years</Option>
+              <Option value="year10above">above 10 years</Option>
             </Select>
           </Form.Item>
         </div>
