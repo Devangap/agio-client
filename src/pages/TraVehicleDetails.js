@@ -4,9 +4,16 @@ import { Table, Button, message, Modal, Form, Input } from 'antd';
 import AnnLayout from '../pages/AnnLayout';
 import { useNavigate } from 'react-router-dom';
 
+import ReactDOM from 'react-dom';
+import App from '../App';
+
+
+
 function TraVehicleDetails() {
 
     const navigate = useNavigate();
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
     
 
     const [booking, setbooking] = useState([]);

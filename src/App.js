@@ -85,7 +85,7 @@ function App() {
           <Route path='/TraBookingDisplay' element={< TraBookingDisplay />} />
           <Route path='/TraBookingUpdate' element={< TraBookingUpdate />} />
           <Route path='/TravehicleDisplay' element={< TraVehicleDetails />} />
-          <Route path='/TraDriverDisplay' element={< TraDriverDetailsDisplay />} />
+          <Route path='/TraDriverDetailsDisplay' element={< TraDriverDetailsDisplay />} />
           
       
           
