@@ -15,12 +15,13 @@ function TraBookingDisplay() {
 
     const fetchbooking = async () => {
         try {
-            const response = await axios.get('/api/TransportRoute/getTraBooking');
+            const response = await axios.get('/api/TransportRoute/TraBookingDisplayg');
             // Assuming response.data.announcements is an array of announcements
             // Add a unique key (e.g., id) to each announcement for the Table component
             const dataWithKey = response.data.booking.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
             setbooking(dataWithKey);
         } catch (error) {
+            console.log(error)
             message.error("Failed to fetch Booking");
         }
     };
