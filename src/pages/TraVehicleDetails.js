@@ -38,13 +38,21 @@ function TraVehicleDetails() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/api/TransportRoute/deleteVehivle/${id}`);
-            setVregister(prev => prev.filter(item => item._id !== id));
+            // Send a DELETE request to delete the booking by its ID
+            await axios.delete(`/api/TransportRoute/deleteVehicle/${id}`);
+    
+            // Update the state to remove the deleted booking from the table
+            setVregister(prevvehicles => prevvehicles.filter(Vregister => Vregister._id !== id));
+    
+            // Show a success message
             message.success('Booking deleted successfully');
         } catch (error) {
+            // Show an error message if deletion fails
+            console.error('Failed to delete Booking:', error);
             message.error('Failed to delete Booking');
         }
     };
+    
 
     const columns = [
         {
