@@ -74,7 +74,7 @@ function Main_Notifications() {
             <h7 className="anchor" onClick={markAllAsSeen}>Mark all as read</h7>
             </div>
             {user?.unseenNotifications .map((notification) =>(
-                <div className = "card p-7" onClick = {() => navigate("/leavehrsupreq")}>
+                <div className = "card p-7" onClick = {() => navigate("/leaveHrsupdisplay")}>
                     <div className = "card-text">{notification.message}</div>
 
                 </div>

@@ -119,7 +119,7 @@ function Layout({ children }) {
         },
         {
             name: ' Leave requests',
-            path: '/leavehrsupreq',
+            path: '/leaveHrsupdisplay',
             icon: 'ri-account-box-line',
         },
        
