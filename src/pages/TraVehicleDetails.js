@@ -4,31 +4,25 @@ import { Table, Button, message, Modal, Form, Input } from 'antd';
 import AnnLayout from '../pages/AnnLayout';
 import { useNavigate } from 'react-router-dom';
 
-import ReactDOM from 'react-dom';
-import App from '../App';
-
-
-
 function TraVehicleDetails() {
 
     const navigate = useNavigate();
-    const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
     
 
-    const [booking, setbooking] = useState([]);
+    const [Vregister, setVregister] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [currentbooking, setCurrentbooking] = useState(null); 
+    const [currentVregister, setCurrentVregister] = useState(null); 
 
 
-    const fetchbooking = async () => {
+    const fetchVregister = async () => {
         try {
-            const response = await axios.get('/api/TransportRoute/getTraBooking');
-            // Assuming response.data.announcements is an array of announcements
-            // Add a unique key (e.g., id) to each announcement for the Table component
-            const dataWithKey = response.data.booking.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
-            setbooking(dataWithKey);
+            const response = await axios.get('/api/TransportRoute/getVehicles');
+            // Assuming response.data.bookings is an array of bookings
+            // Add a unique key (e.g., _id) to each booking for the Table component
+            const dataWithKey = response.data.Vregisters.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
+            setVregister(dataWithKey);
         } catch (error) {
+            console.error(error);
             message.error("Failed to fetch Booking");
         }
     };
@@ -37,15 +31,15 @@ root.render(<App />);
 
     useEffect(() => {
         
-        fetchbooking();
+        fetchVregister();
     }, []);
 
     
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/api/TransportRoute/deletebookings/${id}`);
-            setbooking(prev => prev.filter(item => item._id !== id));
+            await axios.delete(`/api/TransportRoute/deleteVehivle/${id}`);
+            setVregister(prev => prev.filter(item => item._id !== id));
             message.success('Booking deleted successfully');
         } catch (error) {
             message.error('Failed to delete Booking');
@@ -54,7 +48,7 @@ root.render(<App />);
 
     const columns = [
         {
-            title: 'Vehicle Type',
+            title: 'Type',
             dataIndex: 'Type',
             key: 'Type',
         },
@@ -71,41 +65,42 @@ root.render(<App />);
         },
         
         {
-            title: 'Licence Details',
-            dataIndex: 'Licence Details',
-            key: 'Licence Details',
+            title: ' Licence Details',
+            dataIndex: 'LicenceDetails',
+            key: 'LicenceDetails',
+           
         },
 
         {
             title: 'Owner Details',
-            dataIndex: 'Owner Details',
-            key: 'Owner Details',
+            dataIndex: 'OwnerDetails',
+            key: 'OwnerDetails',
         },
         {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
                 <>
-                    <Button type="primary" className="update" onClick={() => navigate(`/TraBookingUpdate/${record._id}`)}>Update</Button>
+                    <Button type="primary" className="update" onClick={() => navigate(`/TraVehicleDetailsUpdate/${record._id}`)}>Update</Button>
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
                 </>
             ),
         },
     ];
 
-    const showModal = (Booking) => {
-        setCurrentbooking(Booking);
+    const showModal = (Vregister) => {
+        setCurrentVregister(Vregister);
         setIsModalVisible(true);
     };
     const handleUpdate = async (values) => {
         try {
             // Assuming you have the Booking ID in currentBooking._id
-            const response = await axios.put(`/api/TransportRoute/updateTraBooking/${currentbooking._id}`, values);
+            const response = await axios.put(`/api/TransportRoute/updateTraVehicle/${currentVregister._id}`, values);
             if (response.data.success) {
                 message.success('Booking updated successfully');
                 setIsModalVisible(false);
                 // Refresh the Booking list to reflect the update
-                fetchbooking();
+                fetchVregister();
             } else {
                 message.error(response.data.message);
             }
@@ -116,7 +111,7 @@ root.render(<App />);
 
   return (
     <AnnLayout>
-    <Table dataSource={booking} columns={columns} />
+    <Table dataSource={Vregister} columns={columns} />
     <Modal
 title="Update Booking"
 open={isModalVisible}
@@ -125,7 +120,7 @@ footer={null} // Use null here to not use the default Ok and Cancel buttons
 >
 <Form
 layout="vertical"
-initialValues={{ ...currentbooking }}
+initialValues={{ ...currentVregister }}
 onFinish={handleUpdate}
 >
 <Form.Item

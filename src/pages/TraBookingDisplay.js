@@ -124,7 +124,7 @@ function TraBookingDisplay() {
         onFinish={handleUpdate}
     >
         <Form.Item
-            name="empname"
+            name="EmpName"
             label="Employee Name"
             rules={[{  message: 'Please input the Employee Name!' }]}
         >

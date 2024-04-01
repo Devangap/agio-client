@@ -19,7 +19,7 @@ function TraDriverDetailsDisplay() {
             const response = await axios.get('/api/TransportRoute/getDrivers');
             // Assuming response.data.bookings is an array of bookings
             // Add a unique key (e.g., _id) to each booking for the Table component
-            const dataWithKey = response.data.bookings.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
+            const dataWithKey = response.data.Dregisters.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
             setDregister(dataWithKey);
         } catch (error) {
             console.error(error);
@@ -125,8 +125,8 @@ initialValues={{ ...currentDregister }}
 onFinish={handleUpdate}
 >
 <Form.Item
-    name="vehicleNum"
-    label="Vehicle Number"
+    name="driName"
+    label="Driver Name"
     rules={[{  message: 'Please input the Employee Name!' }]}
 >
     <Input />

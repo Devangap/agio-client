@@ -53,7 +53,7 @@ function TraDriverRegister() {
           </Form.Item>
         </div>
         <div className="item">
-          <Form.Item name="WorkExpereance" label="Work Expereance">
+          <Form.Item name="Type" label="Work Expereance">
             <Select className="Type" placeholder="Select Work Expereance">
               <Option value="year0-5">0-5 years</Option>
               <Option value="year6-10">6-10 years</Option>

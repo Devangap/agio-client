@@ -19,7 +19,7 @@ function TraVehicleRegister() {
         const response = await axios.post('/api/TransportRoute/Vehicleregister', values);
         if(response.data.success){
             toast.success(response.data.message);
-            navigate('/TravehicleDisplay');
+            navigate('/TraVehicleDetails');
            
             
         }else{
