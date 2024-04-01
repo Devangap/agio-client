@@ -38,13 +38,23 @@ function TraDriverDetailsDisplay() {
 
     const handleDelete = async (id) => {
         try {
+            // Send a DELETE request to delete the driver by its ID
             await axios.delete(`/api/TransportRoute/deleteDriver/${id}`);
-            setDregister(prev => prev.filter(item => item._id !== id));
-            message.success('Booking deleted successfully');
+    
+            // Update the state to remove the deleted driver from the table
+            setDregister(prevDrivers => prevDrivers.filter(Dregister => Dregister._id !== id));
+    
+            // Show a success message
+            message.success('Driver deleted successfully');
         } catch (error) {
-            message.error('Failed to delete Booking');
+            // Show an error message if deletion fails
+            console.error('Failed to delete Driver:', error);
+            message.error('Failed to delete Driver');
         }
     };
+    
+
+    
 
     const columns = [
         {

@@ -36,13 +36,21 @@ function TraBookingDisplay() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/api/TransportRoute/deletebookings/${id}`);
-            setbooking(prev => prev.filter(item => item._id !== id));
+            // Send a DELETE request to delete the booking by its ID
+            await axios.delete(`/api/TransportRoute/deletebooking/${id}`);
+    
+            // Update the state to remove the deleted booking from the table
+            setbooking(prevBookings => prevBookings.filter(booking => booking._id !== id));
+    
+            // Show a success message
             message.success('Booking deleted successfully');
         } catch (error) {
+            // Show an error message if deletion fails
+            console.error('Failed to delete Booking:', error);
             message.error('Failed to delete Booking');
         }
     };
+    
 
     const columns = [
         {
