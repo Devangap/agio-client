@@ -1,6 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react';
 import axios from 'axios';
-import {Button, Form ,  Input,Select, DatePicker,message,Upload } from 'antd'
+import { Button, Form, Input, Select, DatePicker, message, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import AnnLayout from '../pages/AnnLayout';
 import toast from 'react-hot-toast';
@@ -9,40 +9,40 @@ import { useNavigate } from 'react-router-dom';
 function AnnHRsup() {
   const navigate = useNavigate();
 
-  const{Option} = Select;
+  const { Option } = Select;
 
-  const onFinish = async(values) =>{
-    console.log('Recieved values of form', values);
+  const [announcementType, setAnnouncementType] = useState('');
+
+  const onFinish = async (values) => {
+    console.log('Received values of form', values);
 
     try {
       const response = await axios.post('/api/annWorkouts/AnnHRsup', values);
-      if(response.data.success){
-          toast.success(response.data.message);
-          navigate('/AnnDisplay');
-         
-          
-      }else{
-          toast.error(response.data.message);
-
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate('/AnnDisplay');
+      } else {
+        toast.error(response.data.message);
       }
-      
-  } catch (error) {
-      toast.error("Something went wrong");
-  }
+    } catch (error) {
+      toast.error('Something went wrong');
+    }
+  };
 
-  }
-
+  const handleTypeChange = (value) => {
+    setAnnouncementType(value);
+  };
 
   const props = {
-    beforeUpload: file => {
+    beforeUpload: (file) => {
       // Here you can add file type checks and other validation
       const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
       if (!isJpgOrPng) {
-        message.error('You can only upload JPG/PNG file!');
+        message.error('You can only upload JPG/PNG files!');
       }
       return isJpgOrPng || Upload.LIST_IGNORE;
     },
-    onChange: info => {
+    onChange: (info) => {
       if (info.file.status === 'done') {
         message.success(`${info.file.name} file uploaded successfully`);
       } else if (info.file.status === 'error') {
@@ -51,63 +51,87 @@ function AnnHRsup() {
     },
   };
 
+  return (
+    <AnnLayout>
+      <div className="annform">
+        <div className="AnnHRSup_form box p-3">
+          <h3 className="title">Create an Announcement</h3>
+          <Form layout="vertical" onFinish={onFinish}>
+            <div className="form-row">
+              <div className="item">
+                <Form.Item label="Announcement Title" name="anntitle">
+                  <Input placeholder="Announcement Title" />
+                </Form.Item>
+              </div>
+            </div>
 
+            <div className="form-row">
+              <div className="item">
+                <Form.Item label="Upload Date" name="uploaddate">
+                  <DatePicker className="date" />
+                </Form.Item>
+              </div>
+              <div className="item">
+                <Form.Item name="Type" label="Type">
+                  <Select
+                    className="Type"
+                    placeholder="Select announcement type"
+                    onChange={handleTypeChange}
+                  >
+                    <Option value="General">General</Option>
+                    <Option value="Specific">Specific</Option>
+                  </Select>
+                </Form.Item>
+              </div>
+            </div>
 
-  return <AnnLayout>
-  <div className="annform">
-  <div className="AnnHRSup_form box p-3">
-    <h3 className='title'>Create an Announcement</h3>
-    <Form layout='vertical' onFinish={onFinish}>
-      <div className="form-row">
-      <div className="item">
-          <Form.Item label='Announcement Title' name='anntitle'>
-            <Input placeholder='Announcement Title' />
-          </Form.Item>
-        </div>
-        
-      </div>
-      
-      <div className="form-row">
-      <div className="item">
-          <Form.Item label="Upload Date" name="uploaddate">
-            <DatePicker className="date" />
-          </Form.Item>
-        </div>
-        <div className="item">
-          <Form.Item name="Type" label="Type">
-            <Select className="Type" placeholder="Select announcement type">
-              <Option value="General">General</Option>
-              <Option value="Specific">Specific</Option>
-            </Select>
-          </Form.Item>
-        </div>
-      </div>
-      <div className="form-row">
-        <div className="item">
-          <Form.Item label="Expire Date" name="expiredate">
-            <DatePicker className="date" />
-          </Form.Item>
-        </div>
-        <div className="item">
-              <Form.Item label='Upload Media' name='upload'>
-                <Upload {...props}>
-                  <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                </Upload>
+            {announcementType === 'Specific' && (
+              <div className="form-row">
+              <div className="item">
+                
+                <Form.Item label="Department" name="Department">
+                 
+                  <Select placeholder="Select department">
+                    
+                    <Option value="HR">HR</Option>
+                    <Option value="Finance">Finance</Option>
+                    <Option value="Marketing">Marketing</Option>
+                    
+                  </Select>
+                </Form.Item>
+              </div>
+            </div>
+            )}
+
+            <div className="form-row">
+              <div className="item">
+                <Form.Item label="Expire Date" name="expiredate">
+                  <DatePicker className="date" />
+                </Form.Item>
+              </div>
+              <div className="item">
+                <Form.Item label="Upload Media" name="upload">
+                  <Upload {...props}>
+                    <Button icon={<UploadOutlined />}>Click to Upload</Button>
+                  </Upload>
+                </Form.Item>
+              </div>
+            </div>
+            <div className="item">
+              <Form.Item name="Description" label="Description">
+                <Input.TextArea className="Description" />
               </Form.Item>
             </div>
+            <div className="Button-cons">
+              <Button className="primary-button my-2" htmlType="submit">
+                Submit
+              </Button>
+            </div>
+          </Form>
+        </div>
       </div>
-      <div className="item">
-        <Form.Item name="Description" label="Description">
-          <Input.TextArea className='Description' />
-        </Form.Item>
-      </div>
-      <div className="Button-cons">
-        <Button className='primary-button my-2' htmlType='submit'>Submit</Button>
-      </div>
-    </Form>
-  </div>
-</div>
-</AnnLayout>
-} 
+    </AnnLayout>
+  );
+}
 
-export default AnnHRsup
+export default AnnHRsup;

@@ -64,6 +64,11 @@ function AnnDisplay() {
             key: 'Type',
         },
         {
+            title: 'Department',
+            dataIndex: 'Department',
+            key: 'Department',
+        },
+        {
             title: 'Expire Date',
             dataIndex: 'expiredate',
             key: 'expiredate',
