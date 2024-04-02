@@ -42,16 +42,15 @@ function TraBookingUpdate() {
     console.log('Received values of form: ', values);
     const updatedValues = {
       ...values,
-
+      // Convert bookingdate to the desired format if necessary
       bookingdate: values.bookingdate.format('YYYY-MM-DD'),
-      
     };
 
     try {
       const response = await axios.put(`/api/TransportRoute/updateTraBooking/${id}`, updatedValues);
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate('/TraBookingDisplay');
+        navigate('/TraBookingDisplay'); // Navigate to the desired page after successful update
       } else {
         toast.error(response.data.message);
       }

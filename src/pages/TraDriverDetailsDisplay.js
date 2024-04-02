@@ -13,13 +13,12 @@ function TraDriverDetailsDisplay() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentDregister, setCurrentDregister] = useState(null); 
 
-
     const fetchDregister = async () => {
         try {
-            const response = await axios.get('/api/TransportRoute/getDrivers');
+            const response = await axios.get('/api/TransportRoute/getdriver');
             // Assuming response.data.bookings is an array of bookings
             // Add a unique key (e.g., _id) to each booking for the Table component
-            const dataWithKey = response.data.Dregisters.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
+            const dataWithKey = response.data.register.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
             setDregister(dataWithKey);
         } catch (error) {
             console.error(error);
@@ -38,22 +37,20 @@ function TraDriverDetailsDisplay() {
 
     const handleDelete = async (id) => {
         try {
-            // Send a DELETE request to delete the driver by its ID
-            await axios.delete(`/api/TransportRoute/deleteDriver/${id}`);
+            // Send a DELETE request to delete the booking by its ID
+            await axios.delete(`/api/TransportRoute/deletedriver/${id}`);
     
-            // Update the state to remove the deleted driver from the table
-            setDregister(prevDriver => prevDriver.filter(Driver => Driver._id !== id));
+            // Update the state to remove the deleted booking from the table
+            setDregister(prevdrivers => prevdrivers.filter( Dregister=> Dregister._id !== id));
     
             // Show a success message
-            message.success('Driver deleted successfully');
+            message.success('Booking deleted successfully');
         } catch (error) {
             // Show an error message if deletion fails
-            console.error('Failed to delete Driver:', error);
-            message.error('Failed to delete Driver');
+            console.error('Failed to delete Booking:', error);
+            message.error('Failed to delete Booking');
         }
     };
-    
-
     
 
     const columns = [
@@ -75,12 +72,12 @@ function TraDriverDetailsDisplay() {
         },
         
         {
-            title: ' Register Date',
+            title: 'select Register Date',
             dataIndex: 'regdate',
             key: 'regdate',
             render: (text) => new Date(text).toLocaleDateString(),
         },
-
+        
         {
             title: 'Driver PhoneNumber',
             dataIndex: 'driPnum',
@@ -91,7 +88,7 @@ function TraDriverDetailsDisplay() {
             key: 'action',
             render: (_, record) => (
                 <>
-                    <Button type="primary" className="update" onClick={() => navigate(`/TraDriverUpdate/${record._id}`)}>Update</Button>
+                    <Button type="primary" className="update" onClick={() => navigate(`/TraDriverDetailsUpdate/${record._id}`)}>Update</Button>
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
                 </>
             ),
@@ -105,7 +102,7 @@ function TraDriverDetailsDisplay() {
     const handleUpdate = async (values) => {
         try {
             // Assuming you have the Booking ID in currentBooking._id
-            const response = await axios.put(`/api/TransportRoute/updateTraDriver/${currentDregister._id}`, values);
+            const response = await axios.put(`/api/TransportRoute/updatedriver/${currentDregister._id}`, values);
             if (response.data.success) {
                 message.success('Booking updated successfully');
                 setIsModalVisible(false);
@@ -119,40 +116,41 @@ function TraDriverDetailsDisplay() {
         }
     };
 
-
   return (
+
     <AnnLayout>
-    <Table dataSource={Dregister} columns={columns} />
-    <Modal
-title="Update Booking"
-open={isModalVisible}
-onCancel={() => setIsModalVisible(false)}
-footer={null} // Use null here to not use the default Ok and Cancel buttons
+            <Table dataSource={Dregister} columns={columns} />
+            <Modal
+    title="Update Booking"
+    open={isModalVisible}
+    onCancel={() => setIsModalVisible(false)}
+    footer={null} // Use null here to not use the default Ok and Cancel buttons
 >
-<Form
-layout="vertical"
-initialValues={{ ...currentDregister }}
-onFinish={handleUpdate}
->
-<Form.Item
-    name="driName"
-    label="Driver Name"
-    rules={[{  message: 'Please input the Employee Name!' }]}
->
-    <Input />
-</Form.Item>
-{/* Repeat for other fields as necessary */}
-<Form.Item>
-    <Button type="primary" htmlType="submit">
-        Update
-    </Button>
-</Form.Item>
-</Form>
+    <Form
+        layout="vertical"
+        initialValues={{ ...currentDregister }}
+        onFinish={handleUpdate}
+    >
+        <Form.Item
+            name="EmpName"
+            label="Employee Name"
+            rules={[{  message: 'Please input the Employee Name!' }]}
+        >
+            <Input />
+        </Form.Item>
+        {/* Repeat for other fields as necessary */}
+        <Form.Item>
+            <Button type="primary" htmlType="submit">
+                Update
+            </Button>
+        </Form.Item>
+    </Form>
 </Modal>
 
+        
 
-
-</AnnLayout>
+        </AnnLayout>
+    
   )
 }
 
