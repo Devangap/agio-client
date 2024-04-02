@@ -42,7 +42,7 @@ function TraDriverDetailsDisplay() {
             await axios.delete(`/api/TransportRoute/deleteDriver/${id}`);
     
             // Update the state to remove the deleted driver from the table
-            setDregister(prevDrivers => prevDrivers.filter(Dregister => Dregister._id !== id));
+            setDregister(prevDriver => prevDriver.filter(Driver => Driver._id !== id));
     
             // Show a success message
             message.success('Driver deleted successfully');

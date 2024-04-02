@@ -14,7 +14,7 @@ function TraBookingUpdate() {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    const fetchbookings = async () => {
+    const fetchbooking = async () => {
       try {
         const response = await axios.get(`/api/TransportRoute/getTraBooking2/${id}`);
         if (response.data.success) {
@@ -35,7 +35,7 @@ function TraBookingUpdate() {
       }
     };
 
-    fetchbookings();
+    fetchbooking();
   }, [id, form, navigate]);
 
   const onFinish = async (values) => {
