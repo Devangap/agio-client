@@ -31,6 +31,7 @@ import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
+import UniformOrder from './pages/UniformOrder';
 
 
 
@@ -66,6 +67,9 @@ function App() {
           <Route path='/home' element={< TraHome/>} />
           <Route path='/dregister' element={<TraDriverRegister />} />
           <Route path='/vregister' element={< TraVehicleRegister/>} />
+
+          <Route path='/UniformOrder' element={<UniformOrder/>} />
+
 
           
       
