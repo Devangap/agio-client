@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input, DatePicker } from 'antd';
-import AnnLayout from '../pages/AnnLayout';
+import Layout from '../components/Layout';
 import Anndisplay from '../Anndisplay.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -115,7 +115,7 @@ function AnnDisplay() {
     
 
     return (
-        <AnnLayout>
+        <Layout>
             <Table dataSource={announcements} columns={columns} />
             <Modal
     title="Update Announcement"
@@ -146,7 +146,7 @@ function AnnDisplay() {
 
         
 
-        </AnnLayout>
+        </Layout>
         
     );
 }

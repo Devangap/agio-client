@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Form, Input, Select, DatePicker, message, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import AnnLayout from '../pages/AnnLayout';
+import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
@@ -52,7 +52,7 @@ function AnnHRsup() {
   };
 
   return (
-    <AnnLayout>
+    <Layout>
       <div className="annform">
         <div className="AnnHRSup_form box p-3">
           <h3 className="title">Create an Announcement</h3>
@@ -130,7 +130,7 @@ function AnnHRsup() {
           </Form>
         </div>
       </div>
-    </AnnLayout>
+    </Layout>
   );
 }
 
