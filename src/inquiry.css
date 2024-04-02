@@ -13,8 +13,8 @@
 
 }
 .imain_form{
-    width : 750px;
-    height: 850px;
+    width : 950px;
+    height: 650px;
     
     
 }
@@ -73,6 +73,7 @@ label{
     margin-top: 30px !important;
     justify-content: center !important;
 }
+
 .ititle{
     color: #1F1300;
     margin-top: 100px;

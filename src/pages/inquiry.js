@@ -28,6 +28,10 @@ function Inquiry() {
   }
   };
 
+  const handleNavigate = () => {
+    
+  };
+
   return (
     <Layout>
       <div className="inquiry-container">
@@ -57,6 +61,7 @@ function Inquiry() {
               </div>
               <div className="iButton-cons">
                 <Button className='iprimary-button my-2' htmlType='submit'>SUBMIT</Button>
+                <Button className='isecondary-button my-2' onClick={handleNavigate}>My Inquiries</Button>
               </div>
             </Form>
           </div>

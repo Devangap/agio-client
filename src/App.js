@@ -26,6 +26,7 @@ import meddash from './pages/meddash';
 
 
 import Inquiry from './pages/inquiry';
+
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
@@ -65,11 +66,13 @@ function App() {
           
       
           
+        
 
 
 
         
           <Route path='/inquiry' element ={<ProtectedRoute><Inquiry/></ProtectedRoute>} />
+          
 
         </Routes>
 
