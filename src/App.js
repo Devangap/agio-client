@@ -22,16 +22,13 @@ import TraDriverRegister from './pages/TraDriverRegister';
 import TraVehicleRegister from './pages/TraVehicleRegister';
 import meddash from './pages/meddash';
 
-
-
-
 import Inquiry from './pages/inquiry';
 
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
-
+import MyInquiries from './pages/MyInquiries';
 
 function App() {
   const{loading} = useSelector(state => state.alerts);
@@ -70,7 +67,8 @@ function App() {
 
 
 
-        
+          <Route exact path="/MyInquiries" element={<MyInquiries />} />
+
           <Route path='/inquiry' element ={<ProtectedRoute><Inquiry/></ProtectedRoute>} />
           
 

@@ -10,25 +10,23 @@ function Inquiry() {
   const navigate = useNavigate();
 
   const onFinish = async (values) => {
-    console.log('Received values of form:', values);
+    console.log('Received values of form:', values,);
     try {
       const response = await axios.post('/api/inquiry/inquiry', values);
       if(response.data.success){
           toast.success(response.data.message);
-          navigate('/');
-         
-          
-      }else{
+          navigate('/MyInquiries', { state: { username: values.username } });
+      } else {
           toast.error(response.data.message);
-
       }
-      
-  } catch (error) {
+    } catch (error) {
       toast.error("Something went wrong");
-  }
+    }
   };
+  
 
   const handleNavigate = () => {
+    navigate('/MyInquiries');
     
   };
 
