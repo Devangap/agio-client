@@ -6,6 +6,7 @@ import '../leaveEmp.css';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'; // Fixed casing for useSelector
 import { showLoading, hideLoading } from '../redux/empalerts';
+import toast from 'react-hot-toast';
 
 function LeaveHrsupdisplay() { // Changed component name to start with uppercase letter
     const [leaveData, setLeaveData] = useState([]);
@@ -31,6 +32,34 @@ function LeaveHrsupdisplay() { // Changed component name to start with uppercase
 
     useEffect(() => {
         fetchData();
+    }, []);
+
+    const changestatus = async (record, status) => {
+        try {
+            dispatch(showLoading());
+            const response = await axios.post('/api/employee/change_status', {
+                leaveid: record._id,
+                userid: record.userid,
+                status: status
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + token // Pass token as a parameter
+                },
+            });
+            dispatch(hideLoading());
+            if (response.data.success) {
+                toast.success(response.data.message);
+                fetchData(); // Assuming fetchData function fetches the updated leave data
+          
+        } }catch (error) {
+            dispatch(hideLoading());
+            toast.error("Error changing status.");
+            // Log the error for debugging
+        }
+    };
+    
+    useEffect(() => {
+        changestatus(); 
     }, []);
 
     const columns = [
@@ -71,8 +100,8 @@ function LeaveHrsupdisplay() { // Changed component name to start with uppercase
         render: (_, record) => (
             <>
             <div className = "d-flex">
-                {record.status === "pending" && <Button type="primary" className="approve" >Approve</Button>}
-                {record.status === "approved" && <Button type="primary" className="approve" >Reject</Button>}
+                {record.status === "pending" && <Button type="primary" className="approve" onClick={() => changestatus(record,`approved`)}>Approve</Button>}
+                {record.status === "approved" && <Button type="primary" className="reject" onClick={() => changestatus(record,`rejected`)}>Reject</Button>}
                 </div>
                 <Button type="primary" >Delete</Button>
             </>

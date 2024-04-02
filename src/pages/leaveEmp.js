@@ -4,37 +4,51 @@ import Layout from '../components/Layout'
 import axios from 'axios';
 import '../leaveEmp.css';
 import { useNavigate } from 'react-router-dom';
-import { UseSelector } from 'react-redux';
+import { showLoading,hideLoading } from '../redux/empalerts';
+import { useSelector, useDispatch } from 'react-redux'; 
+
+import { useParams } from 'react-router-dom';
 
 function LeaveEmp() {
+    const {user} = useSelector((state) => state.user);
     const [leaveData, setLeaveData] = useState([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const token = localStorage.getItem('token');
+   
    
 
+    useEffect(() => {
+        if (user && user.userid) {
+            fetchData(user.userid);
+        }
+    }, [user]); // Fetch data when user object changes
 
-    const fetchData = async () => {
+    const fetchData = async (userid) => {
         try {
-            const response = await axios.get('/api/employee/getleave', {
+            dispatch(showLoading());
+            const response = await axios.get(`/api/employee/getleave2/${userid}`, {
                 headers: {
-                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                    Authorization: 'Bearer ' + token // Pass token as a parameter
                 },
             });
+            dispatch(hideLoading());
             setLeaveData(response.data.leave); // Assuming response.data.leave is an array of objects
         } catch (error) {
-            console.log(error);
+            console.error(error); // Log the error for debugging
+            message.error('Failed to fetch leave data');
         }
     };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
 
+
+  
     const handleLeaveSubmission = () => {
         navigate('/leaveEmpform');
     };
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/api/annWorkouts/deleteAnnHRsup/${id}`);
+            await axios.delete(`/api/employee/deleteleave/${id}`);
             setLeaveData(prev => prev.filter(item => item._id !== id));
             message.success('Announcement deleted successfully');
         } catch (error) {
@@ -68,6 +82,12 @@ function LeaveEmp() {
                 dataIndex: 'Description',
                 key: 'Description',
             },
+            {
+                title: 'Status',
+                dataIndex: 'status',
+                key: 'Description',
+            },
+        
         
         {
             title: 'Action',

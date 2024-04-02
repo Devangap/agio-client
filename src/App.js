@@ -27,6 +27,7 @@ import Main_Notifications from './pages/Main_Notifications';
 import LeaveHrsupdisplay from './pages/leaveHrsupdisplay'
 
 
+
 import Inquiry from './pages/inquiry';
 
 import { useSelector } from 'react-redux';
@@ -59,6 +60,7 @@ function App() {
           <Route path='/LeaveEmp' element={<ProtectedRoute><LeaveEmp /></ProtectedRoute>} />
           <Route path='/LeaveEmpform' element={<ProtectedRoute><LeaveEmpform /></ProtectedRoute>} />
           <Route path='/LeaveHrsupdisplay' element={<ProtectedRoute><LeaveHrsupdisplay /></ProtectedRoute>} />
+          <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
           <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
 
 

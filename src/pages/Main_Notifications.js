@@ -20,6 +20,7 @@ function Main_Notifications() {
                     Authorization: 'Bearer ' + localStorage.getItem('token')
                 },
             });
+            
             dispatch(hideLoading());
             if(response.data.success){
                 toast.success(response.data.message);
@@ -34,10 +35,12 @@ function Main_Notifications() {
           dispatch(hideLoading());
             toast.error("Something went wrong");
         }
-           
+
+      
 
 
     };
+   
     const deleteall = async()=>{
         try {
             dispatch(showLoading());
