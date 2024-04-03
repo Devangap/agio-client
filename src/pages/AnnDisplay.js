@@ -17,7 +17,7 @@ function AnnDisplay() {
 
     const fetchAnnouncements = async () => {
         try {
-            const response = await axios.get('/api/annWorkouts/getAnnHRsup');
+            const response = await axios.get('/api/employee/getAnnHRsup');
             // Assuming response.data.announcements is an array of announcements
             // Add a unique key (e.g., id) to each announcement for the Table component
             const dataWithKey = response.data.announcements.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
@@ -38,7 +38,7 @@ function AnnDisplay() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/api/annWorkouts/deleteAnnHRsup/${id}`);
+            await axios.delete(`/api/employee/deleteAnnHRsup/${id}`);
             setAnnouncements(prev => prev.filter(item => item._id !== id));
             message.success('Announcement deleted successfully');
         } catch (error) {
@@ -62,6 +62,11 @@ function AnnDisplay() {
             title: 'Type',
             dataIndex: 'Type',
             key: 'Type',
+        },
+        {
+            title: 'Department',
+            dataIndex: 'Department',
+            key: 'Department',
         },
         {
             title: 'Expire Date',
