@@ -8,14 +8,15 @@ const { Option } = Select;
 
 function UniformOrder() {
   const [position, setPosition] = useState('');
-  const [waistSize, setWaistSize] = useState(''); // Initialize waist size as empty string
+  const [waistSize, setWaistSize] = useState('');
   const [showWaistSizeInput, setShowWaistSizeInput] = useState(false);
   const [uniformCount, setUniformCount] = useState(1);
+  const [employeeNumber, setEmployeeNumber] = useState('');
 
   const handlePositionChange = value => {
     setPosition(value);
     if (value === 'Executive') {
-      setWaistSize(''); // Reset waist size to empty string if position is Executive
+      setWaistSize('');
     }
     setShowWaistSizeInput(value === 'Factory Worker');
   };
@@ -28,7 +29,12 @@ function UniformOrder() {
     setUniformCount(value);
   };
 
+  const handleEmployeeNumberChange = e => {
+    setEmployeeNumber(e.target.value);
+  };
+
   const onFinish = values => {
+    values.employeeNumber = employeeNumber; // Adding employeeNumber to the values
     console.log('Received values of form:', values);
   };
 
@@ -47,6 +53,9 @@ function UniformOrder() {
           <Form layout="horizontal" onFinish={onFinish}>
             <div className="uniform-order-form-row">
               <div className="uniform-order-item">
+                <Form.Item label="Employee Number" name="employeeNumber">
+                  <Input value={employeeNumber} onChange={handleEmployeeNumberChange} placeholder="Enter Employee Number" />
+                </Form.Item>
                 <Form.Item label="Position" name="position">
                   <Select onChange={handlePositionChange} placeholder="Select Position">
                     <Option value="Executive">Executive</Option>
