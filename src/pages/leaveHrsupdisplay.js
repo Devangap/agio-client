@@ -50,17 +50,15 @@ function LeaveHrsupdisplay() { // Changed component name to start with uppercase
             if (response.data.success) {
                 toast.success(response.data.message);
                 fetchData(); // Assuming fetchData function fetches the updated leave data
-          
-        } }catch (error) {
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
             dispatch(hideLoading());
+            console.error(error);
             toast.error("Error changing status.");
-            // Log the error for debugging
         }
     };
-    
-    useEffect(() => {
-        changestatus(); 
-    }, []);
 
     const columns = [
         {

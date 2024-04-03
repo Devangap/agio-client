@@ -25,7 +25,7 @@ import LeaveEmp from './pages/leaveEmp';
 import LeaveEmpform from './pages/leaveEmpform';
 import Main_Notifications from './pages/Main_Notifications';
 import LeaveHrsupdisplay from './pages/leaveHrsupdisplay'
-
+import LeaveUpdate from './pages/leaveUpdate';
 
 
 import Inquiry from './pages/inquiry';
@@ -61,7 +61,7 @@ function App() {
           <Route path='/LeaveEmpform' element={<ProtectedRoute><LeaveEmpform /></ProtectedRoute>} />
           <Route path='/LeaveHrsupdisplay' element={<ProtectedRoute><LeaveHrsupdisplay /></ProtectedRoute>} />
           <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
-          <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
+          <Route path='/LeaveUpdate/:id' element={<ProtectedRoute><LeaveUpdate/></ProtectedRoute>} />
 
 
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
