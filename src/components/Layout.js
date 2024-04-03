@@ -124,7 +124,17 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
-            name: ' Userdetails',
+            name: ' BookingUserdetails',
+            path: '/TraBookingDisplay',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' DriverRegister And Details',
+            path: '/TraDriverBox',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' VehicleRegister And Details',
             path: '/profile',
             icon: 'ri-account-box-line',
         },

@@ -40,6 +40,8 @@ import TraVehicleDetails from './pages/TraVehicleDetails';
 import TraDriverDetailsDisplay from './pages/TraDriverDetailsDisplay';
 import TraDriverDetailsUpdate from './pages/TraDriverDetailsUpdate';
 import TraVehicleDetailsUpdate from './pages/TraVehicleDetailsUpdate';
+import DriverBox from './pages/TraDriverBox';
+import TraDriverBox from './pages/TraDriverBox';
 
 
 
@@ -90,6 +92,7 @@ function App() {
           <Route path='/TraDriverDetailsDisplay' element={< TraDriverDetailsDisplay />} />
           <Route path='/TraDriverDetailsUpdate/:id' element={<TraDriverDetailsUpdate/>} />
           <Route path='/TraVehicleDetailsUpdate/:id' element={<TraVehicleDetailsUpdate/>} />
+          <Route path='/TraDriverBox' element={<TraDriverBox/>} />
       
           
 

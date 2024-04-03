@@ -32,7 +32,8 @@ function TraDriverRegister() {
 
   }
 
-  return <Layout>
+  return (
+  <Layout>
     <div className="annform">
   <div className="AnnHRSup_form box p-3">
     <h3 className='title'>CREATE DRIVER ACCOUNT</h3>
@@ -81,6 +82,7 @@ function TraDriverRegister() {
   </div>
 </div>
   </Layout>
+  );
 }
 
 export default TraDriverRegister
