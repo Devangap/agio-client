@@ -32,6 +32,9 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
 import UniformOrder from './pages/UniformOrder';
+import UniformOrderConfirmation from './pages/UniformOrderConfirmation';
+import UniformManagerView1 from './pages/UniformManagerView1';
+
 
 
 
@@ -69,6 +72,8 @@ function App() {
           <Route path='/vregister' element={< TraVehicleRegister/>} />
 
           <Route path='/UniformOrder' element={<UniformOrder/>} />
+          <Route path='/UniformOrderConfirmation' element={<UniformOrderConfirmation/>}/>
+          <Route path='/UniformManagerView1' element={<UniformManagerView1/>} />
 
 
           

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Select } from 'antd';
+import { Button, Form, Input, Select, message } from 'antd'; // Import message from antd
 import { UploadOutlined } from '@ant-design/icons';
 
 import '../UniformOrder.css';
@@ -33,10 +33,26 @@ function UniformOrder() {
     setEmployeeNumber(e.target.value);
   };
 
-  const onFinish = values => {
-    values.employeeNumber = employeeNumber; // Adding employeeNumber to the values
-    console.log('Received values of form:', values);
+  const onFinish = async (values) => {
+    try {
+      const response = await fetch('/api/uniformOrder', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      });
+  
+      const data = await response.json();
+      console.log(data); // Log the response from the server
+
+      // Show success message as a toast
+      message.success('Order placed successfully');
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
   };
+  
 
   const renderAdditionalChargesMessage = () => {
     if (uniformCount > 1) {

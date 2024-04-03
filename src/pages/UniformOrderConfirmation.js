@@ -1,6 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { CountdownCircleTimer } from 'react-countdown-circle-timer';
 
+import '../UniformOrderConfirmation.css';
 
 function UniformOrderConfirmation({ orderDetails }) {
   return (
@@ -14,7 +16,15 @@ function UniformOrderConfirmation({ orderDetails }) {
         {orderDetails.waistSize && <p>Waist Size: {orderDetails.waistSize}</p>}
         <p>No. of Uniforms: {orderDetails.uniformCount}</p>
       </div>
-      <Link to="/">Go back to homepage</Link>
+      <Link to="/modify-order" className="modify-order-button">Modify Order</Link>
+      <div className="countdown-timer">
+        <CountdownCircleTimer
+          isPlaying
+          duration={600}
+          colors={[["#004777", 0.33], ["#F7B801", 0.33], ["#A30000"]]}
+          onComplete={() => [<Link to="/modify-order" key="modify">Modify Order</Link>]}
+        />
+      </div>
     </div>
   );
 }
