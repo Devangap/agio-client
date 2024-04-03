@@ -15,10 +15,10 @@ function TraDriverDetailsDisplay() {
 
     const fetchDregister = async () => {
         try {
-            const response = await axios.get('/api/TransportRoute/getdriver');
+            const response = await axios.get('/api/TransportRoute/getdrivers');
             // Assuming response.data.bookings is an array of bookings
             // Add a unique key (e.g., _id) to each booking for the Table component
-            const dataWithKey = response.data.register.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
+            const dataWithKey = response.data.drivers.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
             setDregister(dataWithKey);
         } catch (error) {
             console.error(error);
@@ -38,10 +38,10 @@ function TraDriverDetailsDisplay() {
     const handleDelete = async (id) => {
         try {
             // Send a DELETE request to delete the booking by its ID
-            await axios.delete(`/api/TransportRoute/deletedriver/${id}`);
+            await axios.delete(`/api/TransportRoute/deletedrivers/${id}`);
     
             // Update the state to remove the deleted booking from the table
-            setDregister(prevdrivers => prevdrivers.filter( Dregister=> Dregister._id !== id));
+            setDregister(prevDrivers => prevDrivers.filter(Dregister => Dregister._id !== id));
     
             // Show a success message
             message.success('Booking deleted successfully');
@@ -102,7 +102,7 @@ function TraDriverDetailsDisplay() {
     const handleUpdate = async (values) => {
         try {
             // Assuming you have the Booking ID in currentBooking._id
-            const response = await axios.put(`/api/TransportRoute/updatedriver/${currentDregister._id}`, values);
+            const response = await axios.put(`/api/TransportRoute/updatedrivers/${currentDregister._id}`, values);
             if (response.data.success) {
                 message.success('Booking updated successfully');
                 setIsModalVisible(false);
@@ -115,9 +115,10 @@ function TraDriverDetailsDisplay() {
             message.error('Failed to update Booking');
         }
     };
+    
+
 
   return (
-
     <AnnLayout>
             <Table dataSource={Dregister} columns={columns} />
             <Modal
@@ -132,8 +133,8 @@ function TraDriverDetailsDisplay() {
         onFinish={handleUpdate}
     >
         <Form.Item
-            name="EmpName"
-            label="Employee Name"
+            name="driName"
+            label="Driver Name"
             rules={[{  message: 'Please input the Employee Name!' }]}
         >
             <Input />
@@ -150,7 +151,6 @@ function TraDriverDetailsDisplay() {
         
 
         </AnnLayout>
-    
   )
 }
 

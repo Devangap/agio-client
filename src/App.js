@@ -85,11 +85,11 @@ function App() {
           <Route path='/vregister' element={< TraVehicleRegister/>} />
           <Route path='/TraBooking' element={<TraBooking/>} />
           <Route path='/TraBookingDisplay' element={< TraBookingDisplay />} />
-          <Route path='/TraBookingUpdate' element={< TraBookingUpdate />} />
+          <Route path='/TraBookingUpdate/:id' element={< TraBookingUpdate />} />
           <Route path='/TraVehicleDetails' element={< TraVehicleDetails />} />
           <Route path='/TraDriverDetailsDisplay' element={< TraDriverDetailsDisplay />} />
-          <Route path='/TraDriverDetailsUpdate' element={<TraDriverDetailsUpdate/>} />
-          <Route path='/TraVehicleDetailsUpdate' element={<TraVehicleDetailsUpdate/>} />
+          <Route path='/TraDriverDetailsUpdate/:id' element={<TraDriverDetailsUpdate/>} />
+          <Route path='/TraVehicleDetailsUpdate/:id' element={<TraVehicleDetailsUpdate/>} />
       
           
 
