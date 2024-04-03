@@ -10,7 +10,7 @@ function MyInquiries() {
   useEffect(() => {
     const fetchInquiries = async () => {
       try {
-        const response = await axios.get(`/api/inquiry/my-inquiries/${location.state.username}`);
+        const response = await axios.get(`/api/inquiry/my-inquiries`);
         setInquiries(response.data);
       } catch (error) {
         console.error('Error fetching inquiries:', error);
