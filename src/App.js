@@ -23,6 +23,7 @@ import TraVehicleRegister from './pages/TraVehicleRegister';
 
 import Inquiry from './pages/inquiry';
 import InsClaimSubmit from './pages/InsClaimSubmit';
+import InsEmployee from './pages/InsEmployee';
 
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -68,6 +69,7 @@ function App() {
           <Route path='/inquiry' element ={<Inquiry/>} />
 
           <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
+          <Route path='/insEmployee' element={<InsEmployee/>}/>
 
         </Routes>
 

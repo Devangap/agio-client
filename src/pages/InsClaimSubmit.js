@@ -8,13 +8,16 @@ import toast from "react-hot-toast";
 import { useNavigate } from 'react-router-dom';
 
 function InsClaimSubmit() {
-    
+
+    const navigate = useNavigate();
+
     const onFinish = async (values) => {
         try {
           const response = await axios.post("/api/insurance/insClaimSubmit", values);
           if (response.data.success) {
             toast.success(response.data.message);
             toast("Redirecting to Employee Insurance Claim Requset page");
+            navigate("/InsEmployee");
           } else {
             toast.error(response.data.message);
           }
@@ -47,7 +50,7 @@ function InsClaimSubmit() {
 
                 <Form.Item label='Attach Medical Document'>
                   <Form.Item name="medicaldoc" valuePropName="fileList" noStyle>
-                    <Upload name="doc" action="/upload.do" listType="text">
+                    <Upload name="meddoc" action="/upload.do" listType="text">
                       <Button icon={<UploadOutlined />}>Click to Upload</Button>
                     </Upload>
                   </Form.Item>
