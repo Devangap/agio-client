@@ -59,6 +59,11 @@ function Layout({ children }) {
             path: '/profile',
             icon: 'ri-account-box-line',
         },
+        {
+            name: 'Inquiry',
+            path: '/inquiry',
+            icon: 'ri-account-box-line',
+        },
        
     ];
     const adminMenu = [
