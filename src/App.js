@@ -31,11 +31,17 @@ import LeaveUpdate from './pages/leaveUpdate';
 
 import Inquiry from './pages/inquiry';
 
+import InsClaimSubmit from './pages/InsClaimSubmit';
+import InsEmployee from './pages/InsEmployee';
+
+
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
 import MyInquiries from './pages/MyInquiries';
+
+
 
 
 
@@ -87,6 +93,9 @@ function App() {
 
           <Route path='/inquiry' element ={<ProtectedRoute><Inquiry/></ProtectedRoute>} />
           
+
+          <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
+          <Route path='/insEmployee' element={<InsEmployee/>}/>
 
         </Routes>
 
