@@ -46,7 +46,7 @@ function Layout({ children }) {
         },
         {
             name: 'Announcements',
-            path: '/announcements',
+            path: '/AnnEmpDisplay',
             icon: 'ri-survey-line',
         },
         {
