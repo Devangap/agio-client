@@ -5,6 +5,7 @@ import axios from "axios";
 import toast from 'react-hot-toast';
 import { useSelector,useDispatch } from 'react-redux';
 import { showLoading, hideLoading } from '../redux/empalerts.js';
+import Layout from '../components/Layout.js';
 
 
 
@@ -35,7 +36,8 @@ function Main_register() {
      
   };
   return (
-    <div className="mainreg">
+    <Layout>
+    <div className="mainreg mt-10" >
   <div className="main_login_form box p-3">
     <h3 className='title'>Employee Registration Form</h3>
     <Form layout='vertical' onFinish={onFinish}>
@@ -46,8 +48,8 @@ function Main_register() {
           </Form.Item>
         </div>
         <div className="item">
-          <Form.Item label="Date of Birth" name="dob">
-            <DatePicker className="date" />
+          <Form.Item label="Employee ID" name="empid">
+          <Input placeholder='Employee ID' />
           </Form.Item>
         </div>
       </div>
@@ -91,10 +93,19 @@ function Main_register() {
           </Form.Item>
         </div>
       </div>
+      <div className="form-row">
       <div className="item">
         <Form.Item name="address" label="Address">
-          <Input.TextArea className='address' />
+          <Input className='address' />
+          
         </Form.Item>
+        </div>
+        <div className="item">
+          <Form.Item label="Date of Birth" name="dob">
+            <DatePicker className="date" />
+          </Form.Item>
+        
+      </div>
       </div>
       <div className="Button-cons">
         <Button className='primary-button my-2' htmlType='submit'>REGISTER</Button>
@@ -102,6 +113,7 @@ function Main_register() {
     </Form>
   </div>
 </div>
+</Layout>
   )
 }
 

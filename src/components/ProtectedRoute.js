@@ -15,10 +15,12 @@ const ProtectedRoute = (props )  =>{
         try {
             dispatch(showLoading());
             const response = await axios.post('/api/employee/get-employee-info-by-id', { token: localStorage.getItem('token') }, {
+                
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem('token')}`
                 }
             });
+           
             dispatch(hideLoading());
             if (response.data.success) {
                 dispatch(setUser(response.data.data));
