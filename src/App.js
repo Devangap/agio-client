@@ -22,18 +22,31 @@ import TraDriverRegister from './pages/TraDriverRegister';
 import TraVehicleRegister from './pages/TraVehicleRegister';
 import meddash from './pages/meddash';
 
-
+import LeaveEmp from './pages/leaveEmp';
+import LeaveEmpform from './pages/leaveEmpform';
+import Main_Notifications from './pages/Main_Notifications';
+import LeaveHrsupdisplay from './pages/leaveHrsupdisplay'
+import LeaveUpdate from './pages/leaveUpdate';
 
 
 import Inquiry from './pages/inquiry';
+
+import InsClaimSubmit from './pages/InsClaimSubmit';
+import InsEmployee from './pages/InsEmployee';
+
 
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
+
+import MyInquiries from './pages/MyInquiries';
+
+
 import UniformOrder from './pages/UniformOrder';
 import UniformOrderConfirmation from './pages/UniformOrderConfirmation';
 import UniformManagerView1 from './pages/UniformManagerView1';
+
 
 
 
@@ -57,7 +70,11 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={< Register/>} />
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
-          
+          <Route path='/LeaveEmp' element={<ProtectedRoute><LeaveEmp /></ProtectedRoute>} />
+          <Route path='/LeaveEmpform' element={<ProtectedRoute><LeaveEmpform /></ProtectedRoute>} />
+          <Route path='/LeaveHrsupdisplay' element={<ProtectedRoute><LeaveHrsupdisplay /></ProtectedRoute>} />
+          <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
+          <Route path='/LeaveUpdate/:id' element={<ProtectedRoute><LeaveUpdate/></ProtectedRoute>} />
 
 
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
@@ -79,11 +96,17 @@ function App() {
           
       
           
-
-
-
         
-          <Route path='/inquiry' element ={<Inquiry/>} />
+
+
+
+          <Route exact path="/MyInquiries" element={<MyInquiries />} />
+
+          <Route path='/inquiry' element ={<ProtectedRoute><Inquiry/></ProtectedRoute>} />
+          
+
+          <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
+          <Route path='/insEmployee' element={<InsEmployee/>}/>
 
         </Routes>
 
