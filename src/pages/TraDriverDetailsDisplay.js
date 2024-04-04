@@ -15,7 +15,7 @@ function TraDriverDetailsDisplay() {
 
     const fetchDregister = async () => {
         try {
-            const response = await axios.get('/api/TransportRoute/getdrivers');
+            const response = await axios.get('/api/employee/getdrivers');
             // Assuming response.data.bookings is an array of bookings
             // Add a unique key (e.g., _id) to each booking for the Table component
             const dataWithKey = response.data.drivers.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
@@ -38,7 +38,7 @@ function TraDriverDetailsDisplay() {
     const handleDelete = async (id) => {
         try {
             // Send a DELETE request to delete the booking by its ID
-            await axios.delete(`/api/TransportRoute/deletedrivers/${id}`);
+            await axios.delete(`/api/employee/deletedrivers/${id}`);
     
             // Update the state to remove the deleted booking from the table
             setDregister(prevDrivers => prevDrivers.filter(Dregister => Dregister._id !== id));
@@ -102,7 +102,7 @@ function TraDriverDetailsDisplay() {
     const handleUpdate = async (values) => {
         try {
             // Assuming you have the Booking ID in currentBooking._id
-            const response = await axios.put(`/api/TransportRoute/updatedrivers/${currentDregister._id}`, values);
+            const response = await axios.put(`/api/employee/updatedrivers/${currentDregister._id}`, values);
             if (response.data.success) {
                 message.success('Booking updated successfully');
                 setIsModalVisible(false);

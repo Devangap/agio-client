@@ -16,7 +16,7 @@ function TraVehicleDetails() {
 
     const fetchVregister = async () => {
         try {
-            const response = await axios.get('/api/TransportRoute/getVehicles');
+            const response = await axios.get('/api/employee/getVehicles');
             // Assuming response.data.bookings is an array of bookings
             // Add a unique key (e.g., _id) to each booking for the Table component
             const dataWithKey = response.data.vehicles.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
@@ -39,7 +39,7 @@ function TraVehicleDetails() {
     const handleDelete = async (id) => {
         try {
             // Send a DELETE request to delete the booking by its ID
-            await axios.delete(`/api/TransportRoute/deletevehicles/${id}`);
+            await axios.delete(`/api/employee/deletevehicles/${id}`);
     
             // Update the state to remove the deleted booking from the table
             setVregister(prevVehicles => prevVehicles.filter(Vregister => Vregister._id !== id));
@@ -102,7 +102,7 @@ function TraVehicleDetails() {
     const handleUpdate = async (values) => {
         try {
             // Assuming you have the Booking ID in currentBooking._id
-            const response = await axios.put(`/api/TransportRoute/updatevehicles/${currentVregister._id}`, values);
+            const response = await axios.put(`/api/employee/updatevehicles/${currentVregister._id}`, values);
             if (response.data.success) {
                 message.success('Booking updated successfully');
                 setIsModalVisible(false);

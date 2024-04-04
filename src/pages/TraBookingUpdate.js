@@ -16,7 +16,7 @@ function TraBookingUpdate() {
   useEffect(() => {
     const fetchbooking = async () => {
       try {
-        const response = await axios.get(`/api/TransportRoute/getTraBooking2/${id}`);
+        const response = await axios.get(`/api/employee/getTraBooking2/${id}`);
         if (response.data.success) {
           const data = response.data.Booking;
           form.setFieldsValue({
@@ -47,7 +47,7 @@ function TraBookingUpdate() {
     };
 
     try {
-      const response = await axios.put(`/api/TransportRoute/updateTraBooking/${id}`, updatedValues);
+      const response = await axios.put(`/api/employee/updateTraBooking/${id}`, updatedValues);
       if (response.data.success) {
         toast.success(response.data.message);
         navigate('/TraBookingDisplay'); // Navigate to the desired page after successful update

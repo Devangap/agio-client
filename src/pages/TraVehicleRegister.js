@@ -16,7 +16,7 @@ function TraVehicleRegister() {
       console.log('Recieved values of form', values);
   
       try {
-        const response = await axios.post('/api/TransportRoute/Vehicleregister', values);
+        const response = await axios.post('/api/employee/Vehicleregister', values);
         if(response.data.success){
             toast.success(response.data.message);
             navigate('/TraVehicleDetails');
