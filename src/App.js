@@ -22,6 +22,12 @@ import TraVehicleRegister from './pages/TraVehicleRegister';
 import meddash from './pages/meddash';
 
 
+import LeaveEmp from './pages/leaveEmp';
+import LeaveEmpform from './pages/leaveEmpform';
+import Main_Notifications from './pages/Main_Notifications';
+import LeaveHrsupdisplay from './pages/leaveHrsupdisplay'
+import LeaveUpdate from './pages/leaveUpdate';
+
 import TraProtectedRoute from './components/TraProtectedRoute';
 import TraPublicRoute from './components/TraPublicRoute';
 import TraLogin from './pages/TraLogin';
@@ -29,7 +35,13 @@ import TraRegister from './pages/TraRegister';
 
 
 
+
 import Inquiry from './pages/inquiry';
+
+import InsClaimSubmit from './pages/InsClaimSubmit';
+import InsEmployee from './pages/InsEmployee';
+
+
 import { useSelector } from 'react-redux';
 import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
@@ -44,6 +56,16 @@ import DriverBox from './pages/TraDriverBox';
 import TraDriverBox from './pages/TraDriverBox';
 import VehicleBox from './pages/VehicleBox';
 import TraBookingBox from './pages/TraBookingBox';
+
+
+import MyInquiries from './pages/MyInquiries';
+
+
+
+
+
+
+
 
 
 
@@ -64,7 +86,11 @@ function App() {
           <Route path='/Main_Login' element={<PublicRoute><Main_login /></PublicRoute>} />
         
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
-          
+          <Route path='/LeaveEmp' element={<ProtectedRoute><LeaveEmp /></ProtectedRoute>} />
+          <Route path='/LeaveEmpform' element={<ProtectedRoute><LeaveEmpform /></ProtectedRoute>} />
+          <Route path='/LeaveHrsupdisplay' element={<ProtectedRoute><LeaveHrsupdisplay /></ProtectedRoute>} />
+          <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
+          <Route path='/LeaveUpdate/:id' element={<ProtectedRoute><LeaveUpdate/></ProtectedRoute>} />
 
           <Route path='/Main_Register' element={<Main_register />} />
           <Route path='/Main_Login' element={<Main_login />} />
@@ -85,6 +111,8 @@ function App() {
          
           <Route path='/dregister' element={<TraDriverRegister />} />
           <Route path='/vregister' element={< TraVehicleRegister/>} />
+ 
+
           <Route path='/TraBooking' element={<TraBooking/>} />
           <Route path='/TraBookingDisplay' element={< TraBookingDisplay />} />
           <Route path='/TraBookingUpdate/:id' element={< TraBookingUpdate />} />
@@ -95,13 +123,19 @@ function App() {
           <Route path='/TraDriverBox' element={<TraDriverBox/>} />
           <Route path='/VehicleBox' element={<VehicleBox/>} />
           <Route path='/TraBookingBox' element={<TraBookingBox/>} />
-      
+
+          
+        
+
+
+
+          <Route exact path="/MyInquiries" element={<MyInquiries />} />
+
+          <Route path='/inquiry' element ={<ProtectedRoute><Inquiry/></ProtectedRoute>} />
           
 
-
-
-        
-          <Route path='/inquiry' element ={<Inquiry/>} />
+          <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
+          <Route path='/insEmployee' element={<InsEmployee/>}/>
 
         </Routes>
 
