@@ -4,11 +4,11 @@ import Layout from '../components/Layout';
 import axios from 'axios';
 import '../leaveEmp.css';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux'; // Fixed casing for useSelector
+import { useSelector, useDispatch } from 'react-redux';
 import { showLoading, hideLoading } from '../redux/empalerts';
 import toast from 'react-hot-toast';
 
-function LeaveHrsupdisplay() { // Changed component name to start with uppercase letter
+function LeaveHrsupdisplay() {
     const [leaveData, setLeaveData] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -19,13 +19,13 @@ function LeaveHrsupdisplay() { // Changed component name to start with uppercase
             dispatch(showLoading());
             const response = await axios.get('/api/employee/getleave', {
                 headers: {
-                    Authorization: 'Bearer ' + token // Pass token as a parameter
+                    Authorization: 'Bearer ' + token
                 },
             });
             dispatch(hideLoading());
-            setLeaveData(response.data.leave); // Assuming response.data.leave is an array of objects
+            setLeaveData(response.data.leave);
         } catch (error) {
-            console.error(error); // Log the error for debugging
+            console.error(error);
             message.error('Failed to fetch leave data');
         }
     };
@@ -34,31 +34,51 @@ function LeaveHrsupdisplay() { // Changed component name to start with uppercase
         fetchData();
     }, []);
 
-    const handleleavecount = async (record) => {
+    const handleLeaveCount = async (record) => {
         try {
-            // Call the backend endpoint to approve the leave
-            const response = await axios.post(`/api/employee/approveleave/${record._id}`);
-            
-            // Check if the leave type is "Medical" and the status is approved
-            if (record.Type === 'Medical' && record.status === 'approved') {
-                // Deduct one from the medical_leave field for the user
-                // This logic is already handled in the backend endpoint, no need to repeat it here
-                // If you need to update the UI based on the new medical_leave count, you may need to fetch the user data again
-                // and update the UI accordingly
+            // Fetch the leave data using the leaveid
+            const responseLeave = await axios.get(`/api/employee/getleave3/${record._id}`, {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                }
+            });
+    
+            if (!responseLeave.data.success) {
+                toast.error("Failed to fetch leave data.");
+                return;
             }
-            
-            // Display success message
-            toast.success(response.data.message);
-            
-            // Assuming fetchData function fetches the updated leave data
-            fetchData(); // Refresh the leave data after approving
+    
+            const leaveData = responseLeave.data.leave;
+            const leave = leaveData; // Assuming the leave data is returned as an object
+    
+            // Check if the leave type is "Medical"
+            if (leave.Type === 'Medical') {
+                // If it's a medical leave, deduct one from the medical_leave field
+                const responseDeduct = await axios.post(
+                    '/api/employee/deduct_medical_leave',
+                    { userid: record.userid },
+                    {
+                        headers: {
+                            Authorization: 'Bearer ' + token
+                        }
+                    }
+                );
+    
+                if (responseDeduct.data.success) {
+                    toast.success(responseDeduct.data.message);
+                    fetchData(); // Refresh the leave data after deducting medical leave
+                } else {
+                    toast.error(responseDeduct.data.message);
+                }
+            } else {
+                toast.error("Leave is not of type Medical.");
+            }
         } catch (error) {
-            // Display error message
-            toast.error("Error approving leave.");
+            toast.error("Error deducting medical leave.");
         }
     };
 
-      const changestatus = async (record, status) => {
+    const changestatus = async (record, status) => {
         try {
             dispatch(showLoading());
             const response = await axios.post('/api/employee/change_status', {
@@ -67,13 +87,13 @@ function LeaveHrsupdisplay() { // Changed component name to start with uppercase
                 status: status
             }, {
                 headers: {
-                    Authorization: 'Bearer ' + token // Pass token as a parameter
+                    Authorization: 'Bearer ' + token
                 },
             });
             dispatch(hideLoading());
             if (response.data.success) {
                 toast.success(response.data.message);
-                fetchData(); // Assuming fetchData function fetches the updated leave data
+                fetchData();
             } else {
                 toast.error(response.data.message);
             }
@@ -115,38 +135,26 @@ function LeaveHrsupdisplay() { // Changed component name to start with uppercase
             dataIndex: 'status',
             key: 'Description',
         },
-    
-    {
-        title: 'Action',
-        key: 'action',
-        render: (_, record) => (
-            <>
-            <div className = "d-flex">
-                {record.status === "pending" && <Button
-    type="primary"
-    className="approve"
-    onClick={() => {
-        changestatus(record, 'approved');
-        handleleavecount(record);
-    }}
->
-    Approve
-</Button>}
-                {record.status === "approved" && <Button type="primary" className="reject" onClick={() => changestatus(record,`rejected`)}>Reject</Button>}
-                </div>
-                <Button type="primary" >Delete</Button>
-            </>
-        ),
-    },
-    // Define your table columns here
-];
+        {
+            title: 'Action',
+            key: 'action',
+            render: (_, record) => (
+                <>
+                    <div className="d-flex">
+                        {record.status === "pending" && <Button type="primary" className="approve" onClick={() => { changestatus(record, 'approved'); handleLeaveCount(record); }}>Approve</Button>}
+                        {record.status === "approved" && <Button type="primary" className="reject" onClick={() => changestatus(record, 'rejected')}>Reject</Button>}
+                    </div>
+                    <Button type="primary">Delete</Button>
+                </>
+            ),
+        },
+    ];
 
-return (
-    <Layout>
-        
-        <Table dataSource={leaveData} columns={columns} />
-    </Layout>
-);
+    return (
+        <Layout>
+            <Table dataSource={leaveData} columns={columns} />
+        </Layout>
+    );
 }
 
 export default LeaveHrsupdisplay;
