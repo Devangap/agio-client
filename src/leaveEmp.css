@@ -1,0 +1,16 @@
+.leavesub {
+    background-color: #F7B05B !important;
+    border-color: #1F1300 !important;
+    height: 40px !important;
+    width: 200px !important;
+    align-items: center !important;
+    color: #000000 !important;
+    font-size: 16px !important;
+    font-weight: bold;
+    border-radius: 10px !important;
+    margin-top: 20px !important; /* Ensure the margin-top is applied */
+    margin-right: 10px !important; /* 10px margin from the right */
+    margin-left: auto !important; /* Move the button to the right */
+    display: flex; /* Enable flexbox */
+    justify-content: center; /* Horizontally center content */
+}

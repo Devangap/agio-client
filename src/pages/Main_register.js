@@ -48,8 +48,8 @@ function Main_register() {
           </Form.Item>
         </div>
         <div className="item">
-          <Form.Item label="Date of Birth" name="dob">
-            <DatePicker className="date" />
+          <Form.Item label="Employee ID" name="empid">
+          <Input placeholder='Employee ID' />
           </Form.Item>
         </div>
       </div>
@@ -93,10 +93,19 @@ function Main_register() {
           </Form.Item>
         </div>
       </div>
+      <div className="form-row">
       <div className="item">
         <Form.Item name="address" label="Address">
-          <Input.TextArea className='address' />
+          <Input className='address' />
+          
         </Form.Item>
+        </div>
+        <div className="item">
+          <Form.Item label="Date of Birth" name="dob">
+            <DatePicker className="date" />
+          </Form.Item>
+        
+      </div>
       </div>
       <div className="Button-cons">
         <Button className='primary-button my-2' htmlType='submit'>REGISTER</Button>

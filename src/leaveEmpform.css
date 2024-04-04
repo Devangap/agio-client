@@ -1,43 +1,20 @@
-.inquiry{
+.leaveform{
     height :100vh;
     display:flex;
     align-items: center;
     justify-content: center;
     
 }
-.ibox{
+.leave_formbox {
+    
     box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
     border-radius: 20px;
     background-color: #FAFAFA;
     
 
 }
-.imain_form{
-    width : 950px;
-    height: 650px;
-    
-    
-}
-.inquiry-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
 
-}
-.iimage-container{
-    flex: 1px;
-    overflow: hidden;
-    position: relative;
-}
-.iimage-container img {
-    width: 1000px;
-    height: 1000px;
-    object-fit: cover;
-    position: relative;
-   
-    border-radius: 10px;
-}
+
 input{
     border-radius: 10px !important;
     border: 1px solid rgba(128, 128, 128, 0.521);
@@ -60,72 +37,71 @@ label{
     font-size: 16px !important;
     color: black;
 }
-.iprimary-button{
-    background-color: #F7B05B !important;
-    border-color: #1F1300 !important;
-    height: 40px !important;
-    width: 300px !important;
-    align-items: center !important;
-    color:#000000 !important;
-    font-size: 16px !important;
-    font-weight: bold; 
-    border-radius: 10px !important;
-    margin-top: 30px !important;
-    margin-right: 30px !important;
-    justify-content: center !important;
-}
-.isecondary-button{
-    background-color: #F7B05B !important;
-    border-color: #1F1300 !important;
-    height: 40px !important;
-    width: 300px !important;
-    align-items: center !important;
-    color:#000000 !important;
-    font-size: 16px !important;
-    font-weight: bold; 
-    border-radius: 10px !important;
-    margin-top: 30px !important;
-    justify-content: center !important;
+.leave_Button-cons {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px; /* Adjust margin-top as needed */
 }
 
-.ititle{
+.leave_primary-button {
+    background-color: #F7B05B !important;
+    border-color: #1F1300 !important;
+    height: 40px !important;
+    width: 300px !important;
+    align-items: center !important;
+    color:#000000 !important;
+    font-size: 16px !important;
+    font-weight: bold; 
+    border-radius: 10px !important;
+    margin-top: 30px !important;
+    justify-content: center !important;
+}
+.title{
     color: #1F1300;
-    margin-top: 100px;
+    margin-top: 20px;
     margin-left: 20px;
 }
-.iform-row {
+.leave_form-row {
     display: flex;
     align-items: center;
 }
 
-.iform-item {
-    margin-right: 20px; 
+.css-dev-only-do-not-override-1drr2mu {
+    
 }
-.idate{
+.ant-form-item-control-input-content{
+    
+}
+.form-item {
+    margin-right: 20px; /* Add some space between form items */
+}
+.date{
     width: 400px;
     height: 40px;
 }
-.iitem{
+.leave_item{
     margin-right: 60px;
     margin-left: 30px;
 }
-.ishift{
+.shift{
     width: 400px !important;
     height: 40px !important;
     border-radius: 10px !important;
 
 }
 
-.inumber{
+.number{
     width: 200px !important;
     height: 40px !important;
 
 }
-.iButton-cons{
-    display: flex;
-    justify-content: center;
 
+.address{
+    width : 1000px;
 }
-.idescribe{
-    width : 500px;
+.leavet{
+   
+    height: 40px !important;
+    width :400px !important;
+    margin-bottom:40px !important;
 }
