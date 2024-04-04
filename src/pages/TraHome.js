@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
-import Layout from '../components/Layout';
-import annlayout from '../pages/AnnLayout'
+
+import TraLayout from '../components/TraLayout';
 
 function TraHome() {
 
@@ -22,9 +22,11 @@ function TraHome() {
         getData();
     }, []);
 
-    return <Layout>
-        
-        </Layout>;
+    return <TraLayout>
+        <div className='Main_header'>
+        <h1>WELCOME OUR ANGIO TRANSPORT </h1>
+        </div>
+    </TraLayout>;
 }
 
 export default TraHome;

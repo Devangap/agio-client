@@ -60,8 +60,15 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
+
             name: 'Inquiry',
             path: '/inquiry',
+          icon: 'ri-account-box-line',
+        },
+      {
+            name: 'Transport',
+            path: '/TraBookingBox',
+
             icon: 'ri-account-box-line',
         },
        
@@ -136,8 +143,23 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: ' transport',
+            name: ' Transport',
             path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' BookingUserdetails',
+            path: '/TraBookingDisplay',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' DriverRegister And Details',
+            path: '/TraDriverBox',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' VehicleRegister And Details',
+            path: '/VehicleBox',
             icon: 'ri-account-box-line',
         },
        
