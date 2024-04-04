@@ -42,6 +42,8 @@ import TraDriverDetailsUpdate from './pages/TraDriverDetailsUpdate';
 import TraVehicleDetailsUpdate from './pages/TraVehicleDetailsUpdate';
 import DriverBox from './pages/TraDriverBox';
 import TraDriverBox from './pages/TraDriverBox';
+import VehicleBox from './pages/VehicleBox';
+import TraBookingBox from './pages/TraBookingBox';
 
 
 
@@ -80,9 +82,7 @@ function App() {
 
         
             /*transport  Navigation*/
-          <Route path='/home' element={<TraProtectedRoute><TraHome /></TraProtectedRoute>} />
-          <Route path='/login' element={<TraPublicRoute><TraLogin /></TraPublicRoute>} />
-          <Route path='/register' element={<ProtectedRoute><TraRegister /></ProtectedRoute>} />
+         
           <Route path='/dregister' element={<TraDriverRegister />} />
           <Route path='/vregister' element={< TraVehicleRegister/>} />
           <Route path='/TraBooking' element={<TraBooking/>} />
@@ -93,6 +93,8 @@ function App() {
           <Route path='/TraDriverDetailsUpdate/:id' element={<TraDriverDetailsUpdate/>} />
           <Route path='/TraVehicleDetailsUpdate/:id' element={<TraVehicleDetailsUpdate/>} />
           <Route path='/TraDriverBox' element={<TraDriverBox/>} />
+          <Route path='/VehicleBox' element={<VehicleBox/>} />
+          <Route path='/TraBookingBox' element={<TraBookingBox/>} />
       
           
 

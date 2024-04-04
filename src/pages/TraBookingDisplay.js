@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
-import AnnLayout from '../pages/AnnLayout';
+import Layout from '../components/Layout'
 import { useNavigate } from 'react-router-dom';
 
 function TraBookingDisplay() {
@@ -118,7 +118,7 @@ function TraBookingDisplay() {
     
 
     return (
-        <AnnLayout>
+        <Layout>
             <Table dataSource={booking} columns={columns} />
             <Modal
     title="Update Booking"
@@ -149,7 +149,7 @@ function TraBookingDisplay() {
 
         
 
-        </AnnLayout>
+        </Layout>
         
     );
 

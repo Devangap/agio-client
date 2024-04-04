@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
-import AnnLayout from '../pages/AnnLayout';
+import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 
 function TraVehicleDetails() {
@@ -117,7 +117,7 @@ function TraVehicleDetails() {
     };
 
   return (
-    <AnnLayout>
+    <Layout>
             <Table dataSource={Vregister} columns={columns} />
             <Modal
     title="Update Booking"
@@ -148,7 +148,7 @@ function TraVehicleDetails() {
 
         
 
-        </AnnLayout>
+        </Layout>
   )
 }
 

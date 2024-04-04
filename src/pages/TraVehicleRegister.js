@@ -37,7 +37,8 @@ function TraVehicleRegister() {
   
   
   
-    return <Layout>
+    return(
+     <Layout>
       <div className="annform">
     <div className="AnnHRSup_form box p-3">
       <h3 className='title'>CREATE VEHICLE ACCOUNT</h3>
@@ -86,7 +87,7 @@ function TraVehicleRegister() {
   </div>
     
     </Layout>
-  
+    );
 }
 
 export default TraVehicleRegister

@@ -44,7 +44,7 @@ function Layout({ children }) {
         },
         {
             name: 'Transport',
-            path: '/register',
+            path: '/TraBookingBox',
             icon: 'ri-account-box-line',
         },
        
@@ -135,7 +135,7 @@ function Layout({ children }) {
         },
         {
             name: ' VehicleRegister And Details',
-            path: '/profile',
+            path: '/VehicleBox',
             icon: 'ri-account-box-line',
         },
        
