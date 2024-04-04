@@ -34,7 +34,7 @@ function LeaveHrsupdisplay() {
         fetchData();
     }, []);
 
-    const handleLeaveCount = async (record) => {
+    const changeLeaveCount = async (record) => {
         try {
             // Fetch the leave data using the leaveid
             const responseLeave = await axios.get(`/api/employee/getleave3/${record._id}`, {
@@ -53,16 +53,15 @@ function LeaveHrsupdisplay() {
     
             // Check if the leave type is "Medical"
             if (leave.Type === 'Medical') {
-                // If it's a medical leave, deduct one from the medical_leave field
-                const responseDeduct = await axios.post(
-                    '/api/employee/deduct_medical_leave',
-                    { userid: record.userid },
-                    {
-                        headers: {
-                            Authorization: 'Bearer ' + token
-                        }
+                // If it's a medical leave, fetch the userid of that leave
+                const userId = record.userid;
+                console.log(userId);
+                // Deduct one from the medical_leave field in the employee database
+                const responseDeduct = await axios.post('/api/employee/leavecountmed', { userid: userId }, {
+                    headers: {
+                        Authorization: 'Bearer ' + token
                     }
-                );
+                });
     
                 if (responseDeduct.data.success) {
                     toast.success(responseDeduct.data.message);
@@ -70,11 +69,45 @@ function LeaveHrsupdisplay() {
                 } else {
                     toast.error(responseDeduct.data.message);
                 }
+            } else if (leave.Type === 'Annual') {
+                // If it's an annual leave, fetch the userid of that leave
+                const userId = record.userid;
+                console.log(userId);
+                // Deduct one from the annual_leave field in the employee database
+                const responseDeduct = await axios.post('/api/employee/leavecountannual', { userid: userId }, {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    }
+                });
+    
+                if (responseDeduct.data.success) {
+                    toast.success(responseDeduct.data.message);
+                    fetchData(); // Refresh the leave data after deducting annual leave
+                } else {
+                    toast.error(responseDeduct.data.message);
+                }
+            } else if (leave.Type === 'General') {
+                // If it's a general leave, fetch the userid of that leave
+                const userId = record.userid;
+                console.log(userId);
+                // Deduct one from the general_leave field in the employee database
+                const responseDeduct = await axios.post('/api/employee/leavecountgeneral', { userid: userId }, {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    }
+                });
+    
+                if (responseDeduct.data.success) {
+                    toast.success(responseDeduct.data.message);
+                    fetchData(); // Refresh the leave data after deducting general leave
+                } else {
+                    toast.error(responseDeduct.data.message);
+                }
             } else {
-                toast.error("Leave is not of type Medical.");
+                toast.error("Leave is not of type Medical, Annual, or General.");
             }
         } catch (error) {
-            toast.error("Error deducting medical leave.");
+            toast.error("Error deducting leave.");
         }
     };
 
@@ -141,7 +174,7 @@ function LeaveHrsupdisplay() {
             render: (_, record) => (
                 <>
                     <div className="d-flex">
-                        {record.status === "pending" && <Button type="primary" className="approve" onClick={() => { changestatus(record, 'approved'); handleLeaveCount(record); }}>Approve</Button>}
+                        {record.status === "pending" && <Button type="primary" className="approve" onClick={() => { changestatus(record, 'approved'); changeLeaveCount(record); }}>Approve</Button>}
                         {record.status === "approved" && <Button type="primary" className="reject" onClick={() => changestatus(record, 'rejected')}>Reject</Button>}
                     </div>
                     <Button type="primary">Delete</Button>

@@ -8,6 +8,7 @@ import { showLoading, hideLoading } from '../redux/empalerts';
 import { useSelector, useDispatch } from 'react-redux';
 
 function LeaveEmp() {
+    const [employeeData, setEmployeeData] = useState(null);
     const { user } = useSelector((state) => state.user);
     const [leaveData, setLeaveData] = useState([]);
     const navigate = useNavigate();
@@ -20,12 +21,11 @@ function LeaveEmp() {
                     Authorization: 'Bearer ' + localStorage.getItem('token')
                 },
             });
-            console.log(response.data);
+            setEmployeeData(response.data.data); // Update employeeData state with response data
         } catch (error) {
             console.log(error);
         }
     };
-
     useEffect(() => {
         getData();
     }, []);
@@ -120,13 +120,14 @@ function LeaveEmp() {
     ];
 
     const leaveTypes = [
-       { title: 'General Leave', description: `Available: ${user?.general_leave}` },
-        { title: 'Annual Leave', description: `Available: ${user?.annual_leave}` },
-        { title: 'Medical Leave', description: `Available: ${user?.medical_leave}` },
+        { title: 'General Leave', description: `Available: ${employeeData ? employeeData.general_leave : ''}` },
+        { title: 'Annual Leave', description: `Available: ${employeeData ? employeeData.annual_leave : ''}` },
+        { title: 'Medical Leave', description: `Available: ${employeeData ? employeeData.medical_leave : ''}` },
     ];
 
     return (
         <Layout>
+            
             <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {leaveTypes.map((type, index) => (
                     <Card key={index} className="leave-type-card" title={type.title} bordered={false}>
@@ -138,6 +139,7 @@ function LeaveEmp() {
                 <button className="leavesub" onClick={handleLeaveSubmission}>Leave Submission</button>
             </div>
             <Table dataSource={leaveData} columns={columns} />
+            
         </Layout>
     );
 }
