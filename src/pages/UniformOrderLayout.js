@@ -4,8 +4,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
 import  { useEffect } from 'react';
-import { Badge ,Avatar} from 'antd';
-import axios from 'axios';
 
 function Layout({ children }) {
 
@@ -21,22 +19,7 @@ function Layout({ children }) {
                                     dispatch(setUser(null)); // Clear user state in Redux store
                                     navigate('/Main_login');
                                 };
-                                const getData = async () => {
-                                    try {
-                                        const response = await axios.post('/api/employee/get-employee-info-by-id', {} , {
-                                            headers: {
-                                                Authorization: 'Bearer ' + localStorage.getItem('token')
-                                            },
-                                        });
-                                        console.log(response.data);
-                                    } catch (error) {
-                                        console.log(error);
-                                    }
-                                };
-                            
-                                useEffect(() => {
-                                    getData();
-                                }, []);                                                      
+                                                          
     
     const userMenu = [
         {
@@ -51,17 +34,12 @@ function Layout({ children }) {
         },
         {
             name: 'Leave',
-            path: '/leaveEmp',
+            path: '/calendar',
             icon: 'ri-calendar-line',
         },
         {
             name: 'Uniform',
             path: '/profile',
-            icon: 'ri-account-box-line',
-        },
-        {
-            name: 'Inquiry',
-            path: '/inquiry',
             icon: 'ri-account-box-line',
         },
        
@@ -123,8 +101,8 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: ' Leave requests',
-            path: '/leaveHrsupdisplay',
+            name: ' leave',
+            path: '/profile',
             icon: 'ri-account-box-line',
         },
        
@@ -265,12 +243,9 @@ useEffect(() => {
                         <div>
                            </div>
                         <div className='layout-action-icon-container'>
-                        <Badge count={user?.unseenNotifications.length} onClick = {() => navigate("/Main_Notifications")}>
-                        <i className="ri-notification-line layout-action-icon mr 3px "></i>
-                         </Badge>
-                            
+                            <i className="ri-notification-line layout-action-icon mr 3px "></i>
                           
-                            <Link className="anchor mx-3" to ='/'>{user?.username}</Link>
+                            <Link className="anchor" to ='/'>{user?.username}</Link>
                             
                             
                         </div>
