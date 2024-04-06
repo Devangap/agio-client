@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 function TraBookingDisplay() {
     const { user } = useSelector((state) => state.user);
-    const [booking, setBooking] = useState([]);
+    const [booking, setbooking] = useState([]);
     const navigate = useNavigate();
 
     const fetchBooking = async (userId) => {
@@ -16,9 +16,9 @@ function TraBookingDisplay() {
             console.log('Booking API Response:', response.data);
 
             if (response.data && response.data.bookings) {
-                setBooking(response.data.bookings);
+                setbooking(response.data.bookings);
             } else {
-                setBooking([]);
+                setbooking([]);
                 message.info('No booking data available');
             }
         } catch (error) {
@@ -40,7 +40,7 @@ function TraBookingDisplay() {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`/api/employee/deletebooking/${id}`);
-            setBooking(prev => prev.filter(item => item._id !== id));
+            setbooking(prev => prev.filter(item => item._id !== id));
             message.success('Booking deleted successfully');
         } catch (error) {
             message.error('Failed to delete booking');
