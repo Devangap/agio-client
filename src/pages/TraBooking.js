@@ -1,72 +1,69 @@
 import React, { useEffect } from 'react';
-import axios from 'axios';
-import {Button, Form ,  Input,Select, DatePicker,Upload, message } from 'antd'
-import Layout from '../components/Layout';
+import { Button, Form, Input, Select, DatePicker, Upload, message } from 'antd';
+import "../leaveEmpform.css";
+import axios from "axios";
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { useState } from 'react';
 import { useDispatch ,useSelector} from 'react-redux';
 import { showLoading ,hideLoading} from '../redux/empalerts';
 import { setUser } from '../redux/userSlice';
+import Layout from '../components/Layout';
 
 function TraBooking() {
 
   const { RangePicker } = DatePicker;
-  const { Option } = Select;
-  const [userData, setUserData] = useState({}); 
+    const { Option } = Select;
+    const [userData, setUserData] = useState({}); 
 
-  const navigate = useNavigate();
-  const {user} = useSelector((state) => state.user);
- const dispatch = useDispatch();
- const getData = async () => {
-  try {
-      const response = await axios.post('/api/employee/get-employee-info-by-id', {} , {
-          headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token')
-          },
-      });
-      console.log(response.data);
-  } catch (error) {
-      console.log(error);
-  }
+    const navigate = useNavigate();
+    const {user} = useSelector((state) => state.user);
+   const dispatch = useDispatch();
+   const getData = async () => {
+    try {
+        const response = await axios.post('/api/employee/get-employee-info-by-id', {} , {
+            headers: {
+                Authorization: 'Bearer ' + localStorage.getItem('token')
+            },
+        });
+        console.log(response.data);
+    } catch (error) {
+        console.log(error);
+    }
 };
 
 useEffect(() => {
-  getData();
+    getData();
 }, []);
-  const onFinish = async (values) => {
-      console.log('Received values of form', values);
-      try {
-          dispatch(showLoading());
-          const response = await axios.post('/api/employee/TraBooking', {...values , userid : user?.userid,}
-         
-         , {headers:{
-          Authorization :`Bearer ${localStorage.getItem("token")}`,
-         },
+    const onFinish = async (values) => {
+        console.log('Received values of form', values);
+        try {
+            dispatch(showLoading());
+            const response = await axios.post('/api/employee/TraBooking', {...values , userid : user?.userid,}
+           
+           , {headers:{
+            Authorization :`Bearer ${localStorage.getItem("token")}`,
+           },
 
-          });
+            });
+            dispatch(hideLoading());
+            if(response.data.success){
+                navigate("/TraBookingDisplay")
+               
+                
+            }else{
+                toast.error(response.data.message);
+      
+            }
+            
+        } catch (error) {
           dispatch(hideLoading());
-          if(response.data.success){
-              navigate("/TraBookingDisplay")
-             
-              
-          }else{
-              toast.error(response.data.message);
-    
-          }
-          
-      } catch (error) {
-        dispatch(hideLoading());
-          toast.error("Something went wrong");
-      }
-  };
-  console.log(user?.userid);
+            toast.error("Something went wrong");
+        }
+    };
+    console.log(user?.userid);
 
-
-
-
-
-  return <Layout>
+    return <Layout>
     <div className="annform">
   <div className="AnnHRSup_form box p-3">
     <h3 className='title'>BOOKING TRANSPORT</h3>
@@ -116,5 +113,6 @@ useEffect(() => {
   
   </Layout>
 }
+
 
 export default TraBooking

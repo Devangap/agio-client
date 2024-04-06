@@ -59,6 +59,7 @@ import TraBookingBox from './pages/TraBookingBox';
 
 
 import MyInquiries from './pages/MyInquiries';
+import TraBookingDisplayAdmin from './pages/TraBookingDisplayAdmin';
 
 
 
@@ -109,20 +110,21 @@ function App() {
         
             /*transport  Navigation*/
          
-          <Route path='/dregister' element={<TraDriverRegister />} />
-          <Route path='/vregister' element={< TraVehicleRegister/>} />
+          <Route path='/dregister' element={<ProtectedRoute><TraDriverRegister /></ProtectedRoute>} />
+          <Route path='/vregister' element={<ProtectedRoute>< TraVehicleRegister/></ProtectedRoute>} />
  
 
-          <Route path='/TraBooking' element={<TraBooking/>} />
-          <Route path='/TraBookingDisplay' element={< TraBookingDisplay />} />
-          <Route path='/TraBookingUpdate/:id' element={< TraBookingUpdate />} />
-          <Route path='/TraVehicleDetails' element={< TraVehicleDetails />} />
-          <Route path='/TraDriverDetailsDisplay' element={< TraDriverDetailsDisplay />} />
-          <Route path='/TraDriverDetailsUpdate/:id' element={<TraDriverDetailsUpdate/>} />
-          <Route path='/TraVehicleDetailsUpdate/:id' element={<TraVehicleDetailsUpdate/>} />
-          <Route path='/TraDriverBox' element={<TraDriverBox/>} />
-          <Route path='/VehicleBox' element={<VehicleBox/>} />
-          <Route path='/TraBookingBox' element={<TraBookingBox/>} />
+          <Route path='/TraBooking' element={<ProtectedRoute><TraBooking/></ProtectedRoute>} />
+          <Route path='/TraBookingDisplay' element={<ProtectedRoute>< TraBookingDisplay /></ProtectedRoute>} />
+          <Route path='/TraBookingUpdate/:id' element={<ProtectedRoute>< TraBookingUpdate /></ProtectedRoute>} />
+          <Route path='/TraVehicleDetails' element={<ProtectedRoute>< TraVehicleDetails /></ProtectedRoute>} />
+          <Route path='/TraDriverDetailsDisplay' element={<ProtectedRoute>< TraDriverDetailsDisplay /></ProtectedRoute>} />
+          <Route path='/TraDriverDetailsUpdate/:id' element={<ProtectedRoute><TraDriverDetailsUpdate/></ProtectedRoute>} />
+          <Route path='/TraVehicleDetailsUpdate/:id' element={<ProtectedRoute><TraVehicleDetailsUpdate/></ProtectedRoute>} />
+          <Route path='/TraDriverBox' element={<ProtectedRoute><TraDriverBox/></ProtectedRoute>} />
+          <Route path='/VehicleBox' element={<ProtectedRoute><VehicleBox/></ProtectedRoute>} />
+          <Route path='/TraBookingBox' element={<ProtectedRoute><TraBookingBox/></ProtectedRoute>} />
+          <Route path='/TraBookingDisplayAdmin' element={<ProtectedRoute><TraBookingDisplayAdmin/></ProtectedRoute>} />
 
           
         
