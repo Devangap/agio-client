@@ -84,7 +84,7 @@ function TraBookingDisplayAdmin() {
     const changestatus = async (record, status) => {
         try {
             dispatch(showLoading());
-            const response = await axios.post('/api/employee/change_status', {
+            const response = await axios.post('/api/employee/change_status_tra', {
                 bookingid: record._id,
                 userid: record.userid,
                 status: status
