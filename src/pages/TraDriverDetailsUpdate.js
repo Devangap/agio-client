@@ -6,51 +6,51 @@ import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 
-function AnnUpdate() {
-  const navigate = useNavigate();
+function TraDriverDetailsUpdate() {
+
+    const navigate = useNavigate();
   const { id } = useParams(); // Assuming you're using react-router-dom v5 or v6
   const { Option } = Select;
   const [form] = Form.useForm();
 
   useEffect(() => {
-    const fetchAnnouncement = async () => {
+    const fetchDregister = async () => {
       try {
-        const response = await axios.get(`/api/annWorkouts/getAnnHRsup2/${id}`);
+        const response = await axios.get(`/api/TransportRoute/getdrivers2/${id}`);
         if (response.data.success) {
-          const data = response.data.announcement;
+          const data = response.data.Dregisters;
           form.setFieldsValue({
-            anntitle: data.anntitle,
-            uploaddate: moment(data.uploaddate),
+            driName: data.driName,
+            driEmail: data.driEmail,
             Type: data.Type,
-            expiredate: moment(data.expiredate),
-            Description: data.Description,
+            regdate: moment(data.regdate),
+            driPnum: data.driPnum,
           });
-          console.log(moment(data.uploaddate))
         } else {
           toast.error('Announcement not found!');
-          navigate('/AnnDisplay');
+          navigate('/TraDriverDetailsDisplay');
         }
       } catch (error) {
         toast.error('Failed to fetch announcement data!');
       }
     };
 
-    fetchAnnouncement();
+    fetchDregister();
   }, [id, form, navigate]);
 
   const onFinish = async (values) => {
     console.log('Received values of form: ', values);
     const updatedValues = {
       ...values,
-      uploaddate: values.uploaddate.format('YYYY-MM-DD'),
-      expiredate: values.expiredate.format('YYYY-MM-DD'),
+      // Convert bookingdate to the desired format if necessary
+      regdate: values.regdate.format('YYYY-MM-DD'),
     };
 
     try {
-      const response = await axios.put(`/api/annWorkouts/updateAnnHRsup/${id}`, updatedValues);
+      const response = await axios.put(`/api/TransportRoute/updatedrivers/${id}`, updatedValues);
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate('/AnnDisplay');
+        navigate('/TraDriverDetailsDisplay'); // Navigate to the desired page after successful update
       } else {
         toast.error(response.data.message);
       }
@@ -59,48 +59,50 @@ function AnnUpdate() {
     }
   };
 
+
   return (
     <Layout>
       <div className="annform">
         <div className="AnnHRSup_form box p-3">
-          <h3 className='title'>Update an Announcement</h3>
+          <h3 className='title'>Update Booking Details</h3>
           <Form layout='vertical' form={form} onFinish={onFinish}>
             <div className="form-row">
               <div className="item">
-                <Form.Item label='Announcement Title' name='anntitle'>
-                  <Input placeholder='Announcement Title' />
+                <Form.Item label='Driver Name' name='driName'>
+                  <Input placeholder='Employee Name' />
                 </Form.Item>
               </div>
             </div>
 
             <div className="form-row">
               <div className="item">
-                <Form.Item label="Upload Date" name="uploaddate">
-                  <DatePicker className="date" />
-                </Form.Item>
+              <Form.Item label='Driver Email' name='driEmail'>
+            <Input placeholder='Employee Email' />
+          </Form.Item>
               </div>
               <div className="item">
-                <Form.Item name="Type" label="Type">
-                  <Select className="Type" placeholder="Select announcement type">
-                    <Option value="General">General</Option>
-                    <Option value="Specific">Specific</Option>
-                  </Select>
-                </Form.Item>
+              <Form.Item name="Type" label="Work Expereance">
+            <Select className="Type" placeholder="Select Vehicle type">
+            <Option value="year0-5">0-5 years</Option>
+              <Option value="year6-10">6-10 years</Option>
+              <Option value="year10above">above 10 years</Option>
+            </Select>
+          </Form.Item>
               </div>
             </div>
 
             <div className="form-row">
               <div className="item">
-                <Form.Item label="Expire Date" name="expiredate">
-                  <DatePicker className="date" />
-                </Form.Item>
+              <Form.Item label="select Register Date" name="regdate">
+            <DatePicker className="date" />
+          </Form.Item>
               </div>
             </div>
 
             <div className="item">
-              <Form.Item name="Description" label="Description">
-                <Input.TextArea className='Description' />
-              </Form.Item>
+            <Form.Item name="driPnum" label="Driver PhoneNumber">
+          <Input.TextArea className='Description' />
+        </Form.Item>
             </div>
 
             <div className="Button-cons">
@@ -110,7 +112,7 @@ function AnnUpdate() {
         </div>
       </div>
     </Layout>
-  );
+  )
 }
 
-export default AnnUpdate;
+export default TraDriverDetailsUpdate

@@ -11,7 +11,8 @@ import { setUser } from '../redux/userSlice';
 
 function LeaveEmpform() {
     const { RangePicker } = DatePicker;
-    const { Option } = Select;
+    const{Option} = Select
+ 
     const [userData, setUserData] = useState({}); 
 
     const navigate = useNavigate();
@@ -94,7 +95,7 @@ useEffect(() => {
                             <Form.Item name="Type" label="Select leave type" className='leavet'>
                                 <Select className="leave_Type" placeholder="Select leave type">
                                     <Option value="General">General</Option>
-                                    <Option value="Specific">Annual</Option>
+                                    <Option value="Annual">Annual</Option>
                                     <Option value="Medical">Medical</Option>
                                 </Select>
                             </Form.Item>

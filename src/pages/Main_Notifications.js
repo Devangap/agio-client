@@ -20,6 +20,7 @@ function Main_Notifications() {
                     Authorization: 'Bearer ' + localStorage.getItem('token')
                 },
             });
+            
             dispatch(hideLoading());
             if(response.data.success){
                 toast.success(response.data.message);
@@ -34,10 +35,12 @@ function Main_Notifications() {
           dispatch(hideLoading());
             toast.error("Something went wrong");
         }
-           
+
+      
 
 
     };
+   
     const deleteall = async()=>{
         try {
             dispatch(showLoading());
@@ -74,7 +77,7 @@ function Main_Notifications() {
             <h7 className="anchor" onClick={markAllAsSeen}>Mark all as read</h7>
             </div>
             {user?.unseenNotifications .map((notification) =>(
-                <div className = "card p-7" onClick = {() => navigate("/leaveHrsupdisplay")}>
+                <div className = "card p-7" onClick = {() => navigate("/")}>
                     <div className = "card-text">{notification.message}</div>
 
                 </div>
@@ -89,7 +92,7 @@ function Main_Notifications() {
                 <h7 className = "anchor"onClick={deleteall}>Clear All</h7>
             </div>
             {user?.seenNotifications .map((notification) =>(
-                <div className = "card p-7" onClick = {() => navigate("/leavehrsupreq")}>
+                <div className = "card p-7" onClick = {() => navigate("/")}>
                     <div className = "card-text">{notification.message}</div>
 
                 </div>

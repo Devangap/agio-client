@@ -6,51 +6,51 @@ import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
 
-function AnnUpdate() {
+function TraVehicleDetailsUpdate() {
+
   const navigate = useNavigate();
   const { id } = useParams(); // Assuming you're using react-router-dom v5 or v6
   const { Option } = Select;
   const [form] = Form.useForm();
 
   useEffect(() => {
-    const fetchAnnouncement = async () => {
+    const fetchVregister = async () => {
       try {
-        const response = await axios.get(`/api/annWorkouts/getAnnHRsup2/${id}`);
+        const response = await axios.get(`/api/TransportRoute/getVehicles2/${id}`);
         if (response.data.success) {
-          const data = response.data.announcement;
+          const data = response.data.VehicleRegister;
           form.setFieldsValue({
-            anntitle: data.anntitle,
-            uploaddate: moment(data.uploaddate),
             Type: data.Type,
-            expiredate: moment(data.expiredate),
-            Description: data.Description,
+            vehicleNum: data.vehicleNum,
+            ECDetails: data.ECDetails,
+            LicenceDetails: data.LicenceDetails,
+            OwnerDetails: data.OwnerDetails,
           });
-          console.log(moment(data.uploaddate))
         } else {
           toast.error('Announcement not found!');
-          navigate('/AnnDisplay');
+          navigate('/TraVehicleDetails');
         }
       } catch (error) {
         toast.error('Failed to fetch announcement data!');
       }
     };
 
-    fetchAnnouncement();
+    fetchVregister();
   }, [id, form, navigate]);
 
   const onFinish = async (values) => {
     console.log('Received values of form: ', values);
     const updatedValues = {
       ...values,
-      uploaddate: values.uploaddate.format('YYYY-MM-DD'),
-      expiredate: values.expiredate.format('YYYY-MM-DD'),
+      // Convert bookingdate to the desired format if necessary
+      
     };
 
     try {
-      const response = await axios.put(`/api/annWorkouts/updateAnnHRsup/${id}`, updatedValues);
+      const response = await axios.put(`/api/TransportRoute/updatevehicles/${id}`, updatedValues);
       if (response.data.success) {
         toast.success(response.data.message);
-        navigate('/AnnDisplay');
+        navigate('/TraVehicleDetails'); // Navigate to the desired page after successful update
       } else {
         toast.error(response.data.message);
       }
@@ -63,44 +63,44 @@ function AnnUpdate() {
     <Layout>
       <div className="annform">
         <div className="AnnHRSup_form box p-3">
-          <h3 className='title'>Update an Announcement</h3>
+          <h3 className='title'>Update Booking Details</h3>
           <Form layout='vertical' form={form} onFinish={onFinish}>
             <div className="form-row">
               <div className="item">
-                <Form.Item label='Announcement Title' name='anntitle'>
-                  <Input placeholder='Announcement Title' />
-                </Form.Item>
+              <Form.Item name="Type" label="Type">
+              <Select className="Vehicle Type" placeholder="Select Vehicle type">
+                <Option value="bus">Bus</Option>
+                <Option value="van">Van</Option>
+              </Select>
+            </Form.Item>
               </div>
             </div>
 
             <div className="form-row">
               <div className="item">
-                <Form.Item label="Upload Date" name="uploaddate">
-                  <DatePicker className="date" />
-                </Form.Item>
+              <Form.Item label='Vehicle Number' name='vehicleNum'>
+              <Input placeholder='Vehicle Number' />
+            </Form.Item>
               </div>
               <div className="item">
-                <Form.Item name="Type" label="Type">
-                  <Select className="Type" placeholder="Select announcement type">
-                    <Option value="General">General</Option>
-                    <Option value="Specific">Specific</Option>
-                  </Select>
-                </Form.Item>
+              <Form.Item name="ECDetails" label="Emissions Certificate Details ">
+            <Input.TextArea className='Description' />
+          </Form.Item>
               </div>
             </div>
 
             <div className="form-row">
               <div className="item">
-                <Form.Item label="Expire Date" name="expiredate">
-                  <DatePicker className="date" />
-                </Form.Item>
+              <Form.Item name="LicenceDetails" label="Licence Details">
+            <Input.TextArea className='Description' />
+          </Form.Item>
               </div>
             </div>
 
             <div className="item">
-              <Form.Item name="Description" label="Description">
-                <Input.TextArea className='Description' />
-              </Form.Item>
+            <Form.Item name="OwnerDetails" label="Owner Details">
+            <Input.TextArea className='Description' />
+          </Form.Item>
             </div>
 
             <div className="Button-cons">
@@ -110,7 +110,7 @@ function AnnUpdate() {
         </div>
       </div>
     </Layout>
-  );
+  )
 }
 
-export default AnnUpdate;
+export default TraVehicleDetailsUpdate
