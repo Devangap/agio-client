@@ -35,10 +35,11 @@ function LeaveEmp() {
             fetchData(user.userid);
         }
     }, [user]);
+    
 
     const fetchData = async (userid) => {
         try {
-          
+          console.log(userid)
             const response = await axios.get(`/api/employee/getleave2/${userid}`, {
                 headers: {
                     Authorization: 'Bearer ' + token
@@ -120,9 +121,9 @@ function LeaveEmp() {
     ];
 
     const leaveTypes = [
-        { title: 'General Leave', description: `Available: ${employeeData ? employeeData.general_leave : ''}` },
-        { title: 'Annual Leave', description: `Available: ${employeeData ? employeeData.annual_leave : ''}` },
-        { title: 'Medical Leave', description: `Available: ${employeeData ? employeeData.medical_leave : ''}` },
+        { title: 'General Leave', description: `Available Leaves: ${employeeData ? employeeData.general_leave : ''}` },
+        { title: 'Annual Leave', description: `Available Leaves: ${employeeData ? employeeData.annual_leave : ''}` },
+        { title: 'Medical Leave', description: `Available Leaves: ${employeeData ? employeeData.medical_leave : ''}` },
     ];
 
     return (

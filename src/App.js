@@ -7,7 +7,7 @@ import Main_register from './pages/Main_register';
 import { Toaster } from 'react-hot-toast';
 import TraHome from './pages/TraHome';
 
-
+import Leaveoverview from './pages/leaveoverview';
 import Home from './pages/Home';
 
 import LeaveHRsup from './pages/leaveHRsup';
@@ -91,6 +91,7 @@ function App() {
           <Route path='/LeaveHrsupdisplay' element={<ProtectedRoute><LeaveHrsupdisplay /></ProtectedRoute>} />
           <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
           <Route path='/LeaveUpdate/:id' element={<ProtectedRoute><LeaveUpdate/></ProtectedRoute>} />
+          <Route path='/Leaveoverview' element={<ProtectedRoute><Leaveoverview/></ProtectedRoute>} />
 
           <Route path='/Main_Register' element={<Main_register />} />
           <Route path='/Main_Login' element={<Main_login />} />
