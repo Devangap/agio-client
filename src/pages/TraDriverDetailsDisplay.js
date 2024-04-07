@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
+import '../search.css';
 
 function TraDriverDetailsDisplay() {
 
@@ -12,6 +13,7 @@ function TraDriverDetailsDisplay() {
     const [Dregister, setDregister] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentDregister, setCurrentDregister] = useState(null); 
+    const [filteredDregister, setFilteredDregister] = useState([]);
 
     const fetchDregister = async () => {
         try {
@@ -115,12 +117,34 @@ function TraDriverDetailsDisplay() {
             message.error('Failed to update Booking');
         }
     };
-    
 
+    useEffect(() => {
+        fetchDregister();
+    }, []);
+
+    const handleSearch = (searchText) => {
+        const filteredData = Dregister.filter(driver =>
+            driver.driName.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setFilteredDregister(filteredData);
+    };
+
+    const clearSearch = () => {
+        setFilteredDregister([]);
+    };
 
   return (
     <Layout>
-            <Table dataSource={Dregister} columns={columns} />
+
+<div className="searchInput">
+                <Input.Search
+                    className="customInput"
+                    placeholder="Search by Driver Name"
+                    onSearch={handleSearch}
+                    enterButton={<Button className="customButton">Search</Button>} // Customized search button
+                />
+            </div>
+            <Table dataSource={filteredDregister.length > 0 ? filteredDregister : Dregister} columns={columns} />
             <Modal
     title="Update Booking"
     open={isModalVisible}

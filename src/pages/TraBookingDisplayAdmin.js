@@ -35,6 +35,8 @@ function TraBookingDisplayAdmin() {
         fetchbooking();
     }, []);
 
+
+
   /*  const handleLeaveCount = async (record) => {
         try {
             // Fetch the leave data using the leaveid
@@ -158,6 +160,8 @@ function TraBookingDisplayAdmin() {
 
     return (
         <Layout>
+
+
             <Table dataSource={booking} columns={columns} />
         </Layout>
     );

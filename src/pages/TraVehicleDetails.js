@@ -13,6 +13,7 @@ function TraVehicleDetails() {
     const [Vregister, setVregister] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentVregister, setCurrentVregister] = useState(null); 
+    const [filteredVregister, setFilteredVregister] = useState([]);
 
     const fetchVregister = async () => {
         try {
@@ -51,6 +52,18 @@ function TraVehicleDetails() {
             console.error('Failed to delete Booking:', error);
             message.error('Failed to delete Booking');
         }
+    };
+
+
+    const handleSearch = searchText => {
+        const filteredData = Vregister.filter(vehicle =>
+            vehicle.vehicleNum.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setFilteredVregister(filteredData);
+    };
+
+    const clearSearch = () => {
+        setFilteredVregister([]);
     };
     
 
@@ -118,7 +131,17 @@ function TraVehicleDetails() {
 
   return (
     <Layout>
-            <Table dataSource={Vregister} columns={columns} />
+        <div style={{ marginBottom: 20 }}>
+                <Input.Search
+                    className="customInput"
+                    placeholder="Search by Vehicle Number"
+                    onSearch={handleSearch}
+                    enterButton={<Button className="customButton">Search</Button>} // Customized search button
+                   
+                />
+               
+                </div>
+                <Table dataSource={filteredVregister.length > 0 ? filteredVregister : Vregister} columns={columns} />
             <Modal
     title="Update Booking"
     open={isModalVisible}
