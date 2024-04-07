@@ -63,6 +63,13 @@ function TraBookingDisplay() {
             title: 'Type',
             dataIndex: 'Type',
             key: 'Type',
+            
+        },
+        
+        {
+            title: 'Select Location',
+            dataIndex: 'location',
+            key: 'location',
         },
         
         {

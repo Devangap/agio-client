@@ -73,6 +73,7 @@ function TraVehicleDetails() {
             dataIndex: 'Type',
             key: 'Type',
         },
+       
         {
             title: 'Vehicle Number',
             dataIndex: 'vehicleNum',
@@ -83,6 +84,11 @@ function TraVehicleDetails() {
             title: 'Emissions Certificate Details ',
             dataIndex: 'ECDetails',
             key: 'ECDetails',
+        },
+        {
+            title: 'Select Location',
+            dataIndex: 'location',
+            key: 'location',
         },
         {
             title: 'Licence Details',

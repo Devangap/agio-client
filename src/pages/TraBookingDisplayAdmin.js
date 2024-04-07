@@ -124,6 +124,11 @@ function TraBookingDisplayAdmin() {
             dataIndex: 'Type',
             key: 'Type',
         },
+        {
+            title: 'Select Location',
+            dataIndex: 'location',
+            key: 'location',
+        },
         
         {
             title: 'Booking Date',

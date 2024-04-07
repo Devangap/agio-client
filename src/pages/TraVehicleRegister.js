@@ -52,8 +52,8 @@ function TraVehicleRegister() {
               </Select>
             </Form.Item>
           </div>
-          
         </div>
+
         
         <div className="form-row">
         <div className="item">
@@ -66,6 +66,19 @@ function TraVehicleRegister() {
             <Input.TextArea className='Description' />
           </Form.Item>
           </div>
+
+          <div className="item">
+          <Form.Item name="location" label="Select Location">
+            <Select className="Type" placeholder="Select Location">
+              <Option value="Colombo">Colombo</Option>
+              <Option value="Ja-ela">Ja-ela</Option>
+              <Option value="Kollupitiya">Kollupitiya</Option>
+              <Option value="Negambo">Negambo</Option>
+              <Option value="Panadura">Panadura</Option>
+              <Option value="Kaduwela">Kaduwela</Option>
+            </Select>
+          </Form.Item>
+        </div>
         </div>
         <div className="form-row">
           <div className="item">
