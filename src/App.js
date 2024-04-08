@@ -45,7 +45,7 @@ import MyInquiries from './pages/MyInquiries';
 
 import UniformOrder from './pages/UniformOrder';
 import UniformOrderConfirmation from './pages/UniformOrderConfirmation';
-import UniformManagerView1 from './pages/UniformManagerView1';
+import UniformManagerView from './pages/UniformManagerView';
 
 
 
@@ -90,7 +90,7 @@ function App() {
 
           <Route path='/UniformOrder' element={<UniformOrder/>} />
           <Route path='/UniformOrderConfirmation' element={<UniformOrderConfirmation/>}/>
-          <Route path='/UniformManagerView1' element={<UniformManagerView1/>} />
+          <Route path='/UniformManagerView' element={<UniformManagerView/>} />
 
 
           

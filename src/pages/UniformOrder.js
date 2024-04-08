@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Select, message } from 'antd'; // Import message from antd
 import { UploadOutlined } from '@ant-design/icons';
-
+import Layout from '../components/Layout';
 import '../UniformOrder.css';
 
 const { Option } = Select;
@@ -62,7 +62,9 @@ function UniformOrder() {
   };
 
   return (
-    <div className="uniform-order-container">
+   
+    
+      <div className="uniform-order-container">
       <div className="uniform-order-form-container">
         <div className="uniform-order-form-box p-3">
           <h3 className="uniform-order-title">Uniform Order Form</h3>
@@ -110,6 +112,10 @@ function UniformOrder() {
         </div>
       </div>
     </div>
+
+
+   
+  
   );
 }
 
