@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Layout from "../components/Layout";
 import { useState } from "react";
 import DatePicker from "react-datepicker";
@@ -10,7 +10,9 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { Button, Form, Input, Tabs } from "antd";
 
-/* get the length of the current month */
+/*
+get the length of the current month
+*/
 function currentMonthLength() {
   const thirtyOneDayMonths = [0, 2, 4, 6, 7, 9, 11];
   const thirtyDayMonths = [3, 5, 8, 10];
@@ -25,7 +27,8 @@ function currentMonthLength() {
   } else if (thirtyDayMonths.includes(currentMonth)) {
     length = 30;
   } else if (currentMonth === 1) {
-    // February
+    // Check if a leap year or not
+    // Assign the no. of dates for the month february based on that
     if (
       (currentYear % 4 === 0 && currentYear % 100 !== 0) ||
       currentYear % 400 === 0
@@ -48,17 +51,191 @@ main function
 const MedParameters = () => {
   const dispatch = useDispatch();
 
-  // date picker essentials
+  // Selected Dates to display in the datepicker
   const [selectedDates, setSelectedDates] = useState([]);
-  const onChange = (dates) => {
-    setSelectedDates(dates);
+
+  // Date object list
+  const [dateObjectsList, setDateObjectsList] = useState([]);
+
+  // Date object length as key to include in date-list component
+  const [dateListKey, setDateListKey] = useState(dateObjectsList.length);
+
+  // IDs of the saved dates
+  const [savedDateIds, setSavedDatesIds] = useState([]);
+
+  // If the existing dates have been checked or not
+  const [checkedExistingDates, setCheckedExistingDates] = useState(false);
+
+  // Default parameter values
+  const [defaultParameterValues, setDefaultParameterValues] = useState(null);
+
+
+
+  /* =============== Manage Dates ===================== */
+
+  /*
+  Manage selected and deselectd dates
+  */
+  const onChange = async (dates) => {
+    console.log("@onChange @medParameters dates:", dates);
+
+    const currentDateList = [];
+    const previousDateList = dateList;
+    const currentDateObjectList = dateObjectsList;
+    const cleanedDateObjectList = [];
+
+    var removedDate = null;
+    var removedIsoDate = null;
+    var removedDateObj = null;
+
+    // To keep track of currently selected dates
+    // currentDateList changes when the user select or deselect dates
+    for (let date of dates) {
+      currentDateList.push(date.toString());
+    }
+
+    // To keep track of the dates before current changes
+    for (let pDate of previousDateList) {
+      // Check if a previously selected date has be deselected
+      if (!currentDateList.includes(pDate)) {
+        removedDate = new Date(pDate);
+        removedIsoDate = removedDate.toISOString();
+      } else {
+        // If none has been deselected set the
+        // current list as selectedDates @date-picker
+        setSelectedDates(dates);
+      }
+    }
+
+    // Get the corresponding date-object of the deselected date
+    for (let dateObj of currentDateObjectList) {
+      if (dateObj.date == removedIsoDate) {
+        removedDateObj = dateObj;
+      }
+    }
+
+    // Check if the deselcted date is already saved
+    if (removedDate != null && removedDateObj._id != -99) {
+
+      // Check if the deselected date has scheduled appointments
+      // Don't remove the date if there are scheduled dates
+      if (removedDateObj.appointmentCount > 0) {
+        const confirmation = window.confirm(
+          `The date: ${removedDate} already has scheduled appointments\nDate cannot be reomved!`
+        );
+        if (confirmation) {
+          var newDates = dates;
+          newDates.push(removedDate);
+
+          setSelectedDates(newDates); // Select the date
+        } else {
+          newDates = dates;
+          newDates.push(removedDate);
+
+          setSelectedDates(newDates); // Select the date
+        }
+        //
+      } else {
+        const confirmation = window.confirm(
+          `The date: ${removedDate} is already saved\nAre you sure you want to remove the selected date?`
+        );
+
+        if (confirmation) { // Confirm to deselct the date
+          setSelectedDates(dates); // Deselect the date
+
+          // Delete the record
+          try {
+            const deleteResponse = await axios.post(
+              "/api/medDoctor/medical-available-dates-delete-existing",
+              { id: removedDateObj._id },
+              {
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            );
+
+            if (deleteResponse.data.success) {
+              toast.success(
+                `Deleted the saved record for the date: ${removedDateObj.date}`
+              );
+            } else {
+              toast.error(
+                `Deleting the saved record for the date: ${removedDateObj.date} failed`
+              );
+            }
+
+
+          } catch (error) {
+            console.log(
+              "Error occured when deleting the record for the date ID: ",
+              removedDateObj._id
+            );
+            toast.error(
+              "Error occured when deleting the record for the selected date"
+            );
+          }
+
+          // Get the date object list without the deselected date's object
+          for (let dateObj of currentDateObjectList) {
+            if (dateObj.date == removedIsoDate) {
+              continue;
+            } else {
+              cleanedDateObjectList.push(dateObj);
+            }
+          }
+
+          console.log(
+            "Cleaned Object List @onChange @medParameters: ",
+            cleanedDateObjectList
+          );
+
+          // Set existing date list to not containt the deselected object
+          //setCheckedExistingDates(cleanedDateObjectList);
+          // Re-render the existing available dates to reflect changes
+          getExistingAvailableDates();
+
+        } else { // If reject deselecting date
+
+          var newDates = dates;
+          newDates.push(new Date(removedDate));
+
+          setSelectedDates(newDates); // Re-select the deselected date
+
+        }
+      }
+    } else { /* If the date is not saved */
+
+      // Get the date object list without the deselected date's object
+      for (let dateObj of currentDateObjectList) {
+        if (dateObj.date == removedIsoDate) {
+          continue;
+        } else {
+          cleanedDateObjectList.push(dateObj);
+        }
+      }
+
+      // Deselect the date
+      setSelectedDates(dates);
+      // Set date objects to reflect the changes
+      setDateObjectsList(cleanedDateObjectList);
+
+      // Re-render the date-list component
+      setDateListKey(cleanedDateObjectList.length);
+    }
+
   };
+ 
+
+  /*
+  Store multiple dates selected as strings
+  */
   const dateList = [];
   for (let date of selectedDates) {
     dateList.push(date.toString());
   }
+  dateList.sort().reverse();
 
-  console.log(dateList);
 
   /* 
   Data submission - update dates
@@ -67,16 +244,18 @@ const MedParameters = () => {
     try {
       dispatch(showLoading());
       let response_check_similar;
-      let response_add_appointment;
+      let response_add_date;
       let response_update_similar;
 
-      // insert only if there are data in the date list
-      if (dateList.length > 0) {
-        for (let localDate of dateList) {
-          // convert the dates to ISO dates
-          const isoDate = new Date(localDate).toISOString();
+      // Update only if the date objects list contain dates =>
+      //      User has already saved dates Or User has selected new dates
+      if (dateObjectsList.length > 0) {
 
-          // find if there is a similar date
+        // Convert the dates to ISO dates
+        for (let dateObj of dateObjectsList) {
+          const isoDate = new Date(dateObj.date).toISOString();
+
+          // Find if there is a saved record for the date
           response_check_similar = await axios.post(
             "/api/medDoctor/medical-similar-available-date",
             {
@@ -90,7 +269,8 @@ const MedParameters = () => {
           );
           console.log("Check_similar: ", response_check_similar);
 
-          // if there is a similar date, only update it's fields
+          // If there is a saved record for the corresponding date
+          // only update it's fields
           if (response_check_similar.data.success) {
             toast.dismiss(response_check_similar.data.message);
 
@@ -101,7 +281,7 @@ const MedParameters = () => {
                 id: response_check_similar.data.similarDate._id,
                 appointmentCount:
                   response_check_similar.data.similarDate.appointmentCount,
-                maxAppointmentCount: 30,
+                maxAppointmentCount: dateObj.maxAppointmentCount,
                 status: response_check_similar.data.similarDate.status,
                 updatedAt: new Date(),
               },
@@ -115,13 +295,14 @@ const MedParameters = () => {
 
             continue;
           }
-          // insert the document
-          response_add_appointment = await axios.post(
+
+          // If the date is not already saved, create a new record
+          response_add_date = await axios.post(
             "/api/medDoctor/medical-new-available-date",
             {
               date: isoDate,
-              appointmentCount: 0,
-              maxAppointmentCount: 20,
+              appointmentCount: dateObj.appointmentCount,
+              maxAppointmentCount: dateObj.maxAppointmentCount,
             },
             {
               headers: {
@@ -129,33 +310,283 @@ const MedParameters = () => {
               },
             }
           );
-
-          if (!response_add_appointment.data.success) {
-            throw new Error(response_add_appointment.data.message);
+          
+          // review this section again =>
+          if (!response_add_date.data.success) {
+            throw new Error(response_add_date.data.message);
           }
+          // <=
+
         }
       } else {
         toast.error("No dates are selected");
       }
+
       dispatch(hideLoading());
-      if (response_add_appointment.data.success) {
-        toast.success(response_add_appointment.data.message);
+
+
+      if (response_add_date.data.success) {
+        toast.success(response_add_date.data.message);
       } else {
-        toast.error(response_add_appointment.data.message);
+        toast.error(response_add_date.data.message);
       }
+
+      // Re-render the saved date record to reflect he changes made
+      getExistingAvailableDates();
+
     } catch (error) {
       dispatch(hideLoading());
       toast.error("Something went wrong while updating dates");
+      console.log(error);
     }
   };
+
+
+
+  /* =============== Manage Parameters ===================== */
+
+
+  /*
+  Set current parameter values as default inputs
+  */
+  useEffect(() => {
+    const getDefaultValues = async () => {
+      try {
+        const existingRecord = await axios.post(
+          "/api/medDoctor/medical-parameters-find-existing",
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        if (existingRecord.data.success) {
+          setDefaultParameterValues(existingRecord.data.fetched);
+        }
+      } catch (error) {
+        console.log(
+          "Error occured when getting default parameter values: ",
+          error
+        );
+      }
+    };
+
+    // call the method and store the current values
+    getDefaultValues();
+  }, []);
+
 
   /* 
   Data submission - parameters
   */
-  const saveParameters = async (params) => {
-    //
-  }
+  const saveParameters = async (values) => {
+    try {
+      dispatch(showLoading());
 
+      // Check if a record already exists
+      const existingRecord = await axios.post(
+        "/api/medDoctor/medical-parameters-find-existing",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("Read parameter record ", existingRecord.data);
+
+      // If a record already exists, only update the fields
+      if (existingRecord.data.success) {
+        const updateExisting = await axios.post(
+          "/api/medDoctor/medical-parameters-update-existing",
+          {
+            id: existingRecord.data.fetched._id,
+            maxAppointments: values.max_appointments,
+            avgSessionTime: values.average_session_time,
+            startTime: values.appointments_start_time,
+            endTime: values.appointments_end_time,
+            updatedAt: new Date(),
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        if (updateExisting.data.success) {
+          toast.success(updateExisting.data.message);
+        } else {
+          toast.error(updateExisting.data.message);
+        }
+        dispatch(hideLoading());
+      } else {
+        // If there is not an exisitng record, create a new record
+        const newRecord = await axios.post(
+          "/api/medDoctor/medical-parameters-insert-new",
+          {
+            maxAppointments: values.max_appointments,
+            avgSessionTime: values.average_session_time,
+            startTime: values.appointments_start_time,
+            endTime: values.appointments_end_time,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        );
+
+        if (newRecord.data.success) {
+          toast.success(newRecord.data.message);
+        } else {
+          toast.error(newRecord.data.message);
+        }
+        dispatch(hideLoading());
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      toast.error("Error occured when saving parameters");
+      console.log(error);
+    }
+  };
+
+  /* =============== Manage Dates - Date List ===================== */
+
+  /*
+  Read the existing available dates from the DB
+  */
+  const getExistingAvailableDates = async () => {
+    
+    const existingAvailableDates = await axios.post(
+      "/api/medDoctor/medical-available-dates-read-existing",
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }
+    );
+
+    // 
+    if (existingAvailableDates.data.success) {
+      const existingAvailableDateObjectList =
+        existingAvailableDates.data.fetched;
+
+      console.log(
+        "@getExistingAvailableDates @medParamters Fetched data: ",
+        existingAvailableDateObjectList
+      );
+
+      // Update the date objects list
+      setDateObjectsList(existingAvailableDateObjectList);
+
+      // To indicate if the date checking has already done
+      setCheckedExistingDates(true);
+
+      const existingAvailableDatesList = [];
+      const savedDateIdsList = [];
+
+      // Retrieve dates from the date fetched date object list
+      for (let d of existingAvailableDateObjectList) {
+        existingAvailableDatesList.push(new Date(d.date));
+        savedDateIdsList.push(d._id); // Add saved dates' IDs to a list
+      }
+
+      // Update selected dates to reflect the retrieved saved dates
+      setSelectedDates(existingAvailableDatesList);
+      // Update the IDs of the already saved dates
+      setSavedDatesIds(savedDateIdsList);
+
+      console.log(
+        "@existingAvailableDates @medParameters Date List for selectedDate: ",
+        existingAvailableDatesList
+      );
+      console.log(
+        "@existingAvailableDates @medParameters date Objects List: ",
+        dateObjectsList
+      );
+
+      // => Should I re-render the date-list component here? <=
+      // setDateListKey(dateObjectsList.length);
+    }
+  };
+
+  useEffect(() => {
+    // Call the method
+    getExistingAvailableDates();
+  }, []);
+
+  /*
+  Set dateObjects on date selection
+  */
+  const setDateObjects = () => {
+    var matchDate;
+    var matchDateObj;
+    var isSaved;
+    var dateObj;
+    var newDateObjectList = dateObjectsList;
+
+    //getExistingAvailableDates();
+    console.log(
+      "@setDateObjects @medParameters Date objects list: ",
+      dateObjectsList
+    );
+    
+    // Iterate through the selected dates
+    for (let d of dateList) {
+      isSaved = false;
+
+      matchDate = new Date(d).toISOString();
+
+      // Check if the dates objects are already saved or not
+      for (let dObj of dateObjectsList) {
+        matchDateObj = dObj.date;
+
+        if (matchDate === matchDateObj && matchDateObj._id != -99) {
+          isSaved = true;
+        }
+      }
+
+      // If a selected date is not saved, create a new date object for it
+      if (!isSaved) {
+        dateObj = {
+          _id: -99, // To identify as a unsaved date
+          date: matchDate,
+          appointmentCount: 0,
+          maxAppointmentCount: defaultParameterValues.maxAppointments,
+        };
+
+        console.log(
+          `@seDateObjects @medParameters dateObject: ${dateObj.date} with id: ${dateObj._id} added`
+        );
+
+        // Add the unsaved date to the current date object list
+        newDateObjectList.push(dateObj);
+      }
+    }
+
+    // Sort the date object list in ascending order
+    newDateObjectList.sort(function (a, b) {
+      return (
+        Number(a.date.split("T")[0].split("-")[2]) -
+        Number(b.date.split("T")[0].split("-")[2])
+      );
+    });
+
+    // Update the date object list to reflect the newly created
+    // unsaved date objects
+    setDateObjectsList(newDateObjectList);
+
+    // Re-render the date-list component
+    setDateListKey(dateObjectsList.length);
+  };
+
+  useEffect(() => {
+    setDateObjects();
+  }, [updateDates]);
 
   return (
     <Layout>
@@ -182,23 +613,80 @@ const MedParameters = () => {
               />
             </div>
             <div className="date-list-container">
-              <div className="date-list">
+              <div className="date-list" key={dateListKey}>
                 <ul>
-                  {dateList.map((date, index) => (
-                    <div className="single-date">
-                      <Form>
-                        <Form.Item label="Date" name="date">
-                          <Input
-                            type="text"
-                            disabled
-                            placeholder={date.toString().split("00")[0]}
-                            name={`available-date-${index}`}
-                            value={date.toString().split("00")[0]}
-                          />
-                        </Form.Item>
-                      </Form>
-                    </div>
-                  ))}
+                  {dateObjectsList.map((dateObject) => {
+                    const date = new Date(dateObject.date);
+                    const dateString = date.toDateString().split("00")[0];
+                    const dateToId =
+                      dateString.split(" ")[1] + dateString.split(" ")[2];
+
+                    const handleMaxAppointmentCountValueChange = (value) => {
+                      console.log(
+                        `Max App. value for: ${dateObject.date}`,
+                        value
+                      );
+                      dateObject.maxAppointmentCount = value;
+                    };
+
+                    return (
+                      <div className="single-date">
+                        <Form>
+                          <Form.Item label="Date" name={`date_${dateToId}`}>
+                            <Input
+                              type="text"
+                              disabled
+                              variant="borderless"
+                              placeholder={dateString}
+                              name={`available_date_${dateToId}`}
+                              value={dateObject.date}
+                            />
+                          </Form.Item>
+
+                          <Form.Item
+                            label="Scheduled"
+                            name={`scheduled_${dateToId}`}
+                          >
+                            <Input
+                              type="number"
+                              disabled
+                              variant="borderless"
+                              defaultValue={dateObject.appointmentCount}
+                              name={`sheduled_${dateToId}`}
+                              value={dateObject.appointmentCount}
+                            />
+                          </Form.Item>
+
+                          <Form.Item
+                            label="Maximum"
+                            name={`maximum_${dateToId}`}
+                          >
+                            {/*
+                            (e) => handleMaxAppointmentCountValueChange(e.target.value) creates 
+                            an arrow function that takes the event (e) as an argument and calls 
+                            handleMaxAppointmentCountValueChange with e.target.value.
+
+                            e.target.value represents the current value of the input element.
+                            */}
+
+                            <Input
+                              id={`max_input_${dateToId}`}
+                              style={{
+                                width: 20,
+                              }}
+                              value={dateObject.maxAppointmentCount}
+                              defaultValue={dateObject.maxAppointmentCount}
+                              onChange={(e) =>
+                                handleMaxAppointmentCountValueChange(
+                                  e.target.value
+                                )
+                              }
+                            />
+                          </Form.Item>
+                        </Form>
+                      </div>
+                    );
+                  })}
                 </ul>
               </div>
               <Button
@@ -211,58 +699,102 @@ const MedParameters = () => {
           </div>
         </Tabs.TabPane>
 
+        {/* ===================== Manage Parameters Tab =================== */}
+
         <Tabs.TabPane tab="Manage Parameters" key={1}>
           <Form onFinish={saveParameters}>
-            <Form.Item
-              label="Maximum appointments"
-              name="max-appointments"
-            >
+            <Form.Item label="Maximum appointments" name="max_appointments">
               <Input
                 type="Number"
-                placeholder={20}
-                name="max-appointments"
+                required={defaultParameterValues != null ? false : true}
+                defaultValue={
+                  defaultParameterValues != null
+                    ? defaultParameterValues.maxAppointments
+                    : null
+                }
+                placeholder={
+                  defaultParameterValues != null ? null : "Enter value"
+                }
+                value={
+                  defaultParameterValues != null
+                    ? defaultParameterValues.maxAppointments
+                    : null
+                }
+                name="max_appointments"
               />
             </Form.Item>
 
             <Form.Item
               label="Average session time (Min)"
-              name="average-session-time"
+              name="average_session_time"
             >
               <Input
                 type="Number"
-                placeholder={10}
-                name="average-session-time"
+                required={defaultParameterValues != null ? false : true}
+                defaultValue={
+                  defaultParameterValues != null
+                    ? defaultParameterValues.avgSessionTime
+                    : null
+                }
+                placeholder={
+                  defaultParameterValues != null ? null : "Enter value"
+                }
+                value={
+                  defaultParameterValues != null
+                    ? defaultParameterValues.avgSessionTime
+                    : null
+                }
+                name="average_session_time"
               />
             </Form.Item>
 
             <Form.Item
               label="Appointments start time"
-              name="appointments-start-time"
+              name="appointments_start_time"
             >
               <Input
                 type="Time"
-                placeholder="08:00:00"
-                name="appointments-start-time"
+                required={defaultParameterValues != null ? false : true}
+                defaultValue={
+                  defaultParameterValues != null
+                    ? defaultParameterValues.startTime
+                    : null
+                }
+                value={
+                  defaultParameterValues != null
+                    ? defaultParameterValues.startTime
+                    : null
+                }
+                name="appointments_start_time"
               />
             </Form.Item>
 
             <Form.Item
               label="Appointments end time"
-              name="appointments-end-time"
+              name="appointments_end_time"
             >
               <Input
                 type="Time"
-                placeholder="08:00:00"
-                name="appointments-end-time"
+                required={defaultParameterValues != null ? false : true}
+                defaultValue={
+                  defaultParameterValues != null
+                    ? defaultParameterValues.endTime
+                    : null
+                }
+                value={
+                  defaultParameterValues != null
+                    ? defaultParameterValues.endTime
+                    : null
+                }
+                name="appointments_end_time"
               />
             </Form.Item>
 
             <div className="d-flex justify-content-end">
-          <Button className="primary-button" htmlType="submit">
-            SAVE
-          </Button>
-        </div>
-
+              <Button className="primary-button" htmlType="submit">
+                SAVE
+              </Button>
+            </div>
           </Form>
         </Tabs.TabPane>
       </Tabs>
