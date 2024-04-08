@@ -37,28 +37,28 @@ function TraBookingDisplayAdmin() {
 
 
 
-  /*  const handleLeaveCount = async (record) => {
+  /*  const handleSeatCount = async (record) => {
         try {
             // Fetch the leave data using the leaveid
-            const responseLeave = await axios.get(`/api/employee/getleave3/${record._id}`, {
+            const responseBooking = await axios.get(`/api/employee/getTraBooking2/${record._id}`, {
                 headers: {
                     Authorization: 'Bearer ' + token
                 }
             });
     
-            if (!responseLeave.data.success) {
+            if (!responseBooking.data.success) {
                 toast.error("Failed to fetch leave data.");
                 return;
             }
     
-            const leaveData = responseLeave.data.leave;
-            const leave = leaveData; // Assuming the leave data is returned as an object
+            const booking = responseBooking.data.bookings;
+            const bookings = booking; // Assuming the leave data is returned as an object
     
             // Check if the leave type is "Medical"
-            if (leave.Type === 'Medical') {
+            if (bookings.Type === 'Bus') {
                 // If it's a medical leave, deduct one from the medical_leave field
                 const responseDeduct = await axios.post(
-                    '/api/employee/deduct_medical_leave',
+                    '/api/employee/deduct_seat_count',
                     { userid: record.userid },
                     {
                         headers: {
@@ -69,7 +69,7 @@ function TraBookingDisplayAdmin() {
     
                 if (responseDeduct.data.success) {
                     toast.success(responseDeduct.data.message);
-                    fetchData(); // Refresh the leave data after deducting medical leave
+                    fetchbooking(); // Refresh the leave data after deducting medical leave
                 } else {
                     toast.error(responseDeduct.data.message);
                 }

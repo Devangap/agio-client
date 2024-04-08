@@ -60,6 +60,7 @@ import TraBookingBox from './pages/TraBookingBox';
 
 import MyInquiries from './pages/MyInquiries';
 import TraBookingDisplayAdmin from './pages/TraBookingDisplayAdmin';
+import TraVehicleviwe from './pages/TraVehicleviwe';
 
 
 
@@ -125,6 +126,8 @@ function App() {
           <Route path='/VehicleBox' element={<ProtectedRoute><VehicleBox/></ProtectedRoute>} />
           <Route path='/TraBookingBox' element={<ProtectedRoute><TraBookingBox/></ProtectedRoute>} />
           <Route path='/TraBookingDisplayAdmin' element={<ProtectedRoute><TraBookingDisplayAdmin/></ProtectedRoute>} />
+          <Route path='/TraVehicleviwe' element={<ProtectedRoute><TraVehicleviwe/></ProtectedRoute>} />
+
 
           
         

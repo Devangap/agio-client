@@ -4,6 +4,7 @@ import { Table, Button, message, Modal, Form, Input } from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import '../search.css';
+import { useReactToPrint } from 'react-to-print';
 
 function TraDriverDetailsDisplay() {
 

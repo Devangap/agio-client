@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, message } from 'antd';
+import { Table, Button, message, Card } from 'antd';
 import Layout from '../components/Layout';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux';
 function TraBookingDisplay() {
     const { user } = useSelector((state) => state.user);
     const [booking, setbooking] = useState([]);
+    
     const navigate = useNavigate();
 
     const fetchBooking = async (userId) => {
@@ -27,11 +28,15 @@ function TraBookingDisplay() {
         }
     };
 
+
+
     useEffect(() => {
         if (user && user.userid) {
             fetchBooking(user.userid);
         }
+        
     }, [user]);
+
 
     const handleLeaveSubmission = () => {
         navigate('/TraBooking');
@@ -101,8 +106,13 @@ function TraBookingDisplay() {
         },
     ];
 
+    
+
     return (
         <Layout>
+
+
+
             
             <Table dataSource={booking} columns={columns} />
         </Layout>

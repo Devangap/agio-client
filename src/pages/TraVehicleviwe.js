@@ -3,9 +3,9 @@ import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
+import { useReactToPrint } from 'react-to-print';
 
-
-function TraVehicleDetails() {
+function TraVehicleviwe() {
 
 
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ function TraVehicleDetails() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentVregister, setCurrentVregister] = useState(null); 
     const [filteredVregister, setFilteredVregister] = useState([]);
-    
+    const componentPDF = useRef();
 
     const fetchVregister = async () => {
         try {
@@ -39,7 +39,7 @@ function TraVehicleDetails() {
 
     
 
-    const handleDelete = async (id) => {
+   /* const handleDelete = async (id) => {
         try {
             // Send a DELETE request to delete the booking by its ID
             await axios.delete(`/api/employee/deletevehicles/${id}`);
@@ -54,7 +54,7 @@ function TraVehicleDetails() {
             console.error('Failed to delete Booking:', error);
             message.error('Failed to delete Booking');
         }
-    };
+    };*/
 
 
     const handleSearch = searchText => {
@@ -105,26 +105,26 @@ function TraVehicleDetails() {
             dataIndex: 'OwnerDetails',
             key: 'OwnerDetails',
         },
-        {
+      /*  {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
 
                 <>
-                
+                <Button type="primary" className="update" danger onClick={() => navigate(`/TraVehicleDetailsUpdate`)}>Viwe</Button>
                     <Button type="primary" className="update" onClick={() => navigate(`/TraVehicleDetailsUpdate/${record._id}`)}>Update</Button>
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
                     
                 </>
             ),
-        },
+        },*/
     ];
 
     const showModal = (Vregister) => {
         setCurrentVregister(Vregister);
         setIsModalVisible(true);
     };
-    const handleUpdate = async (values) => {
+   /* const handleUpdate = async (values) => {
         try {
             // Assuming you have the Booking ID in currentBooking._id
             const response = await axios.put(`/api/employee/updatevehicles/${currentVregister._id}`, values);
@@ -139,9 +139,14 @@ function TraVehicleDetails() {
         } catch (error) {
             message.error('Failed to update Booking');
         }
-    };
+    };*/
 
-   
+    const generatePDF= useReactToPrint({
+        content: ()=>componentPDF.current,
+        documentTitle:"VEHICLE DETAILS",
+        onAfterPrint:()=>alert("Data Saved in PDF")
+
+    });
 
   return (
     <Layout>
@@ -158,40 +163,14 @@ function TraVehicleDetails() {
             
             </div>
             
-            
+            <div ref={componentPDF} style={{width: '100%'}}>
                 <Table dataSource={filteredVregister.length > 0 ? filteredVregister : Vregister} columns={columns} />
-                <Button type="primary" className="update" danger onClick={() => navigate(`/TraVehicleviwe`)}>VIWE VEHICLE DETAILS</Button>
-            <Modal
-    title="Update Booking"
-    open={isModalVisible}
-    onCancel={() => setIsModalVisible(false)}
-    footer={null} // Use null here to not use the default Ok and Cancel buttons
->
+                </div>
 
-    <Form
-        layout="vertical"
-        initialValues={{ ...currentVregister }}
-        onFinish={handleUpdate}
-    >
-        <Form.Item
-            name="vehicleNum"
-            label="Vehicle Number"
-            rules={[{  message: 'Please input the Employee Name!' }]}
-        >
-            <Input />
-        </Form.Item>
-        {/* Repeat for other fields as necessary */}
-        <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Update
+                <Button  className='btn btn-success' onClick={ generatePDF }>
+                Download Report
             </Button>
-        </Form.Item>
-        
-        
-    </Form>
-    
-</Modal>
-
+         
 
         
 
@@ -199,4 +178,4 @@ function TraVehicleDetails() {
   )
 }
 
-export default TraVehicleDetails
+export default TraVehicleviwe;
