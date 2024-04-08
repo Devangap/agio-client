@@ -33,6 +33,7 @@ function Layout({ children }) {
                                         console.log(error);
                                     }
                                 };
+                                
                             
                                 useEffect(() => {
                                     getData();

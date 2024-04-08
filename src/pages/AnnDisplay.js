@@ -13,6 +13,8 @@ function AnnDisplay() {
     const [announcements, setAnnouncements] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentAnnouncement, setCurrentAnnouncement] = useState(null); 
+    const [searchText, setSearchText] = useState('');
+
 
 
     const fetchAnnouncements = async () => {
@@ -111,12 +113,29 @@ function AnnDisplay() {
             message.error('Failed to update announcement');
         }
     };
+    const filteredAnnouncements = announcements.filter((announcement) =>
+  announcement.anntitle.toLowerCase().includes(searchText.toLowerCase())
+  
+   || announcement.anntitle.toLowerCase().includes(searchText.toLowerCase())
+);
+
     
     
 
     return (
         <Layout>
-            <Table dataSource={announcements} columns={columns} />
+         <div className="table-header">
+        <div className="search-container">
+            <Input
+                placeholder="Search announcements"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                style={{ marginBottom: 16, width: 200 }}
+            />
+        </div>
+    </div>
+
+            <Table dataSource={filteredAnnouncements} columns={columns} />
             <Modal
     title="Update Announcement"
     open={isModalVisible}
