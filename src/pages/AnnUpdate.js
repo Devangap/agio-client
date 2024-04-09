@@ -25,6 +25,7 @@ function AnnUpdate() {
             expiredate: moment(data.expiredate),
             Description: data.Description,
           });
+          console.log(moment(data.uploaddate))
         } else {
           toast.error('Announcement not found!');
           navigate('/AnnDisplay');
