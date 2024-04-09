@@ -33,6 +33,7 @@ function Layout({ children }) {
                                         console.log(error);
                                     }
                                 };
+                                
                             
                                 useEffect(() => {
                                     getData();
@@ -46,7 +47,7 @@ function Layout({ children }) {
         },
         {
             name: 'Announcements',
-            path: '/announcements',
+            path: '/AnnEmpDisplay',
             icon: 'ri-survey-line',
         },
         {
@@ -95,13 +96,13 @@ function Layout({ children }) {
     ];
     const Annhrsupmenu = [
         {
-            name: 'Home',
-            path: '/',
+            name: 'Hooome',
+            path: '/AnnHRsup',
             icon: 'ri-home-line',
         },
         {
             name: ' Announcements',
-            path: '/profile',
+            path: '/AnnDisplay',
             icon: 'ri-account-box-line',
         },
         {

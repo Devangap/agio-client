@@ -10,6 +10,18 @@
     background-color: #CA9220; /* Darker shade for hover/focus */
     border-color: #CA9220;
 }
+.table-header {
+    display: flex;
+    justify-content:center;
+    padding-left: 486px; /* Align items to the right */
+    
+}
+
+.search-container {
+   
+    width: 200px; /* This should match the inline style of the Input if you set one */
+}
+
 
 
 
