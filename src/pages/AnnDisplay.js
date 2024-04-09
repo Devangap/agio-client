@@ -6,6 +6,7 @@ import Anndisplay from '../Anndisplay.css';
 import { useNavigate } from 'react-router-dom';
 
 
+
 function AnnDisplay() {
     const navigate = useNavigate();
     
@@ -14,6 +15,8 @@ function AnnDisplay() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentAnnouncement, setCurrentAnnouncement] = useState(null); 
     const [searchText, setSearchText] = useState('');
+    const [selectedFile, setSelectedFile] = useState(null);
+
 
 
 
@@ -70,6 +73,7 @@ function AnnDisplay() {
             dataIndex: 'Department',
             key: 'Department',
         },
+        
         {
             title: 'Expire Date',
             dataIndex: 'expiredate',
@@ -99,6 +103,14 @@ function AnnDisplay() {
     };
     const handleUpdate = async (values) => {
         try {
+            const formData = new FormData();
+            Object.keys(values).forEach(key => {
+              formData.append(key, values[key]);
+            });
+            if (selectedFile) {
+              formData.append("file", selectedFile);
+            }
+        
             // Assuming you have the announcement ID in currentAnnouncement._id
             const response = await axios.put(`/api/annWorkouts/updateAnnHRsup/${currentAnnouncement._id}`, values);
             if (response.data.success) {
