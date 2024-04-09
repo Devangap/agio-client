@@ -14,6 +14,7 @@ function AnnHRsup() {
   const navigate = useNavigate();
   const {user} = useSelector((state) => state.user);
   const [announcementType, setAnnouncementType] = useState('');
+  const [fileList, setFileList] = useState([]);
 
   const{Option} = Select;
 
@@ -34,48 +35,54 @@ useEffect(() => {
 }, []);
 
 
-  const onFinish = async(values) =>{
-    console.log('Recieved values of form', values);
+const onFinish = async (values) => {
+  const formData = new FormData();
+  fileList.forEach(file => {
+    formData.append('file', file.originFileObj);
+  });
+  Object.keys(values).forEach(key => {
+    formData.append(key, values[key]);
+  });
+  formData.append('userid', user?.userid);
 
-    try {
-      const response = await axios.post('/api/employee/AnnHRsup',{...values , userid : user?.userid,},
-      {headers:{
-        Authorization :`Bearer ${localStorage.getItem("token")}`,
-       },
+  try {
+    const response = await axios.post('/api/employee/AnnHRsup', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    });
 
-        });
-      if(response.data.success){
-          toast.success(response.data.message);
-          navigate('/AnnDisplay');
-
-         
-          
-      }else{
-          toast.error(response.data.message);
-
-      }
-      
+    if (response.data.success) {
+      toast.success(response.data.message);
+      navigate('/AnnDisplay');
+    } else {
+      toast.error(response.data.message);
+    }
   } catch (error) {
-      toast.error("Something went wrong");
+    toast.error("Something went wrong");
   }
+};
 
-  };
-  const handleTypeChange = (value) => {
-    setAnnouncementType(value);
-  };
+const handleTypeChange = (value) => {
+  setAnnouncementType(value);
+};
 
-  const uploadProps = {
-    beforeUpload: file => {
-      const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-      if (!isJpgOrPng) {
-          message.error('You can only upload JPG/PNG file!');
-      }
-      // Return false to stop auto uploading because we'll be handling submission separately
-      return isJpgOrPng ? false : Upload.LIST_IGNORE;
-      return false;
-    },
-    multiple: true, // If you want to allow multiple file uploads
-  };
+const uploadProps = {
+  onRemove: file => {
+    setFileList(current => {
+      const index = current.indexOf(file);
+      const newFileList = current.slice();
+      newFileList.splice(index, 1);
+      return newFileList;
+    });
+  },
+  beforeUpload: file => {
+    setFileList([file]); // Replace the current file
+    return false; // Prevent automatic upload
+  },
+  fileList,
+};
   
 
   
