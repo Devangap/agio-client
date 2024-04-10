@@ -2,14 +2,38 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from 'recharts';
-import { Card } from 'antd';
-
+import { Card ,Table,message} from 'antd';
+import { useSelector, useDispatch } from 'react-redux';
+import { showLoading, hideLoading } from '../redux/empalerts';
+import toast from 'react-hot-toast';
 
 function Leaveoverview() {
     const [totalMedicalLeaves, setTotalMedicalLeaves] = useState(0);
     const [totalGeneralLeaves, setTotalGeneralLeaves] = useState(0);
     const [totalAnnualLeaves, setTotalAnnualLeaves] = useState(0);
     const [showChart, setShowChart] = useState(false); // State to manage chart visibility
+    const dispatch = useDispatch();
+    const [leaveData, setLeaveData] = useState([]);
+    const token = localStorage.getItem('token');
+    const fetchData = async () => {
+        try {
+            dispatch(showLoading());
+            const response = await axios.get('/api/employee/getleave', {
+                headers: {
+                    Authorization: 'Bearer ' + token
+                },
+            });
+            dispatch(hideLoading());
+            setLeaveData(response.data.leave);
+        } catch (error) {
+            console.error(error);
+            message.error('Failed to fetch leave data');
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     useEffect(() => {
         // Fetch total medical leaves from backend
@@ -41,6 +65,50 @@ function Leaveoverview() {
                 console.error('Error fetching total annual leaves:', error);
             });
     }, []);
+    const columns = [
+        {
+            title: 'Employee ID',
+            dataIndex: 'empid',
+            key: 'name',
+        },
+        {
+            title: 'Name',
+            dataIndex: 'name',
+            key: 'name',
+        },
+        
+        {
+            title: 'Department',
+            dataIndex: 'department',
+            key: 'department',
+        },
+        {
+            title: 'Remaining Anuual Leave count',
+            dataIndex: '',
+            key: 'department',
+        },
+        {
+            title: 'Remaining General Leave count',
+            dataIndex: '',
+            key: 'department',
+        },
+        {
+            title: 'Remaining Medical Leave count',
+            dataIndex: 'userid', // Assuming the user ID is stored in the data
+            key: 'remainingMedicalLeaves',
+            render: userId => {
+                // Fetch employee data based on the user ID
+                const employee = leaveData.find(item => item.userid === userid);
+                // Calculate remaining medical leaves
+                const remainingMedicalLeaves = employee ? 4 - employee.medical_leave : 0;
+                return remainingMedicalLeaves;
+            }
+        },
+        
+        
+        
+       
+    ];
 
     // Data for the bar chart
     const barChartData = [
@@ -65,6 +133,7 @@ function Leaveoverview() {
 
     return (
         <Layout>
+             <Table dataSource={leaveData} columns={columns} />
             <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {leaveTypes.map((type, index) => (
                     <Card key={index} className="leave-type-card" title={type.title} bordered={false}>
