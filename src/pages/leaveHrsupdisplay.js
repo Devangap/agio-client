@@ -13,6 +13,7 @@ function LeaveHrsupdisplay() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
+    const [searchText, setSearchText] = useState('');
 
     const fetchData = async () => {
         try {
@@ -33,6 +34,13 @@ function LeaveHrsupdisplay() {
     useEffect(() => {
         fetchData();
     }, []);
+    const handleSearch = (value) => {
+        setSearchText(value);
+    };
+
+    const filteredData = leaveData.filter(item =>
+        item.name.toLowerCase().includes(searchText.toLowerCase())
+    );
 
     const changeLeaveCount = async (record) => {
         try {
@@ -185,7 +193,13 @@ function LeaveHrsupdisplay() {
 
     return (
         <Layout>
-            <Table dataSource={leaveData} columns={columns} />
+            <Input.Search
+                placeholder="Search by name"
+                allowClear
+                onChange={(e) => handleSearch(e.target.value)}
+                style={{ width: 200, marginBottom: 16 }}
+            />
+           <Table dataSource={filteredData} columns={columns} />
         </Layout>
     );
 }

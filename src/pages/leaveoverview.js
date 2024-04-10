@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from 'recharts';
+import { Card } from 'antd';
+
 
 function Leaveoverview() {
     const [totalMedicalLeaves, setTotalMedicalLeaves] = useState(0);
@@ -41,20 +43,40 @@ function Leaveoverview() {
     }, []);
 
     // Data for the bar chart
-    const data = [
+    const barChartData = [
         { name: 'Total Medical Leaves', value: totalMedicalLeaves },
         { name: 'Total General Leaves', value: totalGeneralLeaves },
         { name: 'Total Annual Leaves', value: totalAnnualLeaves },
         // Add more data as needed for other types of leaves
     ];
 
+    // Data for the pie chart
+    const pieChartData = [
+        { name: 'Medical Leaves', value: totalMedicalLeaves },
+        { name: 'General Leaves', value: totalGeneralLeaves },
+        { name: 'Annual Leaves', value: totalAnnualLeaves },
+    ];
+
+    const leaveTypes = [
+        { title: 'General Leave', description: `Total Leaves: ${totalGeneralLeaves}` },
+        { title: 'Annual Leave', description: `Total Leaves: ${totalAnnualLeaves}` },
+        { title: 'Medical Leave', description: `Total Leaves: ${totalMedicalLeaves}` },
+    ];
+
     return (
         <Layout>
+            <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                {leaveTypes.map((type, index) => (
+                    <Card key={index} className="leave-type-card" title={type.title} bordered={false}>
+                        <p>{type.description}</p>
+                    </Card>
+                ))}
+            </div>
             <div style={{ width: '80%', margin: '0 auto' }}>
                 <h4>Leave Overview</h4>
-                {showChart && ( // Conditional rendering for chart section
+                {showChart && (
                     <div>
-                        <BarChart width={600} height={400} data={data}>
+                        <BarChart width={600} height={400} data={barChartData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />
                             <YAxis />
@@ -64,6 +86,14 @@ function Leaveoverview() {
                         </BarChart>
                     </div>
                 )}
+                <div>
+                    <h4>Pie Chart</h4>
+                    <PieChart width={400} height={400}>
+                        <Pie dataKey="value" isAnimationActive={false} data={pieChartData} cx={200} cy={200} outerRadius={80} fill="#8884d8" label />
+                        <Tooltip />
+                        <Legend />
+                    </PieChart>
+                </div>
             </div>
         </Layout>
     );

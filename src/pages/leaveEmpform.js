@@ -74,10 +74,19 @@ useEffect(() => {
                             </Form.Item>
                         </div>
                         <div className="leave_item">
-                            <Form.Item label='Department' name='department'>
-                                <Input placeholder='Department' />
-                            </Form.Item>
-                        </div>
+          <Form.Item name="department" label="Department">
+            <Select className="department" placeholder="Select a department">
+              <Option value="HR">HR</Option>
+             
+              <Option value="Logistics">Logistics</Option>
+              <Option value="Procurement Department">Procurement Department</Option>
+              <Option value="Quality Assurance">Quality Assurance</Option>
+              <Option value="Production Department">Production Department</Option>
+              <Option value="Sales and Marketing">Sales and Marketing</Option>
+              <Option value="Finance and Accounting ">Finance and Accounting </Option>
+            </Select>
+          </Form.Item>
+        </div>
                     </div>
                     <div className="leave_form-row">
                         <div className="leave_item">
