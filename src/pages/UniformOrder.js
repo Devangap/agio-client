@@ -8,21 +8,20 @@ const { Option } = Select;
 
 function UniformOrder() {
   const [position, setPosition] = useState('');
-  const [waistSize, setWaistSize] = useState('');
   const [showWaistSizeInput, setShowWaistSizeInput] = useState(false);
   const [uniformCount, setUniformCount] = useState(1);
   const [employeeNumber, setEmployeeNumber] = useState('');
+  const [waistSizeOptions, setWaistSizeOptions] = useState([]);
 
   const handlePositionChange = value => {
     setPosition(value);
     if (value === 'Executive') {
-      setWaistSize('');
+      setWaistSizeOptions([]);
+    } else {
+      // Set the default waist size options for Factory Worker
+      setWaistSizeOptions(['28', '30', '32', '34', '36']);
     }
     setShowWaistSizeInput(value === 'Factory Worker');
-  };
-
-  const handleWaistSizeChange = e => {
-    setWaistSize(e.target.value);
   };
 
   const handleUniformCountChange = value => {
@@ -62,9 +61,7 @@ function UniformOrder() {
   };
 
   return (
-   
-    
-      <div className="uniform-order-container">
+    <div className="uniform-order-container">
       <div className="uniform-order-form-container">
         <div className="uniform-order-form-box p-3">
           <h3 className="uniform-order-title">Uniform Order Form</h3>
@@ -90,7 +87,11 @@ function UniformOrder() {
                 </Form.Item>
                 {showWaistSizeInput && (
                   <Form.Item label="Waist Size" name="waistSize">
-                    <Input value={waistSize} onChange={handleWaistSizeChange} placeholder="Enter Waist Size" />
+                    <Select placeholder="Select Size">
+                      {waistSizeOptions.map(size => (
+                        <Option key={size} value={size}>{size}</Option>
+                      ))}
+                    </Select>
                   </Form.Item>
                 )}
                 <Form.Item label="No. of Uniforms" name="uniformCount">
@@ -112,10 +113,6 @@ function UniformOrder() {
         </div>
       </div>
     </div>
-
-
-   
-  
   );
 }
 

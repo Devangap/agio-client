@@ -44,7 +44,6 @@ import MyInquiries from './pages/MyInquiries';
 
 
 import UniformOrder from './pages/UniformOrder';
-import UniformOrderConfirmation from './pages/UniformOrderConfirmation';
 import UniformManagerView from './pages/UniformManagerView';
 
 
@@ -89,7 +88,6 @@ function App() {
           <Route path='/vregister' element={< TraVehicleRegister/>} />
 
           <Route path='/UniformOrder' element={<UniformOrder/>} />
-          <Route path='/UniformOrderConfirmation' element={<UniformOrderConfirmation/>}/>
           <Route path='/UniformManagerView' element={<UniformManagerView/>} />
 
 
