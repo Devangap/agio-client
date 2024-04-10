@@ -2,6 +2,7 @@ import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
 import Main_register from './pages/Main_register';
+import MainRegDisplay from './pages/MainRegDisplay';
 
 
 import { Toaster } from 'react-hot-toast';
@@ -83,6 +84,7 @@ function App() {
         <Routes>
 
           <Route path='/Main_Register' element={<ProtectedRoute><Main_register /></ProtectedRoute>} />
+          <Route path='/MainRegDisplay' element={<ProtectedRoute><MainRegDisplay /></ProtectedRoute>} />
           <Route path='/Main_Login' element={<PublicRoute><Main_login /></PublicRoute>} />
         
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />

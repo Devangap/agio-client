@@ -92,18 +92,7 @@ function Leaveoverview() {
             dataIndex: '',
             key: 'department',
         },
-        {
-            title: 'Remaining Medical Leave count',
-            dataIndex: 'userid', // Assuming the user ID is stored in the data
-            key: 'remainingMedicalLeaves',
-            render: userId => {
-                // Fetch employee data based on the user ID
-                const employee = leaveData.find(item => item.userid === userid);
-                // Calculate remaining medical leaves
-                const remainingMedicalLeaves = employee ? 4 - employee.medical_leave : 0;
-                return remainingMedicalLeaves;
-            }
-        },
+        
         
         
         
