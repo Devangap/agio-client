@@ -81,6 +81,30 @@ function AnnDisplay() {
             render: (text) => new Date(text).toLocaleDateString(),
         },
         {
+            title: 'File',
+            dataIndex: 'filePath', // Adjust based on your data structure
+            key: 'file',
+            render: (text, record) => {
+              // Make sure `record` and `record.file` are valid objects before trying to access `filename`
+              const filename = record?.file?.filename;
+              
+              // Update this URL to match your backend server's URL and port
+              // For example, if your backend is running on http://localhost:3000
+              const backendUrl = 'http://localhost:5001';
+          
+              // Construct the file path with the full URL
+              const filePath = filename ? `${backendUrl}/uploads/${filename}` : '';
+              
+              return filename ? (
+                <a href={filePath} target="_blank" rel="noopener noreferrer">
+                  Download {filename}
+                </a>
+              ) : (
+                'No File'
+              );
+            },
+          },
+        {
             title: 'Description',
             dataIndex: 'Description',
             key: 'Description',
@@ -182,4 +206,4 @@ function AnnDisplay() {
     );
 }
 
-export default AnnDisplay;
+export default AnnDisplay;
