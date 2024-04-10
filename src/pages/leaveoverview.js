@@ -24,17 +24,50 @@ function Leaveoverview() {
                 },
             });
             dispatch(hideLoading());
-            setLeaveData(response.data.leave);
+    
+            // Extract user IDs from leave data
+            const userIds = response.data.leave.map(item => item.userid);
+    
+            // Fetch employee details based on user IDs
+            const employeeDetailsPromises = userIds.map(async (userId) => {
+                const employeeInfoResponse = await axios.post('/api/employee/getemployeeinfobyuserid', { userid: userId }, {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    },
+                });
+                return employeeInfoResponse.data.data;
+            });
+    
+            // Wait for all promises to resolve
+            const employeeDetails = await Promise.all(employeeDetailsPromises);
+    
+            // Combine leave data with employee details
+            const leaveDataWithEmployeeDetails = response.data.leave.map((leave, index) => {
+                const remainingAnnualLeave = employeeDetails[index].annual_leave;
+                const remainingGeneralLeave = employeeDetails[index].general_leave;
+                const remainingMedicalLeave = employeeDetails[index].medical_leave;
+                return {
+                    ...leave,
+                    empid: employeeDetails[index].empid,
+                    remainingAnnualLeave: remainingAnnualLeave,
+                    remainingGeneralLeave: remainingGeneralLeave,
+                    remainingMedicalLeave: remainingMedicalLeave,
+                };
+            });
+    
+            console.log(leaveDataWithEmployeeDetails);
+            console.log(employeeDetails);
+    
+            setLeaveData(leaveDataWithEmployeeDetails);
         } catch (error) {
             console.error(error);
             message.error('Failed to fetch leave data');
         }
     };
-
+    
     useEffect(() => {
         fetchData();
     }, []);
-
     useEffect(() => {
         // Fetch total medical leaves from backend
         axios.get('/api/employee/total-medical-leaves')
@@ -67,6 +100,11 @@ function Leaveoverview() {
     }, []);
     const columns = [
         {
+            title: 'Userid',
+            dataIndex: 'userid',
+            key: 'name',
+        },
+        {
             title: 'Employee ID',
             dataIndex: 'empid',
             key: 'name',
@@ -84,12 +122,17 @@ function Leaveoverview() {
         },
         {
             title: 'Remaining Anuual Leave count',
-            dataIndex: '',
+            dataIndex: 'remainingAnnualLeave',
             key: 'department',
         },
         {
             title: 'Remaining General Leave count',
-            dataIndex: '',
+            dataIndex: 'remainingGeneralLeave',
+            key: 'department',
+        },
+        {
+            title: 'Remaining Medical Leave count',
+            dataIndex: 'remainingMedicalLeave',
             key: 'department',
         },
         
@@ -119,6 +162,8 @@ function Leaveoverview() {
         { title: 'Annual Leave', description: `Total Leaves: ${totalAnnualLeaves}` },
         { title: 'Medical Leave', description: `Total Leaves: ${totalMedicalLeaves}` },
     ];
+    // Function to fetch employee id based on userid
+   
 
     return (
         <Layout>
