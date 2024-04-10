@@ -100,10 +100,21 @@ override original date picker componenets
 /* 
 **
 **
-common styling
+Employee
 **
 **
 */
+.emp-appointment-container-main {
+    display: flex;
+    flex-direction: row;
+    padding: 15px;
+    justify-content:space-around;
+}
+
+.emp-appointment-container-secondary-1 {
+    display: flex;
+    /*border: 1px solid blue;*/
+}
 
 .date-picker-and-selector {
     display: flex;
@@ -115,7 +126,7 @@ common styling
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 0 2px gray;
-    height: 30vh;
+    height: max-content;
     padding: 15px;
     margin: 0 20px;
 }
@@ -125,13 +136,59 @@ common styling
     flex-direction: column;
 }
 
-.schedule-button {
+.emp-schedule-button {
     background-color: #FFC15E;
     font-weight: bold;
     border-color: #FFC15E;
     border-radius: 20px;
     align-self: center;
 }
+
+
+.emp-appointment-container-secondary-2 {
+    display: flex;
+    flex-direction: column;
+    /*border: 1px solid black;*/
+}
+
+.ant-descriptions-title {
+    font-size: 23px !important;
+}
+
+.emp-appointment-upcomming-button-container-main {
+    display: flex;
+    flex-direction: row;
+    padding: 15px 0px 10px 0px;
+    justify-content: right;
+}
+
+.emp-appointment-upcomming-button-container-secondary {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: max-content;
+}
+
+.emp-reschedule-button {
+    background-color: #FFC15E;
+    font-weight: bold;
+    border-color: #FFC15E;
+    border-radius: 20px;
+    margin-right: 4px;
+}
+
+.emp-cancel-button {
+    background-color: var(--datepicker-border-color);
+    font-weight: bold;
+    border-color: var(--datepicker-border-color);
+    border-radius: 20px;
+    margin-left: 4px;
+}
+
+
+
+
+
 
 /*
 **
