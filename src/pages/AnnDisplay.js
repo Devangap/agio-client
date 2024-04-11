@@ -94,14 +94,13 @@ function AnnDisplay() {
           
               // Construct the file path with the full URL
               const filePath = filename ? `${backendUrl}/uploads/${filename}` : '';
-              
+              console.log(filePath)
               return filename ? (
-                <a href={filePath} target="_blank" rel="noopener noreferrer">
-                  Download {filename}
-                </a>
-              ) : (
-                'No File'
-              );
+                <div>
+                  <img src={filePath} alt={filename} />
+                  <p>{filename}</p>
+                </div>
+              ) : null;
             },
           },
         {
