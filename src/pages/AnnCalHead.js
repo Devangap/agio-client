@@ -1,7 +1,7 @@
 import React from 'react';
 import AnnCal from '../pages/AnnCal'; // Ensure this path is correct
 import Layout from '../components/Layout';
-//import '../AnnCalc.css'; // Assuming this is the correct CSS file
+
 import '../ACal.css'; // Ensure this CSS is correctly named and used
 
 function AnnCalHead() {

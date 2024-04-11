@@ -189,7 +189,7 @@ function AnnCalItems(props) {
                 )}
             </div>
 
-            <div className="col-md-6 secondRow">
+            <div className="secondRow">
                 <form>
                     <h3>SCHEDULE</h3>
                     <input type="text" className="form-control mb-3 mt-3" required="true" name="tName" placeholder="Teacher Name" value={tName}   ></input>

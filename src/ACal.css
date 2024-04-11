@@ -141,7 +141,7 @@ body {
 
 /* ---------------------- modal ------------------------ */
 
-.modal-fade form .form-label {
+.modal form .form-label {
   font-family: "Monserrat", sans-serif;
   color: #0d6efd;
   font-weight: 600;
@@ -149,18 +149,18 @@ body {
   text-transform: uppercase;
 }
 
-.modal-fade form .time {
+.modal form .time {
   display: flex;
   margin-top: 20px;
   margin-bottom: 16px;
   justify-content: space-evenly;
 }
 
-.modal-fade form .time .form-control {
+.modal form .time .form-control {
   width: 50%;
 }
 
-.modal-fade .navbar-nav {
+.modal .navbar-nav {
   margin: auto;
   font-family: "Monserrat", sans-serif;
   color: #0d6efd;
@@ -169,22 +169,23 @@ body {
   text-transform: uppercase;
 }
 
-.modal-fade .firstRow {
+.modal .firstRow {
   font-family: "Monserrat", sans-serif;
 }
-.modal-fade .firstRow h3 {
+/*----------------------------------------------*/
+.row .firstRow h3 {
   text-align: center;
   font-size: 20px;
   font-weight: 600;
   text-transform: uppercase;
 }
-.modal-fade .firstRow ul {
+.row .firstRow ul {
   list-style-type: none;
   height: 300px;
   overflow-x: auto;
 }
 
-.modal-fade .firstRow li {
+.row .firstRow li {
  
   text-align: left;
   font-size: 14px;
@@ -196,47 +197,40 @@ body {
   box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 12%), 0 1px 5px 0 rgb(0 0 0 / 20%);
 }
 
-.modal-fade .firstRow ul li i{
+.row .firstRow ul li i{
   margin: 12px 12px 0 12px;
   color: #0d6efd;
   font-size: 22px;
   cursor: pointer;
 }
-.modal-fade .firstRow ul li .yearDate{
+.row .firstRow ul li .yearDate{
   display: flex;
   justify-content: flex-end;
   font-size: 12px;
 }
  
  
-.firstRow ul{
+.row .firstRow ul{
   padding: 0;
 }
 
-.firstRow .searchBox{
+.row .firstRow .searchBox{
   display: flex;
     padding: 2% 4%;
     margin-bottom: 12px;
 }
 
-
- 
- 
- 
- 
-
-
-.modal .secondRow{
+.row .secondRow{
   text-align: center;
 }
 
-.secondRow h3 {
+.row .secondRow h3 {
   font-size: 20px;
   font-family: "Monserrat", sans-serif;
   font-weight: 600;
   margin-bottom: 12px;
 }
-.secondRow form {
+.row .secondRow form {
   padding: 0% 8%;
 }
 
