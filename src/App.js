@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Routes, Route,Link} from 'react-router-dom';
+import {BrowserRouter, Routes, Route,Link,Router} from 'react-router-dom';
 
 import Main_register from './pages/Main_register';
 
@@ -19,7 +19,9 @@ import AnnHRsup from './pages/AnnHRsup';
 import AnnDisplay from './pages/AnnDisplay';
 import AnnUpdate from './pages/AnnUpdate';
 import AnnEmpDisplay from './pages/AnnEmpDisplay';
-import AnnCalAddEvent from './pages/AnnCalAddEvent';
+import AnnCalHead from './pages/AnnCalHead';
+
+
 
 
 import TraDriverRegister from './pages/TraDriverRegister';
@@ -31,6 +33,7 @@ import LeaveEmpform from './pages/leaveEmpform';
 import Main_Notifications from './pages/Main_Notifications';
 import LeaveHrsupdisplay from './pages/leaveHrsupdisplay'
 import LeaveUpdate from './pages/leaveUpdate';
+
 
 
 
@@ -54,6 +57,9 @@ import MyInquiries from './pages/MyInquiries';
 
 function App() {
   const{loading} = useSelector(state => state.alerts);
+  const [date, setDate] = React.useState(new Date().getDate());
+
+
   return (
     <div >
       <BrowserRouter>
@@ -81,7 +87,8 @@ function App() {
           <Route path='/AnnDisplay' element={<ProtectedRoute><AnnDisplay/></ProtectedRoute>} />
           <Route path='/AnnUpdate/:id' element={<ProtectedRoute><AnnUpdate/></ProtectedRoute>} />
           <Route path='/AnnEmpDisplay' element={<ProtectedRoute><AnnEmpDisplay/></ProtectedRoute>} />
-          <Route path="/AnnCalAddEvent"element={<ProtectedRoute><AnnCalAddEvent/></ProtectedRoute>} />
+          <Route path="/AnnCalHead"element={<ProtectedRoute><AnnCalHead date={date}/></ProtectedRoute>} />
+          
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
 
