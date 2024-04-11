@@ -1,8 +1,8 @@
-import {  Card, Button, Modal, Form, Input, message } from 'antd'; // Import Card from Ant Design
-import { useNavigate } from 'react-router-dom'; // Assuming you're using React Router
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { Card, Button, Modal, Form, Input, message } from 'antd';
 import Layout from '../components/Layout';
+import { useNavigate } from 'react-router-dom';
 
 function AnnEmpDisplay() {
     const navigate = useNavigate();
@@ -68,6 +68,16 @@ function AnnEmpDisplay() {
                             <Button danger onClick={() => handleDelete(announcement._id)}>Delete</Button>
                         ]}
                     >
+                        {/* Render the image here */}
+                        <div>
+                            <img
+                                src={announcement.filePath ? `http://localhost:5001/uploads/${announcement.filePath.filename}` : ''}
+                                alt={announcement.filePath ? announcement.filePath.filename : ''}
+                                style={{ width: '100px', height: '100px' }}
+                            />
+                            <p>{announcement.filePath ? announcement.filePath.filename : ''}</p>
+                        </div>
+
                         <p><strong>Type:</strong> {announcement.Type}</p>
                         <p><strong>Department:</strong> {announcement.Department}</p>
                         <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>

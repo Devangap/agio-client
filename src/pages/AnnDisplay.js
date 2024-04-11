@@ -90,16 +90,16 @@ function AnnDisplay() {
               
               // Update this URL to match your backend server's URL and port
               // For example, if your backend is running on http://localhost:3000
-              const backendUrl = 'http://localhost:5001';
+              const backendUrl = 'http://localhost:5001/';
           
               // Construct the file path with the full URL
-              const filePath = filename ? `${backendUrl}/uploads/${filename}` : '';
+              const filePath = filename ? `${backendUrl}uploads/${filename}` : '';
               console.log(filePath)
               return filename ? (
                 <div>
-                  <img src={filePath} alt={filename} />
-                  <p>{filename}</p>
-                </div>
+                <img src={filePath} alt={filename} style={{ width: '100px', height: '100px' }} />
+                <p>{filename}</p>
+            </div>
               ) : null;
             },
           },
