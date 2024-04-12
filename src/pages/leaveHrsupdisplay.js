@@ -204,10 +204,36 @@ function LeaveHrsupdisplay() {
             key: 'Description',
         },
         {
+            title: 'Documents',
+            dataIndex: 'filePath', // Adjust based on your data structure
+            key: 'file',
+            render: (_, record) => {
+                const filename = record?.file?.filename;
+    
+                const backendUrl = 'http://localhost:5001/';
+    
+                const filePath = filename ? `${backendUrl}uploads/${filename}` : '';
+                
+                // Render a download button if a file exists
+                return filename ? (
+                    <Button 
+                        type="link" 
+                        href={filePath} 
+                        target="_blank" 
+                        download={filename} // Add the download attribute
+                    >
+                        Download PDF
+                    </Button>
+                ) : null;
+            },
+        },
+        {
             title: 'Status',
             dataIndex: 'status',
             key: 'Description',
         },
+
+
         {
             title: 'Action',
             key: 'action',
