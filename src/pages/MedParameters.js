@@ -283,6 +283,12 @@ const MedParameters = () => {
                   response_check_similar.data.similarDate.appointmentCount,
                 maxAppointmentCount: dateObj.maxAppointmentCount,
                 status: response_check_similar.data.similarDate.status,
+                startTime: response_check_similar.data.similarDate.startTime,
+                endTime: response_check_similar.data.similarDate.endTime,
+                avgSessionTime: response_check_similar.data.similarDate.avgSessionTime,
+                nextAppointmentTime: response_check_similar.data.similarDate.nextAppointmentTime,
+                nextAppointmentNo: response_check_similar.data.similarDate.nextAppointmentNo,
+                version: response_check_similar.data.similarDate.version,
                 updatedAt: new Date(),
               },
               {
@@ -303,6 +309,9 @@ const MedParameters = () => {
               date: isoDate,
               appointmentCount: dateObj.appointmentCount,
               maxAppointmentCount: dateObj.maxAppointmentCount,
+              startTime: dateObj.startTime,
+              endTime: dateObj.endTime,
+              avgSessionTime: dateObj.avgSessionTime,
             },
             {
               headers: {
@@ -557,6 +566,9 @@ const MedParameters = () => {
           date: matchDate,
           appointmentCount: 0,
           maxAppointmentCount: defaultParameterValues.maxAppointments,
+          startTime: defaultParameterValues.startTime,
+          endTime: defaultParameterValues.endTime,
+          avgSessionTime: defaultParameterValues.avgSessionTime,
         };
 
         console.log(
