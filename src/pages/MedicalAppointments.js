@@ -11,7 +11,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import "../MedDatePicker.css";
 import Swal from "sweetalert2";
 
-
 function currentMonthLength() {
   const thirtyOneDayMonths = [0, 2, 4, 6, 7, 9, 11];
   const thirtyDayMonths = [3, 5, 8, 10];
@@ -40,8 +39,6 @@ function currentMonthLength() {
   return length;
 }
 
-
-
 /*
 *
 *
@@ -50,15 +47,11 @@ Main
 *
 */
 const MedicalAppointments = () => {
-
   const dispatch = useDispatch();
 
   //const { user } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
-
-  
-
 
   /* ============= States ============== */
   // Set the userId
@@ -83,55 +76,52 @@ const MedicalAppointments = () => {
   const [existingAppointment, setExistingAppointment] = useState(null);
 
   // Existing appointment date object
-  const [existingAppointmentDateObject, setExistingAppointmentDateObject] = useState(null);
+  const [existingAppointmentDateObject, setExistingAppointmentDateObject] =
+    useState(null);
 
   // Upcomming appointment items to display in <Description/> componenet
   const [upcommingAppointmentItems, setUpcommingAppointmentItems] = useState([
     {
-      key: '1',
-      label: 'Date',
-      children: '',
+      key: "1",
+      label: "Date",
+      children: "",
     },
     {
-      key: '2',
-      label: 'Time',
-      children: '',
+      key: "2",
+      label: "Time",
+      children: "",
     },
     {
-      key: '3',
-      label: 'Queue No',
-      children: '',
+      key: "3",
+      label: "Queue No",
+      children: "",
     },
     {
-      key: '4',
-      label: 'Status',
-      children: '',
+      key: "4",
+      label: "Status",
+      children: "",
     },
     {
-      key: '5',
-      label: 'Reminder Status',
-      children: '',
+      key: "5",
+      label: "Reminder Status",
+      children: "",
     },
     {
-      key: '6',
-      label: 'Booked On',
-      children: '',
+      key: "6",
+      label: "Booked On",
+      children: "",
     },
-    ])
-
-  
+  ]);
 
   // ******** History tab ******** //
-  
+
   // History list
   const [historyList, setHistoryList] = useState(null);
-
-
 
   // *** For the reschecule pop window ***
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState('Content of the modal');
+  const [modalText, setModalText] = useState("Content of the modal");
 
   /* ============= Functions ============== */
 
@@ -144,11 +134,15 @@ const MedicalAppointments = () => {
     dispatch(showLoading());
 
     try {
-      const response = await axios.post('/api/employee/get-employee-info-by-id', {} , {
+      const response = await axios.post(
+        "/api/employee/get-employee-info-by-id",
+        {},
+        {
           headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('token')
+            Authorization: "Bearer " + localStorage.getItem("token"),
           },
-      });
+        }
+      );
 
       if (response.data.success) {
         setUserId(response.data.data._id);
@@ -158,11 +152,12 @@ const MedicalAppointments = () => {
       console.log("@getUser() @MedAppointments User info => ", response.data);
     } catch (error) {
       dispatch(hideLoading());
-      console.log("Error occured when retrieving user info @getUser() @MedAppointments => ", error);
+      console.log(
+        "Error occured when retrieving user info @getUser() @MedAppointments => ",
+        error
+      );
     }
-
-  }
-
+  };
 
   /*
   Read existing appointment
@@ -170,16 +165,16 @@ const MedicalAppointments = () => {
   const retrieveExisitngAppointment = async () => {
     try {
       dispatch(showLoading());
-      
+
       //console.log(user);
       const response = await axios.post(
         "/api/medEmployee/medical-appointment-read-one-specific",
-      {id: userId},
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
+        { id: userId },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
 
       dispatch(hideLoading());
@@ -191,7 +186,7 @@ const MedicalAppointments = () => {
 
         const dateObjResponse = await axios.post(
           "/api/medEmployee/medical-available-date-read-one-specific",
-          {date: response.data.fetched.appointmentDate},
+          { date: response.data.fetched.appointmentDate },
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -202,23 +197,25 @@ const MedicalAppointments = () => {
         if (dateObjResponse.data.success) {
           setExistingAppointmentDateObject(dateObjResponse.data.fetched);
         }
-
       } else {
         setExistingAppointmentDateObject(null);
         setExistingAppointment(null);
       }
 
       // Log the status message
-      console.log(`@retrieveExistingAppointment() @MedicalAppointments() Response => ${response.data.message}`);
-
+      console.log(
+        `@retrieveExistingAppointment() @MedicalAppointments() Response => ${response.data.message}`
+      );
     } catch (error) {
       dispatch(hideLoading());
 
-      console.log("Error occured when retrieving existing appointment @retrieveExistingAppointment() @MedicalAppointments() => ", error);
+      console.log(
+        "Error occured when retrieving existing appointment @retrieveExistingAppointment() @MedicalAppointments() => ",
+        error
+      );
       toast.error("Error occured when retrieving existing appointment");
     }
-  }
-
+  };
 
   /*
   Set existing appointment details for the <Description/> component
@@ -226,40 +223,47 @@ const MedicalAppointments = () => {
   const setExistingAppointmentToDisplay = () => {
     var newUpcommingAppointmentItems = [
       {
-        key: '1',
-        label: 'Date',
-        children: `${new Date(existingAppointment.appointmentDate).toLocaleDateString().split("T")[0]}`,
+        key: "1",
+        label: "Date",
+        children: `${
+          new Date(existingAppointment.appointmentDate)
+            .toLocaleDateString()
+            .split("T")[0]
+        }`,
       },
       {
-        key: '2',
-        label: 'Time',
+        key: "2",
+        label: "Time",
         children: `${existingAppointment.appointmentTime}`,
       },
       {
-        key: '3',
-        label: 'Queue No',
+        key: "3",
+        label: "Queue No",
         children: `${existingAppointment.appointmentNo}`,
       },
       {
-        key: '4',
-        label: 'Status',
+        key: "4",
+        label: "Status",
         children: `${existingAppointment.status}`,
       },
       {
-        key: '5',
-        label: 'Reminder Status',
-        children: `${existingAppointment.isReminderSet ? "Reminder is set" : "Reminder is not set"}`,
+        key: "5",
+        label: "Reminder Status",
+        children: `${
+          existingAppointment.isReminderSet
+            ? "Reminder is set"
+            : "Reminder is not set"
+        }`,
       },
       {
-        key: '6',
-        label: 'Booked On',
+        key: "6",
+        label: "Booked On",
         children: `${existingAppointment.updatedAt.split("T")[0]}`,
       },
-     ];
+    ];
 
-     setUpcommingAppointmentItems(newUpcommingAppointmentItems);
-  }
-
+    setUpcommingAppointmentItems(newUpcommingAppointmentItems);
+  };
 
   /*
   Get available date objects from the DB
@@ -276,7 +280,7 @@ const MedicalAppointments = () => {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
-      )
+      );
 
       // Set available date objects
       if (response.data.success) {
@@ -284,15 +288,16 @@ const MedicalAppointments = () => {
       }
 
       dispatch(hideLoading());
-      
     } catch (error) {
       dispatch(hideLoading());
 
-      console.log("Error occured when retrieving available dates @getAvailableDates() @MedicalAppointments() => ", error);
+      console.log(
+        "Error occured when retrieving available dates @getAvailableDates() @MedicalAppointments() => ",
+        error
+      );
       toast.error("Error occured when retrieving available dates");
     }
-  }
-
+  };
 
   /*
   Set up available date list
@@ -309,8 +314,7 @@ const MedicalAppointments = () => {
     }
 
     setAvailableDates(dateList);
-  }
-
+  };
 
   /*
   Set up unavailable date list
@@ -322,13 +326,14 @@ const MedicalAppointments = () => {
 
     for (let i = 1; i <= length; i++) {
       if (!aDates.includes(i)) {
-        uDates.push(new Date(new Date().getFullYear(), new Date().getMonth(), i));
+        uDates.push(
+          new Date(new Date().getFullYear(), new Date().getMonth(), i)
+        );
       }
     }
 
     setUnavailbleDates(uDates);
-  }
-
+  };
 
   /*
   Handle changes of the selected dates
@@ -340,13 +345,12 @@ const MedicalAppointments = () => {
     var matchObjDate;
     var matchDate;
     if (availableDateObjects !== null) {
-      
       for (var dObj of availableDateObjects) {
         matchObjDate = new Date(dObj.date);
         matchObjDate = matchObjDate.toDateString();
 
         matchDate = date.toDateString();
-        
+
         if (matchObjDate === matchDate) {
           setSelectedDateObject(dObj);
         }
@@ -354,11 +358,10 @@ const MedicalAppointments = () => {
     }
   };
 
-  
   /*
   Schedule new appointment
   */
- // *** For the reschecule pop window ***
+  // *** For the reschecule pop window ***
   const handleSchedulePopup = async () => {
     const res = await handleSchedule();
 
@@ -366,17 +369,16 @@ const MedicalAppointments = () => {
       Swal.fire({
         title: "Success!",
         text: "Your appointment has been successfully scheduled.",
-        icon: "success"
+        icon: "success",
       });
     } else {
       Swal.fire({
         title: "Failed!",
         text: "Something went wrong.",
-        icon: "error"
+        icon: "error",
       });
     }
-    
-  }
+  };
 
   // For confirming the reschedulling
   const handleSchedule = async () => {
@@ -413,8 +415,9 @@ const MedicalAppointments = () => {
       }
 
       // Log the response
-      console.log(`@handleSchedule() @medicalAppointments() Response => ${response.data.message}`);
-
+      console.log(
+        `@handleSchedule() @medicalAppointments() Response => ${response.data.message}`
+      );
 
       // ======= Update available date details =======
 
@@ -430,12 +433,21 @@ const MedicalAppointments = () => {
       varAppointmentIds.push(response.data.objectId.toString());
 
       // For status
-      const varStatus = (selectedDateObject.appointmentCount + 1) >= (selectedDateObject.maxAppointmentCount) ? "unavailable" : "available";
+      const varStatus =
+        selectedDateObject.appointmentCount + 1 >=
+        selectedDateObject.maxAppointmentCount
+          ? "unavailable"
+          : "available";
 
       // For nextAppointmentTime
-      var nextAppTimeHour = Number(selectedDateObject.nextAppointmentTime.split(":")[0]);
-      var nextAppTimeMinute = Number(selectedDateObject.nextAppointmentTime.split(":")[1]);
-      nextAppTimeMinute = nextAppTimeMinute + Number(selectedDateObject.avgSessionTime);
+      var nextAppTimeHour = Number(
+        selectedDateObject.nextAppointmentTime.split(":")[0]
+      );
+      var nextAppTimeMinute = Number(
+        selectedDateObject.nextAppointmentTime.split(":")[1]
+      );
+      nextAppTimeMinute =
+        nextAppTimeMinute + Number(selectedDateObject.avgSessionTime);
       if (nextAppTimeMinute == 60) {
         nextAppTimeHour = nextAppTimeHour + 1;
         nextAppTimeMinute = 0;
@@ -457,7 +469,7 @@ const MedicalAppointments = () => {
 
       // For version
       const varVersion = selectedDateObject.version + 1;
-      
+
       const dateResponse = await axios.post(
         "/api/medEmployee//medical-available-date-update",
         {
@@ -478,11 +490,13 @@ const MedicalAppointments = () => {
       );
 
       // Log the response
-      console.log(`@handleSchedule() @medicalAppointments() Response => ${dateResponse.data.message}`);
+      console.log(
+        `@handleSchedule() @medicalAppointments() Response => ${dateResponse.data.message}`
+      );
 
       // Retrieve the newly set appointment and re-render to display
       retrieveExisitngAppointment();
-      
+
       // Retrieve the available date objects to reflect changes
       getAvailableDateObjects();
 
@@ -494,18 +508,19 @@ const MedicalAppointments = () => {
 
       // Return the response
       return res;
-
     } catch (error) {
       //dispatch(hideLoading());
-      
-      console.log("Error occured when scheduling the appointment @handleSchedule() @MedicalAppointments() => ", error);
-      return res = {
+
+      console.log(
+        "Error occured when scheduling the appointment @handleSchedule() @MedicalAppointments() => ",
+        error
+      );
+      return (res = {
         success: false,
         message: "Error occured when scheduling the appointment",
-      };
+      });
     }
   };
-
 
   /*
   Re-schedule the appointment
@@ -520,13 +535,13 @@ const MedicalAppointments = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       cancelButtonText: "No",
-      confirmButtonText: "Yes, reschedule!"
+      confirmButtonText: "Yes, reschedule!",
     }).then((result) => {
       if (result.isConfirmed) {
         showPopupModalForReschedule();
       }
     });
-  }
+  };
 
   // For showing the reschedulign model
   const showPopupModalForReschedule = () => {
@@ -535,7 +550,7 @@ const MedicalAppointments = () => {
 
   // For cancelling the rescheduling model
   const handlePopupCancelForReschedule = () => {
-    console.log('Clicked cancel button');
+    console.log("Clicked cancel button");
     setSelectedDateObject(null);
     setSelectedDate(new Date());
     setOpen(false);
@@ -554,54 +569,53 @@ const MedicalAppointments = () => {
       Swal.fire({
         title: "Rescheduled!",
         text: "Your appointment has been successfully rescheduled.",
-        icon: "success"
+        icon: "success",
       });
-
-
     } catch (error) {
       //dispatch(hideLoading());
 
-      console.log("Error occured when re-scheduling the appointment @handleReschedule() @MedicalAppointments() => ", error);
+      console.log(
+        "Error occured when re-scheduling the appointment @handleReschedule() @MedicalAppointments() => ",
+        error
+      );
       //toast.error("Error occured when re-scheduling the appointment");
     }
   };
 
-
   /*
   Cancel the appointment
   */
- // *** For the cancel pop window ***
- const handleCancelPopup = () => {
-  Swal.fire({
-    title: "Do you want to cancel the appointment?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    cancelButtonText: "No",
-    confirmButtonText: "Yes, cancel!"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      handleCancel();
-      Swal.fire({
-        title: "Cancelled!",
-        text: "Your appointment has been cancelled.",
-        icon: "success"
-      });
-      
-    }
-  });
-}
+  // *** For the cancel pop window ***
+  const handleCancelPopup = () => {
+    Swal.fire({
+      title: "Do you want to cancel the appointment?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      cancelButtonText: "No",
+      confirmButtonText: "Yes, cancel!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        handleCancel();
+        Swal.fire({
+          title: "Cancelled!",
+          text: "Your appointment has been cancelled.",
+          icon: "success",
+        });
+      }
+    });
+  };
 
   // For confirming the cancellation
-  const handleCancel = async() => {
+  const handleCancel = async () => {
     try {
       //dispatch(showLoading());
 
       const response = await axios.post(
         "/api/medEmployee/medical-appointment-delete-one-specific",
-        {recordId: existingAppointment._id},
+        { recordId: existingAppointment._id },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -610,14 +624,16 @@ const MedicalAppointments = () => {
       );
 
       // Log the response
-      console.log(`@handleCancel() @medicalAppointments() Response => ${response.data.message}`);
-
+      console.log(
+        `@handleCancel() @medicalAppointments() Response => ${response.data.message}`
+      );
 
       // Remove the previous appointment details from the available date
 
       // Varaiables
       // For appointmentCount
-      const varAppointmentCount = existingAppointmentDateObject.appointmentCount - 1;
+      const varAppointmentCount =
+        existingAppointmentDateObject.appointmentCount - 1;
 
       // For appointmentIds
       const varAppointmentIds = [];
@@ -628,17 +644,23 @@ const MedicalAppointments = () => {
       }
 
       // For status
-      const varStatus = (existingAppointmentDateObject.appointmentCount - 1) >= (existingAppointmentDateObject.maxAppointmentCount) ? "unavailable" : "available";
+      const varStatus =
+        existingAppointmentDateObject.appointmentCount - 1 >=
+        existingAppointmentDateObject.maxAppointmentCount
+          ? "unavailable"
+          : "available";
 
       // For nextAppointmentTime
-      const varNextAppointmentTime = existingAppointmentDateObject.nextAppointmentTime;
+      const varNextAppointmentTime =
+        existingAppointmentDateObject.nextAppointmentTime;
 
       // For nextAppointmentNo
-      const varNextAppointmentNo = existingAppointmentDateObject.nextAppointmentNo;
+      const varNextAppointmentNo =
+        existingAppointmentDateObject.nextAppointmentNo;
 
       // For version
       const varVersion = existingAppointmentDateObject.version + 1;
-      
+
       const dateResponse = await axios.post(
         "/api/medEmployee/medical-available-date-update",
         {
@@ -667,18 +689,19 @@ const MedicalAppointments = () => {
 
       //dispatch(hideLoading());
       // Log the response
-      console.log(`@handleCancel() @medicalAppointments() Response => ${dateResponse.data.message}`);
-
-
-
+      console.log(
+        `@handleCancel() @medicalAppointments() Response => ${dateResponse.data.message}`
+      );
     } catch (error) {
       //dispatch(hideLoading());
 
-      console.log("Error occured when cancelling the appointment @handleCancel() @MedicalAppointments() => ", error);
+      console.log(
+        "Error occured when cancelling the appointment @handleCancel() @MedicalAppointments() => ",
+        error
+      );
       toast.error("Error occured when cancelling the appointment");
     }
-  }
-
+  };
 
   // ******** History tab ******** //
 
@@ -686,7 +709,7 @@ const MedicalAppointments = () => {
     try {
       const response = await axios.post(
         "/api/medEmployee/medical-appointment-read-all-specific",
-        {id: userId},
+        { id: userId },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -701,13 +724,16 @@ const MedicalAppointments = () => {
       }
 
       // Log the response
-      console.log(`@retrieveHistory() @medicalAppointments() Response => ${response.data.message}`);
-      
+      console.log(
+        `@retrieveHistory() @medicalAppointments() Response => ${response.data.message}`
+      );
     } catch (error) {
-      console.log("Error occured when retrieving the appointment history @retrieveHistory() @MedicalAppointments() => ", error);
+      console.log(
+        "Error occured when retrieving the appointment history @retrieveHistory() @MedicalAppointments() => ",
+        error
+      );
     }
-  }
- 
+  };
 
   /* ============= Function useEffects ============== */
 
@@ -722,63 +748,69 @@ const MedicalAppointments = () => {
   // retrieveExistingAppointment()
   useEffect(() => {
     if (userId !== null) {
-    retrieveExisitngAppointment();
+      retrieveExisitngAppointment();
     }
   }, [userId]);
 
   // Log the existingAppointment
   useEffect(() => {
-    console.log("@retrieveExistingAppointment() @MedicalAppointments() ExistingAppointment =>", existingAppointment);
-  }, [existingAppointment]); 
+    console.log(
+      "@retrieveExistingAppointment() @MedicalAppointments() ExistingAppointment =>",
+      existingAppointment
+    );
+  }, [existingAppointment]);
 
   // setExistingAppointmentToDisplay()
   useEffect(() => {
     if (existingAppointment !== null) {
-    setExistingAppointmentToDisplay();
+      setExistingAppointmentToDisplay();
     } else {
       setUpcommingAppointmentItems([
         {
-          key: '1',
-          label: 'Date',
-          children: '',
+          key: "1",
+          label: "Date",
+          children: "",
         },
         {
-          key: '2',
-          label: 'Time',
-          children: '',
+          key: "2",
+          label: "Time",
+          children: "",
         },
         {
-          key: '3',
-          label: 'Queue No',
-          children: '',
+          key: "3",
+          label: "Queue No",
+          children: "",
         },
         {
-          key: '4',
-          label: 'Status',
-          children: '',
+          key: "4",
+          label: "Status",
+          children: "",
         },
         {
-          key: '5',
-          label: 'Reminder Status',
-          children: '',
+          key: "5",
+          label: "Reminder Status",
+          children: "",
         },
         {
-          key: '6',
-          label: 'Booked On',
-          children: '',
+          key: "6",
+          label: "Booked On",
+          children: "",
         },
-        ]);
+      ]);
     }
   }, [existingAppointment]);
 
   // getAvailableDateObjects()
   useEffect(() => {
     getAvailableDateObjects();
-  }, [])
+  }, []);
 
   // Log available date objects
   useEffect(() => {
-    console.log("@getAvailableDateObjects() @MedicalAppointments() Available date objects =>", availableDateObjects);
+    console.log(
+      "@getAvailableDateObjects() @MedicalAppointments() Available date objects =>",
+      availableDateObjects
+    );
   }, [availableDateObjects]);
 
   // getAvailableDates()
@@ -808,13 +840,10 @@ const MedicalAppointments = () => {
     retrieveHistory();
   }, [userId]);
 
-
-
   return (
     <Layout>
-      <Tabs>
-
-      {/* 
+      <Tabs className="emp-tab">
+        {/* 
       *
       *
       Appointments
@@ -823,123 +852,230 @@ const MedicalAppointments = () => {
       */}
 
         <Tabs.TabPane tab="Appointments" key={0}>
-      <>
-        <Modal
-          title="Pick a new Date"
-          open={open}
-          okText={"Reschedule"}
-          onOk={handleReschedule}
-          confirmLoading={confirmLoading}
-          onCancel={handlePopupCancelForReschedule}
-        >
-          <div className="emp-appointment-container-secondary-1">
-        <div>
-        <div className="date-picker-and-selector" key={unavailableDates !== null ? unavailableDates.length : "dps0"}>
-          <div className="date-picker">
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              excludeDates={unavailableDates}
-              placeholderText="Select a date"
-              minDate={new Date()}
-              maxDate={new Date(new Date().getFullYear(), new Date().getMonth(), currentMonthLength())}
-              inline
-            />
-          </div>
+          <>
+            <Modal
+              title="Pick a new Date"
+              open={open}
+              okText={"Reschedule"}
+              onOk={handleReschedule}
+              confirmLoading={confirmLoading}
+              onCancel={handlePopupCancelForReschedule}
+            >
+              <div className="emp-appointment-container-secondary-1">
+                <div>
+                  <div
+                    className="date-picker-and-selector"
+                    key={
+                      unavailableDates !== null
+                        ? unavailableDates.length
+                        : "dps0"
+                    }
+                  >
+                    <div className="date-picker">
+                      <DatePicker
+                        selected={selectedDate}
+                        onChange={handleDateChange}
+                        excludeDates={unavailableDates}
+                        placeholderText="Select a date"
+                        minDate={new Date()}
+                        maxDate={
+                          new Date(
+                            new Date().getFullYear(),
+                            new Date().getMonth(),
+                            currentMonthLength()
+                          )
+                        }
+                        inline
+                      />
+                    </div>
 
-          <div className="date-selector">
-            <h5>Available Session</h5>
-            <div className="date-selector-info">
-              <p>Date: {selectedDateObject !== null ? new Date(selectedDateObject.date).toLocaleDateString(): null}</p>
-              <p>Time: {selectedDateObject?.nextAppointmentTime}</p>
-              <p>No: {selectedDateObject?.nextAppointmentNo}</p>     
+                    <div className="date-selector">
+                      <h5>Available Session</h5>
+                      <div className="date-selector-info">
+                        <p>
+                          Date:{" "}
+                          {selectedDateObject !== null
+                            ? new Date(
+                                selectedDateObject.date
+                              ).toLocaleDateString()
+                            : null}
+                        </p>
+                        <p>Time: {selectedDateObject?.nextAppointmentTime}</p>
+                        <p>No: {selectedDateObject?.nextAppointmentNo}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Modal>
+          </>
+
+          <div className="emp-appointment-container-main">
+            <div className="emp-appointment-container-secondary-1">
+              <div>
+                <p className="emp-appointment-container-secondary-1-title">New Appointment</p>
+                <div
+                  className="date-picker-and-selector"
+                  key={
+                    unavailableDates !== null ? unavailableDates.length : "dps0"
+                  }
+                >
+                  <div className="date-picker">
+                    <DatePicker
+                      selected={selectedDate}
+                      onChange={handleDateChange}
+                      excludeDates={unavailableDates}
+                      placeholderText="Select a date"
+                      minDate={new Date()}
+                      maxDate={
+                        new Date(
+                          new Date().getFullYear(),
+                          new Date().getMonth(),
+                          currentMonthLength()
+                        )
+                      }
+                      inline
+                    />
+                  </div>
+
+                  <div className="date-selector">
+                    <p className="date-selector-title">Available Session</p>
+                    <div className="date-selector-info">
+                    <div className="date-selector-info-row">
+                      <p className="date-selector-info-label">Date</p>
+                      <p>&nbsp;:&nbsp;</p>
+                        {" "}
+                        {selectedDateObject !== null
+                          ? new Date(
+                              selectedDateObject.date
+                            ).toLocaleDateString()
+                          : null}
+                      </div>
+
+                      <div className="date-selector-info-row">
+                        <p className="date-selector-info-label">Time</p>
+                        <p>&nbsp;:&nbsp;</p>
+                        {selectedDateObject?.nextAppointmentTime}
+                      </div>
+
+                      <div className="date-selector-info-row">
+                        <p className="date-selector-info-label">Number</p>
+                        <p>&nbsp;:&nbsp;</p>
+                        {selectedDateObject?.nextAppointmentNo}
+                      </div>
+
+                      <Button
+                        className="emp-schedule-button"
+                        onClick={handleSchedulePopup}
+                        disabled={existingAppointment !== null ? true : false}
+                      >
+                        SCHEDULE
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="vl"></div>
+
+            <div
+              className="emp-appointment-container-secondary-2"
+              key={
+                existingAppointment !== null
+                  ? existingAppointment.length
+                  : "eacs2"
+              }
+            >
+              <Descriptions
+                title="Upcomming Appointment"
+                layout="horizontal"
+                column={1}
+                bordered={true}
+                size="small"
+                items={upcommingAppointmentItems}
+              />
+              <div className="emp-appointment-upcomming-button-container-main">
+                <div className="emp-appointment-upcomming-button-container-secondary">
+                  <Button
+                    className="emp-reschedule-button"
+                    disabled={existingAppointment !== null ? false : true}
+                    onClick={handleReschedulePopup}
+                  >
+                    RE-SCHEDULE
+                  </Button>
+
+                  <Button
+                    className="emp-cancel-button"
+                    disabled={existingAppointment !== null ? false : true}
+                    onClick={handleCancelPopup}
+                  >
+                    CANCEL
+                  </Button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        </div>
-      </div>
-        </Modal>
-      </>
+        </Tabs.TabPane>
 
-
-      <div className="emp-appointment-container-main">
-      <div className="emp-appointment-container-secondary-1">
-        <div>
-        <h4>New Appointment</h4>
-        <div className="date-picker-and-selector" key={unavailableDates !== null ? unavailableDates.length : "dps0"}>
-          <div className="date-picker">
-            <DatePicker
-              selected={selectedDate}
-              onChange={handleDateChange}
-              excludeDates={unavailableDates}
-              placeholderText="Select a date"
-              minDate={new Date()}
-              maxDate={new Date(new Date().getFullYear(), new Date().getMonth(), currentMonthLength())}
-              inline
-            />
-          </div>
-
-          <div className="date-selector">
-            <h5>Available Session</h5>
-            <div className="date-selector-info">
-              <p>Date: {selectedDateObject !== null ? new Date(selectedDateObject.date).toLocaleDateString(): null}</p>
-              <p>Time: {selectedDateObject?.nextAppointmentTime}</p>
-              <p>No: {selectedDateObject?.nextAppointmentNo}</p>
-
-              
-                <Button className="emp-schedule-button" onClick={handleSchedulePopup} disabled={existingAppointment !== null ? true : false}>
-                  SCHEDULE
-                </Button>
-              
-            </div>
-          </div>
-        </div>
-        </div>
-      </div>
-      
-      <div className="emp-appointment-container-secondary-2" key={existingAppointment !== null ? existingAppointment.length : "eacs2"}>
-        <Descriptions title="Upcomming Appointment" layout="horizontal" column={1} bordered={true} size="small" items={upcommingAppointmentItems}/>
-        <div className="emp-appointment-upcomming-button-container-main">
-        <div className="emp-appointment-upcomming-button-container-secondary">
-          <Button className="emp-reschedule-button" disabled={existingAppointment !== null ? false : true} onClick={handleReschedulePopup}>
-            RE-SCHEDULE
-          </Button>
-
-          <Button className="emp-cancel-button" disabled={existingAppointment !== null ? false : true} onClick={handleCancelPopup}>
-          CANCEL
-          </Button>
-          </div>
-        </div>
-      </div>
-      </div>
-      </Tabs.TabPane>
-
-
-      {/* 
+        {/* 
       *
       *
       Appointment History
       * 
       * 
       */}
-      <Tabs.TabPane tab="History" key={1}>
-
-
-      <List
-      key={historyList !== null ? historyList.length : "hl0"}
-      size="large"
-      dataSource={historyList !== null ? historyList : []}
-      renderItem={(item) => (
-        <List.Item>
-          <List.Item.Meta
-          title = {`Date: ${new Date(item.appointmentDate).toLocaleDateString()}`}
-          description = {item.status}
-          />
-        </List.Item>
-      )}
-      />
-
-      </Tabs.TabPane>
+        <Tabs.TabPane tab="History" key={1} className="emp-history-tabpane">
+          <div className="emp-history-list">
+            <List
+              key={historyList !== null ? historyList.length : "hl0"}
+              size="large"
+              dataSource={historyList !== null ? historyList : []}
+              renderItem={(item) => (
+                <List.Item>
+                  <List.Item.Meta
+                    title={`Date: ${new Date(
+                      item.appointmentDate
+                    ).toLocaleDateString()}`}
+                    //description = {`Status:  Appointment No:  Appointmet Time:  Booked On: `}
+                    description={
+                      <Descriptions
+                        layout="horizontal"
+                        column={4}
+                        bordered={false}
+                        size="small"
+                        items={[
+                          {
+                            key: "1",
+                            label: "Appointment Time",
+                            children: `${item.appointmentTime}`,
+                          },
+                          {
+                            key: "2",
+                            label: "Appointment No",
+                            children: `${item.appointmentNo}`,
+                          },
+                          {
+                            key: "3",
+                            label: "Status",
+                            children: `${item.status}`,
+                          },
+                          {
+                            key: "4",
+                            label: "Booked On",
+                            children: `${new Date(
+                              item.updatedAt
+                            ).toLocaleDateString()}`,
+                          },
+                        ]}
+                      />
+                    }
+                  />
+                </List.Item>
+              )}
+            />
+          </div>
+        </Tabs.TabPane>
       </Tabs>
     </Layout>
   );
