@@ -36,11 +36,15 @@ override original date picker componenets
 }
 
 .react-datepicker__current-month {
-    font-size: 1.2rem;
+    font-size: 16px;
+    font-weight: 550;
+    color: #818181;
 }
 
 .react-datepicker__day-name {
     width: 2rem;
+    font-size: 16px;
+    color: black;
 }
 
 .react-datepicker__day {
@@ -97,6 +101,7 @@ override original date picker componenets
     color: var(--outside-month-font-color);
 }
 
+
 /* 
 **
 **
@@ -104,6 +109,9 @@ Employee
 **
 **
 */
+
+
+
 .emp-appointment-container-main {
     display: flex;
     flex-direction: row;
@@ -116,8 +124,20 @@ Employee
     /*border: 1px solid blue;*/
 }
 
+.emp-appointment-container-secondary-1-title {
+    font-size: 18px;
+    font-weight: 500;
+}
+
 .date-picker-and-selector {
     display: flex;
+    margin-top: 25px;
+}
+
+.date-selector-title {
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
 }
 
 .date-selector {
@@ -127,13 +147,24 @@ Employee
     border-radius: 20px;
     box-shadow: 0 0 2px gray;
     height: max-content;
+    width: 200px;
     padding: 15px;
-    margin: 0 20px;
+    margin: 2px 20px;
+    justify-content: center;
 }
 
 .date-selector-info {
     display: flex;
     flex-direction: column;
+}
+
+.date-selector-info-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.date-selector-info-label {
+    width: 60px;
 }
 
 .emp-schedule-button {
@@ -145,14 +176,21 @@ Employee
 }
 
 
+.vl {
+    border-left: 2px solid var(--datepicker-border-color);
+    height: match-parent;
+  }
+
+
+
+
 .emp-appointment-container-secondary-2 {
     display: flex;
     flex-direction: column;
-    /*border: 1px solid black;*/
 }
 
 .ant-descriptions-title {
-    font-size: 23px !important;
+    font-size: 18px !important;
 }
 
 .emp-appointment-upcomming-button-container-main {
@@ -186,6 +224,21 @@ Employee
 }
 
 
+/* ========= History tab ========= */
+
+.ant-tabs {
+     height: 100%;
+     overflow: hidden;
+ }
+
+ .ant-tabs-tabpane {
+    max-height: 65vh;
+    overflow-y: auto;
+ }
+
+ .ant-tabs-nav-list {
+    margin-left: 10px !important;
+ }
 
 
 
