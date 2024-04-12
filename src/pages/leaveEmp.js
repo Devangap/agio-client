@@ -8,11 +8,13 @@ import { showLoading, hideLoading } from '../redux/empalerts';
 import { useSelector, useDispatch } from 'react-redux';
 
 function LeaveEmp() {
+    const [employeeData, setEmployeeData] = useState(null);
     const { user } = useSelector((state) => state.user);
     const [leaveData, setLeaveData] = useState([]);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
+  
     const getData = async () => {
         try {
             const response = await axios.post('/api/employee/get-employee-info-by-id', {} , {
@@ -20,12 +22,11 @@ function LeaveEmp() {
                     Authorization: 'Bearer ' + localStorage.getItem('token')
                 },
             });
-            console.log(response.data);
+            setEmployeeData(response.data.data); // Update employeeData state with response data
         } catch (error) {
             console.log(error);
         }
     };
-
     useEffect(() => {
         getData();
     }, []);
@@ -35,10 +36,11 @@ function LeaveEmp() {
             fetchData(user.userid);
         }
     }, [user]);
-
+    console.log(user.department)
+    const dep = user?.department;
     const fetchData = async (userid) => {
         try {
-          
+            console.log(userid)
             const response = await axios.get(`/api/employee/getleave2/${userid}`, {
                 headers: {
                     Authorization: 'Bearer ' + token
@@ -48,8 +50,13 @@ function LeaveEmp() {
     
             // Check if response data contains leave information
             if (response.data && response.data.leave) {
-                // If leave data is available, set it in the state
-                setLeaveData(response.data.leave);
+                // If leave data is available, extract department information for each record
+                const leaveRecords = response.data.leave.map(record => ({
+                    ...record,
+                    department: user.department // Assuming user.department is the department info
+                }));
+                // Set the modified leave data in the state
+                setLeaveData(leaveRecords);
             } else {
                 // If leave data is not available, set the state to an empty array or default value
                 setLeaveData([]);
@@ -61,7 +68,7 @@ function LeaveEmp() {
             message.error('Failed to fetch leave data');
         }
     };
-
+    
     const handleLeaveSubmission = () => {
         navigate('/leaveEmpform');
     };
@@ -120,13 +127,14 @@ function LeaveEmp() {
     ];
 
     const leaveTypes = [
-       { title: 'General Leave', description: `Available: ${user?.general_leave}` },
-        { title: 'Annual Leave', description: `Available: ${user?.annual_leave}` },
-        { title: 'Medical Leave', description: `Available: ${user?.medical_leave}` },
+        { title: 'General Leave', description: `Available Leaves: ${employeeData ? employeeData.general_leave : ''}` },
+        { title: 'Annual Leave', description: `Available Leaves: ${employeeData ? employeeData.annual_leave : ''}` },
+        { title: 'Medical Leave', description: `Available Leaves: ${employeeData ? employeeData.medical_leave : ''}` },
     ];
 
     return (
         <Layout>
+            
             <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {leaveTypes.map((type, index) => (
                     <Card key={index} className="leave-type-card" title={type.title} bordered={false}>
@@ -138,6 +146,7 @@ function LeaveEmp() {
                 <button className="leavesub" onClick={handleLeaveSubmission}>Leave Submission</button>
             </div>
             <Table dataSource={leaveData} columns={columns} />
+            
         </Layout>
     );
 }
