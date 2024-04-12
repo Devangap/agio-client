@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 
 function LeaveHrsupdisplay() {
     const [leaveData, setLeaveData] = useState([]);
+    const {user} = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
@@ -24,7 +25,38 @@ function LeaveHrsupdisplay() {
                 },
             });
             dispatch(hideLoading());
-            setLeaveData(response.data.leave);
+    
+            // Extract user IDs from leave data
+            const userIds = response.data.leave.map(item => item.userid);
+    
+            // Fetch employee details based on user IDs
+            const employeeDetailsPromises = userIds.map(async (userId) => {
+                const employeeInfoResponse = await axios.post('/api/employee/getemployeeinfobyuserid', { userid: userId }, {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    },
+                });
+                return employeeInfoResponse.data.data;
+            });
+    
+            // Wait for all promises to resolve
+            const employeeDetails = await Promise.all(employeeDetailsPromises);
+    
+            // Combine leave data with employee details
+            const leaveDataWithEmployeeDetails = response.data.leave.map((leave, index) => {
+           
+                return {
+                    ...leave,
+                    empid: employeeDetails[index].empid,
+                    department:employeeDetails[index].department,
+                    
+                };
+            });
+    
+            console.log(leaveDataWithEmployeeDetails);
+            console.log(employeeDetails);
+    
+            setLeaveData(leaveDataWithEmployeeDetails);
         } catch (error) {
             console.error(error);
             message.error('Failed to fetch leave data');

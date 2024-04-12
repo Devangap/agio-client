@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
+import {Input} from 'antd';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from 'recharts';
 import { Card ,Table,message} from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
@@ -15,6 +16,16 @@ function Leaveoverview() {
     const dispatch = useDispatch();
     const [leaveData, setLeaveData] = useState([]);
     const token = localStorage.getItem('token');
+    const [searchText, setSearchText] = useState('');
+    const handleSearch = (value) => {
+        setSearchText(value);
+    };
+    
+    const filteredData = leaveData.filter(item =>
+        (item.name && item.name.toLowerCase().includes(searchText.toLowerCase())) ||
+        (item.empid && item.empid.toLowerCase().includes(searchText.toLowerCase()))
+    );
+    
     const fetchData = async () => {
         try {
             dispatch(showLoading());
@@ -49,6 +60,7 @@ function Leaveoverview() {
                 return {
                     ...leave,
                     empid: employeeDetails[index].empid,
+                    department:employeeDetails[index].department,
                     remainingAnnualLeave: remainingAnnualLeave,
                     remainingGeneralLeave: remainingGeneralLeave,
                     remainingMedicalLeave: remainingMedicalLeave,
@@ -99,11 +111,11 @@ function Leaveoverview() {
             });
     }, []);
     const columns = [
-        {
-            title: 'Userid',
-            dataIndex: 'userid',
-            key: 'name',
-        },
+        // {
+        //     title: 'Userid',
+        //     dataIndex: 'userid',
+        //     key: 'name',
+        // },
         {
             title: 'Employee ID',
             dataIndex: 'empid',
@@ -167,7 +179,13 @@ function Leaveoverview() {
 
     return (
         <Layout>
-             <Table dataSource={leaveData} columns={columns} />
+            <Input.Search
+                placeholder="Search by name"
+                allowClear
+                onChange={(e) => handleSearch(e.target.value)}
+                style={{ width: 200, marginBottom: 16 }}
+            />
+            <Table dataSource={filteredData} columns={columns} />
             <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {leaveTypes.map((type, index) => (
                     <Card key={index} className="leave-type-card" title={type.title} bordered={false}>
@@ -179,6 +197,7 @@ function Leaveoverview() {
                 <h4>Leave Overview</h4>
                 {showChart && (
                     <div>
+                        <h4>Bar Chart</h4>
                         <BarChart width={600} height={400} data={barChartData}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="name" />

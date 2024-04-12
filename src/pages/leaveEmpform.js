@@ -38,7 +38,7 @@ useEffect(() => {
         console.log('Received values of form', values);
         try {
             dispatch(showLoading());
-            const response = await axios.post('/api/employee/leaveEmpform', {...values , userid : user?.userid,}
+            const response = await axios.post('/api/employee/leaveEmpform', {...values , userid : user?.userid, department :user?.department}
            
            , {headers:{
             Authorization :`Bearer ${localStorage.getItem("token")}`,
@@ -74,7 +74,7 @@ useEffect(() => {
                             </Form.Item>
                         </div>
                         <div className="leave_item">
-          <Form.Item name="department" label="Department">
+          {/* <Form.Item name="department" label="Department">
             <Select className="department" placeholder="Select a department">
               <Option value="HR">HR</Option>
              
@@ -85,7 +85,7 @@ useEffect(() => {
               <Option value="Sales and Marketing">Sales and Marketing</Option>
               <Option value="Finance and Accounting ">Finance and Accounting </Option>
             </Select>
-          </Form.Item>
+          </Form.Item> */}
         </div>
                     </div>
                     <div className="leave_form-row">

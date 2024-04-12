@@ -14,6 +14,7 @@ function LeaveEmp() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
+  
     const getData = async () => {
         try {
             const response = await axios.post('/api/employee/get-employee-info-by-id', {} , {
@@ -35,11 +36,11 @@ function LeaveEmp() {
             fetchData(user.userid);
         }
     }, [user]);
-    
-
+    console.log(user.department)
+    const dep = user?.department;
     const fetchData = async (userid) => {
         try {
-          console.log(userid)
+            console.log(userid)
             const response = await axios.get(`/api/employee/getleave2/${userid}`, {
                 headers: {
                     Authorization: 'Bearer ' + token
@@ -49,8 +50,13 @@ function LeaveEmp() {
     
             // Check if response data contains leave information
             if (response.data && response.data.leave) {
-                // If leave data is available, set it in the state
-                setLeaveData(response.data.leave);
+                // If leave data is available, extract department information for each record
+                const leaveRecords = response.data.leave.map(record => ({
+                    ...record,
+                    department: user.department // Assuming user.department is the department info
+                }));
+                // Set the modified leave data in the state
+                setLeaveData(leaveRecords);
             } else {
                 // If leave data is not available, set the state to an empty array or default value
                 setLeaveData([]);
@@ -62,7 +68,7 @@ function LeaveEmp() {
             message.error('Failed to fetch leave data');
         }
     };
-
+    
     const handleLeaveSubmission = () => {
         navigate('/leaveEmpform');
     };
