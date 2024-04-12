@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Routes, Route,Link,Router} from 'react-router-dom';
 
 import Main_register from './pages/Main_register';
 import MainRegDisplay from './pages/MainRegDisplay';
@@ -17,6 +17,12 @@ import Main_login from './pages/Main_login';
 import AnnHRsup from './pages/AnnHRsup';
 import AnnDisplay from './pages/AnnDisplay';
 import AnnUpdate from './pages/AnnUpdate';
+import AnnEmpDisplay from './pages/AnnEmpDisplay';
+import AnnCalHead from './pages/AnnCalHead';
+
+
+
+
 import TraDriverRegister from './pages/TraDriverRegister';
 import TraVehicleRegister from './pages/TraVehicleRegister';
 
@@ -33,6 +39,8 @@ import TraProtectedRoute from './components/TraProtectedRoute';
 import TraPublicRoute from './components/TraPublicRoute';
 import TraLogin from './pages/TraLogin';
 import TraRegister from './pages/TraRegister';
+
+
 
 
 
@@ -72,6 +80,9 @@ import MyInquiries from './pages/MyInquiries';
 
 function App() {
   const{loading} = useSelector(state => state.alerts);
+  const [date, setDate] = React.useState(new Date().getDate());
+
+
   return (
     <div >
       <BrowserRouter>
@@ -102,9 +113,12 @@ function App() {
 
 
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
-          <Route path='/AnnHRsup' element={< AnnHRsup/>} />
-          <Route path='/AnnDisplay' element={< AnnDisplay/>} />
-          <Route path='/AnnUpdate/:id' element={< AnnUpdate/>} />
+          <Route path='/AnnHRsup' element={<ProtectedRoute><AnnHRsup/></ProtectedRoute>} />
+          <Route path='/AnnDisplay' element={<ProtectedRoute><AnnDisplay/></ProtectedRoute>} />
+          <Route path='/AnnUpdate/:id' element={<ProtectedRoute><AnnUpdate/></ProtectedRoute>} />
+          <Route path='/AnnEmpDisplay' element={<ProtectedRoute><AnnEmpDisplay/></ProtectedRoute>} />
+          <Route path="/AnnCalHead"element={<ProtectedRoute><AnnCalHead date={date}/></ProtectedRoute>} />
+          
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
 

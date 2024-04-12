@@ -1,5 +1,6 @@
 import React from 'react';
 import '../Annlayout.css';
+
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
@@ -33,6 +34,7 @@ function Layout({ children }) {
                                         console.log(error);
                                     }
                                 };
+                                
                             
                                 useEffect(() => {
                                     getData();
@@ -46,7 +48,7 @@ function Layout({ children }) {
         },
         {
             name: 'Announcements',
-            path: '/announcements',
+            path: '/AnnEmpDisplay',
             icon: 'ri-survey-line',
         },
         {
@@ -102,13 +104,13 @@ function Layout({ children }) {
     ];
     const Annhrsupmenu = [
         {
-            name: 'Home',
-            path: '/',
+            name: 'Hooome',
+            path: '/AnnHRsup',
             icon: 'ri-home-line',
         },
         {
             name: ' Announcements',
-            path: '/profile',
+            path: '/AnnDisplay',
             icon: 'ri-account-box-line',
         },
         {
@@ -229,7 +231,7 @@ function Layout({ children }) {
         },
         {
             name: ' Insuarance ',
-            path: '/profile',
+            path: '/insClaimSubmit',
             icon: 'ri-account-box-line',
         },
         {
