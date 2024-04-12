@@ -45,7 +45,7 @@ import MyInquiries from './pages/MyInquiries';
 
 import UniformOrder from './pages/UniformOrder';
 import UniformManagerView from './pages/UniformManagerView';
-
+import UniformInventoryPage from './pages/UniformInventoryPage';
 
 
 
@@ -89,6 +89,7 @@ function App() {
 
           <Route path='/UniformOrder' element={<UniformOrder/>} />
           <Route path='/UniformManagerView' element={<UniformManagerView/>} />
+          <Route path='/UniformInventoryPage' element={<UniformInventoryPage/>} />
 
 
           
