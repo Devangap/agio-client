@@ -130,9 +130,8 @@ function TraDriverDetailsDisplay() {
         setFilteredDregister(filteredData);
     };
 
-    const clearSearch = () => {
-        setFilteredDregister([]);
-    };
+    
+
 
   return (
     <Layout>
