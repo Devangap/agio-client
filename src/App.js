@@ -26,6 +26,7 @@ import Inquiry from "./pages/inquiry";
 // medical
 import MedicalAppointments from "./pages/MedicalAppointments";
 import MedParameters from "./pages/MedParameters";
+import MedOverview from "./pages/MedOverview";
 
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -89,6 +90,12 @@ function App() {
 
           <Route path="/inquiry" element={<Inquiry />} />
 
+          {/*
+          *
+          *
+          Medical Routes 
+          * 
+          */}
           <Route
             path="/medical-appointments"
             element={
@@ -106,6 +113,16 @@ function App() {
               </ProtectedRoute>
             }
           />
+
+          <Route
+            path="/medical-overview"
+            element={
+              <ProtectedRoute>
+                <MedOverview />
+              </ProtectedRoute>
+            }
+          />
+
         </Routes>
       </BrowserRouter>
     </div>
