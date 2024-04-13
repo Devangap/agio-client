@@ -65,8 +65,8 @@ function Layout({ children }) {
 
     const doctorMenu = [
         {
-          name: "Home",
-          path: "/",
+          name: "Overview",
+          path: "/medical-overview",
           icon: "ri-home-line",
         },
     
@@ -77,8 +77,8 @@ function Layout({ children }) {
         },
     
         {
-          name: "Profile",
-          path: "/profile",
+          name: "Reports",
+          path: "/reports",
           icon: "ri-user-line",
         },
       ];
