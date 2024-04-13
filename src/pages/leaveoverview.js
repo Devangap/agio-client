@@ -186,13 +186,13 @@ function Leaveoverview() {
                 style={{ width: 200, marginBottom: 16 }}
             />
             <Table dataSource={filteredData} columns={columns} />
-            <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {/* <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {leaveTypes.map((type, index) => (
                     <Card key={index} className="leave-type-card" title={type.title} bordered={false}>
                         <p>{type.description}</p>
                     </Card>
                 ))}
-            </div>
+            </div> */}
             <div style={{ width: '80%', margin: '0 auto' }}>
                 <h4>Leave Overview</h4>
                 {showChart && (

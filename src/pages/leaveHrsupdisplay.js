@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, message, Modal, Form, Input, DatePicker } from 'antd';
+import { Table, Button, message, Modal, Form, Input, DatePicker ,Card} from 'antd';
 import Layout from '../components/Layout';
 import axios from 'axios';
 import '../leaveEmp.css';
@@ -176,6 +176,9 @@ function LeaveHrsupdisplay() {
             toast.error("Error changing status.");
         }
     };
+    const approvedLeaves = leaveData.filter(item => item.status === 'approved').length;
+    const pendingLeaves = leaveData.filter(item => item.status === 'pending').length;
+    const rejectedLeaves = leaveData.filter(item => item.status === 'rejected').length;
 
     const columns = [
         {
@@ -251,6 +254,17 @@ function LeaveHrsupdisplay() {
 
     return (
         <Layout>
+            <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
+                <Card title="Approved Leaves" style={{ width: 300 }}>
+                    <h1>{approvedLeaves}</h1>
+                </Card>
+                <Card title="Pending Leaves" style={{ width: 300 }}>
+                    <h1>{pendingLeaves}</h1>
+                </Card>
+                <Card title="Rejected Leaves" style={{ width: 300 }}>
+                    <h1>{rejectedLeaves}</h1>
+                </Card>
+            </div>
             <Input.Search
                 placeholder="Search by name"
                 allowClear

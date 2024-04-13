@@ -82,6 +82,7 @@ function LeaveEmp() {
             message.error('Failed to delete leave');
         }
     };
+    
 
     const columns = [
         {
