@@ -337,12 +337,11 @@ medical-overview
     width: match-parent;
     max-height: 80vh;
     padding: 20px;
-    
 }
 
 .doc-overview-secondary-1 {
     display: flex;
-    width: wrap-content;
+    width: max-content;
     height: match-parent;
     flex-direction: column;
 }
@@ -383,7 +382,7 @@ medical-overview
 
 .doc-overview-date-scheduled-count-list {
     height: 80vh;
-    width: 110vh;
+    width: 70vh;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -424,5 +423,5 @@ medical-overview
 
 .doc-overview-secondary-2 {
     display: flex;
-    border: 1px solid blue;
+    padding: 45px 10px 10px 10px;
 }
