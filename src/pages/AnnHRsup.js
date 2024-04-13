@@ -17,24 +17,41 @@ function AnnHRsup() {
   const [fileList, setFileList] = useState([]);
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const [department, setDepartment] = useState('');
+
+  
 
   // Function to handle form submission
   const onFinish = async (values) => {
-    // Create a new FormData instance
     const formData = new FormData();
-    // Append each file to FormData
     fileList.forEach(file => {
-      formData.append('file', file);
+      formData.append('file', file.originFileObj);
     });
-    // Append other form values to FormData
+
     Object.keys(values).forEach(key => {
       formData.append(key, values[key]);
     });
-    // Append user ID to FormData
+
     formData.append('userid', user?.userid);
 
+    // Append department if announcement type is 'Specific'
+    if (announcementType === 'Specific' && department) {
+      formData.append('department', department);
+      const response = await axios.post('/api/employee/sendAnnouncement', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate('/AnnDisplay');
+      } else {
+        toast.error(response.data.message);
+      }
+    }
+
     try {
-      // Make POST request to upload the form data
       const response = await axios.post('/api/employee/AnnHRsup', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -42,7 +59,6 @@ function AnnHRsup() {
         },
       });
 
-      // Handle response
       if (response.data.success) {
         toast.success(response.data.message);
         navigate('/AnnDisplay');
@@ -54,21 +70,31 @@ function AnnHRsup() {
     }
   };
 
+  const handleTypeChange = value => {
+    setAnnouncementType(value);
+    if (value !== 'Specific') {
+      setDepartment('');
+    }
+  };
+  const handleDepartmentChange = value => {
+    setDepartment(value);
+  };
+  
+  
+  
+
   // Function to handle file removal
   const handleRemove = file => {
-    setFileList(prevFileList => prevFileList.filter(f => f !== file));
+    setFileList(prevFileList => prevFileList.filter(f => f.uid !== file.uid));
   };
+
 
   // Function to handle file selection
   const handleBeforeUpload = file => {
-    setFileList([...fileList, file]); // Append file to fileList
-    return false; // Prevent automatic upload
+    setFileList([...fileList, file]);
+    return false;
   };
 
-  // Function to handle announcement type change
-  const handleTypeChange = value => {
-    setAnnouncementType(value);
-  };
 
   // JSX component
   return (
@@ -105,13 +131,17 @@ function AnnHRsup() {
             {announcementType === 'Specific' && (
               <div className="form-row">
                 <div className="item">
-                  <Form.Item label="Department" name="Department">
-                    <Select placeholder="Select department">
-                      <Option value="HR">HR</Option>
-                      <Option value="Finance">Finance</Option>
-                      <Option value="Marketing">Marketing</Option>
-                    </Select>
-                  </Form.Item>
+                <Form.Item label="Department" name="Department">
+  <Select placeholder="Select department" onChange={handleDepartmentChange}>
+    <Option value="Logistics">Logistics</Option>
+    <Option value="Procurement Department">Procurement Department</Option>
+    <Option value="Quality Assurance">Quality Assurance</Option>
+    <Option value="Production Department">Production Department</Option>
+    <Option value="Sales and Marketing">Sales and Marketing</Option>
+    <Option value="Finance and Accounting ">Finance and Accounting </Option>
+  </Select>
+</Form.Item>
+
                 </div>
               </div>
             )}
