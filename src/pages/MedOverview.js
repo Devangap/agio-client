@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import React, { useEffect, useState } from 'react'
 import { List, Card, Table, Space, Button } from "antd";
 import toast from "react-hot-toast";
+import "../MedDatePicker.css";
 
 
 // Calculate the length of the current month
@@ -41,27 +42,31 @@ const MedOverview = () => {
   const columns = [
     {
       title: 'Number',
-      dataIndex: 'name',
-      key: 'name',
+      dataIndex: 'appointmentNo',
+      key: 'appointmentNo',
+      width: 70,
     },
     {
       title: 'Name',
-      dataIndex: 'age',
-      key: 'age',
+      dataIndex: 'employeeName',
+      key: 'employeeName',
+      width: 150,
     },
     {
       title: 'Time',
-      dataIndex: 'address',
-      key: 'address',
+      dataIndex: 'appointmentTime',
+      key: 'appointmentTime',
+      width: 70,
     },
     {
       title: 'Action',
       key: 'action',
+      width: 100,
       render: (_, record) => (
-        <Space size="middle">
-          <Button onClick={() => {toast.success(`${record.key} button clicked`)}}>Complete</Button>
+        <div>
+          <Button style={{marginBottom: 5}} onClick={() => {toast.success(`${record.key} button clicked`)}}>Complete</Button>
           <Button>Incomplete</Button>
-        </Space>
+        </div>
       ),
     },
   ];
@@ -84,31 +89,7 @@ const MedOverview = () => {
   const [employeeList, setEmployeeList] = useState(null);
 
   // Data of the scheduled appointment list
-  const [scheduledListForSpecificDay, setScheduledListForSpecificDay] = useState(
-    [
-      {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-        tags: ['nice', 'developer'],
-      },
-      {
-        key: '23',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-        tags: ['loser'],
-      },
-      {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-        tags: ['cool', 'teacher'],
-      },
-    ]
-  )
+  const [scheduledListForSpecificDay, setScheduledListForSpecificDay] = useState([])
 
 
   /* ============= Functions ============== */
@@ -331,8 +312,38 @@ const MedOverview = () => {
 
 
   /*
-  Create the 
+  Create the appointment detail objects by combining employee info
   */
+  const createAppointmentObjectsToDisplay = () => {
+    const appointmentList = [];
+    var appointmentObj;
+    var empId;
+    var empName;
+
+    for (var aObj of appointmentObjectList) {
+      // Get the corresponding employee details for the appointment
+      for (var eObj of employeeList) {
+        if (eObj._id === aObj.userId) {
+          empId = eObj._id;
+          empName = eObj.fname;
+          break;
+        }
+      }
+
+      appointmentObj = {
+        key: aObj._id, // key => appointment id
+        employeeId: empId,
+        appointmentNo: aObj.appointmentNo,
+        employeeName: empName,
+        appointmentTime: aObj.appointmentTime,
+        bookedDate: aObj.updatedAt,
+      }
+
+      appointmentList.push(appointmentObj);
+    }
+
+    setScheduledListForSpecificDay(appointmentList);
+  }
 
 
   /* ============= useEffects ============== */
@@ -387,6 +398,15 @@ const MedOverview = () => {
   }, [employeeList]);
 
 
+  // createAppointmentObjectsToDisplay() => onChange:: const: employeeList
+  useEffect(() => {
+    if (employeeList !== null) {
+      createAppointmentObjectsToDisplay();
+    }
+  }, [employeeList]);
+
+
+
   return (
     <Layout>
       <div className="doc-overview-main">
@@ -429,7 +449,7 @@ const MedOverview = () => {
 
 
         <div className="doc-overview-secondary-2">
-        <Table columns={columns} dataSource={scheduledListForSpecificDay} />
+        <Table columns={columns} dataSource={scheduledListForSpecificDay} scroll={{y: 240}} pagination={false} style={{width: 500}} bordered={true}/>
         </div>
       </div>
     </Layout>
