@@ -321,3 +321,108 @@ doc date picker
 .single-date Input {
     width: 200px !important;
 }
+
+
+/*
+**
+**
+medical-overview
+**
+**
+*/
+
+.doc-overview-main {
+    display: flex;
+    flex-direction: row;
+    width: match-parent;
+    max-height: 80vh;
+    padding: 20px;
+    
+}
+
+.doc-overview-secondary-1 {
+    display: flex;
+    width: wrap-content;
+    height: match-parent;
+    flex-direction: column;
+}
+
+.doc-overview-secondary-1-title {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 20px;
+}
+
+.doc-overview-secondary-1-title-1 {
+    font-size: 18px;
+    font-weight: 500;
+    color: #818181;
+}
+
+
+.doc-overview-secondary-1-title-2 {
+    display: flex;
+    margin-left: 10px;
+    font-size: 18px;
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+    height: match-parent;
+    border-radius: 20px;
+    width: 120px;
+    background-color: #F6D776;
+}
+
+
+.doc-overview-secondary-1 .ant-card-body {
+    display: flex !important;
+    width: wrap-content !important;
+    align-items: center !important;
+    padding: 10px !important;
+}
+
+.doc-overview-date-scheduled-count-list {
+    height: 80vh;
+    width: 110vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.doc-overview-date-scheduled-count-list-card-content-outer {
+    display: flex;
+    flex-direction: column;
+    height: wrap-content;
+    width: 120px;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.doc-overview-date-scheduled-count-list-card-content-inner-1 {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 17px;
+    font-weight: 500;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.doc-overview-date-scheduled-count-list-card-content-inner-2 {
+    text-align: center;
+    font-size: x-large;
+    width: 45px;
+    height: 45px;
+    align-items: center;
+    border-radius: 60px;
+    background-color: #dfdfdf;
+}
+
+
+
+
+
+.doc-overview-secondary-2 {
+    display: flex;
+    border: 1px solid blue;
+}
