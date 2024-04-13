@@ -23,7 +23,6 @@ function LeaveUpdate() {
             name: data.name,
             Type: data.Type,
             RangePicker: [moment(data.RangePicker[0]), moment(data.RangePicker[1])],
-            department: data.department,
             Description: data.Description,
           });
           
@@ -73,39 +72,34 @@ function LeaveUpdate() {
                 <Input placeholder="Employee name" />
               </Form.Item>
             </div>
+          </div>
+          <div className="leave_form-row">
             <div className="leave_item">
-                            <Form.Item label='Department' name='department'>
-                                <Input placeholder='Department' />
-                            </Form.Item>
-                        </div>
-                    </div>
-                    <div className="leave_form-row">
-                        <div className="leave_item">
-                            <Form.Item
-                                label="Leave Duration"
-                                name="RangePicker"
-                                rules={[{ required: false, message: 'Please input!' }]}
-                            >
-                                <RangePicker />
-                            </Form.Item>
-                        </div>
-                    </div>
-                    <div className="leave_form-row">
-                        <div className="leave_item">
-                            <Form.Item name="Type" label="Select leave type" className='leavet'>
-                                <Select className="leave_Type" placeholder="Select leave type">
-                                    <Option value="General">General</Option>
-                                    <Option value="Specific">Annual</Option>
-                                    <Option value="Medical">Medical</Option>
-                                </Select>
-                            </Form.Item>
-                        </div>
-                    </div>
-                    <div className="leave_form-row">
-                        <div className="leave_item">
-                      
-                        </div>
-                    </div>
+              <Form.Item
+                label="Leave Duration"
+                name="RangePicker"
+                rules={[{ required: false, message: 'Please input!' }]}
+              >
+                <RangePicker />
+              </Form.Item>
+            </div>
+          </div>
+          <div className="leave_form-row">
+            <div className="leave_item">
+              <Form.Item name="Type" label="Select leave type" className="leavet">
+                <Select className="leave_Type" placeholder="Select leave type">
+                  <Option value="General">General</Option>
+                  <Option value="Specific">Annual</Option>
+                  <Option value="Medical">Medical</Option>
+                </Select>
+              </Form.Item>
+              
+            </div>
+          </div>
+          <div className="leave_form-row">
+            <div className="leave_item">
+            </div>
+          </div>
           <div className="leave_item">
             <Form.Item name="Description" label="Description">
               <Input.TextArea className="leave_Description" />

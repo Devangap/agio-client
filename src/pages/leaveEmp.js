@@ -82,6 +82,7 @@ function LeaveEmp() {
             message.error('Failed to delete leave');
         }
     };
+    
 
     const columns = [
         {
@@ -90,9 +91,14 @@ function LeaveEmp() {
             key: 'name',
         },
         {
-            title: 'RangePicker',
-            dataIndex: 'RangePicker',
-            key: 'RangePicker',
+            title: 'Start Date',
+            dataIndex: 'startDate',
+            key: 'startDate',
+        },
+        {
+            title: 'End Date',
+            dataIndex: 'endDate',
+            key: 'endDate',
         },
         {
             title: 'Type',
@@ -113,6 +119,30 @@ function LeaveEmp() {
             title: 'Status',
             dataIndex: 'status',
             key: 'Description',
+        },
+        {
+            title: 'Documents',
+            dataIndex: 'filePath', // Adjust based on your data structure
+            key: 'file',
+            render: (_, record) => {
+                const filename = record?.file?.filename;
+    
+                const backendUrl = 'http://localhost:5001/';
+    
+                const filePath = filename ? `${backendUrl}uploads/${filename}` : '';
+                
+                // Render a download button if a file exists
+                return filename ? (
+                    <Button 
+                        type="link" 
+                        href={filePath} 
+                        target="_blank" 
+                        download={filename} // Add the download attribute
+                    >
+                        Download PDF
+                    </Button>
+                ) : null;
+            },
         },
         {
             title: 'Action',
