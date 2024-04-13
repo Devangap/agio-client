@@ -91,9 +91,14 @@ function LeaveEmp() {
             key: 'name',
         },
         {
-            title: 'RangePicker',
-            dataIndex: 'RangePicker',
-            key: 'RangePicker',
+            title: 'Start Date',
+            dataIndex: 'startDate',
+            key: 'startDate',
+        },
+        {
+            title: 'End Date',
+            dataIndex: 'endDate',
+            key: 'endDate',
         },
         {
             title: 'Type',

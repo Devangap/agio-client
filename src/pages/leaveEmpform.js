@@ -127,15 +127,22 @@ function LeaveEmpform() {
                         </div>
                     </div>
                     <div className="leave_form-row">
-                        <div className="leave_item">
-                            <Form.Item
-                                label="Leave Duration"
-                                name="RangePicker"
-                                rules={[{ required: false, message: 'Please input!' }]}
-                            >
-                                <RangePicker />
-                            </Form.Item>
-                        </div>
+                    <div className="leave_item">
+    <Form.Item
+        label="Start Date"
+        name="startDate"
+        rules={[{ required: false, message: 'Please input!' }]}
+    >
+        <DatePicker />
+    </Form.Item>
+    <Form.Item
+        label="End Date"
+        name="endDate"
+        rules={[{ required: false, message: 'Please input!' }]}
+    >
+        <DatePicker />
+    </Form.Item>
+</div>
                     </div>
                     <div className="leave_form-row">
                         <div className="leave_item">
