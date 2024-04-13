@@ -3,6 +3,8 @@ import {Button, Form ,  Input} from 'antd'
 import {Link, useNavigate }from 'react-router-dom'
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import loginImage from '../Images/Cigars.jpg';
+import "../TraRegister.css"
 
 
 function TraLogin() {
@@ -27,26 +29,43 @@ const navigate = useNavigate();
 
   return (
     
-    <div className='authentication'>
-        <div className='authentication-form card p-3' >
-            <h1 className='card-title'>Welcome Back</h1>
-
-            <Form layout='vertical' onFinish={onFinish}>
-                
-                <Form.Item label="Email" name='email'>
+    <div className="mainlog">
+  <div className="main_login_form_log box_log p-3">
+  <div className="login_image">
+          <img src={loginImage} alt="Login Image" />
+        </div>
+        
+    <h3 className='title_log'>Transport Login</h3>
+    <Form layout='vertical' onFinish={onFinish}>
+    <div className="content">
+   
+     
+      <div className = 'login'>
+      <div className = 'field'>
+      <Form.Item label="Email" name='email'>
                     <Input placeholder='email' />
                 </Form.Item>
-                <Form.Item label="Password" name='password'>
+          </div>
+         
+          <Form.Item label="Password" name='password'>
                     <Input placeholder='password' type='password'/>
-                </Form.Item>
+          </Form.Item>
+          
+          </div>
+      
+      <div className="Button-conslog">
+      <Button className='primary-button my-2' htmlType='submit'>LOGIN</Button> 
+      
+        <div className='anchor mt-2'>
+        <Link  to='/register' className='anchor mt-2'>CLICK HERE TO REGISTER</Link> 
 
-                 <Button className='primary-button my-2' htmlType='submit'>LOGIN</Button> 
-                 <Link  to='/register' className='anchor mt-2'>CLICK HERE TO REGISTER</Link> 
-
-            </Form>
         </div>
-
-    </div>
+      </div>
+      
+      </div>
+    </Form>
+  </div>
+</div>
     
   )
 }

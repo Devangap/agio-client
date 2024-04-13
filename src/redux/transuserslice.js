@@ -1,13 +1,13 @@
 import {createSlice} from "@reduxjs/toolkit";
 
-export const userSlice = createSlice(
+export const transuserslice = createSlice(
     {
         name: "user",
         initialState : {
             user: null,
         },
         reducers : {
-            setUser: (state,action) => {
+            trsetUser: (state,action) => {
                 state.user = action.payload;
 
             },
@@ -17,5 +17,4 @@ export const userSlice = createSlice(
     }
 );
 
-export const {setUser} = userSlice.actions;
-
+export const {trsetUser} = userSlice.actions;

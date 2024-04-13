@@ -62,8 +62,15 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
+
             name: 'Inquiry',
             path: '/inquiry',
+          icon: 'ri-account-box-line',
+        },
+      {
+            name: 'Transport',
+            path: '/TraBookingBox',
+
             icon: 'ri-account-box-line',
         },
        
@@ -107,6 +114,11 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
+        {
             name: ' Calendar',
             path: '/AnnCalHead',
             icon: 'ri-account-box-line',
@@ -130,6 +142,17 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
        
+        {
+            name: ' Calendar',
+            path: '/calendar',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Overview',
+            path: '/leaveoverview',
+            icon: 'ri-account-box-line',
+        },
+       
     ];
     const logisticmenu = [
         {
@@ -138,8 +161,28 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: ' transport',
+            name: ' Transport',
             path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
+        {
+            name: ' BookingUserdetails',
+            path: '/TraBookingDisplay',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' DriverRegister And Details',
+            path: '/TraDriverBox',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' VehicleRegister And Details',
+            path: '/VehicleBox',
             icon: 'ri-account-box-line',
         },
        
@@ -155,6 +198,11 @@ function Layout({ children }) {
             path: '/profile',
             icon: 'ri-account-box-line',
         },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
        
     ];
     const inquirymenu = [
@@ -167,6 +215,11 @@ function Layout({ children }) {
             name: ' Inquiry ',
             path: '/profile',
             icon: 'ri-account-box-line',
+        },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
         },
        
     ];
@@ -181,6 +234,11 @@ function Layout({ children }) {
             path: '/insClaimSubmit',
             icon: 'ri-account-box-line',
         },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
        
     ];
     const performancemenu = [
@@ -193,6 +251,11 @@ function Layout({ children }) {
             name: 'Performance',
             path: '/perf',
             icon: 'ri-home-line',
+        },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
         },
       
     ];
