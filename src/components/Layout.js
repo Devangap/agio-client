@@ -78,7 +78,7 @@ function Layout({ children }) {
     
         {
           name: "Reports",
-          path: "/reports",
+          path: "/medical-reports",
           icon: "ri-user-line",
         },
       ];
