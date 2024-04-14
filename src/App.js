@@ -48,7 +48,7 @@ import UniformManagerView from './pages/UniformManagerView';
 import UniformShirt from './pages/UniformShirt';
 import UniformSkirt from './pages/UniformSkirt';
 import UniformShirtInventory from './pages/UniformShirtInventory';
-
+import UniformOrderDetails from './pages/UniformOrderDetails';
 
 
 
@@ -94,6 +94,7 @@ function App() {
           <Route path='/UniformShirt' element={<UniformShirt/>} />
           <Route path='/UniformSkirt' element={<UniformSkirt/>} />
           <Route path='/UniformShirtInventory' element={<UniformShirtInventory/>} />
+          <Route path='/UniformOrderDetails' element={<UniformOrderDetails/>} />
 
 
           
