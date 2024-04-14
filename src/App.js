@@ -45,7 +45,9 @@ import MyInquiries from './pages/MyInquiries';
 
 import UniformOrder from './pages/UniformOrder';
 import UniformManagerView from './pages/UniformManagerView';
-import UniformInventoryPage from './pages/UniformInventoryPage';
+import UniformShirt from './pages/UniformShirt';
+import UniformSkirt from './pages/UniformSkirt';
+import UniformShirtInventory from './pages/UniformShirtInventory';
 
 
 
@@ -89,7 +91,9 @@ function App() {
 
           <Route path='/UniformOrder' element={<UniformOrder/>} />
           <Route path='/UniformManagerView' element={<UniformManagerView/>} />
-          <Route path='/UniformInventoryPage' element={<UniformInventoryPage/>} />
+          <Route path='/UniformShirt' element={<UniformShirt/>} />
+          <Route path='/UniformSkirt' element={<UniformSkirt/>} />
+          <Route path='/UniformShirtInventory' element={<UniformShirtInventory/>} />
 
 
           

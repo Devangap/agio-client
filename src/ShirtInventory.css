@@ -1,0 +1,49 @@
+.shirt-inventory-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .shirt-inventory-form-container {
+    box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
+    border-radius: 20px;
+    background-color: #FAFAFA;
+  }
+  
+  .shirt-inventory-form-box {
+    padding: 20px;
+  }
+  
+  .shirt-inventory-title {
+    color: #1F1300;
+    margin-bottom: 20px;
+  }
+  
+  .shirt-inventory-form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .shirt-inventory-item {
+    margin-right: 20px;
+  }
+  
+  .shirt-inventory-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .shirt-inventory-submit-button {
+    background-color: #F7B05B !important;
+    border-color: #1F1300 !important;
+    height: 40px !important;
+    width: 300px !important;
+    color: #000000 !important;
+    font-size: 16px !important;
+    font-weight: bold;
+    border-radius: 10px !important;
+  }
+  
