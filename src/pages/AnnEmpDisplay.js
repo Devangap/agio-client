@@ -13,7 +13,8 @@ function AnnEmpDisplay() {
 
     const fetchAnnouncements = async () => {
         try {
-            const response = await axios.get('/api/employee/getAnnHRsup');
+            // Make a GET request to fetch announcements
+            const response = await axios.get('/api/employee/getAnnHRsup?Type=specific'); // Modify the route to include the announcement type
             const dataWithKey = response.data.announcements.map(item => ({ ...item, key: item._id }));
             setAnnouncements(dataWithKey);
         } catch (error) {
@@ -54,6 +55,7 @@ function AnnEmpDisplay() {
             message.error('Failed to update announcement');
         }
     };
+    
 
     return (
         <Layout>
