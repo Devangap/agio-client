@@ -1,30 +1,81 @@
-import React, { useState, useEffect } from 'react';
+
+
+    import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Button, Modal, Form, Input, message } from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function AnnEmpDisplay() {
     const navigate = useNavigate();
+    const { user } = useSelector((state) => state.user);
 
     const [announcements, setAnnouncements] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentAnnouncement, setCurrentAnnouncement] = useState(null);
 
+    useEffect(() => {
+        // Fetch announcements when the user state is available
+        if (user) {
+            fetchAnnouncements();
+        }
+    }, [user]);
+
     const fetchAnnouncements = async () => {
         try {
-            const response = await axios.get('/api/employee/getAnnHRsup');
-            const dataWithKey = response.data.announcements.map(item => ({ ...item, key: item._id }));
-            setAnnouncements(dataWithKey);
+            if (user.department) {
+                // Fetch specific announcements for the user's department
+                const [specificAnnouncements, generalAnnouncements] = await Promise.all([
+                    fetchSpecificAnnouncements(user.department),
+                    fetchGeneralAnnouncements()
+                ]);
+                
+                // Combine specific and general announcements
+                const combinedAnnouncements = [...specificAnnouncements, ...generalAnnouncements];
+                setAnnouncements(combinedAnnouncements);
+            } else {
+                // Fetch general announcements
+                await fetchGeneralAnnouncements();
+            }
         } catch (error) {
-            message.error("Failed to fetch announcements");
+            message.error('Failed to fetch announcements');
         }
     };
 
-    useEffect(() => {
-        fetchAnnouncements();
-    }, []);
-
+    const fetchSpecificAnnouncements = async (department) => {
+        try {
+            const response = await axios.get(`/api/employee/getAnnHRsupSpecific?department=${department}`);
+            const data = response.data;
+    
+            if (!data.success) {
+                message.error(data.message || 'No specific announcements');
+                return [];
+            }
+    
+            return data.announcements;
+        } catch (error) {
+            message.error('Failed to fetch announcements');
+            return [];
+        }
+    };
+    
+    const fetchGeneralAnnouncements = async () => {
+        try {
+            const response = await axios.get('/api/employee/getAnnHRsup');
+            const data = response.data;
+    
+            if (!data.success) {
+                message.error(data.message || 'No general announcements');
+                return [];
+            }
+    
+            return data.announcements;
+        } catch (error) {
+            message.error('Failed to fetch announcements');
+            return [];
+        }
+    };
     const handleDelete = async (id) => {
         try {
             await axios.delete(`/api/employee/deleteAnnHRsup/${id}`);
@@ -63,34 +114,23 @@ function AnnEmpDisplay() {
                     console.log('File path:', announcement.filePath ? `http://localhost:5001/uploads/${announcement.filePath.filename}` : '');
                     return (
                         <Card
-                        key={announcement._id}
-                        title={announcement.anntitle}
-                        style={{ width: 300, margin: '16px' }}
-                        actions={[
-                            <Button type="primary" onClick={() => navigate(`/AnnUpdate/${announcement._id}`)}>Update</Button>,
-                            <Button danger onClick={() => handleDelete(announcement._id)}>Delete</Button>
-                        ]}
-                    >
-                        {/* Render the image here */}
-                        <div>
-                            {announcement.file && (
-                                <>
-                                    <img
-                                        src={announcement.file.path ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
-                                        alt={announcement.file.filename}
-                                        style={{ width: '100px', height: '100px' }}
-                                    />
-                                    <p>{announcement.file.filename}</p>
-                                </>
-                            )}
-                        </div>
-                     
-                        <p><strong>Type:</strong> {announcement.Type}</p>
-                        <p><strong>Department:</strong> {announcement.Department}</p>
-                        <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
-                        <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
-                        <p><strong>Description:</strong> {announcement.Description}</p>
-                    </Card>
+                            key={announcement._id}
+                            title={announcement.anntitle}
+                            style={{ width: 300, margin: '16px' }}
+                            actions={[
+                                <Button type="primary" onClick={() => navigate(`/AnnUpdate/${announcement._id}`)}>Update</Button>,
+                                <Button danger onClick={() => handleDelete(announcement._id)}>Delete</Button>
+                            ]}
+                        >
+                            <div>
+                                {/* Render the image here */}
+                            </div>
+                            <p><strong>Type:</strong> {announcement.Type}</p>
+                            <p><strong>Department:</strong> {announcement.Department}</p>
+                            <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
+                            <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
+                            <p><strong>Description:</strong> {announcement.Description}</p>
+                        </Card>
                     );
                 })}
             </div>
@@ -126,3 +166,4 @@ function AnnEmpDisplay() {
 }
 
 export default AnnEmpDisplay;
+
