@@ -243,26 +243,12 @@ function LeaveOverview() {
 
     return (
         <Layout>
-            <div>
-        <h3>Monthly Medical Leave Counts</h3>
-        <ul>
-            {Object.entries(monthlyMedicalLeaves).map(([month, count]) => (
-                <li key={month}>Month: {months[parseInt(month) - 1]}, Count: {count}</li>
-            ))}
-        </ul>
-    </div>
-            <Input.Search
-                placeholder="Search by name"
-                allowClear
-                onChange={(e) => handleSearch(e.target.value)}
-                style={{ width: 200, marginBottom: 16 }}
-            />
-            <Table dataSource={filteredData} columns={columns} />
-            <div style={{ width: '80%', margin: '0 auto' }}>
-                <h4>Leave Overview</h4>
+             <h4>Leave Overview</h4>
+             <div style={{ width: '80%', margin: '0 auto' }}>
+                
                 {showChart && (
-                    <div>
-                        <h4>Monthly Leave Distribution</h4>
+         <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '10px' }}>
+                        <h6>Monthly Leave Distribution</h6>
                         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
                             {Object.keys(updatedBarChartData).map(year => (
                                 <div key={year}>
@@ -284,14 +270,22 @@ function LeaveOverview() {
                     </div>
                 )}
             </div>
-            <div>
+            <Input.Search
+                placeholder="Search by name or employee Id"
+                allowClear
+                onChange={(e) => handleSearch(e.target.value)}
+                style={{ width: 200, marginBottom: 16 }}
+            />
+            <Table dataSource={filteredData} columns={columns} />
+            
+            {/* <div>
                 <h4>Pie Chart</h4>
                 <PieChart width={400} height={400}>
                     <Pie dataKey="value" isAnimationActive={false} data={pieChartData} cx={200} cy={200} outerRadius={80} fill="#8884d8" label />
                     <Tooltip />
                     <Legend />
                 </PieChart>
-            </div>
+            </div> */}
         </Layout>
     );
                             }
