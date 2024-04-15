@@ -62,7 +62,7 @@ function AnnEmpDisplay() {
     
     const fetchGeneralAnnouncements = async () => {
         try {
-            const response = await axios.get('/api/employee/getAnnHRsup');
+            const response = await axios.get('/api/employee/getAnnHRsupgen');
             const data = response.data;
     
             if (!data.success) {
