@@ -19,8 +19,6 @@ function AnnHRsup() {
   const navigate = useNavigate();
   const [department, setDepartment] = useState('');
 
-  
-
   // Function to handle form submission
   const onFinish = async (values) => {
     const formData = new FormData();
@@ -79,22 +77,22 @@ function AnnHRsup() {
   const handleDepartmentChange = value => {
     setDepartment(value);
   };
-  
-  
-  
 
   // Function to handle file removal
   const handleRemove = file => {
     setFileList(prevFileList => prevFileList.filter(f => f.uid !== file.uid));
   };
 
-
   // Function to handle file selection
   const handleBeforeUpload = file => {
+    const isPngOrJpeg = file.type === 'image/png' || file.type === 'image/jpeg';
+    if (!isPngOrJpeg) {
+      toast.error('You can only upload PNG or JPEG files!');
+      return false;
+    }
     setFileList([...fileList, file]);
     return false;
   };
-
 
   // JSX component
   return (
@@ -132,16 +130,15 @@ function AnnHRsup() {
               <div className="form-row">
                 <div className="item">
                 <Form.Item label="Department" name="Department">
-  <Select placeholder="Select department" onChange={handleDepartmentChange}>
-    <Option value="Logistics">Logistics</Option>
-    <Option value="Procurement Department">Procurement Department</Option>
-    <Option value="Quality Assurance">Quality Assurance</Option>
-    <Option value="Production Department">Production Department</Option>
-    <Option value="Sales and Marketing">Sales and Marketing</Option>
-    <Option value="Finance and Accounting ">Finance and Accounting </Option>
-  </Select>
-</Form.Item>
-
+                  <Select placeholder="Select department" onChange={handleDepartmentChange}>
+                    <Option value="Logistics">Logistics</Option>
+                    <Option value="Procurement Department">Procurement Department</Option>
+                    <Option value="Quality Assurance">Quality Assurance</Option>
+                    <Option value="Production Department">Production Department</Option>
+                    <Option value="Sales and Marketing">Sales and Marketing</Option>
+                    <Option value="Finance and Accounting ">Finance and Accounting </Option>
+                  </Select>
+                </Form.Item>
                 </div>
               </div>
             )}
@@ -182,4 +179,4 @@ function AnnHRsup() {
   );
 }
 
-export default AnnHRsup;
+export default AnnHRsup;
