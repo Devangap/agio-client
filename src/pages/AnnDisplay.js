@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input, DatePicker } from 'antd';
-import AnnLayout from '../pages/AnnLayout';
+import Layout from '../components/Layout';
 import Anndisplay from '../Anndisplay.css';
 import { useNavigate } from 'react-router-dom';
+
 
 
 function AnnDisplay() {
@@ -13,11 +14,15 @@ function AnnDisplay() {
     const [announcements, setAnnouncements] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentAnnouncement, setCurrentAnnouncement] = useState(null); 
+    const [searchText, setSearchText] = useState('');
+    const [selectedFile, setSelectedFile] = useState(null);
+
+
 
 
     const fetchAnnouncements = async () => {
         try {
-            const response = await axios.get('/api/annWorkouts/getAnnHRsup');
+            const response = await axios.get('/api/employee/getAnnHRsup');
             // Assuming response.data.announcements is an array of announcements
             // Add a unique key (e.g., id) to each announcement for the Table component
             const dataWithKey = response.data.announcements.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
@@ -38,7 +43,7 @@ function AnnDisplay() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/api/annWorkouts/deleteAnnHRsup/${id}`);
+            await axios.delete(`/api/employee/deleteAnnHRsup/${id}`);
             setAnnouncements(prev => prev.filter(item => item._id !== id));
             message.success('Announcement deleted successfully');
         } catch (error) {
@@ -63,6 +68,12 @@ function AnnDisplay() {
             dataIndex: 'Type',
             key: 'Type',
         },
+        {
+            title: 'Department',
+            dataIndex: 'Department',
+            key: 'Department',
+        },
+        
         {
             title: 'Expire Date',
             dataIndex: 'expiredate',
@@ -92,6 +103,14 @@ function AnnDisplay() {
     };
     const handleUpdate = async (values) => {
         try {
+            const formData = new FormData();
+            Object.keys(values).forEach(key => {
+              formData.append(key, values[key]);
+            });
+            if (selectedFile) {
+              formData.append("file", selectedFile);
+            }
+        
             // Assuming you have the announcement ID in currentAnnouncement._id
             const response = await axios.put(`/api/annWorkouts/updateAnnHRsup/${currentAnnouncement._id}`, values);
             if (response.data.success) {
@@ -106,12 +125,29 @@ function AnnDisplay() {
             message.error('Failed to update announcement');
         }
     };
+    const filteredAnnouncements = announcements.filter((announcement) =>
+  announcement.anntitle.toLowerCase().includes(searchText.toLowerCase())
+  
+   || announcement.anntitle.toLowerCase().includes(searchText.toLowerCase())
+);
+
     
     
 
     return (
-        <AnnLayout>
-            <Table dataSource={announcements} columns={columns} />
+        <Layout>
+         <div className="table-header">
+        <div className="search-container">
+            <Input
+                placeholder="Search announcements"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                style={{ marginBottom: 16, width: 200 }}
+            />
+        </div>
+    </div>
+
+            <Table dataSource={filteredAnnouncements} columns={columns} />
             <Modal
     title="Update Announcement"
     open={isModalVisible}
@@ -141,7 +177,7 @@ function AnnDisplay() {
 
         
 
-        </AnnLayout>
+        </Layout>
         
     );
 }
