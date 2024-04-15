@@ -176,7 +176,7 @@ function Layout({ children }) {
         },
         {
             name: ' Insuarance ',
-            path: '/insClaimSubmit',
+            path: '/InsuranceManagerDisplay',
             icon: 'ri-account-box-line',
         },
        

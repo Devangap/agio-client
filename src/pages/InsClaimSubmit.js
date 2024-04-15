@@ -15,7 +15,8 @@ function InsClaimSubmit() {
                 formData.append('name', values.name);
                 formData.append('id', values.id);
                 formData.append('phoneNumber', values.phoneNumber);
-                formData.append('file', values.medicaldoc[0].originFileObj); // Access the file object using originFileObj
+                formData.append('description', values.description); // Add description field
+                formData.append('file', values.medicaldoc[0].originFileObj);
 
                 const response = await axios.post("/api/insurance/insClaimSubmit", formData, {
                     headers: {
@@ -26,6 +27,7 @@ function InsClaimSubmit() {
                 if (response.data.success) {
                     toast.success(response.data.message);
                     toast("Redirecting to Employee Insurance Claim Request page");
+                    console.log(response.formData);
                     navigate("/InsEmployee");
                 } else {
                     toast.error(response.data.message);
@@ -55,6 +57,9 @@ function InsClaimSubmit() {
                                 </Form.Item>
                                 <Form.Item label='Phone Number' name='phoneNumber'>
                                     <Input placeholder='Phone Number' />
+                                </Form.Item>
+                                <Form.Item label='Description' name='description'>
+                                    <Input.TextArea placeholder='Description' />
                                 </Form.Item>
                                 <Form.Item label='Attach Medical Document' name="medicaldoc" valuePropName="fileList" getValueFromEvent={(e) => e.fileList}>
                                     <Upload name="meddoc" action="/api/insurance/insClaimSubmit" listType="text">

@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Routes, Route} from 'react-router-dom'; 
 
 import Main_register from './pages/Main_register';
 
@@ -33,6 +33,7 @@ import Inquiry from './pages/inquiry';
 
 import InsClaimSubmit from './pages/InsClaimSubmit';
 import InsEmployee from './pages/InsEmployee';
+import InsuranceManagerDisplay from './pages/InsuranceManagerDisplay';
 
 
 import { useSelector } from 'react-redux';
@@ -40,12 +41,6 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
 import MyInquiries from './pages/MyInquiries';
-
-
-
-
-
-
 
 function App() {
   const{loading} = useSelector(state => state.alerts);
@@ -96,6 +91,7 @@ function App() {
 
           <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
           <Route path='/insEmployee' element={<InsEmployee/>}/>
+          <Route path='/InsuranceManagerDisplay' element={<InsuranceManagerDisplay/>}/>
 
         </Routes>
 

@@ -13,6 +13,7 @@ function InsEmployee() {
     try {
       const response = await fetch("/api/insurance/getInsurance");
       if (!response.ok) {
+        console.log(error);
         throw new Error('Failed to fetch insurance data');
       }
       const data = await response.json();
