@@ -4,7 +4,7 @@ import { Table, Button, message, Modal, Form, Input } from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import '../search.css';
-import { useReactToPrint } from 'react-to-print';
+
 
 function TraDriverDetailsDisplay() {
 
@@ -145,6 +145,7 @@ function TraDriverDetailsDisplay() {
                 />
             </div>
             <Table dataSource={filteredDregister.length > 0 ? filteredDregister : Dregister} columns={columns} />
+            <Button type="primary" className="update" danger onClick={() => navigate(`/TraDriverViwe`)}>VIWE VEHICLE DETAILS</Button>
             <Modal
     title="Update Booking"
     open={isModalVisible}
