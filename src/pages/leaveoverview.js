@@ -243,6 +243,14 @@ function LeaveOverview() {
 
     return (
         <Layout>
+            <div>
+        <h3>Monthly Medical Leave Counts</h3>
+        <ul>
+            {Object.entries(monthlyMedicalLeaves).map(([month, count]) => (
+                <li key={month}>Month: {months[parseInt(month) - 1]}, Count: {count}</li>
+            ))}
+        </ul>
+    </div>
              <h4>Leave Overview</h4>
              <div style={{ width: '80%', margin: '0 auto' }}>
                 
