@@ -106,14 +106,15 @@ function AnnEmpDisplay() {
         }
     };
 
-    return (
-        <Layout>
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {announcements.map(announcement => {
-                    console.log(announcement)
-                    console.log('File path:', announcement.filePath ? `http://localhost:5001/uploads/${announcement.filePath.filename}` : '');
-                    return (
-                        <Card
+    
+        return (
+            <Layout>
+                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                    {announcements.map(announcement => {
+                        console.log(announcement)
+                        console.log('File path:', announcement.filePath ? `http://localhost:5001/uploads/${announcement.filePath.filename}` : '');
+                        return (
+                            <Card
                             key={announcement._id}
                             title={announcement.anntitle}
                             style={{ width: 300, margin: '16px' }}
@@ -122,47 +123,58 @@ function AnnEmpDisplay() {
                                 <Button danger onClick={() => handleDelete(announcement._id)}>Delete</Button>
                             ]}
                         >
+                            {/* Render the image here */}
                             <div>
-                                {/* Render the image here */}
+                                {announcement.file && (
+                                    <>
+                                        <img
+                                            src={announcement.file.path ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
+                                            alt={announcement.file.filename}
+                                            style={{ width: '100px', height: '100px' }}
+                                        />
+                                        <p>{announcement.file.filename}</p>
+                                    </>
+                                )}
                             </div>
+                         
                             <p><strong>Type:</strong> {announcement.Type}</p>
                             <p><strong>Department:</strong> {announcement.Department}</p>
                             <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
                             <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
                             <p><strong>Description:</strong> {announcement.Description}</p>
                         </Card>
-                    );
-                })}
-            </div>
-
-            <Modal
-                title="Update Announcement"
-                visible={isModalVisible}
-                onCancel={() => setIsModalVisible(false)}
-                footer={null}
-            >
-                <Form
-                    layout="vertical"
-                    initialValues={{ ...currentAnnouncement }}
-                    onFinish={handleUpdate}
+                        );
+                    })}
+                </div>
+    
+                <Modal
+                    title="Update Announcement"
+                    visible={isModalVisible}
+                    onCancel={() => setIsModalVisible(false)}
+                    footer={null}
                 >
-                    <Form.Item
-                        name="anntitle"
-                        label="Announcement Title"
-                        rules={[{ required: true, message: 'Please input the announcement title!' }]}
+                    <Form
+                        layout="vertical"
+                        initialValues={{ ...currentAnnouncement }}
+                        onFinish={handleUpdate}
                     >
-                        <Input />
-                    </Form.Item>
-                    {/* Repeat for other fields as necessary */}
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Update
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Modal>
-        </Layout>
-    );
+                        <Form.Item
+                            name="anntitle"
+                            label="Announcement Title"
+                            rules={[{ required: true, message: 'Please input the announcement title!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        {/* Repeat for other fields as necessary */}
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">
+                                Update
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Modal>
+            </Layout>
+        );
 }
 
 export default AnnEmpDisplay;
