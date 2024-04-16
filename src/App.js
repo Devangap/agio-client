@@ -36,6 +36,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import PublicRoute from './components/PublicRoute';
 
 import MyInquiries from './pages/MyInquiries';
+import InquiryAdmin from './pages/inquiryAdmin';
 
 
 
@@ -83,9 +84,10 @@ function App() {
 
 
 
-          <Route exact path="/MyInquiries" element={<MyInquiries />} />
+          <Route exact path="/MyInquiries" element={<ProtectedRoute><MyInquiries /></ProtectedRoute>} />
 
           <Route path='/inquiry' element ={<ProtectedRoute><Inquiry/></ProtectedRoute>} />
+          <Route path='/inquiryAdmin' element ={<ProtectedRoute><InquiryAdmin/></ProtectedRoute>} />
           
 
         </Routes>

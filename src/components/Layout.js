@@ -163,7 +163,7 @@ function Layout({ children }) {
         },
         {
             name: ' Inquiry ',
-            path: '/profile',
+            path: '/inquiryAdmin',
             icon: 'ri-account-box-line',
         },
        
