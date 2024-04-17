@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
 import { Input } from 'antd';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, PieChart, Pie } from 'recharts';
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
+
 import { Table, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { showLoading, hideLoading } from '../redux/empalerts';
@@ -228,7 +229,10 @@ function LeaveOverview() {
         })),
         // Additional years if needed
     };
-   
+    const MonthlyLeaveDistribution = ({ updatedBarChartData }) => {
+        const [showChart, setShowChart] = useState(true);
+    
+    }
     
 
     
