@@ -332,16 +332,17 @@ axios.get('/api/employee/yearly-annual-leaves')
         "January", "February", "March", "April", "May", "June",
         "July", "August", "September", "October", "November", "December"
     ];
+    console.log('Monthly Medical Leavesssss:', monthlyMedicalLeaves);
     const updatedBarChartData = {
-        "2024": Object.entries(monthlyMedicalLeaves).map(([month, count]) => ({
+        "2024": Array.isArray(monthlyMedicalLeaves["2024"]) ? monthlyMedicalLeaves["2024"].map(({ month, count }) => ({
             month: months[parseInt(month) - 1], // Convert month number to month name
             medical: count, // Assign medical leave count
-            general: monthlyGeneralLeaves[month] || 0, // Assign general leave count or default to 0
-           
-            annual: monthlyAnnualLeaves[month] || 0 // Assign annual leave count or default to 0
-        })),
+            general: monthlyGeneralLeaves["2024"] && monthlyGeneralLeaves["2024"][month] ? monthlyGeneralLeaves["2024"][month] : 0, // Assign general leave count or default to 0
+            annual: monthlyAnnualLeaves["2024"] && monthlyAnnualLeaves["2024"][month] ? monthlyAnnualLeaves["2024"][month] : 0 // Assign annual leave count or default to 0
+        })) : [],
         // Additional years if needed
     };
+    console.log('ss:',updatedBarChartData)
     const updatedBarChartDataquaterly = {
         "2024": [
             { quarter: 'Q1', medical: quarterlyMedicalLeaves[1] || 0, general: quarterlyGeneralLeaves[1] || 0, annual: quarterlyAnnualLeaves[1] || 0 },
@@ -351,13 +352,15 @@ axios.get('/api/employee/yearly-annual-leaves')
         ],
         // Additional years if needed
     };
-    const updatedYearlyChartData = Object.entries(yearlyMedicalLeaves).map(([year, count]) => ({
+    const updatedYearlyChartData = {
+        "Year": Object.entries(yearlyMedicalLeaves).map(([year, count]) => ({
         year,
         medical: count || 0,
         general: yearlyGeneralLeaves[year] || 0,
         
         annual: yearlyAnnualLeaves[year] || 0
-    }));
+    })),
+};
     const MonthlyLeaveDistribution = ({ updatedBarChartData }) => {
         const [showChart, setShowChart] = useState(true);
     
@@ -403,7 +406,7 @@ axios.get('/api/employee/yearly-annual-leaves')
 </div>
             
              <h4>Leave Overview</h4>
-<div style={{ width: '100%', margin: '0 auto' }}>
+             <div style={{ width: '100%', margin: '0 auto' }}>
     {showChart && (
         <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '10px' }}>
             <h6>Monthly Leave Distribution</h6>
@@ -411,16 +414,20 @@ axios.get('/api/employee/yearly-annual-leaves')
                 {Object.keys(updatedBarChartData).map(year => (
                     <div key={year}>
                         <h5>{year}</h5>
-                        <BarChart width={600} height={400} data={updatedBarChartData[year]}>
-                            <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="month" />
-                            <YAxis />
-                            <Tooltip />
-                            <Legend />
-                            <Bar dataKey="general" fill="#8884d8" />
-                            <Bar dataKey="annual" fill="#ffc658" />
-                            <Bar dataKey="medical" fill="#82ca9d" />
-                        </BarChart>
+                        {Array.isArray(updatedBarChartData[year]) && updatedBarChartData[year].length > 0 ? (
+                            <BarChart width={600} height={400} data={updatedBarChartData[year]}>
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="month" />
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Bar dataKey="general" fill="#8884d8" />
+                                <Bar dataKey="annual" fill="#ffc658" />
+                                <Bar dataKey="medical" fill="#82ca9d" />
+                            </BarChart>
+                        ) : (
+                            <p>No data available for {year}</p>
+                        )}
                     </div>
                 ))}
             </div>
@@ -461,7 +468,7 @@ axios.get('/api/employee/yearly-annual-leaves')
                         <h5>{year}</h5>
                         <BarChart width={600} height={400} data={updatedYearlyChartData[year]}>
                             <CartesianGrid strokeDasharray="3 3" />
-                            <XAxis dataKey="leaveType" />
+                            <XAxis dataKey="year" />
                             <YAxis />
                             <Tooltip />
                             <Legend />
