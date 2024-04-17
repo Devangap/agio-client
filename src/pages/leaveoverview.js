@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
-import { Input } from 'antd';
+import { Input ,Tabs} from 'antd';
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 
 import { Table, message } from 'antd';
@@ -27,6 +27,8 @@ function LeaveOverview() {
     const [yearlyMedicalLeaves, setYearlyMedicalLeaves] = useState({});
 const [yearlyGeneralLeaves, setYearlyGeneralLeaves] = useState({});
 const [yearlyAnnualLeaves, setYearlyAnnualLeaves] = useState({});
+const TabPane = Tabs;
+const [activeTab, setActiveTab] = useState('monthly'); 
 
 
     const handleSearch = (value) => {
@@ -334,21 +336,23 @@ axios.get('/api/employee/yearly-annual-leaves')
     ];
     console.log('Monthly Medical Leavesssss:', monthlyMedicalLeaves);
     const updatedBarChartData = {
-        "2024": Array.isArray(monthlyMedicalLeaves["2024"]) ? monthlyMedicalLeaves["2024"].map(({ month, count }) => ({
-            month: months[parseInt(month) - 1], // Convert month number to month name
-            medical: count, // Assign medical leave count
-            general: monthlyGeneralLeaves["2024"] && monthlyGeneralLeaves["2024"][month] ? monthlyGeneralLeaves["2024"][month] : 0, // Assign general leave count or default to 0
-            annual: monthlyAnnualLeaves["2024"] && monthlyAnnualLeaves["2024"][month] ? monthlyAnnualLeaves["2024"][month] : 0 // Assign annual leave count or default to 0
-        })) : [],
+        "2024": monthlyMedicalLeaves["2024"] ? 
+            Object.entries(monthlyMedicalLeaves["2024"]).map(([month, count]) => ({
+                month: months[parseInt(month) - 1], // Convert month number to month name
+                medical: count, // Assign medical leave count
+                general: monthlyGeneralLeaves["2024"] && monthlyGeneralLeaves["2024"][month] ? monthlyGeneralLeaves["2024"][month] : 0, // Assign general leave count or default to 0
+                specific: 0, // Placeholder for specific leave count
+                annual: monthlyAnnualLeaves["2024"] && monthlyAnnualLeaves["2024"][month] ? monthlyAnnualLeaves["2024"][month] : 0 // Assign annual leave count or default to 0
+            })) : [],
         // Additional years if needed
     };
     console.log('ss:',updatedBarChartData)
-    const updatedBarChartDataquaterly = {
+    const updatedBarChartDataQuarterly = {
         "2024": [
-            { quarter: 'Q1', medical: quarterlyMedicalLeaves[1] || 0, general: quarterlyGeneralLeaves[1] || 0, annual: quarterlyAnnualLeaves[1] || 0 },
-            { quarter: 'Q2', medical: quarterlyMedicalLeaves[2] || 0, general: quarterlyGeneralLeaves[2] || 0, annual: quarterlyAnnualLeaves[2] || 0 },
-            { quarter: 'Q3', medical: quarterlyMedicalLeaves[3] || 0, general: quarterlyGeneralLeaves[3] || 0, annual: quarterlyAnnualLeaves[3] || 0 },
-            { quarter: 'Q4', medical: quarterlyMedicalLeaves[4] || 0, general: quarterlyGeneralLeaves[4] || 0, annual: quarterlyAnnualLeaves[4] || 0 }
+            { quarter: 'Q1', medical: (quarterlyMedicalLeaves["2024"] && quarterlyMedicalLeaves["2024"][1]) || 0, general: (quarterlyGeneralLeaves["2024"] && quarterlyGeneralLeaves["2024"][1]) || 0, annual: (quarterlyAnnualLeaves["2024"] && quarterlyAnnualLeaves["2024"][1]) || 0 },
+            { quarter: 'Q2', medical: (quarterlyMedicalLeaves["2024"] && quarterlyMedicalLeaves["2024"][2]) || 0, general: (quarterlyGeneralLeaves["2024"] && quarterlyGeneralLeaves["2024"][2]) || 0, annual: (quarterlyAnnualLeaves["2024"] && quarterlyAnnualLeaves["2024"][2]) || 0 },
+            { quarter: 'Q3', medical: (quarterlyMedicalLeaves["2024"] && quarterlyMedicalLeaves["2024"][3]) || 0, general: (quarterlyGeneralLeaves["2024"] && quarterlyGeneralLeaves["2024"][3]) || 0, annual: (quarterlyAnnualLeaves["2024"] && quarterlyAnnualLeaves["2024"][3]) || 0 },
+            { quarter: 'Q4', medical: (quarterlyMedicalLeaves["2024"] && quarterlyMedicalLeaves["2024"][4]) || 0, general: (quarterlyGeneralLeaves["2024"] && quarterlyGeneralLeaves["2024"][4]) || 0, annual: (quarterlyAnnualLeaves["2024"] && quarterlyAnnualLeaves["2024"][4]) || 0 }
         ],
         // Additional years if needed
     };
@@ -379,7 +383,7 @@ axios.get('/api/employee/yearly-annual-leaves')
 
     return (
         <Layout>
-            <div>
+            {/* <div>
     <h4>Yearly General Leaves</h4>
     <ul>
         {Object.entries(yearlyGeneralLeaves).map(([year, count]) => (
@@ -403,46 +407,51 @@ axios.get('/api/employee/yearly-annual-leaves')
             <li key={year}>{year}: {count}</li>
         ))}
     </ul>
-</div>
+</div> */}
             
              <h4>Leave Overview</h4>
-             <div style={{ width: '100%', margin: '0 auto' }}>
-    {showChart && (
-        <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '10px' }}>
-            <h6>Monthly Leave Distribution</h6>
-            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                {Object.keys(updatedBarChartData).map(year => (
+             <Tabs defaultActiveKey="monthly" onChange={(key) => setActiveTab(key)}>
+                <TabPane tab="Monthly" key="monthly">
+                    {/* Monthly leave distribution content */}
+                    {/* Conditionally render the chart when the monthly tab is active */}
+                    {activeTab === 'monthly' && (
+                        <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '10px' }}>
+                            <h6>Monthly Leave Distribution</h6>
+                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                                {Object.keys(updatedBarChartData).map(year => (
+                                    <div key={year}>
+                                        <h5>{year}</h5>
+                                        {Array.isArray(updatedBarChartData[year]) && updatedBarChartData[year].length > 0 ? (
+                                            <BarChart width={600} height={400} data={updatedBarChartData[year]}>
+                                                <CartesianGrid strokeDasharray="3 3" />
+                                                <XAxis dataKey="month" />
+                                                <YAxis />
+                                                <Tooltip />
+                                                <Legend />
+                                                <Bar dataKey="general" fill="#8884d8" />
+                                                <Bar dataKey="annual" fill="#ffc658" />
+                                                <Bar dataKey="medical" fill="#82ca9d" />
+                                            </BarChart>
+                                        ) : (
+                                            <p>No data available for {year}</p>
+                                        )}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </TabPane>
+                <TabPane tab="Quarterly" key="quarterly">
+                    {/* Quarterly leave distribution content */}
+                    {/* Conditionally render the chart when the quarterly tab is active */}
+                    {activeTab === 'quarterly' && (
+                        <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '10px' }}>
+                            <h6>Quarterly Leave Distribution</h6>
+                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                            {Object.keys(updatedBarChartDataQuarterly).map(year => (
                     <div key={year}>
                         <h5>{year}</h5>
-                        {Array.isArray(updatedBarChartData[year]) && updatedBarChartData[year].length > 0 ? (
-                            <BarChart width={600} height={400} data={updatedBarChartData[year]}>
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="month" />
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Bar dataKey="general" fill="#8884d8" />
-                                <Bar dataKey="annual" fill="#ffc658" />
-                                <Bar dataKey="medical" fill="#82ca9d" />
-                            </BarChart>
-                        ) : (
-                            <p>No data available for {year}</p>
-                        )}
-                    </div>
-                ))}
-            </div>
-        </div>
-    )}
-</div>
-<div style={{ width: '80%', margin: '0 auto' }}>
-    {showChart && (
-        <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '10px' }}>
-            <h6>Quarterly Leave Distribution</h6>
-            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                {Object.keys(updatedBarChartDataquaterly).map(year => (
-                    <div key={year}>
-                        <h5>{year}</h5>
-                        <BarChart width={600} height={400} data={updatedBarChartDataquaterly[year]}>
+                        <BarChart width={600} height={400} data={updatedBarChartDataQuarterly[year]}>
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="quarter" />
                             <YAxis />
@@ -454,16 +463,18 @@ axios.get('/api/employee/yearly-annual-leaves')
                         </BarChart>
                     </div>
                 ))}
-            </div>
-        </div>
-    )}
-</div>
-<div style={{ width: '80%', margin: '0 auto' }}>
-    {showChart && (
-        <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '10px' }}>
-            <h6>Yearly Leave Distribution</h6>
-            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                {Object.keys(updatedYearlyChartData).map(year => (
+                            </div>
+                        </div>
+                    )}
+                </TabPane>
+                <TabPane tab="Yearly" key="yearly">
+                    {/* Yearly leave distribution content */}
+                    {/* Conditionally render the chart when the yearly tab is active */}
+                    {activeTab === 'yearly' && (
+                        <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '10px' }}>
+                            <h6>Yearly Leave Distribution</h6>
+                            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                            {Object.keys(updatedYearlyChartData).map(year => (
                     <div key={year}>
                         <h5>{year}</h5>
                         <BarChart width={600} height={400} data={updatedYearlyChartData[year]}>
@@ -478,10 +489,12 @@ axios.get('/api/employee/yearly-annual-leaves')
                         </BarChart>
                     </div>
                 ))}
-            </div>
-        </div>
-    )}
-</div>
+                            </div>
+                        </div>
+                    )}
+                </TabPane>
+            </Tabs>
+             
             <Input.Search
                 placeholder="Search by name or employee Id"
                 allowClear
