@@ -243,41 +243,32 @@ function LeaveOverview() {
 
     return (
         <Layout>
-            <div>
-        <h3>Monthly Medical Leave Counts</h3>
-        <ul>
-            {Object.entries(monthlyMedicalLeaves).map(([month, count]) => (
-                <li key={month}>Month: {months[parseInt(month) - 1]}, Count: {count}</li>
-            ))}
-        </ul>
-    </div>
+            
              <h4>Leave Overview</h4>
-             <div style={{ width: '80%', margin: '0 auto' }}>
-                
-                {showChart && (
-         <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '10px' }}>
-                        <h6>Monthly Leave Distribution</h6>
-                        <div style={{ display: 'flex', justifyContent: 'space-around' }}>
-                            {Object.keys(updatedBarChartData).map(year => (
-                                <div key={year}>
-                                    <h5>{year}</h5>
-                                    <BarChart width={600} height={400} data={updatedBarChartData[year]}>
-                                        <CartesianGrid strokeDasharray="3 3" />
-                                        <XAxis dataKey="month" />
-                                        <YAxis />
-                                        <Tooltip />
-                                        <Legend />
-                                        <Bar dataKey="general" stackId="a" fill="#8884d8" />
-                                        
-                                        <Bar dataKey="annual" stackId="a" fill="#ffc658" />
-                                        <Bar dataKey="medical" stackId="a" fill="#82ca9d" />
-                                    </BarChart>
-                                </div>
-                            ))}
-                        </div>
+<div style={{ width: '80%', margin: '0 auto' }}>
+    {showChart && (
+        <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '10px' }}>
+            <h6>Monthly Leave Distribution</h6>
+            <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                {Object.keys(updatedBarChartData).map(year => (
+                    <div key={year}>
+                        <h5>{year}</h5>
+                        <BarChart width={600} height={400} data={updatedBarChartData[year]}>
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="month" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="general" fill="#8884d8" />
+                            <Bar dataKey="annual" fill="#ffc658" />
+                            <Bar dataKey="medical" fill="#82ca9d" />
+                        </BarChart>
                     </div>
-                )}
+                ))}
             </div>
+        </div>
+    )}
+</div>
             <Input.Search
                 placeholder="Search by name or employee Id"
                 allowClear
