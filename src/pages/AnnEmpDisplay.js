@@ -106,8 +106,7 @@ function AnnEmpDisplay() {
                         title={announcement.anntitle}
                         style={{ width: 1000, margin: '16px' }}
                         actions={[
-                            
-                            
+                             
                         ]}
 
                     >
