@@ -49,7 +49,7 @@ import UniformShirt from './pages/UniformShirt';
 import UniformSkirt from './pages/UniformSkirt';
 import UniformShirtInventory from './pages/UniformShirtInventory';
 import UniformOrderDetails from './pages/UniformOrderDetails';
-
+import UniformTotals from './pages/UniformTotals';
 
 
 
@@ -95,6 +95,7 @@ function App() {
           <Route path='/UniformSkirt' element={<UniformSkirt/>} />
           <Route path='/UniformShirtInventory' element={<UniformShirtInventory/>} />
           <Route path='/UniformOrderDetails' element={<UniformOrderDetails/>} />
+          <Route path='/UniformTotals' element={<UniformTotals/>}/>
 
 
           

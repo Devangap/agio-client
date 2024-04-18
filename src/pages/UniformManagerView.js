@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Table, Input, Button, Select, DatePicker, Modal, Form, message } from 'antd';
-import moment from 'moment'; // Import moment library
+import { Table, Input, Button, Select, Modal, Form, message } from 'antd';
+import moment from 'moment';
+import { Document, Page, Text, PDFDownloadLink } from '@react-pdf/renderer';
 import '../UniformManagerView.css';
 
 const { Option } = Select;
@@ -17,27 +18,7 @@ function UniformOrders() {
   const [modalVisible, setModalVisible] = useState(false);
   const [updateRecord, setUpdateRecord] = useState(null);
   const [waistSizeDisabled, setWaistSizeDisabled] = useState(false);
-  const [filterModalVisible, setFilterModalVisible] = useState(false);
-
-  // Function to handle opening the filter modal
-const handleFilterModalOpen = () => {
-  setFilterModalVisible(true);
-};
-
-// Modify handleFilterClick to open the filter modal
-const handleFilterClick = () => {
-  handleFilterModalOpen();
-};
-
-// Update Modal component to conditionally render based on filterModalVisible
-<Modal
-  title="Filter Uniform Orders"
-  visible={filterModalVisible}
-  onCancel={() => setFilterModalVisible(false)}
-  footer={null}
->
-  {/* Filter form content goes here */}
-</Modal>
+  const [searchId, setSearchId] = useState(""); 
 
   const fetchUniformOrders = async () => {
     try {
@@ -64,10 +45,8 @@ const handleFilterClick = () => {
 
   const handleUpdateSubmit = async (values) => {
     try {
-      // Send a request to update the record in the database
       await axios.put(`/api/uniformOrder/${updateRecord._id}`, values);
       message.success('Uniform order updated successfully');
-      // Fetch the updated uniform orders
       fetchUniformOrders();
       setModalVisible(false);
     } catch (error) {
@@ -78,10 +57,8 @@ const handleFilterClick = () => {
 
   const handleDelete = async (key) => {
     try {
-      // Send a request to delete the record from the database
       await axios.delete(`/api/uniformOrder/${key}`);
       message.success('Uniform order deleted successfully');
-      // Fetch the updated uniform orders
       fetchUniformOrders();
     } catch (error) {
       console.error('Error deleting uniform order:', error);
@@ -93,25 +70,57 @@ const handleFilterClick = () => {
     setFilters({ ...filters, [filterKey]: value });
   };
 
-  const handleFilterClick = () => {
-    setModalVisible(true);
-  };
-
   const handleCancel = () => {
     setModalVisible(false);
   };
 
-  const filteredUniformOrders = uniformOrders.filter(order => {
-    for (let key in filters) {
-      if (key === 'position' && filters[key] === 'Any') {
-        continue;
-      }
-      if (filters[key] && filters[key] !== order[key]) {
-        return false;
-      }
+  const handleSearch = () => {
+    if (searchId.trim() === "") {
+      message.warning("Please enter a valid ID");
+      return;
     }
-    return true;
-  });
+
+    const foundOrder = uniformOrders.find(order => order.employeeNumber === searchId);
+    if (!foundOrder) {
+      message.info("No order found with that ID");
+      return;
+    }
+
+    setUniformOrders([foundOrder]);
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchId(e.target.value);
+    
+    if (e.target.value.trim() === "") {
+      fetchUniformOrders();
+    }
+  };
+
+  const handleDownloadReport = () => {
+    const ReportDocument = (
+      <Document>
+        <Page>
+          <Text>Employee Number, Position, T-shirt Size, Waist Size, Uniform Count, Order Date</Text>
+          {uniformOrders.map(order => (
+            <Text key={order._id}>{order.employeeNumber}, {order.position}, {order.tshirtSize}, {order.waistSize}, {order.uniformCount}, {moment(order.createdAt).format('YYYY-MM-DD')}</Text>
+          ))}
+        </Page>
+      </Document>
+    );
+
+    const pdfName = 'uniform_orders_report.pdf';
+
+    return (
+      <PDFDownloadLink document={ReportDocument} fileName={pdfName}>
+        {({ loading }) => (
+          <Button type="primary" loading={loading}>
+            {loading ? 'Generating PDF...' : 'Download Report'}
+          </Button>
+        )}
+      </PDFDownloadLink>
+    );
+  };
 
   const columns = [
     {
@@ -160,7 +169,16 @@ const handleFilterClick = () => {
   return (
     <div>
       <h1>Uniform Orders</h1>
-      <Button type="primary" onClick={handleFilterClick}>Filter</Button>
+      <div style={{ marginBottom: '10px' }}>
+        <Input
+          value={searchId}
+          onChange={handleSearchChange}
+          placeholder="Search by Employee Number"
+          style={{ width: 200, marginRight: 10 }}
+        />
+        <Button type="primary" onClick={handleSearch}>Search</Button>
+      </div>
+      {handleDownloadReport()}
       <Modal
         title="Update Uniform Order"
         visible={modalVisible}
@@ -209,7 +227,7 @@ const handleFilterClick = () => {
           </Form.Item>
         </Form>
       </Modal>
-      <Table dataSource={filteredUniformOrders} columns={columns} />
+      <Table dataSource={uniformOrders} columns={columns} />
     </div>
   );
 }
