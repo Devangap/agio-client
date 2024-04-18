@@ -17,6 +17,27 @@ function UniformOrders() {
   const [modalVisible, setModalVisible] = useState(false);
   const [updateRecord, setUpdateRecord] = useState(null);
   const [waistSizeDisabled, setWaistSizeDisabled] = useState(false);
+  const [filterModalVisible, setFilterModalVisible] = useState(false);
+
+  // Function to handle opening the filter modal
+const handleFilterModalOpen = () => {
+  setFilterModalVisible(true);
+};
+
+// Modify handleFilterClick to open the filter modal
+const handleFilterClick = () => {
+  handleFilterModalOpen();
+};
+
+// Update Modal component to conditionally render based on filterModalVisible
+<Modal
+  title="Filter Uniform Orders"
+  visible={filterModalVisible}
+  onCancel={() => setFilterModalVisible(false)}
+  footer={null}
+>
+  {/* Filter form content goes here */}
+</Modal>
 
   const fetchUniformOrders = async () => {
     try {
