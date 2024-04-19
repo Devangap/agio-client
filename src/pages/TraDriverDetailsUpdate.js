@@ -27,11 +27,11 @@ function TraDriverDetailsUpdate() {
             driPnum: data.driPnum,
           });
         } else {
-          toast.error('Announcement not found!');
+          toast.error('Driver not found!');
           navigate('/TraDriverDetailsDisplay');
         }
       } catch (error) {
-        toast.error('Failed to fetch announcement data!');
+        toast.error('Failed to fetch Driver data!');
       }
     };
 

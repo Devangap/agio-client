@@ -28,11 +28,11 @@ function TraBookingUpdate() {
             Details: data.Details,
           });
         } else {
-          toast.error('Announcement not found!');
+          toast.error('Booking  not found!');
           navigate('/TraBookingDisplay');
         }
       } catch (error) {
-        toast.error('Failed to fetch announcement data!');
+        toast.error('Failed to fetch Booking data!');
       }
     };
 

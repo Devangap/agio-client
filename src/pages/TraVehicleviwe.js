@@ -26,7 +26,7 @@ function TraVehicleviwe() {
             setVregister(dataWithKey);
         } catch (error) {
             console.error(error);
-            message.error("Failed to fetch Booking");
+            message.error("Failed to fetch Vehicle");
         }
     };
 

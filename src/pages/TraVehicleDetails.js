@@ -26,7 +26,7 @@ function TraVehicleDetails() {
             setVregister(dataWithKey);
         } catch (error) {
             console.error(error);
-            message.error("Failed to fetch Booking");
+            message.error("Failed to fetch Vehicle");
         }
     };
 
@@ -48,11 +48,11 @@ function TraVehicleDetails() {
             setVregister(prevVehicles => prevVehicles.filter(Vregister => Vregister._id !== id));
     
             // Show a success message
-            message.success('Booking deleted successfully');
+            message.success('Vehicle deleted successfully');
         } catch (error) {
             // Show an error message if deletion fails
-            console.error('Failed to delete Booking:', error);
-            message.error('Failed to delete Booking');
+            console.error('Failed to delete Vehicle:', error);
+            message.error('Failed to delete Vehicle');
         }
     };
 
@@ -64,9 +64,7 @@ function TraVehicleDetails() {
         setFilteredVregister(filteredData);
     };
 
-    const clearSearch = () => {
-        setFilteredVregister([]);
-    };
+  
     
 
     const columns = [
