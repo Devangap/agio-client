@@ -19,6 +19,7 @@ import AnnDisplay from './pages/AnnDisplay';
 import AnnUpdate from './pages/AnnUpdate';
 import AnnEmpDisplay from './pages/AnnEmpDisplay';
 import AnnCalHead from './pages/AnnCalHead';
+import LeaveCal from './pages/LeaveCal'
 
 
 
@@ -105,6 +106,7 @@ function App() {
           <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
           <Route path='/LeaveUpdate/:id' element={<ProtectedRoute><LeaveUpdate/></ProtectedRoute>} />
           <Route path='/Leaveoverview' element={<ProtectedRoute><Leaveoverview/></ProtectedRoute>} />
+          <Route path='/LeaveCal' element={<ProtectedRoute><LeaveCal/></ProtectedRoute>} />
 
           <Route path='/Main_Register' element={<Main_register />} />
           <Route path='/Main_Login' element={<Main_login />} />
