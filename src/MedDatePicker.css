@@ -417,11 +417,222 @@ medical-overview
     background-color: #dfdfdf;
 }
 
-
-
-
-
 .doc-overview-secondary-2 {
     display: flex;
     padding: 45px 10px 10px 10px;
+}
+
+
+
+/*
+**
+**
+medical-reports
+**
+**
+*/
+
+.doc-reports-main {
+    display: flex;
+    flex-direction: column;
+    width: match-parent;
+    height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.doc-reports-secondary-1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.doc-reports-secondary-1-label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #818181;
+}
+
+.doc-reports-secondary-1-rangePicker .ant-picker-input {
+    width: 100px;
+    text-align: center;
+}
+
+.doc-reports-secondary-1-rangePicker .ant-picker-input Input {
+    text-align: center;
+    height: 30px !important;
+}
+
+.doc-reports-secondary-1-download-button {
+    border-radius: 5px;
+    margin-left: 20px;
+    height: 40px;
+    background-color: #dfdfdf;
+    border-color: #dfdfdf;
+}
+
+.doc-reports-secondary-2 {
+    padding: 10px;
+}
+
+.doc-reports-secondary-2-title {
+    font-size: 25px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #FFC15E;
+}
+
+.doc-reports-secondary-2-section-title {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 15px;
+    color:#818181;
+}
+
+.doc-reports-secondary-2-section-1 {
+    margin-bottom: 15px;
+}
+
+.doc-reports-secondary-2-section-1-info {
+    padding-left: 20px;
+}
+
+.doc-reports-secondary-2-section-1-info-box {
+    display: flex;
+    flex-direction: row;
+}
+
+.doc-reports-secondary-2-section-1-info-box-title {
+    color: #818181;
+    font-size: 16px;
+    width: 225px;
+}
+
+.doc-reports-secondary-2-section-1-info-box-inside-box {
+    display: flex;
+    margin-left: 20px;
+}
+
+.doc-reports-secondary-2-section-2-data {
+    display: flex;
+    flex-direction: row;
+}
+
+.doc-reports-secondary-2-section-2-data-chart {
+    overflow: auto;
+    width: 60%;
+}
+
+.doc-reports-secondary-2-section-2-data-summary {
+    width: 40%;
+    padding-left: 30px;
+}
+
+.doc-reports-secondary-2-section-2-data-summary table, td, th {
+    border: 1px solid #dfdfdf;
+    border-collapse: collapse;
+}
+
+.doc-reports-secondary-2-section-2-data-summary th {
+    background-color: #eeeeee;
+    text-align: center;
+    font-weight: 500;
+    height: 40px;
+    width: 84px;
+}
+
+.doc-reports-secondary-2-section-2-data-summary td {
+    width: 84px;
+}
+
+
+.doc-reports-secondary-2-section-3-data {
+    display: flex;
+    flex-direction: row;
+}
+
+.doc-reports-secondary-2-section-3-data-chart {
+    overflow: auto;
+    width: 60%;
+}
+
+.doc-reports-secondary-2-section-3-data-summary {
+    width: 40%;
+    padding-left: 30px;
+}
+
+.doc-reports-secondary-2-section-3-data-summary table, td, th {
+    border: 1px solid #dfdfdf;
+    border-collapse: collapse;
+}
+
+.doc-reports-secondary-2-section-3-data-summary th {
+    background-color: #eeeeee;
+    text-align: center;
+    font-weight: 500;
+    height: 40px;
+    width: 84px;
+}
+
+.doc-reports-secondary-2-section-3-data-summary td {
+    width: 84px;
+}
+
+.doc-reports-secondary-2-section-4-data {
+    
+}
+
+.doc-reports-secondary-2-section-4-data-container {
+    
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.doc-reports-secondary-2-section-4-data-container-chart {
+    
+    width: 100%;
+}
+
+.doc-reports-secondary-2-section-4-data-container-chart-chart {
+    
+}
+
+.doc-reports-secondary-2-section-4-data-container-chart-title {
+    
+    text-align: center;
+}
+
+
+.doc-reports-secondary-2-section-5-data {
+    display: flex;
+    flex-direction: row;
+}
+
+.doc-reports-secondary-2-section-5-data-chart {
+    overflow: auto;
+    width: 60%;
+}
+
+.doc-reports-secondary-2-section-5-data-summary {
+    width: 40%;
+    padding-left: 30px;
+}
+
+.doc-reports-secondary-2-section-5-data-summary table, td, th {
+    border: 1px solid #dfdfdf;
+    border-collapse: collapse;
+}
+
+.doc-reports-secondary-2-section-5-data-summary th {
+    background-color: #eeeeee;
+    text-align: center;
+    font-weight: 500;
+    height: 40px;
+    width: 84px;
+}
+
+.doc-reports-secondary-2-section-5-data-summary td {
+    width: 84px;
 }
