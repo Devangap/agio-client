@@ -64,8 +64,8 @@ const MedOverview = () => {
       width: 100,
       render: (_, record) => (
         <div>
-          <Button style={{marginBottom: 5}} onClick={() => {toast.success(`${record.key} button clicked`)}}>Complete</Button>
-          <Button>Incomplete</Button>
+          <Button style={{marginBottom: 5, backgroundColor: "#dfdfdf"}} onClick={() => {updateCompletionStatusOfAppointment(record.key, "completed")}}>Complete</Button>
+          <Button onClick={() => {updateCompletionStatusOfAppointment(record.key, "missed")}}>Incomplete</Button>
         </div>
       ),
     },
@@ -344,6 +344,36 @@ const MedOverview = () => {
 
     setScheduledListForSpecificDay(appointmentList);
   }
+
+
+  /*
+  Update completion status of an appointment
+  */
+  const updateCompletionStatusOfAppointment = async (id, status) => {
+    try {
+
+      const response = await axios.post(
+        "/api/medDoctor/medical-overview-update-one-appointment-status",
+        {
+          recordId: id,
+          status: status,
+          updatedAt: new Date(),
+        },
+        {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        }
+      );
+
+      // Log the response
+      console.log(`@updateCompletionStatusOfAppointment() @MedOverview() Response => ${response.data.message}`);
+      
+    } catch (error) {
+      console.log("Error occured when updating the completion status for an appointment @updateCompletionStatusOfAppointment() @MedReports() => ", error);
+    }
+  }
+
 
 
   /* ============= useEffects ============== */
