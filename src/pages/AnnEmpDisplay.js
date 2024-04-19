@@ -7,6 +7,7 @@ import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+
 function AnnEmpDisplay() {
     const navigate = useNavigate();
     const { user } = useSelector((state) => state.user);
@@ -75,7 +76,7 @@ function AnnEmpDisplay() {
             
             {
                 headers: {
-                  'Content-Type': 'multipart/form-data',
+                  'Content-Type': 'application/json',
                   Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
               }
@@ -93,6 +94,8 @@ function AnnEmpDisplay() {
         } catch (error) {
             message.error('Failed to add comment');
         }
+        console.log(commentText); // Ensure it's not empty or undefined
+
     };
 
     
