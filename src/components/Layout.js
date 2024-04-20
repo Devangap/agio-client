@@ -1,9 +1,12 @@
 import React from 'react';
 import '../Annlayout.css';
+
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
 import  { useEffect } from 'react';
+import { Badge ,Avatar} from 'antd';
+import axios from 'axios';
 
 function Layout({ children }) {
 
@@ -19,7 +22,23 @@ function Layout({ children }) {
                                     dispatch(setUser(null)); // Clear user state in Redux store
                                     navigate('/Main_login');
                                 };
-                                                          
+                                const getData = async () => {
+                                    try {
+                                        const response = await axios.post('/api/employee/get-employee-info-by-id', {} , {
+                                            headers: {
+                                                Authorization: 'Bearer ' + localStorage.getItem('token')
+                                            },
+                                        });
+                                        console.log(response.data);
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                };
+                                
+                            
+                                useEffect(() => {
+                                    getData();
+                                }, []);                                                      
     
     const userMenu = [
         {
@@ -29,20 +48,41 @@ function Layout({ children }) {
         },
         {
             name: 'Announcements',
-            path: '/announcements',
+            path: '/AnnEmpDisplay',
             icon: 'ri-survey-line',
         },
         {
             name: 'Leave',
-            path: '/calendar',
+            path: '/leaveEmp',
             icon: 'ri-calendar-line',
         },
+        {
+            name: "Appointments",
+            path: "/medical-appointments",
+            icon: "ri-file-list-line",
+          },
         {
             name: 'Uniform',
             path: '/profile',
             icon: 'ri-account-box-line',
         },
-       
+        {
+
+            name: 'Inquiry',
+            path: '/inquiry',
+          icon: 'ri-account-box-line',
+        },
+      {
+            name: 'Transport',
+            path: '/TraBookingBox',
+
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: 'Insurance',
+            path: '/insEmployee',
+            icon: 'ri-article-line',
+        },
     ];
     const adminMenu = [
         {
@@ -60,31 +100,42 @@ function Layout({ children }) {
 
     const doctorMenu = [
         {
-            name: 'Home',
-            path: '/',
-            icon: 'ri-home-line',
+          name: "Overview",
+          path: "/medical-overview",
+          icon: "ri-home-line",
         },
+    
         {
-            name: ' Doctor Profile',
-            path: '/profile',
-            icon: 'ri-account-box-line',
+          name: "Parameters",
+          path: "/parameters",
+          icon: "ri-list-settings-line",
         },
-        
-    ];
+    
+        {
+          name: "Reports",
+          path: "/medical-reports",
+          icon: "ri-user-line",
+        },
+      ];
     const Annhrsupmenu = [
         {
             name: 'Home',
-            path: '/',
+            path: '/AnnHRsup',
             icon: 'ri-home-line',
         },
         {
             name: ' Announcements',
-            path: '/profile',
+            path: '/AnnDisplay',
             icon: 'ri-account-box-line',
         },
         {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
+        {
             name: ' Calendar',
-            path: '/profile',
+            path: '/AnnCalendar',
             icon: 'ri-account-box-line',
         },
         {
@@ -96,15 +147,23 @@ function Layout({ children }) {
     ];
     const leavemenu = [
         {
-            name: 'Home',
-            path: '/',
-            icon: 'ri-home-line',
-        },
-        {
-            name: ' leave',
-            path: '/profile',
+            name: ' Overview',
+            path: '/leaveoverview',
             icon: 'ri-account-box-line',
         },
+        
+        {
+            name: ' Leave requests',
+            path: '/leaveHrsupdisplay',
+            icon: 'ri-account-box-line',
+        },
+       
+        {
+            name: ' Calendar',
+            path: '/LeaveCal',
+            icon: 'ri-account-box-line',
+        },
+       
        
     ];
     const logisticmenu = [
@@ -114,8 +173,28 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: ' transport',
+            name: ' Transport',
             path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
+        {
+            name: ' BookingUserdetails',
+            path: '/TraBookingDisplayAdmin',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' DriverRegister And Details',
+            path: '/TraDriverBox',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' VehicleRegister And Details',
+            path: '/VehicleBox',
             icon: 'ri-account-box-line',
         },
        
@@ -131,6 +210,11 @@ function Layout({ children }) {
             path: '/profile',
             icon: 'ri-account-box-line',
         },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
        
     ];
     const inquirymenu = [
@@ -141,8 +225,13 @@ function Layout({ children }) {
         },
         {
             name: ' Inquiry ',
-            path: '/profile',
+            path: '/inquiryAdmin',
             icon: 'ri-account-box-line',
+        },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
         },
        
     ];
@@ -154,8 +243,13 @@ function Layout({ children }) {
         },
         {
             name: ' Insuarance ',
-            path: '/profile',
+            path: '/InsuranceManagerDisplay',
             icon: 'ri-account-box-line',
+        },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
         },
        
     ];
@@ -169,6 +263,11 @@ function Layout({ children }) {
             name: 'Performance',
             path: '/perf',
             icon: 'ri-home-line',
+        },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
         },
       
     ];
@@ -243,9 +342,12 @@ useEffect(() => {
                         <div>
                            </div>
                         <div className='layout-action-icon-container'>
-                            <i className="ri-notification-line layout-action-icon mr 3px "></i>
+                        <Badge count={user?.unseenNotifications.length} onClick = {() => navigate("/Main_Notifications")}>
+                        <i className="ri-notification-line layout-action-icon mr 3px "></i>
+                         </Badge>
+                            
                           
-                            <Link className="anchor" to ='/'>{user?.username}</Link>
+                            <Link className="anchor mx-3" to ='/'>{user?.username}</Link>
                             
                             
                         </div>

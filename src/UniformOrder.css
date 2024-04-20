@@ -1,0 +1,54 @@
+.uniform-order-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.uniform-order-form-container {
+  box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
+  border-radius: 20px;
+  background-color: #FAFAFA;
+}
+
+.uniform-order-form-box {
+  padding: 20px;
+}
+
+.uniform-order-title {
+  color: #1F1300;
+  margin-bottom: 20px;
+}
+
+.uniform-order-form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.uniform-order-item {
+  margin-right: 20px;
+}
+
+.uniform-order-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.uniform-order-submit-button {
+  background-color: #F7B05B !important;
+  border-color: #1F1300 !important;
+  height: 40px !important;
+  width: 300px !important;
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  border-radius: 10px !important;
+}
+
+.additional-charges-message {
+  color: #FF0000;
+  font-size: 14px;
+  margin-top: 10px;
+}

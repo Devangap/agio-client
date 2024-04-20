@@ -1,6 +1,8 @@
 import React from 'react';
-import '../Annlayout.css';
+import '../leaveLayout.css';
 import { Link, useLocation } from 'react-router-dom';
+
+
 
 function Layout({ children }) {
     const location = useLocation();//no collapsed there is the phto in ur phonr
@@ -13,8 +15,8 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: 'Announcements',
-            path: '/announcements',
+            name: 'Leaves',
+            path: '/leaves',
             icon: 'ri-survey-line',
         },
         {

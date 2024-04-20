@@ -1,7 +1,7 @@
 import React, { useEffect} from 'react';
 import axios from 'axios';
 import { Button, Form, Input, Select, DatePicker} from 'antd';
-import AnnLayout from '../pages/AnnLayout';
+import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
@@ -15,7 +15,7 @@ function AnnUpdate() {
   useEffect(() => {
     const fetchAnnouncement = async () => {
       try {
-        const response = await axios.get(`/api/annWorkouts/getAnnHRsup2/${id}`);
+        const response = await axios.get(`/api/employee/getAnnHRsup2/${id}`);
         if (response.data.success) {
           const data = response.data.announcement;
           form.setFieldsValue({
@@ -25,6 +25,7 @@ function AnnUpdate() {
             expiredate: moment(data.expiredate),
             Description: data.Description,
           });
+          console.log(moment(data.uploaddate))
         } else {
           toast.error('Announcement not found!');
           navigate('/AnnDisplay');
@@ -46,7 +47,7 @@ function AnnUpdate() {
     };
 
     try {
-      const response = await axios.put(`/api/annWorkouts/updateAnnHRsup/${id}`, updatedValues);
+      const response = await axios.put(`/api/employee/updateAnnHRsup/${id}`, updatedValues);
       if (response.data.success) {
         toast.success(response.data.message);
         navigate('/AnnDisplay');
@@ -59,7 +60,7 @@ function AnnUpdate() {
   };
 
   return (
-    <AnnLayout>
+    <Layout>
       <div className="annform">
         <div className="AnnHRSup_form box p-3">
           <h3 className='title'>Update an Announcement</h3>
@@ -108,7 +109,7 @@ function AnnUpdate() {
           </Form>
         </div>
       </div>
-    </AnnLayout>
+    </Layout>
   );
 }
 

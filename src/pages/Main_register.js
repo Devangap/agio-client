@@ -12,6 +12,7 @@ import Layout from '../components/Layout.js';
 function Main_register() {
   const { Option } = Select;
   const dispatch = useDispatch();
+  const { TextArea } = Input;
 
 
   const onFinish = async(values) => {
@@ -48,8 +49,8 @@ function Main_register() {
           </Form.Item>
         </div>
         <div className="item">
-          <Form.Item label="Date of Birth" name="dob">
-            <DatePicker className="date" />
+          <Form.Item label="Employee ID" name="empid">
+          <Input placeholder='Employee ID' />
           </Form.Item>
         </div>
       </div>
@@ -93,10 +94,41 @@ function Main_register() {
           </Form.Item>
         </div>
       </div>
+      <div className="form-row">
       <div className="item">
-        <Form.Item name="address" label="Address">
-          <Input.TextArea className='address' />
-        </Form.Item>
+          <Form.Item label="Date of Birth" name="dob">
+            <DatePicker className="date" />
+          </Form.Item>
+        
+      </div>
+      <div className="item">
+          <Form.Item name="department" label="Department">
+            <Select className="department" placeholder="Select a department">
+              <Option value="HR">HR</Option>
+             
+              <Option value="Logistics">Logistics</Option>
+              <Option value="Procurement Department">Procurement Department</Option>
+              <Option value="Quality Assurance">Quality Assurance</Option>
+              <Option value="Production Department">Production Department</Option>
+              <Option value="Sales and Marketing">Sales and Marketing</Option>
+              <Option value="Finance and Accounting ">Finance and Accounting </Option>
+            </Select>
+          </Form.Item>
+        </div>
+        
+        
+      </div>
+      <div className="form-row">
+      
+      <div className="item">
+      <Form.Item label="Address" name="address">
+    <Input.TextArea rows={4} className='address' />
+  </Form.Item>
+        
+      
+        </div>
+        
+        
       </div>
       <div className="Button-cons">
         <Button className='primary-button my-2' htmlType='submit'>REGISTER</Button>

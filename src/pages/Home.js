@@ -1,10 +1,30 @@
 import React, { useEffect } from 'react';
 import axios from 'axios';
 import Layout from '../components/Layout';
-
+import '../Home.css'
+function Card({ title }) {
+    return (
+      <div className="card">
+        <h3>{title}</h3>
+      </div>
+    );
+  }
+  
+  
 
 
 function Home() {
+    const announcements = [
+        'Leave',
+        'Announcement',
+        'Transport',
+        'Uniform',
+        'Insurance',
+        'Inquiry',
+        'Medical',
+        'Performance',
+        
+      ];
 
     const getData = async () => {
         try {
@@ -14,6 +34,7 @@ function Home() {
                 },
             });
             console.log(response.data);
+            
         } catch (error) {
             console.log(error);
         }
@@ -24,10 +45,12 @@ function Home() {
     }, []);
 
     return <Layout>
-        <h1></h1>
-        
-    
-    </Layout>
+    <div className="cards-container">
+      {announcements.slice(0, 8).map((announcement, index) => (
+        <Card key={index} title={announcement} />
+      ))}
+    </div>
+  </Layout>
 }
 
 export default Home;

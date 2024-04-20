@@ -1,0 +1,33 @@
+.uniform-order-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .uniform-order-table {
+    width: 80%;
+  }
+  
+  .uniform-order-title {
+    color: #1F1300;
+    margin-bottom: 20px;
+  }
+  
+  .ant-table-thead > tr > th {
+    background-color: #FAFAFA;
+    color: #1F1300;
+    font-weight: bold;
+  }
+  
+  .ant-table-tbody > tr > td {
+    background-color: #FFFFFF;
+    color: #000000;
+  }
+  
+  .additional-charges-message {
+    color: #FF0000;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
