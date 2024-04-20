@@ -1,7 +1,7 @@
 import React from 'react'
 import {Button, Form ,  Input,Select, DatePicker } from 'antd'
 import '../mainlogin.css';
-import loginImage from '../images/login.jpg';
+
 import {Link, useNavigate }from 'react-router-dom'
 import axios from "axios";
 import toast from 'react-hot-toast';
@@ -47,35 +47,33 @@ function Main_login() {
   
   return (
     <div className="mainlog">
-  <div className="main_login_form_log box_log p-3">
-  <div className="login_image">
-          <img src={loginImage} alt="Login Image" />
-        </div>
-        
-    <h3 className='title_log'>Login</h3>
-    <Form layout='vertical' onFinish={onFinish}>
-    <div className="content">
-   
-     
-      <div className = 'login'>
-      <div className = 'field'>
-          <Form.Item label='Username' name='username_log'>
-            <Input placeholder='Username' />
-          </Form.Item>
-          </div>
-         
-          <Form.Item label='Password' name='password_log'>
-            <Input placeholder='Password' />
-          </Form.Item>
-          
-          </div>
-      
-      <div className="Button-conslog">
-        <Button className='primary-button my-2' htmlType='submit'>LOGIN</Button>
-      </div>
-      </div>
-    </Form>
-  </div>
+    <div className="main_login_form_log boxx_log p-3">
+      <div className = "logindata">
+      <div className='logoforlogin'>
+                        <img src='logos.png' className='logo'></img>
+                        
+                    </div>
+                    <div className = "logindataform">
+        <Form layout='vertical' onFinish={onFinish}>
+            <div className="content">
+                <div className='login'>
+                    <div className='field'>
+                        <Form.Item label='Username' name='username_log'>
+                            <Input placeholder='Username' />
+                        </Form.Item>
+                    </div>
+                    <Form.Item label='Password' name='password_log'>
+                        <Input placeholder='Password' />
+                    </Form.Item>
+                </div>
+                <div className="Button-conslog">
+                    <Button className='primary-button my-2' htmlType='submit'>LOG IN</Button>
+                </div>
+            </div>
+        </Form>
+    </div>
+</div>
+</div>
 </div>
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import '../Annlayout.css';
+
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
@@ -33,6 +34,7 @@ function Layout({ children }) {
                                         console.log(error);
                                     }
                                 };
+                                
                             
                                 useEffect(() => {
                                     getData();
@@ -46,7 +48,7 @@ function Layout({ children }) {
         },
         {
             name: 'Announcements',
-            path: '/announcements',
+            path: '/AnnEmpDisplay',
             icon: 'ri-survey-line',
         },
         {
@@ -55,13 +57,25 @@ function Layout({ children }) {
             icon: 'ri-calendar-line',
         },
         {
+            name: "Appointments",
+            path: "/medical-appointments",
+            icon: "ri-file-list-line",
+          },
+        {
             name: 'Uniform',
             path: '/profile',
             icon: 'ri-account-box-line',
         },
         {
+
             name: 'Inquiry',
             path: '/inquiry',
+          icon: 'ri-account-box-line',
+        },
+      {
+            name: 'Transport',
+            path: '/TraBookingBox',
+
             icon: 'ri-account-box-line',
         },
        
@@ -82,31 +96,42 @@ function Layout({ children }) {
 
     const doctorMenu = [
         {
-            name: 'Home',
-            path: '/',
-            icon: 'ri-home-line',
+          name: "Overview",
+          path: "/medical-overview",
+          icon: "ri-home-line",
         },
+    
         {
-            name: ' Doctor Profile',
-            path: '/profile',
-            icon: 'ri-account-box-line',
+          name: "Parameters",
+          path: "/parameters",
+          icon: "ri-list-settings-line",
         },
-        
-    ];
+    
+        {
+          name: "Reports",
+          path: "/medical-reports",
+          icon: "ri-user-line",
+        },
+      ];
     const Annhrsupmenu = [
         {
             name: 'Home',
-            path: '/',
+            path: '/AnnHRsup',
             icon: 'ri-home-line',
         },
         {
             name: ' Announcements',
-            path: '/profile',
+            path: '/AnnDisplay',
             icon: 'ri-account-box-line',
         },
         {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
+        {
             name: ' Calendar',
-            path: '/profile',
+            path: '/AnnCalendar',
             icon: 'ri-account-box-line',
         },
         {
@@ -118,15 +143,23 @@ function Layout({ children }) {
     ];
     const leavemenu = [
         {
-            name: 'Home',
-            path: '/',
-            icon: 'ri-home-line',
+            name: ' Overview',
+            path: '/leaveoverview',
+            icon: 'ri-account-box-line',
         },
+        
         {
             name: ' Leave requests',
             path: '/leaveHrsupdisplay',
             icon: 'ri-account-box-line',
         },
+       
+        {
+            name: ' Calendar',
+            path: '/LeaveCal',
+            icon: 'ri-account-box-line',
+        },
+       
        
     ];
     const logisticmenu = [
@@ -136,8 +169,28 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: ' transport',
+            name: ' Transport',
             path: '/profile',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
+        {
+            name: ' BookingUserdetails',
+            path: '/TraBookingDisplayAdmin',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' DriverRegister And Details',
+            path: '/TraDriverBox',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' VehicleRegister And Details',
+            path: '/VehicleBox',
             icon: 'ri-account-box-line',
         },
        
@@ -153,6 +206,11 @@ function Layout({ children }) {
             path: '/profile',
             icon: 'ri-account-box-line',
         },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
        
     ];
     const inquirymenu = [
@@ -166,6 +224,11 @@ function Layout({ children }) {
             path: '/inquiryAdmin',
             icon: 'ri-account-box-line',
         },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
+        },
        
     ];
     const insuarancemenu = [
@@ -176,8 +239,13 @@ function Layout({ children }) {
         },
         {
             name: ' Insuarance ',
-            path: '/profile',
+            path: '/insClaimSubmit',
             icon: 'ri-account-box-line',
+        },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
         },
        
     ];
@@ -191,6 +259,11 @@ function Layout({ children }) {
             name: 'Performance',
             path: '/perf',
             icon: 'ri-home-line',
+        },
+        {
+            name: 'Leave',
+            path: '/leaveEmp',
+            icon: 'ri-calendar-line',
         },
       
     ];
