@@ -52,7 +52,6 @@ const [isEventModalVisible, setIsEventModalVisible] = useState(false);
     };
     
     const handleDeleteEvent = async () => {
-<<<<<<< Updated upstream
         if (selectedEvent && selectedEvent.id) {
             try {
                 const response = await axios.delete(`/api/employee/deletevent/${selectedEvent.id}`);
@@ -71,35 +70,6 @@ const [isEventModalVisible, setIsEventModalVisible] = useState(false);
     
     
     
-=======
-        if (selectedEvent && selectedEvent._id) {
-            try {
-                // Make API call to delete the event
-                await axios.delete(`/api/employee/delevent/${selectedEvent._id}`);
-    
-                // Update the state to remove the deleted event
-                setEvents(prevEvents => prevEvents.filter(event => event._id !== selectedEvent._id));
-    
-                // Close the modal
-                setIsEventModalVisible(false);
-    
-                // Optionally, display a success message
-                toast.success('Event deleted successfully');
-    
-                // Refresh the list of events, if necessary
-                fetchNotices(); // Assuming fetchNotices refreshes the list of events
-            } catch (error) {
-                // Handle errors if the API call fails
-                toast.error('Failed to delete event');
-                console.error('Error deleting the event:', error);
-            }
-        } else {
-            // Handle the case where there is no event selected or if it's missing an ID
-            toast.error('No event selected or missing event ID');
-        }
-    };
-    
->>>>>>> Stashed changes
 
     // Move fetchNotices outside useEffect
     const fetchNotices = async () => {
