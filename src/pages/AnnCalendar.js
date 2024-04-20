@@ -28,27 +28,55 @@ const [isEventModalVisible, setIsEventModalVisible] = useState(false);
         getDay,
         locales,
     });
-    const handleUpdateEvent = () => {
-      // Placeholder for update logic
-      console.log("Updating event:", selectedEvent.title);
-      // After updating, you might want to close the modal and refresh events
-      setIsEventModalVisible(false);
-      fetchNotices(); // Assuming fetchNotices refreshes the list of events
+    const handleUpdateEvent = async () => {
+        form.validateFields().then(async (values) => {
+            try {
+                const response = await axios.put(`/api/employee/updatevent/${selectedEvent.id}`, {
+                    ...values,
+                    submission: values.submission.format("YYYY-MM-DD"),
+                    expiryDate: values.expiryDate.format("YYYY-MM-DD")
+                });
+                if (response.data.success) {
+                    toast.success('Event updated successfully');
+                    setIsEventModalVisible(false);  // Close the modal
+                    fetchNotices();  // Refresh the list to show updated events
+                } else {
+                    toast.error(response.data.message);
+                }
+            } catch (error) {
+                toast.error('Error updating event');
+            }
+        }).catch(info => {
+            console.log('Validate Failed:', info);
+        });
     };
     
-    const handleDeleteEvent = () => {
-      // Placeholder for delete logic
-      console.log("Deleting event:", selectedEvent.title);
-      // After deleting, you might want to close the modal and refresh events
-      setIsEventModalVisible(false);
-      fetchNotices(); // Assuming fetchNotices refreshes the list of events
+    const handleDeleteEvent = async () => {
+        if (selectedEvent && selectedEvent.id) {
+            try {
+                const response = await axios.delete(`/api/employee/deletevent/${selectedEvent.id}`);
+                if (response.status === 200) {
+                    toast.success('Event deleted successfully');
+                    setIsEventModalVisible(false);  // Close the modal
+                    fetchNotices();  // Refresh the list to show updated events
+                } else {
+                    toast.error('Failed to delete the event');
+                }
+            } catch (error) {
+                toast.error('Error deleting event');
+            }
+        }
     };
+    
+    
+    
 
     // Move fetchNotices outside useEffect
     const fetchNotices = async () => {
         try {
             const response = await axios.get('/api/employee/event');
             const notices = response.data.getNotice.map(notice => ({
+                id: notice._id,
                 title: notice.title,
                 start: new Date(notice.submission),
                 end: new Date(notice.expiryDate),
@@ -141,29 +169,43 @@ const [isEventModalVisible, setIsEventModalVisible] = useState(false);
                 <Modal
   title="Event Details"
   visible={isEventModalVisible}
-  onOk={() => setIsEventModalVisible(false)}
+  onOk={() => form.submit()}
   onCancel={() => setIsEventModalVisible(false)}
   footer={[
-    <Button key="back" onClick={() => setIsEventModalVisible(false)}>
-      Close
-    </Button>,
-    <Button key="update" type="primary" onClick={handleUpdateEvent}>
-      Update
-    </Button>,
-    <Button key="delete" type="danger" onClick={handleDeleteEvent}>
-      Delete
-    </Button>
+    <Button key="back" onClick={() => setIsEventModalVisible(false)}>Close</Button>,
+    <Button key="update" type="primary" form="eventForm" htmlType="submit">Update</Button>,
+    <Button key="delete" type="danger" onClick={handleDeleteEvent}>Delete</Button>
   ]}
 >
   {selectedEvent ? (
-    <div>
-      <p><strong>Title:</strong> {selectedEvent.title}</p>
-      <p><strong>Start:</strong> {selectedEvent.start.toString()}</p>
-      <p><strong>End:</strong> {selectedEvent.end.toString()}</p>
-      <p><strong>Description:</strong> {selectedEvent.description}</p>
-    </div>
+    <Form
+      id="eventForm"
+      form={form}
+      layout="vertical"
+      onFinish={handleUpdateEvent}
+      initialValues={{
+        title: selectedEvent.title,
+        submission: moment(selectedEvent.start),
+        expiryDate: moment(selectedEvent.end),
+        description: selectedEvent.description
+      }}
+    >
+      <Form.Item label="Title" name="title" rules={[{ required: true }]}>
+        <Input />
+      </Form.Item>
+      <Form.Item label="Submission Date" name="submission">
+        <DatePicker format="YYYY-MM-DD" />
+      </Form.Item>
+      <Form.Item label="Expiry Date" name="expiryDate">
+        <DatePicker format="YYYY-MM-DD" />
+      </Form.Item>
+      <Form.Item label="Description" name="description">
+        <Input.TextArea />
+      </Form.Item>
+    </Form>
   ) : null}
 </Modal>
+
 
             </div>
         </Layout>
