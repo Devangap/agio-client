@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Select, message } from 'antd'; // Import message from antd
+import { Button, Form, Input, Select, message, Modal } from 'antd'; // Import message and Modal from antd
 import { UploadOutlined } from '@ant-design/icons';
 import Layout from '../components/Layout';
 import '../UniformOrder.css';
@@ -12,6 +12,8 @@ function UniformOrder() {
   const [uniformCount, setUniformCount] = useState(1);
   const [employeeNumber, setEmployeeNumber] = useState('');
   const [waistSizeOptions, setWaistSizeOptions] = useState([]);
+  const [showExtraChargesModal, setShowExtraChargesModal] = useState(false);
+  const [extraChargeTotal, setExtraChargeTotal] = useState(0);
 
   const handlePositionChange = value => {
     setPosition(value);
@@ -51,11 +53,33 @@ function UniformOrder() {
       console.error('Error submitting form:', error);
     }
   };
-  
+
+  const calculateAmount = () => {
+    // Define charges for t-shirts and skirts
+    const tshirtCharge = 1250;
+    const skirtCharge = 1500;
+
+    // Calculate total charge based on position and uniform count
+    let totalCharge = 0;
+    if (position === 'Executive') {
+      totalCharge = uniformCount > 1 ? (uniformCount - 1) * tshirtCharge : 0;
+    } else if (position === 'Factory Worker') {
+      totalCharge = uniformCount > 1 ? (uniformCount - 1) * (tshirtCharge + skirtCharge) : 0;
+    }
+
+    // Update the state to show the modal with the calculated amount
+    setExtraChargeTotal(totalCharge);
+    setShowExtraChargesModal(true);
+  };
 
   const renderAdditionalChargesMessage = () => {
     if (uniformCount > 1) {
-      return <p className="additional-charges-message">Additional Charges May Apply</p>;
+      return (
+        <>
+          <p className="additional-charges-message">Additional Charges May Apply</p>
+          <Button onClick={calculateAmount}>Calculate Amount</Button>
+        </>
+      );
     }
     return null;
   };
@@ -68,16 +92,28 @@ function UniformOrder() {
           <Form layout="horizontal" onFinish={onFinish}>
             <div className="uniform-order-form-row">
               <div className="uniform-order-item">
-                <Form.Item label="Employee Number" name="employeeNumber">
+                <Form.Item
+                  label="Employee Number"
+                  name="employeeNumber"
+                  rules={[{ required: true, message: 'Please input Employee Number' }]}
+                >
                   <Input value={employeeNumber} onChange={handleEmployeeNumberChange} placeholder="Enter Employee Number" />
                 </Form.Item>
-                <Form.Item label="Position" name="position">
+                <Form.Item
+                  label="Position"
+                  name="position"
+                  rules={[{ required: true, message: 'Please select Position' }]}
+                >
                   <Select onChange={handlePositionChange} placeholder="Select Position">
                     <Option value="Executive">Executive</Option>
                     <Option value="Factory Worker">Factory Worker</Option>
                   </Select>
                 </Form.Item>
-                <Form.Item label="Standard T-shirt Size" name="tshirtSize">
+                <Form.Item
+                  label="Standard T-shirt Size"
+                  name="tshirtSize"
+                  rules={[{ required: true, message: 'Please select Standard T-shirt Size' }]}
+                >
                   <Select placeholder="Select Size">
                     <Option value="Small">Small</Option>
                     <Option value="Medium">Medium</Option>
@@ -94,7 +130,11 @@ function UniformOrder() {
                     </Select>
                   </Form.Item>
                 )}
-                <Form.Item label="No. of Uniforms" name="uniformCount">
+                <Form.Item
+                  label="No. of Uniforms"
+                  name="uniformCount"
+                  rules={[{ required: true, message: 'Please select No. of Uniforms' }]}
+                >
                   <Select onChange={handleUniformCountChange} placeholder="Select No. of Uniforms">
                     <Option value={1}>1</Option>
                     <Option value={2}>2</Option>
@@ -110,6 +150,21 @@ function UniformOrder() {
               </Button>
             </div>
           </Form>
+          <Modal
+            title="Additional Charges"
+            visible={showExtraChargesModal}
+            onCancel={() => setShowExtraChargesModal(false)}
+            footer={[
+              <Button key="submit" type="primary" onClick={() => setShowExtraChargesModal(false)}>
+                OK
+              </Button>,
+            ]}
+          >
+            <p>Extra Skirt: Rs. 1500</p>
+            <p>Extra T-shirt: Rs. 1250</p>
+            <p>Total Extra Charge: Rs. {extraChargeTotal}</p>
+            <p>Pay The Extra Charge When Collecting Your Uniforms</p>
+          </Modal>
         </div>
       </div>
     </div>

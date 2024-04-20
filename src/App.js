@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
+
 import Main_register from './pages/Main_register';
 
 import Login from './pages/TraLogin';
