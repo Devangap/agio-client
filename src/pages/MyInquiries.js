@@ -12,6 +12,7 @@ function MyInquiries() {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [selectedInquiry, setSelectedInquiry] = useState(null);
+  const [fullInquiry, setFullInquiry] = useState('');
   const username = location.state ? location.state.username : null; // Get username from location state
 
   useEffect(() => {
@@ -51,6 +52,11 @@ function MyInquiries() {
     setVisible(true);
   };
 
+  const handleShowMore = (record) => {
+    setFullInquiry(record.describe);
+    setVisible(true);
+  };
+
   const onFinish = async (values) => {
     try {
       const updatedInquiry = { ...selectedInquiry, ...values };
@@ -66,35 +72,71 @@ function MyInquiries() {
     }
   };
 
-  const columns = [
+    const columns = [
     {
       title: 'Full Name',
       dataIndex: 'name',
       key: 'name',
+      width: 150,
+      ellipsis: true, // Truncate text if it overflows
     },
     {
       title: 'Username',
       dataIndex: 'username',
       key: 'username',
+      width: 150,
+      ellipsis: true,
     },
     {
       title: 'Inquiry Date',
       dataIndex: 'inquirydate',
       key: 'inquirydate',
+      width: 150,
+      ellipsis: true,
     },
     {
       title: 'Phone Number',
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
+      width: 150,
+      ellipsis: true,
     },
     {
       title: 'Inquiry',
       dataIndex: 'describe',
       key: 'describe',
+      width: 150,
+      ellipsis: true,
+      render: (text) => (
+        <>
+          {text.split(' ').slice(0, 5).join(' ')}
+          {text.split(' ').length > 5 && (
+            <Button type="link" onClick={() => handleShowMore({ describe: text })}>
+              Show More
+            </Button>
+          )}
+        </>
+      ),
+    },
+    {
+      title: 'Reply',
+      dataIndex: 'reply',
+      key: 'reply',
+      width: 150,
+      ellipsis: true,
+    },
+    {
+      title: 'Status',
+      dataIndex: 'status',
+      key: 'status',
+      width: 100,
+      ellipsis: true,
     },
     {
       title: 'Action',
       key: 'action',
+      width: 200,
+      ellipsis: true,
       render: (_, record) => (
         <>
           <Button type="primary" className="update" onClick={() => handleUpdate(record)}>Update</Button>
@@ -108,36 +150,15 @@ function MyInquiries() {
     <Layout>
       <div>
         <h1>My Inquiries</h1>
-        <Table dataSource={inquiries} columns={columns} />
+        <Table dataSource={inquiries} columns={columns} scroll={{ x: 1200 }} />
 
         <Modal
-          title="Update Inquiry"
+          title="Inquiry Details"
           visible={visible}
           onCancel={() => setVisible(false)}
           footer={null}
         >
-          <Form form={form} onFinish={onFinish} layout="vertical">
-            <Form.Item label="Full Name" name="name">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Username" name="username">
-              <Input disabled />
-            </Form.Item>
-            <Form.Item label="Inquiry Date" name="inquirydate">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Phone Number" name="phoneNumber">
-              <Input />
-            </Form.Item>
-            <Form.Item label="Inquiry" name="describe">
-              <TextArea rows={4} />
-            </Form.Item>
-            <Form.Item>
-              <Button type="primary" htmlType="submit">
-                Update
-              </Button>
-            </Form.Item>
-          </Form>
+          <p>{fullInquiry}</p>
         </Modal>
       </div>
     </Layout>

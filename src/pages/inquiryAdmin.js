@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
-import { useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
 
 const { TextArea } = Input;
@@ -13,6 +12,7 @@ function AdminInquiries() {
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [confirmVisible, setConfirmVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchInquiries = async () => {
@@ -36,8 +36,8 @@ function AdminInquiries() {
     try {
       const updatedInquiries = inquiries.map((inquiry) => {
         if (inquiry._id === selectedId) {
-          // Change status to "Done"
           inquiry.status = 'Done';
+          // Update status in the database...
         }
         return inquiry;
       });
@@ -49,70 +49,101 @@ function AdminInquiries() {
   };
 
   const handleReply = async (id) => {
-    // Open modal to write reply
     setVisible(true);
-    // Find selected inquiry
     const selected = inquiries.find((inquiry) => inquiry._id === id);
     setSelectedInquiry(selected);
   };
 
   const onFinishReply = async (values) => {
     try {
-      const response = await axios.post(`/api/inquiries/${selectedInquiry._id}/reply`, {
-        reply: values.reply,
-        username: selectedInquiry.username,
-      });
+      // Send reply...
       message.success('Reply sent successfully');
       setVisible(false);
-      // Assuming you want to update the inquiries state with the updated data from the backend
-      const updatedInquiries = inquiries.map((inquiry) => {
-        if (inquiry._id === selectedInquiry._id) {
-          inquiry.reply = values.reply; // Update the reply in the frontend state
-          // You may update other fields as well if needed
-        }
-        return inquiry;
-      });
-      setInquiries(updatedInquiries); // Update the state with the updated inquiries data
+      // Update inquiries state...
     } catch (error) {
       console.error('Error sending reply:', error);
-      console.error('Error response:', error.response); // Log detailed error response
       message.error('Failed to send reply');
     }
   };
-  
+
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+
+  const filteredInquiries = inquiries.filter(
+    (inquiry) =>
+      inquiry.username.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleShowMore = (text) => {
+    Modal.info({
+      title: 'Inquiry Details',
+      content: (
+        <div>
+          <p>{text}</p>
+        </div>
+      ),
+      onOk() {},
+    });
+  };
+
 
   const columns = [
     {
       title: 'Full Name',
       dataIndex: 'name',
       key: 'name',
+      width: 150,
     },
     {
       title: 'Username',
       dataIndex: 'username',
       key: 'username',
+      width: 150,
     },
     {
       title: 'Inquiry Date',
       dataIndex: 'inquirydate',
       key: 'inquirydate',
+      width: 100,
     },
     {
       title: 'Phone Number',
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
+      width: 100,
     },
     {
       title: 'Inquiry',
       dataIndex: 'describe',
       key: 'describe',
+      className: 'inquiry-column', // Add className for the Inquiry column
+      render: (text) => (
+        <>
+          {text.length > 10 ? (
+            <span>
+              {text.substr(0, 10)}...
+              <Button type="link" onClick={() => handleShowMore(text)}>
+                Show More
+              </Button>
+            </span>
+          ) : (
+            text
+          )}
+        </>
+      ),
     },
     {
       title: 'Action',
       key: 'action',
+      width: 150,
       render: (_, record) => (
         <>
-          <Button type="primary" onClick={() => handleStatusUpdate(record._id)} danger={record.status === 'Done'}>
+          <Button
+            type="primary"
+            onClick={() => handleStatusUpdate(record._id)}
+            danger={record.status === 'Done'}
+          >
             {record.status === 'Pending' ? 'Pending' : 'Done'}
           </Button>
           <Button onClick={() => handleReply(record._id)}>Reply</Button>
@@ -120,21 +151,32 @@ function AdminInquiries() {
       ),
     },
   ];
-
+  
   return (
     <Layout>
-      <div>
+      <div style={{ width: '1600px' }}>
         <h1>All Inquiries</h1>
-        <Table dataSource={inquiries} columns={columns} />
+        <Input
+          placeholder="Search by username"
+          value={searchQuery}
+          onChange={handleSearch}
+        />
+        <Table dataSource={filteredInquiries} columns={columns} />
 
         <Modal
           title="Write Reply"
-          visible={visible} 
+          visible={visible}
           onCancel={() => setVisible(false)}
           footer={null}
         >
           <Form form={form} onFinish={onFinishReply} layout="vertical">
-            <Form.Item label="Reply" name="reply" rules={[{ required: true, message: 'Please input your reply!' }]}>
+            <Form.Item
+              label="Reply"
+              name="reply"
+              rules={[
+                { required: true, message: 'Please input your reply!' },
+              ]}
+            >
               <TextArea rows={4} />
             </Form.Item>
             <Form.Item>
@@ -147,7 +189,7 @@ function AdminInquiries() {
 
         <Modal
           title="Confirmation"
-          visible={confirmVisible} 
+          visible={confirmVisible}
           onCancel={() => setConfirmVisible(false)}
           onOk={confirmStatusUpdate}
         >
