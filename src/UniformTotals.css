@@ -1,50 +1,51 @@
-/* UniformTotals.css */
-
-/* Container styles */
 .container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-  }
-  
-  /* Form styles */
-  .form-container {
-    flex: 1;
-    margin: 10px;
-    padding: 20px;
-    border: 1px solid #e60c0c;
-    border-radius: 10px;
-  }
-  
-  /* Title styles */
-  .title {
-    text-align: center;
-    margin-bottom: 20px;
-  }
-  
-  /* List styles */
-  .list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  /* List item styles */
-  .list-item {
-    margin-bottom: 10px;
-  }
-  
-  /* Image container styles */
-  .image-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  
-  /* Image styles */
-  .image {
-    width: 200px; /* Adjust size as needed */
-    height: auto; /* Maintain aspect ratio */
-    border: 1px solid #ccc;
-    border-radius: 10px;
-  }
-  
+  width: 100%;
+}
+
+.scroll-container {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 20px 0; /* Add some padding for spacing */
+}
+
+.form {
+  flex: 0 0 300px; /* Set a fixed width for each form */
+  margin-right: 20px; /* Adjust spacing between forms */
+  scroll-snap-align: start;
+  border-radius: 10px; /* Add border radius for rounded corners */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+  background-color: #fff; /* Set background color to white */
+}
+
+.title {
+  font-size: 1.5rem; /* Increase title font size for better readability */
+  text-align: center; /* Center align the title */
+  margin-top: 20px; /* Add some top margin for spacing */
+}
+
+.image-container {
+  text-align: center; /* Center align the image */
+  margin-top: 20px; /* Add some top margin for spacing */
+}
+
+.image {
+  max-width: 80%; /* Limit image width to prevent overflow */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 10px; /* Add border radius for rounded corners */
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+}
+
+.list {
+  list-style: none; /* Remove default list styles */
+  padding: 0; /* Remove default padding */
+}
+
+.list li {
+  padding: 10px 20px; /* Add padding to list items for spacing */
+  border-bottom: 1px solid #eee; /* Add border bottom for separation */
+}
+
+.list li:last-child {
+  border-bottom: none; /* Remove border bottom for last list item */
+}

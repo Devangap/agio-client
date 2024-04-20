@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../UniformTotals.css';
 import shirtImage from '../Images/shirt.png';
-import skirtImage from '../Images/skirt .png';
+import skirtImage from '../Images/shirt.png';
 import Layout from '../components/Layout';
 
 function UniformTotals() {
@@ -40,8 +40,8 @@ function UniformTotals() {
     <Layout>
       <div>
         <h1>Total Uniform Orders</h1>
-        <div className="shirt-forms-container">
-          <div className="shirt-form">
+        <div className="scroll-container">
+          <div className="form">
             <FoamContainer title="Factory Worker T-Shirts" imageSrc={shirtImage}>
               <ul>
                 {sortByTShirtSize(factoryWorkerShirtTotals).map((total, index) => (
@@ -52,7 +52,7 @@ function UniformTotals() {
               </ul>
             </FoamContainer>
           </div>
-          <div className="shirt-form">
+          <div className="form">
             <FoamContainer title="Executive Shirts" imageSrc={shirtImage}>
               <ul>
                 {sortByTShirtSize(executiveShirtTotals).map((total, index) => (
@@ -63,17 +63,17 @@ function UniformTotals() {
               </ul>
             </FoamContainer>
           </div>
-        </div>
-        <div className="skirt-form-container">
-          <FoamContainer title="Factory Worker Skirts" imageSrc={skirtImage}>
-            <ul>
-              {sortByWaistSize(factoryWorkerSkirtTotals).map((total, index) => (
-                <li key={index}>
-                  {total._id}: {total.totalSkirts}
-                </li>
-              ))}
-            </ul>
-          </FoamContainer>
+          <div className="form">
+            <FoamContainer title="Factory Worker Skirts" imageSrc={skirtImage}>
+              <ul>
+                {sortByWaistSize(factoryWorkerSkirtTotals).map((total, index) => (
+                  <li key={index}>
+                    {total._id}: {total.totalSkirts}
+                  </li>
+                ))}
+              </ul>
+            </FoamContainer>
+          </div>
         </div>
       </div>
     </Layout>
