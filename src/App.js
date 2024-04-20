@@ -1,3 +1,4 @@
+
 import React from 'react';
 import {BrowserRouter, Routes, Route,Link,Router} from 'react-router-dom';
 
@@ -6,8 +7,10 @@ import Main_register from './pages/Main_register';
 import MainRegDisplay from './pages/MainRegDisplay';
 
 
-import { Toaster } from 'react-hot-toast';
-import TraHome from './pages/TraHome';
+
+import { Toaster } from "react-hot-toast";
+import TraHome from "./pages/TraHome";
+
 
 import Leaveoverview from './pages/leaveoverview';
 import Home from './pages/Home';
@@ -94,24 +97,132 @@ import UniformTotals from './pages/UniformTotals';
 
 
 
+import AnnHRsup from "./pages/AnnHRsup";
+import AnnDisplay from "./pages/AnnDisplay";
+import AnnUpdate from "./pages/AnnUpdate";
+import TraDriverRegister from "./pages/TraDriverRegister";
+import TraVehicleRegister from "./pages/TraVehicleRegister";
+import meddash from "./pages/meddash";
 
+import Inquiry from "./pages/inquiry";
 
+// medical
+import MedicalAppointments from "./pages/MedicalAppointments";
+import MedParameters from "./pages/MedParameters";
+import MedOverview from "./pages/MedOverview";
+import MedReports from "./pages/MedReports";
+
+import { useSelector } from "react-redux";
+import ProtectedRoute from "./components/ProtectedRoute";
+import PublicRoute from "./components/PublicRoute";
 
 function App() {
+
   const{loading} = useSelector(state => state.alerts);
   const [date, setDate] = React.useState(new Date().getDate());
 
 
+
   return (
-    <div >
+    <div>
       <BrowserRouter>
-      {loading && (<div className = "spinner-parent">
-      <div class="spinner-border" role="status">
-  
-</div>
-      </div>)}
-      <Toaster position='top-center' reverseOrder={false} />
+        {loading && (
+          <div className="spinner-parent">
+            <div class="spinner-border" role="status"></div>
+          </div>
+        )}
+        <Toaster position="top-center" reverseOrder={false} />
         <Routes>
+
+          <Route
+            path="/Main_Register"
+            element={
+              <ProtectedRoute>
+                <Main_register />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/Main_Login"
+            element={
+              <PublicRoute>
+                <Main_login />
+              </PublicRoute>
+            }
+          />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/meddash"
+            element={
+              <ProtectedRoute>
+                <meddash />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/AnnHRsup" element={<AnnHRsup />} />
+          <Route path="/AnnDisplay" element={<AnnDisplay />} />
+          <Route path="/AnnUpdate/:id" element={<AnnUpdate />} />
+          <Route path="/LeaveHRsup" element={<LeaveHRsup />} />
+
+          <Route path="/home" element={<TraHome />} />
+          <Route path="/dregister" element={<TraDriverRegister />} />
+          <Route path="/vregister" element={<TraVehicleRegister />} />
+
+          <Route path="/inquiry" element={<Inquiry />} />
+
+          {/*
+          *
+          *
+          Medical Routes 
+          * 
+          */}
+          <Route
+            path="/medical-appointments"
+            element={
+              <ProtectedRoute>
+                <MedicalAppointments />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/parameters"
+            element={
+              <ProtectedRoute>
+                <MedParameters />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="/medical-overview"
+            element={
+              <ProtectedRoute>
+                <MedOverview />
+              </ProtectedRoute>
+            }
+          />
+
+          
+          <Route
+            path="/medical-reports"
+            element={
+              <ProtectedRoute>
+                <MedReports />
+              </ProtectedRoute>
+            }
+          />
+
 
           <Route path='/Main_Register' element={<ProtectedRoute><Main_register /></ProtectedRoute>} />
           <Route path='/MainRegDisplay' element={<ProtectedRoute><MainRegDisplay /></ProtectedRoute>} />
@@ -190,10 +301,9 @@ function App() {
           <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
           <Route path='/insEmployee' element={<InsEmployee/>}/>
 
-        </Routes>
 
+        </Routes>
       </BrowserRouter>
-      
     </div>
   );
 }
