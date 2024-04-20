@@ -1,47 +1,34 @@
 
 
-    import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Card, Button, Modal, Form, Input, message } from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
+
 function AnnEmpDisplay() {
     const navigate = useNavigate();
     const { user } = useSelector((state) => state.user);
 
     const [announcements, setAnnouncements] = useState([]);
+
+    const [specificAnnouncements, setSpecificAnnouncements] = useState([]);
+    const [generalAnnouncements, setGeneralAnnouncements] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentAnnouncement, setCurrentAnnouncement] = useState(null);
+    const [commentText, setCommentText] = useState('');
+
+
 
     useEffect(() => {
         // Fetch announcements when the user state is available
         if (user) {
-            fetchAnnouncements();
+            fetchSpecificAnnouncements(user.department);
+            fetchGeneralAnnouncements();
         }
     }, [user]);
-
-    const fetchAnnouncements = async () => {
-        try {
-            if (user.department) {
-                // Fetch specific announcements for the user's department
-                const [specificAnnouncements, generalAnnouncements] = await Promise.all([
-                    fetchSpecificAnnouncements(user.department),
-                    fetchGeneralAnnouncements()
-                ]);
-                
-                // Combine specific and general announcements
-                const combinedAnnouncements = [...specificAnnouncements, ...generalAnnouncements];
-                setAnnouncements(combinedAnnouncements);
-            } else {
-                // Fetch general announcements
-                await fetchGeneralAnnouncements();
-            }
-        } catch (error) {
-            message.error('Failed to fetch announcements');
-        }
-    };
 
     const fetchSpecificAnnouncements = async (department) => {
         try {
@@ -50,117 +37,160 @@ function AnnEmpDisplay() {
     
             if (!data.success) {
                 message.error(data.message || 'No specific announcements');
-                return [];
+                setSpecificAnnouncements([]);
+            } else {
+                setSpecificAnnouncements(data.announcements);
             }
-    
-            return data.announcements;
         } catch (error) {
-            message.error('Failed to fetch announcements');
-            return [];
+            message.error('Failed to fetch specific announcements');
         }
     };
     
     const fetchGeneralAnnouncements = async () => {
         try {
-            const response = await axios.get('/api/employee/getAnnHRsup');
+            const response = await axios.get('/api/employee/getAnnHRsupgen');
             const data = response.data;
     
             if (!data.success) {
                 message.error(data.message || 'No general announcements');
-                return [];
+                setGeneralAnnouncements([]);
+            } else {
+                setGeneralAnnouncements(data.announcements);
             }
-    
-            return data.announcements;
         } catch (error) {
-            message.error('Failed to fetch announcements');
-            return [];
+            message.error('Failed to fetch general announcements');
         }
     };
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`/api/employee/deleteAnnHRsup/${id}`);
-            setAnnouncements(prev => prev.filter(item => item._id !== id));
-            message.success('Announcement deleted successfully');
-        } catch (error) {
-            message.error('Failed to delete announcement');
-        }
-    };
+
+   
 
     const showModal = (announcement) => {
         setCurrentAnnouncement(announcement);
         setIsModalVisible(true);
     };
 
-    const handleUpdate = async (values) => {
+   
+    const handleCommentSubmit = async (announcementId) => {
         try {
-            const response = await axios.put(`/api/annWorkouts/updateAnnHRsup/${currentAnnouncement._id}`, values);
+            const response = await axios.post(`/api/employee/comments/${announcementId}`, { text: commentText },
+            
+            {
+                headers: {
+                  'Content-Type': 'application/json',
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              }
+            )
+            console.log (announcementId)
+        ;
             if (response.data.success) {
-                message.success('Announcement updated successfully');
-                setIsModalVisible(false);
-                fetchAnnouncements();
+                message.success('Comment added successfully');
+                setCommentText(''); // Clear comment text after submission
+                fetchSpecificAnnouncements(user.department); // Refetch announcements to update comments
+                fetchGeneralAnnouncements();
             } else {
-                message.error(response.data.message);
+                message.error(response.data.message || 'Failed to add comment');
             }
         } catch (error) {
-            message.error('Failed to update announcement');
+            message.error('Failed to add comment');
         }
+        console.log(commentText); // Ensure it's not empty or undefined
+
     };
 
+    
     return (
         <Layout>
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {announcements.map(announcement => {
-                    console.log(announcement)
-                    console.log('File path:', announcement.filePath ? `http://localhost:5001/uploads/${announcement.filePath.filename}` : '');
-                    return (
-                        <Card
-                            key={announcement._id}
-                            title={announcement.anntitle}
-                            style={{ width: 300, margin: '16px' }}
-                            actions={[
-                                <Button type="primary" onClick={() => navigate(`/AnnUpdate/${announcement._id}`)}>Update</Button>,
-                                <Button danger onClick={() => handleDelete(announcement._id)}>Delete</Button>
-                            ]}
-                        >
-                            <div>
-                                {/* Render the image here */}
-                            </div>
-                            <p><strong>Type:</strong> {announcement.Type}</p>
-                            <p><strong>Department:</strong> {announcement.Department}</p>
-                            <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
-                            <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
-                            <p><strong>Description:</strong> {announcement.Description}</p>
-                        </Card>
-                    );
-                })}
+                <h6>SPECIFIC ANNOUNCEMENTS</h6>
+                {specificAnnouncements.map(announcement => (
+                    <Card
+                        key={announcement._id}
+                        title={announcement.anntitle}
+                        style={{ width: 1000, margin: '16px' }}
+                        actions={[
+                             
+                        ]}
+
+                    >
+                        <div>
+                            {announcement.file && (
+                                <>
+                                    <img
+                                        src={announcement.file.path ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
+                                        alt={announcement.file.filename}
+                                        style={{ width: '100px', height: '100px' }}
+                                    />
+                                    <p>{announcement.file.filename}</p>
+                                </>
+                            )}
+                        </div>
+                        <p><strong>Type:</strong> {announcement.Type}</p>
+                        <p><strong>Department:</strong> {announcement.Department}</p>
+                        <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
+                        <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
+                        <p><strong>Description:</strong> {announcement.Description}</p>
+                        <Form onFinish={() => handleCommentSubmit(announcement._id)}>
+                            <Form.Item>
+                                <Input
+                                    value={commentText}
+                                    onChange={(e) => setCommentText(e.target.value)}
+                                    placeholder="Add a comment"
+                                />
+                            </Form.Item>
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit" className='comment' name='comment'>Add Comment</Button>
+                            </Form.Item>
+                        </Form>
+                    </Card>
+                ))}
             </div>
 
-            <Modal
-                title="Update Announcement"
-                visible={isModalVisible}
-                onCancel={() => setIsModalVisible(false)}
-                footer={null}
-            >
-                <Form
-                    layout="vertical"
-                    initialValues={{ ...currentAnnouncement }}
-                    onFinish={handleUpdate}
-                >
-                    <Form.Item
-                        name="anntitle"
-                        label="Announcement Title"
-                        rules={[{ required: true, message: 'Please input the announcement title!' }]}
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <h6>GENERAL ANNOUNCEMENTS</h6>
+                {generalAnnouncements.map(announcement => (
+                    <Card
+                        key={announcement._id}
+                        title={announcement.anntitle}
+                        style={{ width: 300, margin: '16px' }}
+                        actions={[
+                           
+                        ]}
                     >
-                        <Input />
-                    </Form.Item>
-                    {/* Repeat for other fields as necessary */}
-                    <Form.Item>
-                        <Button type="primary" htmlType="submit">
-                            Update
-                        </Button>
-                    </Form.Item>
-                </Form>
-            </Modal>
+                        <div>
+                            {announcement.file && (
+                                <>
+                                    <img
+                                        src={announcement.file.path ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
+                                        alt={announcement.file.filename}
+                                        style={{ width: '100px', height: '100px' }}
+                                    />
+                                    <p>{announcement.file.filename}</p>
+                                </>
+                            )}
+                        </div>
+                        <p><strong>Type:</strong> {announcement.Type}</p>
+                        <p><strong>Department:</strong> {announcement.Department}</p>
+                        <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
+                        <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
+                        <p><strong>Description:</strong> {announcement.Description}</p>
+                        <Form onFinish={() => handleCommentSubmit(announcement._id)}>
+                            <Form.Item>
+                                <Input
+                                    value={commentText}
+                                    onChange={(e) => setCommentText(e.target.value)}
+                                    placeholder="Add a comment"
+                                />
+                            </Form.Item>
+                            <Form.Item>
+                                <Button type="primary" htmlType="submit" className='comment' name='comment'>Add Comment</Button>
+                            </Form.Item>
+                        </Form>
+                    </Card>
+                ))}
+            </div>
+
+            
         </Layout>
     );
 }
