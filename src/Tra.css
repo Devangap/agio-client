@@ -1,20 +1,13 @@
-#componentPDF {
-  width: 100%;
-  margin-bottom: 20px;
-}
-
-/* Styling for the Download Report button */
-.btn-success {
-  background-color: #28a745;
-  color: #fff;
-  border-color: #28a745;
-  padding: 8px 16px;
-  font-size: 16px;
-  cursor: pointer;
+/* Your CSS styles here */
+.payH {
   text-align: center;
+  margin-bottom: 20px;
+  padding-top: 20px;
+
 }
 
-.btn-success:hover {
-  background-color: #218838;
-  border-color: #1e7e34;
+.payH h3 {
+  font-family: ;
+  color: #333;
+  font-size: 24px;
 }
