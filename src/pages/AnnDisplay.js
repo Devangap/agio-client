@@ -111,7 +111,7 @@ function AnnDisplay() {
             dataIndex: 'Department',
             key: 'Department',
         },
-        
+
         {
             title: 'Expire Date',
             dataIndex: 'expiredate',
@@ -198,6 +198,7 @@ function AnnDisplay() {
 
     return (
         <Layout>
+
          <div className="table-header">
         <div className="search-container">
             <Input
@@ -210,6 +211,7 @@ function AnnDisplay() {
     </div>
 
             <Table dataSource={filteredAnnouncements} columns={columns} />
+
             <Modal
     title="Update Announcement"
     open={isModalVisible}

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 *{
     .lato-regular {
         font-family: "Lato", sans-serif;
@@ -8,7 +8,7 @@
 }
 
 /* antd override */
-input{
+/* input{
     border-radius: 2px !important;
     border: 1px solid rgba(128, 128, 128, 0.521);
     height: 40px !important;
@@ -28,7 +28,7 @@ label{
 }
 
 /* comon style */
-.card-title{
+/* .card-title{
     font-size: 1.5rem;
     font-weight: bold;
 }
@@ -59,7 +59,7 @@ label{
 /*authentication pages */
 
 
-.authentication{
+/* .authentication{
     height: 100vh;
     display: flex;
     align-items: center;
@@ -103,5 +103,5 @@ label{
     width : 80px;
     height : 80px;
 
-}
+} */
 
