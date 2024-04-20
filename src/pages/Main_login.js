@@ -14,35 +14,36 @@ function Main_login() {
   const dispatch = useDispatch();
   
 
-  const onFinish = async(values) =>{
+  const onFinish = async (values) => {
     dispatch(showLoading());
-    console.log('Recieved values of form', values);
-   
-    try {
-        const response = await axios.post('/api/employee/Main_login', values);
-        if(response.data.success){
-            toast.success(response.data.message);
-            toast("Redirecting to home page");
-            localStorage.setItem("token", response.data.data);
-            navigate("/")
-
-           
-            
-        }else{
-            toast.error(response.data.message);
+    console.log('Received values of form', values);
   
+    try {
+      const response = await axios.post('/api/employee/Main_login', values);
+      if (response.data.success) {
+        toast.success(response.data.message);
+        toast("Redirecting to home page");
+        localStorage.setItem("token", response.data.data);
+        console.log(response.data.data);
+        console.log(values.username_log)
+  
+        // Check if username_log is "Devanaga"
+        if (values.username_log === "Devanga") {
+          navigate("/leaveoverview");
+        } else {
+          navigate("/");
         }
-        
+      } else {
+        toast.error(response.data.message);
+      }
+  
     } catch (error) {
-      
-        toast.error("Something went wrong");
-    }
-    finally{
+      toast.error("Something went wrong");
+    } finally {
       dispatch(hideLoading());
     }
-       
-
   }
+        
   
   
   return (
@@ -67,7 +68,7 @@ function Main_login() {
                     </Form.Item>
                 </div>
                 <div className="Button-conslog">
-                    <Button className='primary-button my-2' htmlType='submit'>LOG IN</Button>
+                    <Button className='primary-button my-2' htmlType='submit'>LOGIN</Button>
                 </div>
             </div>
         </Form>
