@@ -1,6 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route,Link,Router} from 'react-router-dom';
 
+
 import Main_register from './pages/Main_register';
 import MainRegDisplay from './pages/MainRegDisplay';
 
@@ -80,6 +81,15 @@ import TraDriverViwe from './pages/TraDriverViwe';
 
 
 
+import UniformOrder from './pages/UniformOrder';
+import UniformManagerView from './pages/UniformManagerView';
+import UniformShirt from './pages/UniformShirt';
+import UniformSkirt from './pages/UniformSkirt';
+import UniformShirtInventory from './pages/UniformShirtInventory';
+import UniformOrderDetails from './pages/UniformOrderDetails';
+import UniformTotals from './pages/UniformTotals';
+
+
 
 
 
@@ -137,6 +147,15 @@ function App() {
 
 
 
+
+          <Route path='/UniformOrder' element={<UniformOrder/>} />
+          <Route path='/UniformManagerView' element={<UniformManagerView/>} />
+          <Route path='/UniformShirt' element={<UniformShirt/>} />
+          <Route path='/UniformSkirt' element={<UniformSkirt/>} />
+          <Route path='/UniformShirtInventory' element={<UniformShirtInventory/>} />
+          <Route path='/UniformOrderDetails' element={<UniformOrderDetails/>} />
+          <Route path='/UniformTotals' element={<UniformTotals/>}/>
+
         
             /*transport  Navigation*/
          
@@ -155,6 +174,7 @@ function App() {
           <Route path='/TraBookingDisplayAdmin' element={<ProtectedRoute><TraBookingDisplayAdmin/></ProtectedRoute>} />
           <Route path='/TraVehicleviwe' element={<ProtectedRoute><TraVehicleviwe/></ProtectedRoute>} />
           <Route path='/TraDriverViwe' element={<ProtectedRoute><TraDriverViwe/></ProtectedRoute>} />
+
 
 
           

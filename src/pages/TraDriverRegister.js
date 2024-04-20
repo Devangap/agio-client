@@ -1,3 +1,4 @@
+
 import React from 'react';
 import axios from 'axios';
 import { Button, Form, Input, Select, DatePicker } from 'antd';
@@ -12,6 +13,7 @@ function TraDriverRegister() {
   const onFinish = async (values) => {
     console.log('Received values of form', values);
 
+
     try {
       const response = await axios.post('/api/employee/Driveregister', values);
       if (response.data.success) {
@@ -22,6 +24,7 @@ function TraDriverRegister() {
       }
     } catch (error) {
       toast.error("Something went wrong");
+
     }
   };
 
@@ -105,3 +108,4 @@ function TraDriverRegister() {
 }
 
 export default TraDriverRegister;
+
