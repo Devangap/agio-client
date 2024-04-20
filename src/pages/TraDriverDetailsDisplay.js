@@ -3,6 +3,8 @@ import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
+import '../search.css';
+
 
 function TraDriverDetailsDisplay() {
 
@@ -12,10 +14,11 @@ function TraDriverDetailsDisplay() {
     const [Dregister, setDregister] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentDregister, setCurrentDregister] = useState(null); 
+    const [filteredDregister, setFilteredDregister] = useState([]);
 
     const fetchDregister = async () => {
         try {
-            const response = await axios.get('/api/TransportRoute/getdrivers');
+            const response = await axios.get('/api/employee/getdrivers');
             // Assuming response.data.bookings is an array of bookings
             // Add a unique key (e.g., _id) to each booking for the Table component
             const dataWithKey = response.data.drivers.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
@@ -38,7 +41,7 @@ function TraDriverDetailsDisplay() {
     const handleDelete = async (id) => {
         try {
             // Send a DELETE request to delete the booking by its ID
-            await axios.delete(`/api/TransportRoute/deletedrivers/${id}`);
+            await axios.delete(`/api/employee/deletedrivers/${id}`);
     
             // Update the state to remove the deleted booking from the table
             setDregister(prevDrivers => prevDrivers.filter(Dregister => Dregister._id !== id));
@@ -102,7 +105,7 @@ function TraDriverDetailsDisplay() {
     const handleUpdate = async (values) => {
         try {
             // Assuming you have the Booking ID in currentBooking._id
-            const response = await axios.put(`/api/TransportRoute/updatedrivers/${currentDregister._id}`, values);
+            const response = await axios.put(`/api/employee/updatedrivers/${currentDregister._id}`, values);
             if (response.data.success) {
                 message.success('Booking updated successfully');
                 setIsModalVisible(false);
@@ -115,12 +118,51 @@ function TraDriverDetailsDisplay() {
             message.error('Failed to update Booking');
         }
     };
+
+    useEffect(() => {
+        fetchDregister();
+    }, []);
+
+    const handleSearch = (searchText) => {
+        const filteredData = Dregister.filter(driver =>
+            driver.driName.toLowerCase().includes(searchText.toLowerCase())
+        );
+        setFilteredDregister(filteredData);
+    };
+
     
 
 
   return (
     <Layout>
-            <Table dataSource={Dregister} columns={columns} />
+
+<div className="searchInput">
+      <Input.Search
+        className="customInput"
+        placeholder="Search by Driver Name"
+        onSearch={handleSearch}
+        enterButton={<Button className="customButton">Search</Button>} // Customized search button
+        style={{ padding:10 ,width: 500  }} // Example: Set width inline style
+      />
+            </div>
+            <Table dataSource={filteredDregister.length > 0 ? filteredDregister : Dregister} columns={columns} />
+            <Button
+        type="primary"
+        className="update"
+        danger
+        onClick={() => navigate(`/TraDriverViwe`)}
+        style={{
+            backgroundColor: '#1f1300', // Background color
+            color: '#fff', // Text color
+            border: 'none', // Remove border
+            margin:10,
+            borderRadius: '5px', // Rounded corners
+            fontSize: '16px', // Font size
+            cursor: 'pointer', // Pointer cursor on hover
+          }} // Example: Set margin-top, font size, and font weight inline style
+      >
+        VIEW DRIVER DETAILS
+      </Button>
             <Modal
     title="Update Booking"
     open={isModalVisible}

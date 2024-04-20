@@ -16,22 +16,23 @@ function TraBookingUpdate() {
   useEffect(() => {
     const fetchbooking = async () => {
       try {
-        const response = await axios.get(`/api/TransportRoute/getTraBooking2/${id}`);
+        const response = await axios.get(`/api/employee/getTraBooking2/${id}`);
         if (response.data.success) {
           const data = response.data.Booking;
           form.setFieldsValue({
             EmpName: data.EmpName,
             EmpEmail: data.EmpEmail,
             Type: data.Type,
+            location:data.location,
             bookingdate: moment(data.bookingdate),
             Details: data.Details,
           });
         } else {
-          toast.error('Announcement not found!');
+          toast.error('Booking  not found!');
           navigate('/TraBookingDisplay');
         }
       } catch (error) {
-        toast.error('Failed to fetch announcement data!');
+        toast.error('Failed to fetch Booking data!');
       }
     };
 
@@ -47,7 +48,7 @@ function TraBookingUpdate() {
     };
 
     try {
-      const response = await axios.put(`/api/TransportRoute/updateTraBooking/${id}`, updatedValues);
+      const response = await axios.put(`/api/employee/updateTraBooking/${id}`, updatedValues);
       if (response.data.success) {
         toast.success(response.data.message);
         navigate('/TraBookingDisplay'); // Navigate to the desired page after successful update
@@ -87,6 +88,19 @@ function TraBookingUpdate() {
             </Select>
           </Form.Item>
               </div>
+
+              <div className="item">
+          <Form.Item name="location" label="Select Location">
+            <Select className="Type" placeholder="Select Location">
+              <Option value="Colombo">Colombo</Option>
+              <Option value="Ja-ela">Ja-ela</Option>
+              <Option value="Kollupitiya">Kollupitiya</Option>
+              <Option value="Negambo">Negambo</Option>
+              <Option value="Panadura">Panadura</Option>
+              <Option value="Kaduwela">Kaduwela</Option>
+            </Select>
+          </Form.Item>
+        </div>
             </div>
 
             <div className="form-row">

@@ -1,3 +1,4 @@
+// Inquiry.js
 import React from 'react';
 import { Button, Form, Input, DatePicker } from 'antd';
 import '../inquiry.css';
@@ -5,29 +6,37 @@ import Layout from '../components/Layout';
 import axios from "axios";
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function Inquiry() {
   const navigate = useNavigate();
+  const { user } = useSelector((state) => state.user);
 
   const onFinish = async (values) => {
-    console.log('Received values of form:', values,);
+    console.log('Received values of form:', values);
     try {
-      const response = await axios.post('/api/inquiry/inquiry', values);
-      if(response.data.success){
-          toast.success(response.data.message);
-          navigate('/MyInquiries', { state: { username: values.username } });
+      const response = await axios.post(
+        '/api/employee/inquiry',
+        { ...values, userid: user?.userid, username: user?.username },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      if (response.data.success) {
+        toast.success(response.data.message);
+        navigate('/MyInquiries', { state: { username: user?.username } });
       } else {
-          toast.error(response.data.message);
+        toast.error(response.data.message);
       }
     } catch (error) {
       toast.error("Something went wrong");
     }
   };
-  
 
   const handleNavigate = () => {
-    navigate('/MyInquiries');
-    
+    navigate('/MyInquiries', { state: { username: user?.username } });
   };
 
   return (
@@ -37,14 +46,11 @@ function Inquiry() {
         <div className="iform-container">
           <div className="imain_form box p-3">
             <h3 className='ititle'>Enter Inquiry Form</h3>
-            <Form layout='horizontal' onFinish={onFinish}>
+            <Form layout='horizontal' onFinish={onFinish} initialValues={{ username: user?.username }}>
               <div className="iform-row">
                 <div className="iitem">
                   <Form.Item label='Full Name' name='name' rules={[{ required: true, message: 'Please input your full name!' }]}>
                     <Input placeholder='Full name' />
-                  </Form.Item>
-                  <Form.Item label='Username' name='username' rules={[{ required: true, message: 'Please input your username!' }]}>
-                    <Input placeholder='Username' />
                   </Form.Item>
                   <Form.Item label="Pick a date" name="inquirydate" rules={[{ required: true, message: 'Please select inquiry date!' }]}>
                     <DatePicker className="date" />

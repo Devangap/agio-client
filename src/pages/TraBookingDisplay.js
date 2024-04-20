@@ -1,56 +1,56 @@
 import React, { useEffect, useState } from 'react';
+import { Table, Button, message, Card } from 'antd';
+import Layout from '../components/Layout';
 import axios from 'axios';
-import { Table, Button, message, Modal, Form, Input } from 'antd';
-import Layout from '../components/Layout'
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 function TraBookingDisplay() {
-    const navigate = useNavigate();
-    
-
+    const { user } = useSelector((state) => state.user);
     const [booking, setbooking] = useState([]);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [currentbooking, setCurrentbooking] = useState(null); 
+    
+    const navigate = useNavigate();
 
-    const fetchbooking = async () => {
+    const fetchBooking = async (userId) => {
         try {
-            const response = await axios.get('/api/TransportRoute/getTraBooking');
-            // Assuming response.data.bookings is an array of bookings
-            // Add a unique key (e.g., _id) to each booking for the Table component
-            const dataWithKey = response.data.bookings.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
-            setbooking(dataWithKey);
+            const response = await axios.get(`/api/employee/getTraBooking3/${userId}`);
+            console.log('Booking API Response:', response.data);
+
+            if (response.data && response.data.bookings) {
+                setbooking(response.data.bookings);
+            } else {
+                setbooking([]);
+                message.info('No booking data available');
+            }
         } catch (error) {
-            console.error(error);
-            message.error("Failed to fetch Booking");
+            console.error('Error fetching booking:', error);
+            message.error('Failed to fetch booking data');
         }
     };
 
 
 
     useEffect(() => {
+        if (user && user.userid) {
+            fetchBooking(user.userid);
+        }
         
-        fetchbooking();
-    }, []);
+    }, [user]);
 
-    
+
+    const handleLeaveSubmission = () => {
+        navigate('/TraBooking');
+    };
 
     const handleDelete = async (id) => {
         try {
-            // Send a DELETE request to delete the booking by its ID
-            await axios.delete(`/api/TransportRoute/deletebooking/${id}`);
-    
-            // Update the state to remove the deleted booking from the table
-            setbooking(prevBookings => prevBookings.filter(booking => booking._id !== id));
-    
-            // Show a success message
+            await axios.delete(`/api/employee/deletebooking/${id}`);
+            setbooking(prev => prev.filter(item => item._id !== id));
             message.success('Booking deleted successfully');
         } catch (error) {
-            // Show an error message if deletion fails
-            console.error('Failed to delete Booking:', error);
-            message.error('Failed to delete Booking');
+            message.error('Failed to delete booking');
         }
     };
-    
 
     const columns = [
         {
@@ -68,6 +68,13 @@ function TraBookingDisplay() {
             title: 'Type',
             dataIndex: 'Type',
             key: 'Type',
+            
+        },
+        
+        {
+            title: 'Select Location',
+            dataIndex: 'location',
+            key: 'location',
         },
         
         {
@@ -83,76 +90,35 @@ function TraBookingDisplay() {
             key: 'Details',
         },
         {
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'Description',
+        },
+        {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
                 <>
                     <Button type="primary" className="update" onClick={() => navigate(`/TraBookingUpdate/${record._id}`)}>Update</Button>
+                    <Button type="primary" className="update" onClick={() => navigate(`/TraPayment`)}>Upload Payment</Button>
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
+                    
                 </>
             ),
         },
     ];
 
-    const showModal = (booking) => {
-        setCurrentbooking(booking);
-        setIsModalVisible(true);
-    };
-    const handleUpdate = async (values) => {
-        try {
-            // Assuming you have the Booking ID in currentBooking._id
-            const response = await axios.put(`/api/TransportRoute/updateTraBooking/${currentbooking._id}`, values);
-            if (response.data.success) {
-                message.success('Booking updated successfully');
-                setIsModalVisible(false);
-                // Refresh the Booking list to reflect the update
-                fetchbooking();
-            } else {
-                message.error(response.data.message);
-            }
-        } catch (error) {
-            message.error('Failed to update Booking');
-        }
-    };
-    
     
 
     return (
         <Layout>
+
+
+
+            
             <Table dataSource={booking} columns={columns} />
-            <Modal
-    title="Update Booking"
-    open={isModalVisible}
-    onCancel={() => setIsModalVisible(false)}
-    footer={null} // Use null here to not use the default Ok and Cancel buttons
->
-    <Form
-        layout="vertical"
-        initialValues={{ ...currentbooking }}
-        onFinish={handleUpdate}
-    >
-        <Form.Item
-            name="EmpName"
-            label="Employee Name"
-            rules={[{  message: 'Please input the Employee Name!' }]}
-        >
-            <Input />
-        </Form.Item>
-        {/* Repeat for other fields as necessary */}
-        <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Update
-            </Button>
-        </Form.Item>
-    </Form>
-</Modal>
-
-        
-
         </Layout>
-        
     );
-
 }
 
-export default TraBookingDisplay
+export default TraBookingDisplay;
