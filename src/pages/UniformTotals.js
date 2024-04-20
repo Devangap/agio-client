@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import '../UniformTotals.css';
+import shirtImage from '../Images/shirt.png';
+import skirtImage from '../Images/shirt.png';
+import Layout from '../components/Layout';
 
 function UniformTotals() {
   const [factoryWorkerShirtTotals, setFactoryWorkerShirtTotals] = useState([]);
@@ -33,53 +37,60 @@ function UniformTotals() {
   };
 
   return (
-    <div>
-      <h1>Total Uniform Orders</h1>
-      <div style={{ display: 'flex' }}>
-        <div style={{ flex: 1 }}>
-          <FoamContainer title="Factory Worker T-Shirts">
-            <ul>
-              {sortByTShirtSize(factoryWorkerShirtTotals).map((total, index) => (
-                <li key={index}>
-                  {total._id}: {total.totalShirts}
-                </li>
-              ))}
-            </ul>
-          </FoamContainer>
-        </div>
-        <div style={{ flex: 1 }}>
-          <FoamContainer title="Factory Worker Skirts">
-            <ul>
-              {sortByWaistSize(factoryWorkerSkirtTotals).map((total, index) => (
-                <li key={index}>
-                  {total._id}: {total.totalSkirts}
-                </li>
-              ))}
-            </ul>
-          </FoamContainer>
+    <Layout>
+      <div>
+        <h1>Total Uniform Orders</h1>
+        <div className="scroll-container">
+          <div className="form">
+            <FoamContainer title="Factory Worker T-Shirts" imageSrc={shirtImage}>
+              <ul>
+                {sortByTShirtSize(factoryWorkerShirtTotals).map((total, index) => (
+                  <li key={index}>
+                    {total._id}: {total.totalShirts}
+                  </li>
+                ))}
+              </ul>
+            </FoamContainer>
+          </div>
+          <div className="form">
+            <FoamContainer title="Executive Shirts" imageSrc={shirtImage}>
+              <ul>
+                {sortByTShirtSize(executiveShirtTotals).map((total, index) => (
+                  <li key={index}>
+                    {total._id}: {total.totalShirts}
+                  </li>
+                ))}
+              </ul>
+            </FoamContainer>
+          </div>
+          <div className="form">
+            <FoamContainer title="Factory Worker Skirts" imageSrc={skirtImage}>
+              <ul>
+                {sortByWaistSize(factoryWorkerSkirtTotals).map((total, index) => (
+                  <li key={index}>
+                    {total._id}: {total.totalSkirts}
+                  </li>
+                ))}
+              </ul>
+            </FoamContainer>
+          </div>
         </div>
       </div>
-      <div style={{ display: 'flex', justifyContent: 'center' }}>
-        <div style={{ width: '50%' }}>
-          <FoamContainer title="Executive Shirts">
-            <ul>
-              {sortByTShirtSize(executiveShirtTotals).map((total, index) => (
-                <li key={index}>
-                  {total._id}: {total.totalShirts}
-                </li>
-              ))}
-            </ul>
-          </FoamContainer>
-        </div>
-      </div>
-    </div>
+    </Layout>
   );
 }
 
-const FoamContainer = ({ title, children }) => (
-  <div style={{ border: '1px solid #ccc', borderRadius: '10px', padding: '20px', marginBottom: '20px' }}>
-    <h2 style={{ textAlign: 'center' }}>{title}</h2>
-    {children}
+const FoamContainer = ({ title, children, imageSrc }) => (
+  <div className="container">
+    <div className="form-container">
+      <h2 className="title">{title}</h2>
+      <div className="image-container">
+        <img className="image" src={imageSrc} alt={`${title} Mockup`} />
+      </div>
+      <ul className="list">
+        {children}
+      </ul>
+    </div>
   </div>
 );
 
