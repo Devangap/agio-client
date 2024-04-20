@@ -37,36 +37,8 @@ function TraVehicleviwe() {
         fetchVregister();
     }, []);
 
-    
-
-   /* const handleDelete = async (id) => {
-        try {
-            // Send a DELETE request to delete the booking by its ID
-            await axios.delete(`/api/employee/deletevehicles/${id}`);
-    
-            // Update the state to remove the deleted booking from the table
-            setVregister(prevVehicles => prevVehicles.filter(Vregister => Vregister._id !== id));
-    
-            // Show a success message
-            message.success('Booking deleted successfully');
-        } catch (error) {
-            // Show an error message if deletion fails
-            console.error('Failed to delete Booking:', error);
-            message.error('Failed to delete Booking');
-        }
-    };*/
 
 
-    const handleSearch = searchText => {
-        const filteredData = Vregister.filter(vehicle =>
-            vehicle.vehicleNum.toLowerCase().includes(searchText.toLowerCase())
-        );
-        setFilteredVregister(filteredData);
-    };
-
-    const clearSearch = () => {
-        setFilteredVregister([]);
-    };
     
 
     const columns = [
@@ -105,41 +77,14 @@ function TraVehicleviwe() {
             dataIndex: 'OwnerDetails',
             key: 'OwnerDetails',
         },
-      /*  {
-            title: 'Action',
-            key: 'action',
-            render: (_, record) => (
-
-                <>
-                <Button type="primary" className="update" danger onClick={() => navigate(`/TraVehicleDetailsUpdate`)}>Viwe</Button>
-                    <Button type="primary" className="update" onClick={() => navigate(`/TraVehicleDetailsUpdate/${record._id}`)}>Update</Button>
-                    <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
-                    
-                </>
-            ),
-        },*/
+     
     ];
 
     const showModal = (Vregister) => {
         setCurrentVregister(Vregister);
         setIsModalVisible(true);
     };
-   /* const handleUpdate = async (values) => {
-        try {
-            // Assuming you have the Booking ID in currentBooking._id
-            const response = await axios.put(`/api/employee/updatevehicles/${currentVregister._id}`, values);
-            if (response.data.success) {
-                message.success('Booking updated successfully');
-                setIsModalVisible(false);
-                // Refresh the Booking list to reflect the update
-                fetchVregister();
-            } else {
-                message.error(response.data.message);
-            }
-        } catch (error) {
-            message.error('Failed to update Booking');
-        }
-    };*/
+   
 
     const generatePDF= useReactToPrint({
         content: ()=>componentPDF.current,
@@ -151,22 +96,16 @@ function TraVehicleviwe() {
   return (
     <Layout>
 
+        
          
             
             <div ref={componentPDF} style={{width: '100%'}}>
+            <h3>ALL VEHICLE DETAILS</h3>
                 <Table dataSource={filteredVregister.length > 0 ? filteredVregister : Vregister} columns={columns} />
                 </div>
 
-                <Button
-      style={{
-        backgroundColor: '#1f1300', // Background color
-        color: '#fff', // Text color
-        border: 'none', // Remove border
-        margin:10,
-        borderRadius: '5px', // Rounded corners
-        fontSize: '16px', // Font size
-        cursor: 'pointer', // Pointer cursor on hover
-      }}
+                <Button className="bookdetails"
+      
       onClick={generatePDF}
     >
       Download Report

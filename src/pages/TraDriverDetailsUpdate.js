@@ -62,25 +62,25 @@ function TraDriverDetailsUpdate() {
 
   return (
     <Layout>
-      <div className="annform">
-        <div className="AnnHRSup_form box p-3">
-          <h3 className='title'>Update Booking Details</h3>
+      <div className="bookform">
+        <div className="book_form box p-3">
+          <h3 className='booktitle'>Update Booking Details</h3>
           <Form layout='vertical' form={form} onFinish={onFinish}>
-            <div className="form-row">
-              <div className="item">
+            <div className="bookform-row">
+              <div className="bookitem">
                 <Form.Item label='Driver Name' name='driName'>
                   <Input placeholder='Employee Name' />
                 </Form.Item>
               </div>
             </div>
 
-            <div className="form-row">
-              <div className="item">
+            <div className="bookform-row">
+              <div className="bookitem">
               <Form.Item label='Driver Email' name='driEmail'>
             <Input placeholder='Employee Email' />
           </Form.Item>
               </div>
-              <div className="item">
+              <div className="bookitem">
               <Form.Item name="Type" label="Work Expereance">
             <Select className="Type" placeholder="Select Vehicle type">
             <Option value="year0-5">0-5 years</Option>
@@ -91,22 +91,22 @@ function TraDriverDetailsUpdate() {
               </div>
             </div>
 
-            <div className="form-row">
-              <div className="item">
+            <div className="bookform-row">
+              <div className="bookitem">
               <Form.Item label="select Register Date" name="regdate">
             <DatePicker className="date" />
           </Form.Item>
               </div>
             </div>
 
-            <div className="item">
+            <div className="bookitem">
             <Form.Item name="driPnum" label="Driver PhoneNumber">
           <Input.TextArea className='Description' />
         </Form.Item>
             </div>
 
-            <div className="Button-cons">
-              <Button className='primary-button my-2' htmlType='submit'>Update</Button>
+            <div className="bookButton-cons">
+              <Button className='bookprimary-button my-2' htmlType='submit'>Update</Button>
             </div>
           </Form>
         </div>
