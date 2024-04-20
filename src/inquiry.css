@@ -13,8 +13,8 @@
 
 }
 .imain_form{
-    width : 750px;
-    height: 850px;
+    width : 950px;
+    height: 650px;
     
     
 }
@@ -48,7 +48,7 @@ input{
 input:hover{
     outline: none;
     box-shadow: none !important;
-    border: 1px solid #F7934C !important;
+    border: 1px solid #ECB159!important;
 
 }
 input:focus{
@@ -71,8 +71,23 @@ label{
     font-weight: bold; 
     border-radius: 10px !important;
     margin-top: 30px !important;
+    margin-right: 30px !important;
     justify-content: center !important;
 }
+.isecondary-button{
+    background-color: #F7B05B !important;
+    border-color: #1F1300 !important;
+    height: 40px !important;
+    width: 300px !important;
+    align-items: center !important;
+    color:#000000 !important;
+    font-size: 16px !important;
+    font-weight: bold; 
+    border-radius: 10px !important;
+    margin-top: 30px !important;
+    justify-content: center !important;
+}
+
 .ititle{
     color: #1F1300;
     margin-top: 100px;

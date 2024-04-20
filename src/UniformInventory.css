@@ -1,0 +1,55 @@
+.inventory-container {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .form-container {
+    box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
+    border-radius: 20px;
+    background-color: #FAFAFA;
+  }
+  
+  .form-box {
+    padding: 20px;
+  }
+  
+  .form-title {
+    color: #1F1300;
+    margin-bottom: 20px;
+  }
+  
+  .form-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .form-item {
+    margin-right: 20px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+  .submit-button {
+    background-color: #F7B05B !important;
+    border-color: #1F1300 !important;
+    height: 40px !important;
+    width: 300px !important;
+    color: #000000 !important;
+    font-size: 16px !important;
+    font-weight: bold;
+    border-radius: 10px !important;
+  }
+  
+  .additional-message {
+    color: #FF0000;
+    font-size: 14px;
+    margin-top: 10px;
+  }
+  
