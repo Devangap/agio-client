@@ -4,6 +4,10 @@ import { Table, Button, message, Modal, Form, Input, DatePicker } from 'antd';
 import Layout from '../components/Layout';
 import Anndisplay from '../Anndisplay.css';
 import { useNavigate } from 'react-router-dom';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import { jsPDF } from 'jspdf';
+
 
 
 
@@ -30,6 +34,40 @@ function AnnDisplay() {
         } catch (error) {
             message.error("Failed to fetch announcements");
         }
+    };
+
+
+    const handleDownload = async (announcement) => {
+        const zip = new JSZip();
+        if (announcement.file && announcement.file.filename) {
+            try {
+                const fileResponse = await axios.get(`${'http://localhost:5001/'}uploads/${announcement.file.filename}`, {
+                    responseType: 'blob',
+                });
+                zip.file(announcement.file.filename, fileResponse.data);
+            } catch (error) {
+                message.error('Failed to download file');
+                return;
+            }
+        }
+
+        // Generate PDF with jsPDF
+        const doc = new jsPDF();
+        doc.text(`Title: ${announcement.anntitle}`, 10, 10);
+        doc.text(`Upload Date: ${new Date(announcement.uploaddate).toLocaleDateString()}`, 10, 20);
+        doc.text(`Type: ${announcement.Type}`, 10, 30);
+        doc.text(`Department: ${announcement.Department}`, 10, 40);
+        doc.text(`Expire Date: ${new Date(announcement.expiredate).toLocaleDateString()}`, 10, 50);
+        doc.text(`Description: ${announcement.Description}`, 10, 60);
+
+        // Convert PDF to a binary string and include it in the ZIP
+        const pdfBlob = doc.output('blob');
+        zip.file("announcement_details.pdf", pdfBlob);
+
+        // Generate zip file and download
+        zip.generateAsync({ type: "blob" }).then(function (content) {
+            saveAs(content, `announcement_${announcement._id}.zip`);
+        });
     };
 
 
@@ -115,6 +153,7 @@ function AnnDisplay() {
                 <>
                     <Button type="primary" className="update" onClick={() => navigate(`/AnnUpdate/${record._id}`)}>Update</Button>
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
+                    <Button type="default" style={{ marginTop: '8px',marginLeft: '36px' }} onClick={() => handleDownload(record)}>Download</Button>
                 </>
             ),
         },

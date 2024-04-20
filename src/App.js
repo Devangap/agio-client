@@ -19,7 +19,12 @@ import AnnDisplay from './pages/AnnDisplay';
 import AnnUpdate from './pages/AnnUpdate';
 import AnnEmpDisplay from './pages/AnnEmpDisplay';
 import AnnCalHead from './pages/AnnCalHead';
+
+import AnnCalendar from './pages/AnnCalendar';
+import AnnCalendarForm from './pages/AnnCalendarForm';
+
 import LeaveCal from './pages/LeaveCal'
+
 
 
 
@@ -121,7 +126,9 @@ function App() {
 
           <Route path='/AnnEmpDisplay' element={<ProtectedRoute><AnnEmpDisplay/></ProtectedRoute>} />
           <Route path="/AnnCalHead"element={<ProtectedRoute><AnnCalHead date={date}/></ProtectedRoute>} />
-          
+
+          <Route path="/AnnCalendar"element={<ProtectedRoute><AnnCalendar /></ProtectedRoute>} />
+          <Route path="/AnnCalendarForm"element={<ProtectedRoute><AnnCalendarForm /></ProtectedRoute>} />
 
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 

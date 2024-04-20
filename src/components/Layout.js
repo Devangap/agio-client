@@ -104,7 +104,7 @@ function Layout({ children }) {
     ];
     const Annhrsupmenu = [
         {
-            name: 'Hooome',
+            name: 'Home',
             path: '/AnnHRsup',
             icon: 'ri-home-line',
         },
@@ -120,7 +120,7 @@ function Layout({ children }) {
         },
         {
             name: ' Calendar',
-            path: '/profile',
+            path: '/AnnCalHead',
             icon: 'ri-account-box-line',
         },
         {
