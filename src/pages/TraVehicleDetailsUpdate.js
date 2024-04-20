@@ -16,13 +16,14 @@ function TraVehicleDetailsUpdate() {
   useEffect(() => {
     const fetchVregister = async () => {
       try {
-        const response = await axios.get(`/api/TransportRoute/getVehicles2/${id}`);
+        const response = await axios.get(`/api/employee/getVehicles2/${id}`);
         if (response.data.success) {
           const data = response.data.VehicleRegister;
           form.setFieldsValue({
             Type: data.Type,
             vehicleNum: data.vehicleNum,
             ECDetails: data.ECDetails,
+            location: data.location,
             LicenceDetails: data.LicenceDetails,
             OwnerDetails: data.OwnerDetails,
           });
@@ -47,7 +48,7 @@ function TraVehicleDetailsUpdate() {
     };
 
     try {
-      const response = await axios.put(`/api/TransportRoute/updatevehicles/${id}`, updatedValues);
+      const response = await axios.put(`/api/employee/updatevehicles/${id}`, updatedValues);
       if (response.data.success) {
         toast.success(response.data.message);
         navigate('/TraVehicleDetails'); // Navigate to the desired page after successful update
@@ -74,6 +75,7 @@ function TraVehicleDetailsUpdate() {
               </Select>
             </Form.Item>
               </div>
+
             </div>
 
             <div className="form-row">
@@ -87,6 +89,20 @@ function TraVehicleDetailsUpdate() {
             <Input.TextArea className='Description' />
           </Form.Item>
               </div>
+
+              <div className="item">
+          <Form.Item name="location" label="Select Location">
+            <Select className="Type" placeholder="Select Location">
+              <Option value="Colombo">Colombo</Option>
+              <Option value="Ja-ela">Ja-ela</Option>
+              <Option value="Kollupitiya">Kollupitiya</Option>
+              <Option value="Negambo">Negambo</Option>
+              <Option value="Panadura">Panadura</Option>
+              <Option value="Kaduwela">Kaduwela</Option>
+            </Select>
+          </Form.Item>
+        </div>
+        
             </div>
 
             <div className="form-row">

@@ -3,9 +3,9 @@ import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
+import { useReactToPrint } from 'react-to-print';
 
-
-function TraVehicleDetails() {
+function TraVehicleviwe() {
 
 
     const navigate = useNavigate();
@@ -15,7 +15,7 @@ function TraVehicleDetails() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentVregister, setCurrentVregister] = useState(null); 
     const [filteredVregister, setFilteredVregister] = useState([]);
-    
+    const componentPDF = useRef();
 
     const fetchVregister = async () => {
         try {
@@ -39,7 +39,7 @@ function TraVehicleDetails() {
 
     
 
-    const handleDelete = async (id) => {
+   /* const handleDelete = async (id) => {
         try {
             // Send a DELETE request to delete the booking by its ID
             await axios.delete(`/api/employee/deletevehicles/${id}`);
@@ -48,13 +48,13 @@ function TraVehicleDetails() {
             setVregister(prevVehicles => prevVehicles.filter(Vregister => Vregister._id !== id));
     
             // Show a success message
-            message.success('Vehicle deleted successfully');
+            message.success('Booking deleted successfully');
         } catch (error) {
             // Show an error message if deletion fails
-            console.error('Failed to delete Vehicle:', error);
-            message.error('Failed to delete Vehicle');
+            console.error('Failed to delete Booking:', error);
+            message.error('Failed to delete Booking');
         }
-    };
+    };*/
 
 
     const handleSearch = searchText => {
@@ -64,7 +64,9 @@ function TraVehicleDetails() {
         setFilteredVregister(filteredData);
     };
 
-  
+    const clearSearch = () => {
+        setFilteredVregister([]);
+    };
     
 
     const columns = [
@@ -103,26 +105,26 @@ function TraVehicleDetails() {
             dataIndex: 'OwnerDetails',
             key: 'OwnerDetails',
         },
-        {
+      /*  {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
 
                 <>
-                
+                <Button type="primary" className="update" danger onClick={() => navigate(`/TraVehicleDetailsUpdate`)}>Viwe</Button>
                     <Button type="primary" className="update" onClick={() => navigate(`/TraVehicleDetailsUpdate/${record._id}`)}>Update</Button>
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
                     
                 </>
             ),
-        },
+        },*/
     ];
 
     const showModal = (Vregister) => {
         setCurrentVregister(Vregister);
         setIsModalVisible(true);
     };
-    const handleUpdate = async (values) => {
+   /* const handleUpdate = async (values) => {
         try {
             // Assuming you have the Booking ID in currentBooking._id
             const response = await axios.put(`/api/employee/updatevehicles/${currentVregister._id}`, values);
@@ -137,76 +139,39 @@ function TraVehicleDetails() {
         } catch (error) {
             message.error('Failed to update Booking');
         }
-    };
+    };*/
 
-   
+    const generatePDF= useReactToPrint({
+        content: ()=>componentPDF.current,
+        documentTitle:"VEHICLE DETAILS",
+        onAfterPrint:()=>alert("Data Saved in PDF")
+
+    });
 
   return (
     <Layout>
 
          
-        <div style={{ marginBottom: 20 }}>
-                <Input.Search
-                    className="customInput"
-                    placeholder="Search by Vehicle Number"
-                    onSearch={handleSearch}
-                    enterButton={<Button className="customButton">Search</Button>} // Customized search button
-                    style={{ padding:10 ,width: 500  }} // Example: Set width inline style
-                   
-                />
             
-            </div>
-            
-            
+            <div ref={componentPDF} style={{width: '100%'}}>
                 <Table dataSource={filteredVregister.length > 0 ? filteredVregister : Vregister} columns={columns} />
+                </div>
+
                 <Button
-        type="primary"
-        className="update"
-        danger
-        onClick={() => navigate(`/TraVehicleviwe`)}
-        style={{
-            backgroundColor: '#1f1300', // Background color
-            color: '#fff', // Text color
-            border: 'none', // Remove border
-            margin:10,
-            borderRadius: '5px', // Rounded corners
-            fontSize: '16px', // Font size
-            cursor: 'pointer', // Pointer cursor on hover
-          }} // Example: Set margin-top, font size, and font weight inline style
-      >
-        VIEW VEHICLE DETAILS
-      </Button>
-            <Modal
-    title="Update Booking"
-    open={isModalVisible}
-    onCancel={() => setIsModalVisible(false)}
-    footer={null} // Use null here to not use the default Ok and Cancel buttons
->
-
-    <Form
-        layout="vertical"
-        initialValues={{ ...currentVregister }}
-        onFinish={handleUpdate}
+      style={{
+        backgroundColor: '#1f1300', // Background color
+        color: '#fff', // Text color
+        border: 'none', // Remove border
+        margin:10,
+        borderRadius: '5px', // Rounded corners
+        fontSize: '16px', // Font size
+        cursor: 'pointer', // Pointer cursor on hover
+      }}
+      onClick={generatePDF}
     >
-        <Form.Item
-            name="vehicleNum"
-            label="Vehicle Number"
-            rules={[{  message: 'Please input the Employee Name!' }]}
-        >
-            <Input />
-        </Form.Item>
-        {/* Repeat for other fields as necessary */}
-        <Form.Item>
-            <Button type="primary" htmlType="submit">
-                Update
-            </Button>
-        </Form.Item>
-        
-        
-    </Form>
-    
-</Modal>
-
+      Download Report
+    </Button>
+         
 
         
 
@@ -214,4 +179,4 @@ function TraVehicleDetails() {
   )
 }
 
-export default TraVehicleDetails
+export default TraVehicleviwe;

@@ -169,7 +169,7 @@ function Layout({ children }) {
         },
         {
             name: ' BookingUserdetails',
-            path: '/TraBookingDisplay',
+            path: '/TraBookingDisplayAdmin',
             icon: 'ri-account-box-line',
         },
         {

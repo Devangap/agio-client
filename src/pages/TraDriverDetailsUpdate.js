@@ -16,7 +16,7 @@ function TraDriverDetailsUpdate() {
   useEffect(() => {
     const fetchDregister = async () => {
       try {
-        const response = await axios.get(`/api/TransportRoute/getdrivers2/${id}`);
+        const response = await axios.get(`/api/employee/getdrivers2/${id}`);
         if (response.data.success) {
           const data = response.data.Dregisters;
           form.setFieldsValue({
@@ -27,11 +27,11 @@ function TraDriverDetailsUpdate() {
             driPnum: data.driPnum,
           });
         } else {
-          toast.error('Announcement not found!');
+          toast.error('Driver not found!');
           navigate('/TraDriverDetailsDisplay');
         }
       } catch (error) {
-        toast.error('Failed to fetch announcement data!');
+        toast.error('Failed to fetch Driver data!');
       }
     };
 
@@ -47,7 +47,7 @@ function TraDriverDetailsUpdate() {
     };
 
     try {
-      const response = await axios.put(`/api/TransportRoute/updatedrivers/${id}`, updatedValues);
+      const response = await axios.put(`/api/employee/updatedrivers/${id}`, updatedValues);
       if (response.data.success) {
         toast.success(response.data.message);
         navigate('/TraDriverDetailsDisplay'); // Navigate to the desired page after successful update
