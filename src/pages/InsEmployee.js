@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table, Button, message, Modal, Form, Input } from "antd"; // Import Modal, Form, and Input components
+import { Table, Button, message, Modal, Form, Input } from "antd"; 
 import { useParams } from "react-router-dom";
 import Layout from "../components/Layout";
 import { showLoading, hideLoading } from "../redux/empalerts";
