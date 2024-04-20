@@ -97,14 +97,8 @@ import UniformTotals from './pages/UniformTotals';
 
 
 
-import AnnHRsup from "./pages/AnnHRsup";
-import AnnDisplay from "./pages/AnnDisplay";
-import AnnUpdate from "./pages/AnnUpdate";
-import TraDriverRegister from "./pages/TraDriverRegister";
-import TraVehicleRegister from "./pages/TraVehicleRegister";
-import meddash from "./pages/meddash";
 
-import Inquiry from "./pages/inquiry";
+
 
 // medical
 import MedicalAppointments from "./pages/MedicalAppointments";
@@ -112,9 +106,6 @@ import MedParameters from "./pages/MedParameters";
 import MedOverview from "./pages/MedOverview";
 import MedReports from "./pages/MedReports";
 
-import { useSelector } from "react-redux";
-import ProtectedRoute from "./components/ProtectedRoute";
-import PublicRoute from "./components/PublicRoute";
 
 function App() {
 
@@ -150,8 +141,7 @@ function App() {
               </PublicRoute>
             }
           />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          
           <Route
             path="/meddash"
             element={
