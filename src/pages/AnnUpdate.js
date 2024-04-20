@@ -15,7 +15,7 @@ function AnnUpdate() {
   useEffect(() => {
     const fetchAnnouncement = async () => {
       try {
-        const response = await axios.get(`/api/annWorkouts/getAnnHRsup2/${id}`);
+        const response = await axios.get(`/api/employee/getAnnHRsup2/${id}`);
         if (response.data.success) {
           const data = response.data.announcement;
           form.setFieldsValue({
@@ -47,7 +47,7 @@ function AnnUpdate() {
     };
 
     try {
-      const response = await axios.put(`/api/annWorkouts/updateAnnHRsup/${id}`, updatedValues);
+      const response = await axios.put(`/api/employee/updateAnnHRsup/${id}`, updatedValues);
       if (response.data.success) {
         toast.success(response.data.message);
         navigate('/AnnDisplay');

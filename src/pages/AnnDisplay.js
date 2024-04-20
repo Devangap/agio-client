@@ -6,6 +6,7 @@ import Anndisplay from '../Anndisplay.css';
 import { useNavigate } from 'react-router-dom';
 
 
+
 function AnnDisplay() {
     const navigate = useNavigate();
     
@@ -13,11 +14,15 @@ function AnnDisplay() {
     const [announcements, setAnnouncements] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentAnnouncement, setCurrentAnnouncement] = useState(null); 
+    const [searchText, setSearchText] = useState('');
+    const [selectedFile, setSelectedFile] = useState(null);
+
+
 
 
     const fetchAnnouncements = async () => {
         try {
-            const response = await axios.get('/api/annWorkouts/getAnnHRsup');
+            const response = await axios.get('/api/employee/getAnnHRsup');
             // Assuming response.data.announcements is an array of announcements
             // Add a unique key (e.g., id) to each announcement for the Table component
             const dataWithKey = response.data.announcements.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
@@ -38,7 +43,7 @@ function AnnDisplay() {
 
     const handleDelete = async (id) => {
         try {
-            await axios.delete(`/api/annWorkouts/deleteAnnHRsup/${id}`);
+            await axios.delete(`/api/employee/deleteAnnHRsup/${id}`);
             setAnnouncements(prev => prev.filter(item => item._id !== id));
             message.success('Announcement deleted successfully');
         } catch (error) {
@@ -68,12 +73,36 @@ function AnnDisplay() {
             dataIndex: 'Department',
             key: 'Department',
         },
+
         {
             title: 'Expire Date',
             dataIndex: 'expiredate',
             key: 'expiredate',
             render: (text) => new Date(text).toLocaleDateString(),
         },
+        {
+            title: 'File',
+            dataIndex: 'filePath', // Adjust based on your data structure
+            key: 'file',
+            render: (text, record) => {
+              // Make sure `record` and `record.file` are valid objects before trying to access `filename`
+              const filename = record?.file?.filename;
+              
+              // Update this URL to match your backend server's URL and port
+              // For example, if your backend is running on http://localhost:3000
+              const backendUrl = 'http://localhost:5001/';
+          
+              // Construct the file path with the full URL
+              const filePath = filename ? `${backendUrl}uploads/${filename}` : '';
+              console.log(filePath)
+              return filename ? (
+                <div>
+                <img src={filePath} alt={filename} style={{ width: '100px', height: '100px' }} />
+                <p>{filename}</p>
+            </div>
+              ) : null;
+            },
+          },
         {
             title: 'Description',
             dataIndex: 'Description',
@@ -97,6 +126,14 @@ function AnnDisplay() {
     };
     const handleUpdate = async (values) => {
         try {
+            const formData = new FormData();
+            Object.keys(values).forEach(key => {
+              formData.append(key, values[key]);
+            });
+            if (selectedFile) {
+              formData.append("file", selectedFile);
+            }
+        
             // Assuming you have the announcement ID in currentAnnouncement._id
             const response = await axios.put(`/api/annWorkouts/updateAnnHRsup/${currentAnnouncement._id}`, values);
             if (response.data.success) {
@@ -111,12 +148,31 @@ function AnnDisplay() {
             message.error('Failed to update announcement');
         }
     };
+    const filteredAnnouncements = announcements.filter((announcement) =>
+  announcement.anntitle.toLowerCase().includes(searchText.toLowerCase())
+  
+   || announcement.anntitle.toLowerCase().includes(searchText.toLowerCase())
+);
+
     
     
 
     return (
         <Layout>
-            <Table dataSource={announcements} columns={columns} />
+
+         <div className="table-header">
+        <div className="search-container">
+            <Input
+                placeholder="Search announcements"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                style={{ marginBottom: 16, width: 200 }}
+            />
+        </div>
+    </div>
+
+            <Table dataSource={filteredAnnouncements} columns={columns} />
+
             <Modal
     title="Update Announcement"
     open={isModalVisible}
@@ -151,4 +207,4 @@ function AnnDisplay() {
     );
 }
 
-export default AnnDisplay;
+export default AnnDisplay;

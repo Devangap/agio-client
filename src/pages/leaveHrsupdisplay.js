@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, message, Modal, Form, Input, DatePicker } from 'antd';
+import { Table, Button, message, Modal, Form, Input, DatePicker ,Card} from 'antd';
 import Layout from '../components/Layout';
 import axios from 'axios';
 import '../leaveEmp.css';
@@ -10,9 +10,11 @@ import toast from 'react-hot-toast';
 
 function LeaveHrsupdisplay() {
     const [leaveData, setLeaveData] = useState([]);
+    const {user} = useSelector((state) => state.user);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
+    const [searchText, setSearchText] = useState('');
 
     const fetchData = async () => {
         try {
@@ -23,7 +25,38 @@ function LeaveHrsupdisplay() {
                 },
             });
             dispatch(hideLoading());
-            setLeaveData(response.data.leave);
+    
+            // Extract user IDs from leave data
+            const userIds = response.data.leave.map(item => item.userid);
+    
+            // Fetch employee details based on user IDs
+            const employeeDetailsPromises = userIds.map(async (userId) => {
+                const employeeInfoResponse = await axios.post('/api/employee/getemployeeinfobyuserid', { userid: userId }, {
+                    headers: {
+                        Authorization: 'Bearer ' + token
+                    },
+                });
+                return employeeInfoResponse.data.data;
+            });
+    
+            // Wait for all promises to resolve
+            const employeeDetails = await Promise.all(employeeDetailsPromises);
+    
+            // Combine leave data with employee details
+            const leaveDataWithEmployeeDetails = response.data.leave.map((leave, index) => {
+           
+                return {
+                    ...leave,
+                    empid: employeeDetails[index].empid,
+                    department:employeeDetails[index].department,
+                    
+                };
+            });
+    
+            console.log(leaveDataWithEmployeeDetails);
+            console.log(employeeDetails);
+    
+            setLeaveData(leaveDataWithEmployeeDetails);
         } catch (error) {
             console.error(error);
             message.error('Failed to fetch leave data');
@@ -33,6 +66,13 @@ function LeaveHrsupdisplay() {
     useEffect(() => {
         fetchData();
     }, []);
+    const handleSearch = (value) => {
+        setSearchText(value);
+    };
+
+    const filteredData = leaveData.filter(item =>
+        item.name.toLowerCase().includes(searchText.toLowerCase())
+    );
 
     const changeLeaveCount = async (record) => {
         try {
@@ -136,6 +176,9 @@ function LeaveHrsupdisplay() {
             toast.error("Error changing status.");
         }
     };
+    const approvedLeaves = leaveData.filter(item => item.status === 'approved').length;
+    const pendingLeaves = leaveData.filter(item => item.status === 'pending').length;
+    const rejectedLeaves = leaveData.filter(item => item.status === 'rejected').length;
 
     const columns = [
         {
@@ -144,9 +187,14 @@ function LeaveHrsupdisplay() {
             key: 'name',
         },
         {
-            title: 'RangePicker',
-            dataIndex: 'RangePicker',
-            key: 'RangePicker',
+            title: 'Start Date',
+            dataIndex: 'startDate',
+            key: 'startDate',
+        },
+        {
+            title: 'End Date',
+            dataIndex: 'endDate',
+            key: 'endDate',
         },
         {
             title: 'Type',
@@ -164,10 +212,36 @@ function LeaveHrsupdisplay() {
             key: 'Description',
         },
         {
+            title: 'Documents',
+            dataIndex: 'filePath', // Adjust based on your data structure
+            key: 'file',
+            render: (_, record) => {
+                const filename = record?.file?.filename;
+    
+                const backendUrl = 'http://localhost:5001/';
+    
+                const filePath = filename ? `${backendUrl}uploads/${filename}` : '';
+                
+                // Render a download button if a file exists
+                return filename ? (
+                    <Button 
+                        type="link" 
+                        href={filePath} 
+                        target="_blank" 
+                        download={filename} // Add the download attribute
+                    >
+                        Download PDF
+                    </Button>
+                ) : null;
+            },
+        },
+        {
             title: 'Status',
             dataIndex: 'status',
             key: 'Description',
         },
+
+
         {
             title: 'Action',
             key: 'action',
@@ -185,7 +259,24 @@ function LeaveHrsupdisplay() {
 
     return (
         <Layout>
-            <Table dataSource={leaveData} columns={columns} />
+            <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
+                <Card title="Approved Leaves" style={{ width: 300 }}>
+                    <h1>{approvedLeaves}</h1>
+                </Card>
+                <Card title="Pending Leaves" style={{ width: 300 }}>
+                    <h1>{pendingLeaves}</h1>
+                </Card>
+                <Card title="Rejected Leaves" style={{ width: 300 }}>
+                    <h1>{rejectedLeaves}</h1>
+                </Card>
+            </div>
+            <Input.Search
+                placeholder="Search by name"
+                allowClear
+                onChange={(e) => handleSearch(e.target.value)}
+                style={{ width: 200, marginBottom: 16 }}
+            />
+           <Table dataSource={filteredData} columns={columns} />
         </Layout>
     );
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import '../Annlayout.css';
+
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
@@ -33,6 +34,7 @@ function Layout({ children }) {
                                         console.log(error);
                                     }
                                 };
+                                
                             
                                 useEffect(() => {
                                     getData();
@@ -46,7 +48,7 @@ function Layout({ children }) {
         },
         {
             name: 'Announcements',
-            path: '/announcements',
+            path: '/AnnEmpDisplay',
             icon: 'ri-survey-line',
         },
         {
@@ -130,10 +132,11 @@ function Layout({ children }) {
     ];
     const leavemenu = [
         {
-            name: 'Home',
-            path: '/',
-            icon: 'ri-home-line',
+            name: ' Overview',
+            path: '/leaveoverview',
+            icon: 'ri-account-box-line',
         },
+        
         {
             name: ' Leave requests',
             path: '/leaveHrsupdisplay',
@@ -142,14 +145,10 @@ function Layout({ children }) {
        
         {
             name: ' Calendar',
-            path: '/calendar',
+            path: '/LeaveCal',
             icon: 'ri-account-box-line',
         },
-        {
-            name: ' Overview',
-            path: '/leaveoverview',
-            icon: 'ri-account-box-line',
-        },
+       
        
     ];
     const logisticmenu = [
@@ -229,7 +228,7 @@ function Layout({ children }) {
         },
         {
             name: ' Insuarance ',
-            path: '/profile',
+            path: '/insClaimSubmit',
             icon: 'ri-account-box-line',
         },
         {
