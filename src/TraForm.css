@@ -1,10 +1,21 @@
 /* CSS for Booking Transport Form */
 
-
+h3{
+    margin:1.5%;
+    font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  color: #1F1300;
+  font-size: 24px;
+}
   
   .booktitle {
     text-align: center;
-    font-size: 24px;
+    font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  color: #1F1300;
+  font-size: 24px;
     margin-bottom: 20px;
   }
   
@@ -38,11 +49,8 @@
   font-size: 16px !important;
   font-weight: bold;
   border-radius: 10px !important;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
   }
-  
-  .bookprimary-button:hover {
-    background-color: #40a9ff;
-  }
+
   

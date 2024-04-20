@@ -15,6 +15,7 @@ function TraVehicleDetails() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentVregister, setCurrentVregister] = useState(null); 
     const [filteredVregister, setFilteredVregister] = useState([]);
+    const [searchText, setSearchText] = useState('');
     
 
     const fetchVregister = async () => {
@@ -57,13 +58,11 @@ function TraVehicleDetails() {
     };
 
 
-    const handleSearch = searchText => {
-        const filteredData = Vregister.filter(vehicle =>
-            vehicle.vehicleNum.toLowerCase().includes(searchText.toLowerCase())
-        );
-        setFilteredVregister(filteredData);
-    };
-
+    const filteredData = Vregister.filter((vehicle) =>
+    vehicle.vehicleNum.toLowerCase().includes(searchText.toLowerCase())
+    
+     || vehicle.vehicleNum.toLowerCase().includes(searchText.toLowerCase())
+  );
   
     
 
@@ -111,7 +110,7 @@ function TraVehicleDetails() {
                 <>
                 
                     <Button type="primary" className="update" onClick={() => navigate(`/TraVehicleDetailsUpdate/${record._id}`)}>Update</Button>
-                    <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
+                    <Button type="primary" className="update" danger onClick={() => handleDelete(record._id)}>Delete</Button>
                     
                 </>
             ),
@@ -144,35 +143,26 @@ function TraVehicleDetails() {
   return (
     <Layout>
 
-         
-        <div style={{ marginBottom: 20 }}>
-                <Input.Search
-                    className="customInput"
-                    placeholder="Search by Vehicle Number"
-                    onSearch={handleSearch}
-                    enterButton={<Button className="customButton">Search</Button>} // Customized search button
-                    style={{ padding:10 ,width: 500  }} // Example: Set width inline style
-                   
-                />
-            
-            </div>
-            
-            
-                <Table dataSource={filteredVregister.length > 0 ? filteredVregister : Vregister} columns={columns} />
-                <Button
-        type="primary"
-        className="update"
+
+        <div className="bookTratable-header">
+        <h3>ALL VEHICLE DETAILS</h3>
+        <div className="booksearch-container">
+            <Input
+                placeholder="Search vehicel"
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                style={{ marginBottom: 16, width: 200 }}
+            />
+        </div>
+    </div>
+
+            <Table dataSource={filteredData} columns={columns} />
+                <Button classNames="bookdetails"
+        type="bookprimary"
+        className="bookdetails"
         danger
         onClick={() => navigate(`/TraVehicleviwe`)}
-        style={{
-            backgroundColor: '#1f1300', // Background color
-            color: '#fff', // Text color
-            border: 'none', // Remove border
-            margin:10,
-            borderRadius: '5px', // Rounded corners
-            fontSize: '16px', // Font size
-            cursor: 'pointer', // Pointer cursor on hover
-          }} // Example: Set margin-top, font size, and font weight inline style
+        
       >
         VIEW VEHICLE DETAILS
       </Button>
@@ -197,7 +187,7 @@ function TraVehicleDetails() {
         </Form.Item>
         {/* Repeat for other fields as necessary */}
         <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="bookprimary" htmlType="submit">
                 Update
             </Button>
         </Form.Item>
