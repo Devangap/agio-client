@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Table, Input, Button, Select, Modal, Form, message } from 'antd';
 import moment from 'moment';
 import { Document, Page, Text, PDFDownloadLink } from '@react-pdf/renderer';
+import Layout from '../components/Layout';
 import '../UniformManagerView.css';
 
 const { Option } = Select;

@@ -1,5 +1,7 @@
 .container {
-  width: 100%;
+  display: flex;
+  justify-content: center; /* Center the forms horizontally */
+  align-items: center; /* Center the forms vertically */
 }
 
 .scroll-container {
@@ -49,3 +51,23 @@
 .list li:last-child {
   border-bottom: none; /* Remove border bottom for last list item */
 }
+
+.buttons-container {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  margin-top: 20px; /* Add space between the buttons and the content above */
+}
+
+.history-button,
+.report-button {
+  background-color: #F7B05B !important;
+  border-color: #1F1300 !important;
+  height: 40px !important;
+  width: 300px !important;
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  border-radius: 10px !important;
+  margin-right: 10px; /* Add margin to the right */
+}
+

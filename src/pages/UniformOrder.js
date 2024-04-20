@@ -85,6 +85,7 @@ function UniformOrder() {
   };
 
   return (
+    <Layout>
     <div className="uniform-order-container">
       <div className="uniform-order-form-container">
         <div className="uniform-order-form-box p-3">
@@ -168,6 +169,7 @@ function UniformOrder() {
         </div>
       </div>
     </div>
+    </Layout>
   );
 }
 
