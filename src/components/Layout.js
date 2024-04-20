@@ -120,7 +120,7 @@ function Layout({ children }) {
         },
         {
             name: ' Calendar',
-            path: '/AnnCalHead',
+            path: '/AnnCalendar',
             icon: 'ri-account-box-line',
         },
         {
