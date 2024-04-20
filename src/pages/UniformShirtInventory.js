@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import Layout from './AnnLayout'; // Import the Layout component
 import axios from 'axios';
 import '../UniformInventory.css'; // Import CSS file for styling
+import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast from react-toastify
+import 'react-toastify/dist/ReactToastify.css'; // Import CSS for react-toastify
 
 const InventoryPage = () => {
   const [shirtInventory, setShirtInventory] = useState([]);
@@ -45,9 +47,13 @@ const InventoryPage = () => {
         setShirtInventory(prevState =>
           prevState.map(item => (item._id === id ? { ...item, quantity } : item))
         );
+        // Show toast message for successful update
+        toast.success('T-Shirt inventory modified successfully!');
       }
     } catch (error) {
       console.error('Error updating shirt inventory:', error);
+      // Show toast message for error
+      toast.error('Failed to modify shirt inventory.');
     }
   };
 
@@ -61,9 +67,13 @@ const InventoryPage = () => {
         setSkirtInventory(prevState =>
           prevState.map(item => (item._id === id ? { ...item, quantity } : item))
         );
+        // Show toast message for successful update
+        toast.success('Skirt inventory modified successfully!');
       }
     } catch (error) {
       console.error('Error updating skirt inventory:', error);
+      // Show toast message for error
+      toast.error('Failed to modify skirt inventory.');
     }
   };
 
@@ -71,7 +81,7 @@ const InventoryPage = () => {
     <Layout> {/* Wrap the content with the Layout component */}
       <div className="inventory-container"> {/* Use a parent container to style both forms */}
         <form className="form-container">
-          <h2>Shirt Inventory</h2>
+          <h2>T-Shirt Inventory</h2>
           <table>
             <thead>
               <tr>
@@ -89,15 +99,18 @@ const InventoryPage = () => {
                       type="number"
                       value={shirt.quantity}
                       onChange={e => {
+                        // Handle quantity change
                         const newQuantity = parseInt(e.target.value);
                         if (!isNaN(newQuantity)) {
-                          handleShirtUpdate(shirt._id, newQuantity);
+                          setShirtInventory(prevState =>
+                            prevState.map(item => (item._id === shirt._id ? { ...item, quantity: newQuantity } : item))
+                          );
                         }
                       }}
                     />
                   </td>
                   <td>
-                    <button onClick={() => handleShirtUpdate(shirt._id, shirt.quantity)}>Update</button>
+                    <button type="button" onClick={() => handleShirtUpdate(shirt._id, shirt.quantity)}>Update</button>
                   </td>
                 </tr>
               ))}
@@ -124,15 +137,18 @@ const InventoryPage = () => {
                       type="number"
                       value={skirt.quantity}
                       onChange={e => {
+                        // Handle quantity change
                         const newQuantity = parseInt(e.target.value);
                         if (!isNaN(newQuantity)) {
-                          handleSkirtUpdate(skirt._id, newQuantity);
+                          setSkirtInventory(prevState =>
+                            prevState.map(item => (item._id === skirt._id ? { ...item, quantity: newQuantity } : item))
+                          );
                         }
                       }}
                     />
                   </td>
                   <td>
-                    <button onClick={() => handleSkirtUpdate(skirt._id, skirt.quantity)}>Update</button>
+                    <button type="button" onClick={() => handleSkirtUpdate(skirt._id, skirt.quantity)}>Update</button>
                   </td>
                 </tr>
               ))}
@@ -140,6 +156,7 @@ const InventoryPage = () => {
           </table>
         </form>
       </div>
+      <ToastContainer /> {/* Render the ToastContainer to show toast messages */}
     </Layout>
   );
 };

@@ -1,0 +1,50 @@
+/* UniformTotals.css */
+
+/* Container styles */
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  
+  /* Form styles */
+  .form-container {
+    flex: 1;
+    margin: 10px;
+    padding: 20px;
+    border: 1px solid #e60c0c;
+    border-radius: 10px;
+  }
+  
+  /* Title styles */
+  .title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* List styles */
+  .list {
+    list-style: none;
+    padding: 0;
+  }
+  
+  /* List item styles */
+  .list-item {
+    margin-bottom: 10px;
+  }
+  
+  /* Image container styles */
+  .image-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Image styles */
+  .image {
+    width: 200px; /* Adjust size as needed */
+    height: auto; /* Maintain aspect ratio */
+    border: 1px solid #ccc;
+    border-radius: 10px;
+  }
+  
