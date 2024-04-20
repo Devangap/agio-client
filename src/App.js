@@ -1,13 +1,14 @@
 import React from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {BrowserRouter, Routes, Route,Link,Router} from 'react-router-dom';
 
 import Main_register from './pages/Main_register';
+import MainRegDisplay from './pages/MainRegDisplay';
 
 
 import { Toaster } from 'react-hot-toast';
 import TraHome from './pages/TraHome';
 
-
+import Leaveoverview from './pages/leaveoverview';
 import Home from './pages/Home';
 
 import LeaveHRsup from './pages/leaveHRsup';
@@ -16,6 +17,18 @@ import Main_login from './pages/Main_login';
 import AnnHRsup from './pages/AnnHRsup';
 import AnnDisplay from './pages/AnnDisplay';
 import AnnUpdate from './pages/AnnUpdate';
+import AnnEmpDisplay from './pages/AnnEmpDisplay';
+import AnnCalHead from './pages/AnnCalHead';
+
+import AnnCalendar from './pages/AnnCalendar';
+import AnnCalendarForm from './pages/AnnCalendarForm';
+
+import LeaveCal from './pages/LeaveCal'
+
+
+
+
+
 import TraDriverRegister from './pages/TraDriverRegister';
 import TraVehicleRegister from './pages/TraVehicleRegister';
 
@@ -32,6 +45,8 @@ import TraProtectedRoute from './components/TraProtectedRoute';
 import TraPublicRoute from './components/TraPublicRoute';
 import TraLogin from './pages/TraLogin';
 import TraRegister from './pages/TraRegister';
+
+
 
 
 
@@ -74,6 +89,9 @@ import TraDriverViwe from './pages/TraDriverViwe';
 
 function App() {
   const{loading} = useSelector(state => state.alerts);
+  const [date, setDate] = React.useState(new Date().getDate());
+
+
   return (
     <div >
       <BrowserRouter>
@@ -86,6 +104,7 @@ function App() {
         <Routes>
 
           <Route path='/Main_Register' element={<ProtectedRoute><Main_register /></ProtectedRoute>} />
+          <Route path='/MainRegDisplay' element={<ProtectedRoute><MainRegDisplay /></ProtectedRoute>} />
           <Route path='/Main_Login' element={<PublicRoute><Main_login /></PublicRoute>} />
         
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
@@ -94,6 +113,8 @@ function App() {
           <Route path='/LeaveHrsupdisplay' element={<ProtectedRoute><LeaveHrsupdisplay /></ProtectedRoute>} />
           <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
           <Route path='/LeaveUpdate/:id' element={<ProtectedRoute><LeaveUpdate/></ProtectedRoute>} />
+          <Route path='/Leaveoverview' element={<ProtectedRoute><Leaveoverview/></ProtectedRoute>} />
+          <Route path='/LeaveCal' element={<ProtectedRoute><LeaveCal/></ProtectedRoute>} />
 
           <Route path='/Main_Register' element={<Main_register />} />
           <Route path='/Main_Login' element={<Main_login />} />
@@ -102,9 +123,16 @@ function App() {
 
 
           <Route path='/' element={<ProtectedRoute><Home/></ProtectedRoute>} />
-          <Route path='/AnnHRsup' element={< AnnHRsup/>} />
-          <Route path='/AnnDisplay' element={< AnnDisplay/>} />
-          <Route path='/AnnUpdate/:id' element={< AnnUpdate/>} />
+          <Route path='/AnnHRsup' element={<ProtectedRoute><AnnHRsup/></ProtectedRoute>} />
+          <Route path='/AnnDisplay' element={<ProtectedRoute><AnnDisplay/></ProtectedRoute>} />
+          <Route path='/AnnUpdate/:id' element={<ProtectedRoute><AnnUpdate/></ProtectedRoute>} />
+
+          <Route path='/AnnEmpDisplay' element={<ProtectedRoute><AnnEmpDisplay/></ProtectedRoute>} />
+          <Route path="/AnnCalHead"element={<ProtectedRoute><AnnCalHead date={date}/></ProtectedRoute>} />
+
+          <Route path="/AnnCalendar"element={<ProtectedRoute><AnnCalendar /></ProtectedRoute>} />
+          <Route path="/AnnCalendarForm"element={<ProtectedRoute><AnnCalendarForm /></ProtectedRoute>} />
+
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
 

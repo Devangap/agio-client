@@ -1,88 +1,110 @@
-.mainlog{
-    height :100vh;
-    display:flex;
+.mainlog {
+    height: 100vh;
+    display: flex;
     align-items: center;
     justify-content: center;
-    
-}
-.box_log{
-    box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
-    border-radius: 20px;
-    background-color: #FAFAFA;
-}
-.main_login_form_log{
-    width : 950px;
-    height:450px;  
+    position: relative;
 }
 
-input{
+.mainlog::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('./Images/Cigars.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: blur(4px);
+    background-color: rgba(0, 0, 0, 1);
+    z-index: -1;
+}
+
+.boxx_log {
+    
+    box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
+    border-radius: 20px;
+    width: 500px !important;
+    background-color: #FAFAFA !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.logolog {
+    width: 150px; /* Adjust the width as needed */
+    height: auto; /* Maintain aspect ratio */
+    display: block; /* Ensures the image is displayed as a block element */
+    margin: 0 auto; /* Centers the image horizontally */
+}
+
+.main_login_form_log {
+    width: 400px; /* Adjust width as needed */
+    height: 400px;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+.logindata {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    height: 100%;
+}
+.logindataform{
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin-right: 450px!important;
+    margin-bottom: 50px;
+
+}
+
+
+
+input {
     border-radius: 10px !important;
     border: 1px solid rgba(128, 128, 128, 0.521);
     height: 40px !important;
-    width :400px !important
-    
+    width: 80%; /* Adjust width as needed */
 }
 input:hover{
-
     outline: none;
     box-shadow: none !important;
-    border: 1px solid #F7934C !important;
-    
+    border: 1px solid #ECB159!important;
 
 }
-input:focus{
-    outline: none;
-    box-shadow: none !important;
-    border: 1px solid gray !important;
-}
-label{
+
+label {
     font-size: 16px !important;
     color: black;
 }
-.primary-button{
-    background-color: #F7B05B !important;
-    border-color: #1F1300 !important;
+
+.primary-button {
+    background-color: #ECB159!important;
+    
     height: 40px !important;
-    width: 300px !important;
+    width: 250px !important;
     align-items: center !important;
-    color:#000000 !important;
+    color: #000000 !important;
     font-size: 16px !important;
-    font-weight: bold; 
-    border-radius: 10px !important;
+    font-weight: bold;
+    border-radius: 20px !important;
     margin-top: 30px !important;
+    margin-left: 18px;
     justify-content: center !important;
 }
-.title_log{
+
+.title_log {
     color: #1F1300;
-   margin-top: -375px;
-    margin-left: 450px;
-    margin-bottom: 40px;
+   
 }
 
-
-
-.Button-conslog{
-   margin-top: 30px;
-   margin-left: 500px;
-
-}
-
-.login{
-    margin-left:450px;
-    
-}
-.field{
-    margin-bottom: 30px !important;
-}
-.login_image {
-    margin-right: 40px !important; 
-    justify-content: left;
-}
-
-.login_image img {
-    margin-top: 10px;
-    max-width: 350px;
-    height: 400px;
-    border-radius: 10px;
-    margin-right:40px ;
+.Button-conslog {
+    margin-top: 30px;
+    margin-left: 500px;
 }
