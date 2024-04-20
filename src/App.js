@@ -1,6 +1,8 @@
 
 import React from 'react';
+
 import {BrowserRouter, Routes, Route,Link,Router} from 'react-router-dom';
+
 
 
 import Main_register from './pages/Main_register';
@@ -59,6 +61,7 @@ import Inquiry from './pages/inquiry';
 
 import InsClaimSubmit from './pages/InsClaimSubmit';
 import InsEmployee from './pages/InsEmployee';
+import InsuranceManagerDisplay from './pages/InsuranceManagerDisplay';
 
 
 import { useSelector } from 'react-redux';
@@ -78,6 +81,7 @@ import TraBookingBox from './pages/TraBookingBox';
 
 
 import MyInquiries from './pages/MyInquiries';
+
 
 import InquiryAdmin from './pages/inquiryAdmin';
 
@@ -109,6 +113,7 @@ import MedicalAppointments from "./pages/MedicalAppointments";
 import MedParameters from "./pages/MedParameters";
 import MedOverview from "./pages/MedOverview";
 import MedReports from "./pages/MedReports";
+
 
 
 function App() {
@@ -294,7 +299,9 @@ function App() {
           
 
           <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
+          <Route path='/insEmployee/:userId' element={<InsEmployee/>}/>
           <Route path='/insEmployee' element={<InsEmployee/>}/>
+          <Route path='/InsuranceManagerDisplay' element={<InsuranceManagerDisplay/>}/>
 
 
         </Routes>
