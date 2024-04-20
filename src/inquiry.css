@@ -48,7 +48,7 @@ input{
 input:hover{
     outline: none;
     box-shadow: none !important;
-    border: 1px solid #F7934C !important;
+    border: 1px solid #ECB159!important;
 
 }
 input:focus{
@@ -129,3 +129,73 @@ label{
 .idescribe{
     width : 500px;
 }
+.iContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  /* Title */
+  .iTitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  /* Table */
+  .iAntTable {
+    margin-bottom: 20px;
+  }
+  
+  /* Modal */
+  .iAntModalContent {
+    border-radius: 10px;
+  }
+  
+  /* Form */
+  .iAntFormItemLabel {
+    font-weight: bold;
+  }
+  
+  .iAntInput {
+    border-radius: 5px;
+  }
+  .ant-table-cell {
+    white-space: nowrap; /* Truncate text instead of wrapping */
+    overflow: hidden; /* Hide overflowing content */
+    text-overflow: ellipsis; /* Display an ellipsis (...) when text is truncated */
+  }
+  
+  .ant-table .inquiry-column {
+    width: 10px; /* Adjust the width as needed */
+  }
+  /* Optional: Add some padding around the form */
+.ant-modal-body {
+    padding: 20px;
+  }
+  
+  /* Optional: Adjust the width of the form */
+  .ant-modal-content {
+    max-width: 100%;
+  }
+  
+  /* Style form labels */
+  .ant-form-item-label {
+    font-weight: bold;
+  }
+  
+  /* Style form inputs */
+  .ant-input,
+  .ant-input-disabled {
+    width: 100%;
+  }
+  
+  /* Optional: Add some margin between form items */
+  .ant-form-item {
+    margin-bottom: 16px;
+  }
+  
+  /* Optional: Style the primary button */
+  .ant-btn-primary {
+    margin-right: 8px;
+  }
+  
