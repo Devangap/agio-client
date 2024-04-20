@@ -16,7 +16,6 @@
     "chartjs-plugin-datalabels": "^2.2.0",
     "date-fns": "^3.6.0",
     "file-saver": "^2.0.5",
-   
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",
     "jszip": "^3.10.1",
@@ -28,7 +27,7 @@
     "react-bootstrap": "^2.10.2",
     "react-chartjs-2": "^5.2.0",
     "react-countdown-circle-timer": "^3.2.1",
-    "react-datepicker": "^6.6.0",
+    "react-datepicker": "^6.9.0",
     "react-dom": "^18.2.0",
     "react-highlight-words": "^0.20.0",
     "react-hot-toast": "^2.4.1",
