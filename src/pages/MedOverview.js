@@ -41,22 +41,22 @@ const MedOverview = () => {
   // Columns of the scheduled appointment table
   const columns = [
     {
-      title: 'Number',
+      title: 'No',
       dataIndex: 'appointmentNo',
       key: 'appointmentNo',
-      width: 70,
+      width: 50,
     },
     {
       title: 'Name',
       dataIndex: 'employeeName',
       key: 'employeeName',
-      width: 150,
+      width: 100,
     },
     {
       title: 'Time',
       dataIndex: 'appointmentTime',
       key: 'appointmentTime',
-      width: 70,
+      width:60,
     },
     {
       title: 'Action',
@@ -65,7 +65,7 @@ const MedOverview = () => {
       render: (_, record) => (
         <div>
           <Button style={{marginBottom: 5, backgroundColor: "#dfdfdf"}} onClick={() => {updateCompletionStatusOfAppointment(record.key, "completed")}}>Complete</Button>
-          <Button onClick={() => {updateCompletionStatusOfAppointment(record.key, "missed")}}>Incomplete</Button>
+          <Button onClick={() => {updateCompletionStatusOfAppointment(record.key, "missed")}}>Absent</Button>
         </div>
       ),
     },
@@ -479,7 +479,7 @@ const MedOverview = () => {
 
 
         <div className="doc-overview-secondary-2">
-        <Table columns={columns} dataSource={scheduledListForSpecificDay} scroll={{y: 240}} pagination={false} style={{width: 500}} bordered={true}/>
+        <Table columns={columns} dataSource={scheduledListForSpecificDay} scroll={{y: 240}} pagination={false} style={{width: 380}} bordered={true}/>
         </div>
       </div>
     </Layout>
