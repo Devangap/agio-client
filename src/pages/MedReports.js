@@ -23,6 +23,10 @@ import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { userSlice } from "../redux/userSlice";
 
+
+
+
+
 // Calculate the length of a month
 function monthLength(month, year) {
   const thirtyOneDayMonths = [0, 2, 4, 6, 7, 9, 11];
@@ -54,6 +58,70 @@ const disabledDate = (current) => {
   return current > dayjs().endOf("day");
 };
 
+
+// SSE Connection
+const eventSource = new EventSource('http://localhost:5001')
+
+function updateMessage (message) {
+    console.log('Message Received: ', message);
+}
+
+eventSource.onmessage = function (event) {
+    updateMessage(event.data);
+}
+
+eventSource.onerror = function () {
+    updateMessage('Server closed connection');
+    eventSource.close();
+}
+
+
+
+
+// END SSE connection
+
+
+const generateMonthlyReport = () => {
+const lastDate = new Date(new Date().setDate(new Date().getDate()-1));
+const firstDate = new Date(lastDate.getFullYear(), 0, 1);
+
+
+
+const range = [
+    {
+        $D: firstDate.getDate(),
+        $H: 0,
+        $L: "en",
+        $M: firstDate.getMonth(),
+        $W: null,
+        $d: firstDate.toString(),
+        $isDayjsObject: true,
+        $m: 0,
+        $ms: 0,
+        $s: 0,
+        $u: undefined,
+        $x: {},
+        $y: firstDate.getFullYear(),
+    },
+    {
+        $D: lastDate.getDate(),
+        $H: 0,
+        $L: "en",
+        $M: lastDate.getMonth(),
+        $W: null,
+        $d: lastDate.toString(),
+        $isDayjsObject: true,
+        $m: 0,
+        $ms: 0,
+        $s: 0,
+        $u: undefined,
+        $x: {},
+        $y: lastDate.getFullYear(),
+    },
+]
+}
+
+
 /*
 *
 *
@@ -66,6 +134,9 @@ const MedReports = () => {
 
   // Selected date range in range-picker
   const [selectedRange, setSelectedRange] = useState(null);
+
+  // Log if the date range changed
+  const [rangeChange, setRangeChange] = useState(false);
 
   // Selected min date
   const [minDate, setMinDate] = useState(null);
@@ -449,6 +520,8 @@ const MedReports = () => {
             monthLength(selectedRange[1].$M, selectedRange[1].$y)
         ).toISOString()
       );
+
+      setRangeChange(!rangeChange);
     }
   }, [selectedRange]);
 
@@ -456,14 +529,14 @@ const MedReports = () => {
   useEffect(() => {
     console.log("@const: minDate => ", minDate);
     console.log("@const: maxDate => ", maxDate);
-  }, [maxDate]);
+  }, [rangeChange]);
 
   // getSelectedRangeAvailableDates() => onChange:: const: maxDate
   useEffect(() => {
     if (maxDate !== null) {
       getSelectedRangeAvailableDates();
     }
-  }, [maxDate]);
+  }, [rangeChange]);
 
   // Log the selectedRangeAvailableDates => onChange:: const: selectedRangeAvailableDates
   useEffect(() => {
