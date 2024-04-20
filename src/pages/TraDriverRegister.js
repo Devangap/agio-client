@@ -3,7 +3,7 @@ import {Button, Form ,  Input,Select, DatePicker } from 'antd'
 import '../mainreg.css';
 import axios from "axios";
 import toast from 'react-hot-toast';
-import TraLayout from './TraLayout'
+import Layout from '../components/Layout';
 
 
 
@@ -29,7 +29,7 @@ function TraDriverRegister() {
   }
      
   };
-  return <TraLayout>
+  return <Layout>
     <div className="mainreg">
   <div className="main_login_form box p-3">
     <h3 className='title'>Employee Registration Form</h3>
@@ -97,7 +97,7 @@ function TraDriverRegister() {
     </Form>
   </div>
 </div>
-  </TraLayout>
+  </Layout>
 }
 
 export default TraDriverRegister
