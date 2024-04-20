@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'; 
-import {BrowserRouter, Routes, Route,Link} from 'react-router-dom';
+import {ink} from 'react-router-dom';
 
 import Main_register from './pages/Main_register';
 
@@ -98,6 +98,7 @@ function App() {
           
 
           <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
+          <Route path='/insEmployee/:userId' element={<InsEmployee/>}/>
           <Route path='/insEmployee' element={<InsEmployee/>}/>
           <Route path='/InsuranceManagerDisplay' element={<InsuranceManagerDisplay/>}/>
 

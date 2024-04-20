@@ -65,7 +65,11 @@ function Layout({ children }) {
             path: '/inquiry',
             icon: 'ri-account-box-line',
         },
-       
+        {
+            name: 'Insurance',
+            path: '/insEmployee',
+            icon: 'ri-article-line',
+        },
     ];
     const adminMenu = [
         {

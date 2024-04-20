@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
 import { showLoading, hideLoading } from "../redux/empalerts";
-import { Table } from "antd";
+import { Table, Button, message, Modal, Form, Input } from 'antd'; 
 import axios from "axios";
 import { useDispatch } from "react-redux";
-import toast from 'react-hot-toast';
 
 function InsuranceManagerDisplay() {
   const [insuranceData, setInsuranceData] = useState([]);
+  const [visible, setVisible] = useState(false); 
+  const [selectedInsurance, setSelectedInsurance] = useState(null); 
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
@@ -16,10 +17,9 @@ function InsuranceManagerDisplay() {
       dispatch(showLoading());
       const response = await axios.get("/api/insurance/getInsurance", {
         headers: {
-          Authorization: 'Bearer ' + token // Pass token as a parameter
+          Authorization: 'Bearer ' + token 
         },
       });
-      console.log(response.data);
       dispatch(hideLoading());
       if (response.data.success) {
         setInsuranceData(response.data.insurance);
@@ -27,7 +27,6 @@ function InsuranceManagerDisplay() {
     } catch (error) {
       dispatch(hideLoading());
       console.error("Error fetching insurance data:", error);
-      // Handle error state here
     }
   };
 
@@ -44,9 +43,80 @@ function InsuranceManagerDisplay() {
       window.open(fileURL, '_blank');
     } catch (error) {
       console.error('Error viewing file:', error);
-      // Handle error state here
     }
   };
+
+  const handleUpdate = (record) => {
+    setSelectedInsurance(record); 
+    setVisible(true); 
+  }
+
+  const handleDelete = async (id) => {
+    try {
+      dispatch(showLoading());
+      const response = await axios.delete(`/api/insurance/deleteInsurance/${id}`);
+      dispatch(hideLoading());
+      if (response.data.success) {
+        setInsuranceData(insuranceData.filter(item => item._id !== id));
+        message.success(response.data.message);
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Error deleting insurance data:", error);
+      message.error("Failed to delete claim request.");
+    }
+  };
+
+  const handleCancel = () => {
+    setVisible(false);
+  }
+
+  const handleSave = async () => {
+    try {
+      dispatch(showLoading());
+      const response = await axios.put(`/api/insurance/updateInsurance/${selectedInsurance._id}`, selectedInsurance);
+      dispatch(hideLoading());
+      if (response.data.success) {
+        message.success(response.data.message);
+        setVisible(false); 
+        setInsuranceData(insuranceData.map(item => item._id === selectedInsurance._id ? response.data.insurance : item));
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Error updating insurance data:", error);
+      message.error("Failed to update insurance data.");
+    }
+  };
+
+  const changeClaimStatus = async (record) => {
+    try {
+      let newStatus;
+      if (record.status === 'Pending') {
+        newStatus = 'approved';
+      } else if (record.status === 'approved') {
+        newStatus = 'rejected';
+      } else {
+        newStatus = 'Pending'; 
+      }
+      
+      const response = await axios.put(`/api/insurance/changeStatus/${record._id}`, { status: newStatus });
+      
+      if (response.data.success) {
+        message.success(response.data.message);
+        setInsuranceData(insuranceData.map(item => item._id === record._id ? {...item, status: newStatus} : item));
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      console.error("Error changing status:", error);
+      message.error("Failed to change status.");
+    }
+  };
+  
 
   const columns = [
     {
@@ -74,15 +144,27 @@ function InsuranceManagerDisplay() {
       dataIndex: "file",
       key: 'file',
       render: (text, record) => (
-        <button onClick={() => viewFile(record.file)}>View File</button>
+        <Button onClick={() => viewFile(record.file)}>View File</Button>
       ),
     },
     {
-      title: "Action",
-      dataIndex: "action",
+      title: "Status",
+      dataIndex: "status",
       render: (text, record) => (
-        <div className="insanchor">
-          <h1>Approve</h1>
+        <div className="insstatus"> 
+          {record.status === "Pending" && <h1 className="insanchor" onClick={() => changeClaimStatus(record)}>Approve</h1>}
+          {record.status === "approved" && <h1 className="insanchor" onClick={() => changeClaimStatus(record)}>Reject</h1>}
+          {record.status === "rejected" && <h1 className="insanchor" onClick={() => changeClaimStatus(record)}>Approve</h1>}
+        </div>
+      )
+    },
+    {
+      title: "Action",
+      key: 'action',
+      render: (text, record) => (
+        <div className="insactbutton">
+          <Button onClick={() => handleUpdate(record)}>Update</Button>
+          <Button onClick={() => handleDelete(record._id)}>Cancel</Button>
         </div>
       ),
     },
@@ -91,10 +173,29 @@ function InsuranceManagerDisplay() {
   return (
     <Layout>
       <h1>Claim List</h1>
+      <hr/>
       <Table
         columns={columns}
         dataSource={insuranceData}
       />
+      <Modal
+        title="Update Insurance"
+        visible={visible}
+        onOk={handleSave}
+        onCancel={handleCancel}
+      >
+        <Form layout="vertical">
+          <Form.Item label="Full Name">
+            <Input value={selectedInsurance?.name} onChange={e => setSelectedInsurance({...selectedInsurance, name: e.target.value})} />
+          </Form.Item>
+          <Form.Item label="Phone Number">
+            <Input value={selectedInsurance?.phoneNumber} onChange={e => setSelectedInsurance({...selectedInsurance, phoneNumber: e.target.value})} />
+          </Form.Item>
+          <Form.Item label="Description">
+            <Input value={selectedInsurance?.description} onChange={e => setSelectedInsurance({...selectedInsurance, description: e.target.value})} />
+          </Form.Item>
+        </Form>
+      </Modal>
     </Layout>
   );
 }

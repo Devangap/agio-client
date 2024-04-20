@@ -1,12 +1,36 @@
 import React from 'react';
 import { Button, Form, Input, Upload } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import Layout from "../components/Layout";
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import "../Insurance.css";
 
 function InsClaimSubmit() {
     const navigate = useNavigate();
+    const token = localStorage.getItem("token");
+
+    const validatePhoneNumber = (_, value) => {
+        if (value && value.length !== 10) {
+            return Promise.reject(new Error('Phone number must be 10 digits'));
+        }
+        return Promise.resolve();
+    };
+
+    const validateFile = (_, fileList) => {
+        if (fileList.length > 1) {
+            return Promise.reject(new Error('Only one file can be uploaded'));
+        }
+        if (fileList.length === 1) {
+            const file = fileList[0];
+            const fileType = file.type;
+            if (fileType !== 'application/pdf') {
+                return Promise.reject(new Error('Only PDF files are allowed'));
+            }
+        }
+        return Promise.resolve();
+    };
 
     const onFinish = async (values) => {
         try {
@@ -15,12 +39,16 @@ function InsClaimSubmit() {
                 formData.append('name', values.name);
                 formData.append('id', values.id);
                 formData.append('phoneNumber', values.phoneNumber);
-                formData.append('description', values.description); // Add description field
+                formData.append('description', values.description); 
                 formData.append('file', values.medicaldoc[0].originFileObj);
+
+                const userId = values.id;
+                console.log(userId);
 
                 const response = await axios.post("/api/insurance/insClaimSubmit", formData, {
                     headers: {
-                        'Content-Type': 'multipart/form-data'
+                        'Content-Type': 'multipart/form-data',
+                        Authorization: 'Bearer ' + token,
                     }
                 });
 
@@ -28,7 +56,7 @@ function InsClaimSubmit() {
                     toast.success(response.data.message);
                     toast("Redirecting to Employee Insurance Claim Request page");
                     console.log(response.formData);
-                    navigate("/InsEmployee");
+                    navigate(`/InsEmployee/${userId}`);
                 } else {
                     toast.error(response.data.message);
                 }
@@ -42,39 +70,45 @@ function InsClaimSubmit() {
     };
 
     return (
-        <div className="inquiry-container">
-            <div className="iform-container">
-                <div className="imain_form box p-3">
-                    <h3 className='ititle'>Enter Insurance Claim Form</h3>
-                    <Form layout='horizontal' onFinish={onFinish}>
-                        <div className="iform-row">
-                            <div className="iitem">
-                                <Form.Item label='Full Name' name='name'>
-                                    <Input placeholder='Full name' />
-                                </Form.Item>
-                                <Form.Item label='Employee ID' name='id'>
-                                    <Input placeholder='Employee ID' />
-                                </Form.Item>
-                                <Form.Item label='Phone Number' name='phoneNumber'>
-                                    <Input placeholder='Phone Number' />
-                                </Form.Item>
-                                <Form.Item label='Description' name='description'>
-                                    <Input.TextArea placeholder='Description' />
-                                </Form.Item>
-                                <Form.Item label='Attach Medical Document' name="medicaldoc" valuePropName="fileList" getValueFromEvent={(e) => e.fileList}>
-                                    <Upload name="meddoc" action="/api/insurance/insClaimSubmit" listType="text">
-                                        <Button icon={<UploadOutlined />}>Click to Upload</Button>
-                                    </Upload>
-                                </Form.Item>
-                            </div>
-                        </div>
-                        <div className="iButton-cons">
-                            <Button className='iprimary-button my-2' htmlType='submit'>SUBMIT</Button>
-                        </div>
-                    </Form>
+        <Layout>
+            <h3 className='ins-title'>Enter Insurance Claim Form</h3>
+            <hr/>
+            <Form layout='horizontal' onFinish={onFinish}>
+                <div className="ins-form-row">
+                    <div className="ins-item">
+                        <label htmlFor="name">Full Name:</label>
+                        <Form.Item name='name' className="ins-form-item">
+                            <Input className='ins-input-field' id="name" placeholder='Full name' />
+                        </Form.Item>
+            
+                        <label htmlFor="id">Employee ID:</label>
+                        <Form.Item name='id' className="ins-form-item">
+                            <Input className='ins-input-field' id="id" placeholder='Employee ID' />
+                        </Form.Item>
+
+                        <label htmlFor="phoneNumber">Phone Number:</label>
+                        <Form.Item name='phoneNumber' rules={[{ validator: validatePhoneNumber }]} className="ins-form-item">
+                            <Input className='ins-input-field' id="phoneNumber" placeholder='Phone Number' />
+                        </Form.Item>
+
+                        <label htmlFor="description">Description:</label>
+                        <Form.Item name='description' className="ins-form-item">
+                            <Input.TextArea className='ins-textarea-field' id="description" placeholder='Description' />
+                        </Form.Item>
+
+                        <label htmlFor="medicaldoc">Attach Medical Document:</label>
+                        <Form.Item name="medicaldoc" valuePropName="fileList" getValueFromEvent={(e) => e.fileList} rules={[{ validator: validateFile }]} className="ins-form-item">
+                            <Upload name="meddoc" action="/api/insurance/insClaimSubmit" listType="text">
+                                <Button className='ins-primary-button' icon={<UploadOutlined />}>Click to Upload</Button>
+                            </Upload>
+                        </Form.Item>
+                    </div>
                 </div>
-            </div>
-        </div>
+                <div className="ins-button-container">
+                    <Button className='ins-primary-button my-2' htmlType='submit'>SUBMIT</Button>
+                </div>
+            </Form>
+        </Layout>
     );
 }
 

@@ -1,136 +1,121 @@
-.inquiry{
-    height :100vh;
-    display:flex;
-    align-items: center;
-    justify-content: center;
-    
+.institle {
+    margin-top: 40px;
+    padding-left: 14px;
 }
-.ibox{
-    box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
-    border-radius: 20px;
-    background-color: #FAFAFA;
-    
 
-}
-.imain_form{
-    width : 950px;
-    height: 650px;
-    
-    
-}
-.inquiry-container{
+.ins-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    
+    height: 100vh;
+  }
+  
+  .insform-container {
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .ins-main-form {
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    padding: 20px;
+  }
+  
+  .ins-title {
+    padding-left: 19px;
+    margin-top: 140px;
+  }
 
-}
-.iimage-container{
-    flex: 1px;
-    overflow: hidden;
-    position: relative;
-}
-.iimage-container img {
-    width: 1000px;
-    height: 1000px;
-    object-fit: cover;
-    position: relative;
-   
-    border-radius: 10px;
-}
-input{
-    border-radius: 10px !important;
-    border: 1px solid rgba(128, 128, 128, 0.521);
-    height: 40px !important;
-    width :400px !important
-    
-}
-input:hover{
+  .ins-form-item {
+    margin-bottom: 20px;
+  }
+  
+  .ins-form-item label {
+    display: block;
+    text-align: right;
+    margin-bottom: 5px;
+  }
+  
+  .ins-form-row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+  
+  .ins-item {
+    flex: 1;
+    margin-right: 20px;
+  }
+  
+  .ins-item:last-child {
+    margin-right: 0;
+  }
+  
+  .ins-item label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .ins-button-container {
+    text-align: center;
+  }
+  
+  .ins-primary-button {
+    background-color: #1890ff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+  }
+  
+  .ins-primary-button:hover {
+    background-color: #40a9ff;
+  }
+  
+  .ins-input-field {
+    width: 100%;
+    padding: 10px;
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    transition: border-color 0.3s ease;
+  }
+  
+  .ins-input-field:focus {
+    border-color: #1890ff;
     outline: none;
-    box-shadow: none !important;
-    border: 1px solid #F7934C !important;
-
-}
-input:focus{
+  }
+  
+  .ins-textarea-field {
+    width: 50%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #d9d9d9;
+    transition: border-color 0.3s ease;
+    resize: vertical;
+  }
+  
+  .ins-textarea-field:focus {
+    border-color: #1890ff;
     outline: none;
-    box-shadow: none !important;
-    border: 1px solid gray !important;
-}
-label{
-    font-size: 16px !important;
-    color: black;
-}
-.iprimary-button{
-    background-color: #F7B05B !important;
-    border-color: #1F1300 !important;
-    height: 40px !important;
-    width: 300px !important;
-    align-items: center !important;
-    color:#000000 !important;
-    font-size: 16px !important;
-    font-weight: bold; 
-    border-radius: 10px !important;
-    margin-top: 30px !important;
-    margin-right: 30px !important;
-    justify-content: center !important;
-}
-.isecondary-button{
-    background-color: #F7B05B !important;
-    border-color: #1F1300 !important;
-    height: 40px !important;
-    width: 300px !important;
-    align-items: center !important;
-    color:#000000 !important;
-    font-size: 16px !important;
-    font-weight: bold; 
-    border-radius: 10px !important;
-    margin-top: 30px !important;
-    justify-content: center !important;
+  }
+
+.insanchor {
+  font-size: 1rem;
+  text-decoration: underline;
 }
 
-.ititle{
-    color: #1F1300;
-    margin-top: 100px;
-    margin-left: 20px;
-}
-.iform-row {
-    display: flex;
-    align-items: center;
+.custom-upload {
+  width: 160px; /* Adjust the width as needed */
 }
 
-.iform-item {
-    margin-right: 20px; 
-}
-.idate{
-    width: 400px;
-    height: 40px;
-}
-.iitem{
-    margin-right: 60px;
-    margin-left: 30px;
-}
-.ishift{
-    width: 400px !important;
-    height: 40px !important;
-    border-radius: 10px !important;
-
+.file-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 160px; /* Adjust the width as needed */
 }
 
-.inumber{
-    width: 200px !important;
-    height: 40px !important;
-
-}
-.iButton-cons{
-    display: flex;
-    justify-content: center;
-
-}
-.idescribe{
-    width : 500px;
-}
-
-.insanchor{
-    font-size: smaller;
-    text-decoration: underline;
+.inscustom-modal .ant-modal-footer {
+  text-align: center; /* Center-align the buttons */
 }
