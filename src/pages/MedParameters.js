@@ -283,8 +283,8 @@ const MedParameters = () => {
                   response_check_similar.data.similarDate.appointmentCount,
                 maxAppointmentCount: dateObj.maxAppointmentCount,
                 status: response_check_similar.data.similarDate.status,
-                startTime: response_check_similar.data.similarDate.startTime,
-                endTime: response_check_similar.data.similarDate.endTime,
+                startTime: dateObj.startTime,
+                endTime: dateObj.endTime,
                 avgSessionTime: response_check_similar.data.similarDate.avgSessionTime,
                 nextAppointmentTime: response_check_similar.data.similarDate.nextAppointmentTime,
                 nextAppointmentNo: response_check_similar.data.similarDate.nextAppointmentNo,
@@ -345,8 +345,7 @@ const MedParameters = () => {
 
     } catch (error) {
       dispatch(hideLoading());
-      toast.error("Something went wrong while updating dates");
-      console.log(error);
+      console.log("Error occured when updating dates @updateDates() @MedParameters() => ", error);
     }
   };
 
@@ -489,6 +488,8 @@ const MedParameters = () => {
         existingAvailableDateObjectList
       );
 
+      // Sort the date Objects list
+
       // Update the date objects list
       setDateObjectsList(existingAvailableDateObjectList);
 
@@ -602,7 +603,7 @@ const MedParameters = () => {
 
   return (
     <Layout>
-      <h1 className="page-title">Parameters</h1>
+      
       <Tabs>
         <Tabs.TabPane tab="Manage Dates" key={0}>
           <div className="doc-date-picker-container">
@@ -638,13 +639,36 @@ const MedParameters = () => {
                         `Max App. value for: ${dateObject.date}`,
                         value
                       );
-                      dateObject.maxAppointmentCount = value;
+                      var singleDateElement = document.getElementById(dateObject.date);
+                      singleDateElement.style.backgroundColor = '#dfdfdf';
+                    };
+
+                    const handleStartTimeValueChange = (value) => {
+                      console.log(
+                        `StartTime value for: ${dateObject.date}`,
+                        value
+                      );
+                      dateObject.startTime = value;
+                      var singleDateElement = document.getElementById(dateObject.date);
+                      singleDateElement.style.backgroundColor = '#dfdfdf';
+                    };
+
+                    const handleEndTimeValueChange = (value) => {
+                      console.log(
+                        `EndTime value for: ${dateObject.date}`,
+                        value
+                      );
+                      dateObject.endTime = value;
+                      var singleDateElement = document.getElementById(dateObject.date);
+                      singleDateElement.style.backgroundColor = '#dfdfdf';
                     };
 
                     return (
-                      <div className="single-date">
+                      <div className="single-date" id={dateObject.date}>
                         <Form>
-                          <Form.Item label="Date" name={`date_${dateToId}`}>
+                          <div className="single-date-content">
+                          <Form.Item label="Date" name={`date_${dateToId}`} className="single-date-date">
+
                             <Input
                               type="text"
                               disabled
@@ -652,9 +676,11 @@ const MedParameters = () => {
                               placeholder={dateString}
                               name={`available_date_${dateToId}`}
                               value={dateObject.date}
+                              
                             />
                           </Form.Item>
-
+                          <hr></hr>
+                          <div className="single-date-content-inputs">
                           <Form.Item
                             label="Scheduled"
                             name={`scheduled_${dateToId}`}
@@ -666,10 +692,12 @@ const MedParameters = () => {
                               defaultValue={dateObject.appointmentCount}
                               name={`sheduled_${dateToId}`}
                               value={dateObject.appointmentCount}
+                              
                             />
                           </Form.Item>
 
                           <Form.Item
+                          
                             label="Maximum"
                             name={`maximum_${dateToId}`}
                           >
@@ -688,13 +716,56 @@ const MedParameters = () => {
                               }}
                               value={dateObject.maxAppointmentCount}
                               defaultValue={dateObject.maxAppointmentCount}
+                              
                               onChange={(e) =>
-                                handleMaxAppointmentCountValueChange(
+                                {handleMaxAppointmentCountValueChange(
+                                  e.target.value
+                                );
+                                }
+                              }
+                            />
+                          </Form.Item>
+
+                          <Form.Item
+                            label="Start Time"
+                            name={`startTime_${dateToId}`}
+                          >
+                            <Input
+                              id={`startTime_input_${dateToId}`}
+                              style={{
+                                width: 20,
+                              }}
+                              value={dateObject.startTime}
+                              defaultValue={dateObject.startTime}
+                              onChange={(e) =>
+                                handleStartTimeValueChange(
                                   e.target.value
                                 )
                               }
                             />
                           </Form.Item>
+
+
+                          <Form.Item
+                            label="Finish Time"
+                            name={`finishTime_${dateToId}`}
+                          >
+                            <Input
+                              id={`finishTime_input_${dateToId}`}
+                              style={{
+                                width: 20,
+                              }}
+                              value={dateObject.endTime}
+                              defaultValue={dateObject.endTime}
+                              onChange={(e) =>
+                                handleEndTimeValueChange(
+                                  e.target.value
+                                )
+                              }
+                            />
+                          </Form.Item>
+                              </div>
+                          </div>
                         </Form>
                       </div>
                     );
@@ -714,7 +785,10 @@ const MedParameters = () => {
         {/* ===================== Manage Parameters Tab =================== */}
 
         <Tabs.TabPane tab="Manage Parameters" key={1}>
+          <div className="doc-manage-parameters-container-main">
+            <div className="doc-manage-parameters-container-secondary">
           <Form onFinish={saveParameters}>
+            <div className="doc-manage-parameters-inputs">
             <Form.Item label="Maximum appointments" name="max_appointments">
               <Input
                 type="Number"
@@ -801,13 +875,16 @@ const MedParameters = () => {
                 name="appointments_end_time"
               />
             </Form.Item>
-
-            <div className="d-flex justify-content-end">
-              <Button className="primary-button" htmlType="submit">
+                </div>
+            <div className="doc-manage-parameters-save-button-container">
+              <Button className="doc-manage-parameters-save-button" htmlType="submit">
                 SAVE
               </Button>
             </div>
           </Form>
+          </div>
+          
+          </div>
         </Tabs.TabPane>
       </Tabs>
     </Layout>
