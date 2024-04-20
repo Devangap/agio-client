@@ -78,6 +78,9 @@ import TraBookingBox from './pages/TraBookingBox';
 
 
 import MyInquiries from './pages/MyInquiries';
+
+import InquiryAdmin from './pages/inquiryAdmin';
+
 import TraBookingDisplayAdmin from './pages/TraBookingDisplayAdmin';
 import TraVehicleviwe from './pages/TraVehicleviwe';
 import TraDriverViwe from './pages/TraDriverViwe';
@@ -91,6 +94,7 @@ import UniformSkirt from './pages/UniformSkirt';
 import UniformShirtInventory from './pages/UniformShirtInventory';
 import UniformOrderDetails from './pages/UniformOrderDetails';
 import UniformTotals from './pages/UniformTotals';
+
 
 
 
@@ -283,9 +287,10 @@ function App() {
 
 
 
-          <Route exact path="/MyInquiries" element={<MyInquiries />} />
+          <Route exact path="/MyInquiries" element={<ProtectedRoute><MyInquiries /></ProtectedRoute>} />
 
           <Route path='/inquiry' element ={<ProtectedRoute><Inquiry/></ProtectedRoute>} />
+          <Route path='/inquiryAdmin' element ={<ProtectedRoute><InquiryAdmin/></ProtectedRoute>} />
           
 
           <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
