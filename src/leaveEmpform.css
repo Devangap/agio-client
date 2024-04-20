@@ -1,4 +1,4 @@
-.leaveform{
+/* .leaveform{
     height :100vh;
     display:flex;
     align-items: center;
@@ -41,7 +41,7 @@ label{
     display: flex;
     justify-content: center;
     margin-top: 30px; /* Adjust margin-top as needed */
-}
+/* }
 
 .leave_primary-button {
     background-color: #F7B05B !important;
@@ -74,7 +74,7 @@ label{
 }
 .form-item {
     margin-right: 20px; /* Add some space between form items */
-}
+/* }
 .date{
     width: 400px;
     height: 40px;
@@ -104,4 +104,4 @@ label{
     height: 40px !important;
     width :400px !important;
     margin-bottom:40px !important;
-}
+} */ 

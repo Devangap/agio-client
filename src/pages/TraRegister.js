@@ -3,6 +3,8 @@ import {Button, Form ,  Input} from 'antd'
 import {Link, useNavigate }from 'react-router-dom'
 import axios from "axios";
 import toast from 'react-hot-toast';
+import '../TraRegister.css'
+import loginImage from '../Images/Cigars.jpg';
 
 
 function TraRegister() {
@@ -25,35 +27,49 @@ function TraRegister() {
     };
 
   return (
-
-    
-    <div className='authentication'>
+<div className="mainlog">
+  <div className="main_login_form_log box_log p-3">
+  <div className="login_image">
+          <img src={loginImage} alt="Login Image" />
+        </div>
         
-       
-
-        <div className='authentication-form card p-3' >
-            <h1 className='card-title'>Welcome Our Service</h1>
-
-            <Form layout='vertical' onFinish={onFinish}>
-                <Form.Item label="Full Name" name='name'>
+    <h3 className='title_log'>Transport Register Form</h3>
+    <Form layout='vertical' onFinish={onFinish}>
+    <div className="content">
+   
+     
+      <div className = 'login'>
+      <div className = 'field'>
+      <Form.Item label="Full Name" name='name'>
                     <Input placeholder='Name' />
                 </Form.Item>
+
                 <Form.Item label="Email" name='email'>
                     <Input placeholder='email' />
                 </Form.Item>
-                <Form.Item label="Password" name='password'>
+
+          </div>
+         
+          <Form.Item label="Password" name='password'>
                     <Input placeholder='password' type='password'/>
                 </Form.Item>
 
-                 <Button className='primary-button my-2' htmlType='submit'>REGISTER</Button> 
-                 <Link  to='/login' className='anchor mt-2'>CLICK HERE TO LOGIN</Link> 
-
-            </Form>
+          
+          </div>
+      
+      <div className="t3Button-conslog">
+      <Button className='primary-button my-2' htmlType='submit'>REGISTER</Button>
+        <div className='t3anchor mt-2'>
+        <Link  to='/login' className='anchor mt-2'>CLICK HERE TO LOGIN</Link> 
         </div>
-
-    </div>
+      </div>
+      
+      </div>
+    </Form>
+  </div>
+</div>
    
-  )
+  );
 }
 
 export default TraRegister

@@ -48,7 +48,7 @@ input{
 input:hover{
     outline: none;
     box-shadow: none !important;
-    border: 1px solid #F7934C !important;
+    border: 1px solid #ECB159!important;
 
 }
 input:focus{
