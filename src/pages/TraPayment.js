@@ -42,25 +42,25 @@ function TraPayment() {
                 <h3>UPLOAD PAYMENT SLIP</h3>
             </div>
             <div className='PayD'>
-                <h4>Bank Details</h4>
+                <h4>Angio Company Bank Details</h4>
                 <ul>
-                    <li>Bank name: BOC</li>
+                    <li>Bank name: Bank Of Celone</li>
                     <li>Account Nunber : 5647483</li>
                     <li>Account Name : Angio</li>
                     <li>Branch : Malabe</li>
                 </ul>
             </div>
             <Form onFinish={onFinish}>
-                <div>
-                    <label htmlFor="medicaldoc">Attach Medical Document:</label>
+                <div className='input_file'>
+                    <label className="bank_attch" htmlFor="medicaldoc">Attach Paymenet Slip:</label>
                     <Form.Item name="medicaldoc" valuePropName="fileList" getValueFromEvent={(e) => e.fileList}>
                         <Upload beforeUpload={() => false} maxCount={1}>
-                            <Button className='ins-primary-button' icon={<UploadOutlined />}>Click to Upload</Button>
+                            <Button className='upbtn' icon={<UploadOutlined />}>Click to Upload</Button>
                         </Upload>
                     </Form.Item>
                 </div>
-                <div className="ins-button-container">
-                    <Button className='ins-primary-button my-2' htmlType='submit' >SUBMIT</Button>
+                <div className="sbtn">
+                    <Button className='sbbtn' htmlType='submit' >SUBMIT</Button>
                 </div>
             </Form>
         </Layout>
