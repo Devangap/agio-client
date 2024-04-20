@@ -37,11 +37,27 @@ function AdminInquiries() {
       const updatedInquiries = inquiries.map((inquiry) => {
         if (inquiry._id === selectedId) {
           inquiry.status = 'Done';
-          // Update status in the database...
+          axios
+            .put(`/api/employee/inquiry/${selectedId}/update-status`, {
+              status: 'Done',
+            })
+            .then((response) => {
+              setInquiries((prevInquiries) =>
+                prevInquiries.map((prevInquiry) =>
+                  prevInquiry._id === selectedId
+                    ? { ...prevInquiry, status: 'Done' }
+                    : prevInquiry
+                )
+              );
+              message.success('Status updated successfully');
+            })
+            .catch((error) => {
+              console.error('Error updating status:', error);
+              message.error('Failed to update status');
+            });
         }
         return inquiry;
       });
-      setInquiries(updatedInquiries);
       setConfirmVisible(false);
     } catch (error) {
       console.error('Error updating status:', error);
@@ -56,10 +72,34 @@ function AdminInquiries() {
 
   const onFinishReply = async (values) => {
     try {
-      // Send reply...
-      message.success('Reply sent successfully');
+      const reply = values.reply;
+      const updatedInquiries = inquiries.map((inquiry) => {
+        if (inquiry._id === selectedInquiry._id) {
+          inquiry.status = 'Done';
+          inquiry.reply = reply;
+          axios
+            .put(`/api/employee/inquiry/${selectedInquiry._id}/reply`, {
+              reply,
+            })
+            .then((response) => {
+              setInquiries((prevInquiries) =>
+                prevInquiries.map((prevInquiry) =>
+                  prevInquiry._id === selectedInquiry._id
+                    ? { ...prevInquiry, reply, status: 'Done' }
+                    : prevInquiry
+                )
+              );
+              message.success('Reply sent successfully');
+            })
+            .catch((error) => {
+              console.error('Error sending reply:', error);
+              message.error('Failed to send reply');
+            });
+        }
+        return inquiry;
+      });
+      setInquiries(updatedInquiries);
       setVisible(false);
-      // Update inquiries state...
     } catch (error) {
       console.error('Error sending reply:', error);
       message.error('Failed to send reply');
@@ -86,7 +126,6 @@ function AdminInquiries() {
       onOk() {},
     });
   };
-
 
   const columns = [
     {
@@ -117,10 +156,30 @@ function AdminInquiries() {
       title: 'Inquiry',
       dataIndex: 'describe',
       key: 'describe',
-      className: 'inquiry-column', // Add className for the Inquiry column
+      className: 'inquiry-column',
       render: (text) => (
         <>
           {text.length > 10 ? (
+            <span>
+              {text.substr(0, 10)}...
+              <Button type="link" onClick={() => handleShowMore(text)}>
+                Show More
+              </Button>
+            </span>
+          ) : (
+            text
+          )}
+        </>
+      ),
+    },
+    {
+      title: 'Reply',
+      dataIndex: 'reply',
+      key: 'reply',
+      width: 200,
+      render: (text) => (
+        <>
+          {text && text.length > 10 ? (
             <span>
               {text.substr(0, 10)}...
               <Button type="link" onClick={() => handleShowMore(text)}>
@@ -151,7 +210,7 @@ function AdminInquiries() {
       ),
     },
   ];
-  
+
   return (
     <Layout>
       <div style={{ width: '1600px' }}>
@@ -188,12 +247,12 @@ function AdminInquiries() {
         </Modal>
 
         <Modal
-          title="Confirmation"
+          title="Confirm Update"
           visible={confirmVisible}
-          onCancel={() => setConfirmVisible(false)}
           onOk={confirmStatusUpdate}
+          onCancel={() => setConfirmVisible(false)}
         >
-          <p>Are you sure you want to change the status to Done?</p>
+          Are you sure you want to mark this inquiry as Done?
         </Modal>
       </div>
     </Layout>

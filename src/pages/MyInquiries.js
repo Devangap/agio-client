@@ -6,14 +6,18 @@ import Layout from '../components/Layout';
 
 const { TextArea } = Input;
 
+// Existing imports...
+
 function MyInquiries() {
   const location = useLocation();
   const [inquiries, setInquiries] = useState([]);
-  const [visible, setVisible] = useState(false);
+  const [updateModalVisible, setUpdateModalVisible] = useState(false);
+  const [detailModalVisible, setDetailModalVisible] = useState(false);
   const [form] = Form.useForm();
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [fullInquiry, setFullInquiry] = useState('');
-  const username = location.state ? location.state.username : null; // Get username from location state
+  const [fullReply, setFullReply] = useState(''); // New state for full reply
+  const username = location.state ? location.state.username : null;
 
   useEffect(() => {
     const fetchInquiries = async () => {
@@ -49,12 +53,17 @@ function MyInquiries() {
       phoneNumber: record.phoneNumber,
       describe: record.describe,
     });
-    setVisible(true);
+    setUpdateModalVisible(true);
   };
 
-  const handleShowMore = (record) => {
-    setFullInquiry(record.describe);
-    setVisible(true);
+  const handleShowMore = (text) => {
+    setFullInquiry(text);
+    setDetailModalVisible(true);
+  };
+
+  const handleShowReplyMore = (reply) => {
+    setFullReply(reply);
+    setDetailModalVisible(true);
   };
 
   const onFinish = async (values) => {
@@ -66,53 +75,43 @@ function MyInquiries() {
       );
       setInquiries(updatedInquiries);
       message.success('Inquiry updated successfully');
-      setVisible(false);
+      setUpdateModalVisible(false);
     } catch (error) {
       message.error('Failed to update inquiry');
     }
   };
 
-    const columns = [
+  const columns = [
     {
       title: 'Full Name',
       dataIndex: 'name',
       key: 'name',
-      width: 150,
-      ellipsis: true, // Truncate text if it overflows
     },
     {
       title: 'Username',
       dataIndex: 'username',
       key: 'username',
-      width: 150,
-      ellipsis: true,
     },
     {
       title: 'Inquiry Date',
       dataIndex: 'inquirydate',
       key: 'inquirydate',
-      width: 150,
-      ellipsis: true,
     },
     {
       title: 'Phone Number',
       dataIndex: 'phoneNumber',
       key: 'phoneNumber',
-      width: 150,
-      ellipsis: true,
     },
     {
       title: 'Inquiry',
       dataIndex: 'describe',
       key: 'describe',
-      width: 150,
-      ellipsis: true,
       render: (text) => (
         <>
-          {text.split(' ').slice(0, 5).join(' ')}
-          {text.split(' ').length > 5 && (
-            <Button type="link" onClick={() => handleShowMore({ describe: text })}>
-              Show More
+          {text.length > 10 ? `${text.slice(0, 10)}...` : text}
+          {text.length > 10 && (
+            <Button type="link" onClick={() => handleShowMore(text)}>
+              See More
             </Button>
           )}
         </>
@@ -122,21 +121,25 @@ function MyInquiries() {
       title: 'Reply',
       dataIndex: 'reply',
       key: 'reply',
-      width: 150,
-      ellipsis: true,
+      render: (text) => (
+        <>
+          {text && text.length > 10 ? `${text.slice(0, 10)}...` : text}
+          {text && text.length > 10 && (
+            <Button type="link" onClick={() => handleShowReplyMore(text)}>
+              See More
+            </Button>
+          )}
+        </>
+      ),
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'status',
-      width: 100,
-      ellipsis: true,
     },
     {
       title: 'Action',
       key: 'action',
-      width: 200,
-      ellipsis: true,
       render: (_, record) => (
         <>
           <Button type="primary" className="update" onClick={() => handleUpdate(record)}>Update</Button>
@@ -150,15 +153,46 @@ function MyInquiries() {
     <Layout>
       <div>
         <h1>My Inquiries</h1>
-        <Table dataSource={inquiries} columns={columns} scroll={{ x: 1200 }} />
+        <Table dataSource={inquiries} columns={columns} />
 
         <Modal
           title="Inquiry Details"
-          visible={visible}
-          onCancel={() => setVisible(false)}
+          visible={detailModalVisible}
+          onCancel={() => setDetailModalVisible(false)}
           footer={null}
         >
           <p>{fullInquiry}</p>
+          <p>{fullReply}</p>
+        </Modal>
+
+        <Modal
+          title="Update Inquiry"
+          visible={updateModalVisible}
+          onCancel={() => setUpdateModalVisible(false)}
+          footer={null}
+        >
+          <Form form={form} onFinish={onFinish} layout="vertical">
+            <Form.Item label="Full Name" name="name">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Username" name="username">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item label="Inquiry Date" name="inquirydate">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Phone Number" name="phoneNumber">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Inquiry" name="describe">
+              <TextArea rows={4} />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Update
+              </Button>
+            </Form.Item>
+          </Form>
         </Modal>
       </div>
     </Layout>

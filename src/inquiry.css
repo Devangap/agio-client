@@ -168,3 +168,34 @@ label{
   .ant-table .inquiry-column {
     width: 10px; /* Adjust the width as needed */
   }
+  /* Optional: Add some padding around the form */
+.ant-modal-body {
+    padding: 20px;
+  }
+  
+  /* Optional: Adjust the width of the form */
+  .ant-modal-content {
+    max-width: 100%;
+  }
+  
+  /* Style form labels */
+  .ant-form-item-label {
+    font-weight: bold;
+  }
+  
+  /* Style form inputs */
+  .ant-input,
+  .ant-input-disabled {
+    width: 100%;
+  }
+  
+  /* Optional: Add some margin between form items */
+  .ant-form-item {
+    margin-bottom: 16px;
+  }
+  
+  /* Optional: Style the primary button */
+  .ant-btn-primary {
+    margin-right: 8px;
+  }
+  
