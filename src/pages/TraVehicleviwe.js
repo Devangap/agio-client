@@ -152,24 +152,25 @@ function TraVehicleviwe() {
     <Layout>
 
          
-        <div style={{ marginBottom: 20 }}>
-                <Input.Search
-                    className="customInput"
-                    placeholder="Search by Vehicle Number"
-                    onSearch={handleSearch}
-                    enterButton={<Button className="customButton">Search</Button>} // Customized search button
-                   
-                />
-            
-            </div>
             
             <div ref={componentPDF} style={{width: '100%'}}>
                 <Table dataSource={filteredVregister.length > 0 ? filteredVregister : Vregister} columns={columns} />
                 </div>
 
-                <Button  className='btn btn-success' onClick={ generatePDF }>
-                Download Report
-            </Button>
+                <Button
+      style={{
+        backgroundColor: '#1f1300', // Background color
+        color: '#fff', // Text color
+        border: 'none', // Remove border
+        margin:10,
+        borderRadius: '5px', // Rounded corners
+        fontSize: '16px', // Font size
+        cursor: 'pointer', // Pointer cursor on hover
+      }}
+      onClick={generatePDF}
+    >
+      Download Report
+    </Button>
          
 
         

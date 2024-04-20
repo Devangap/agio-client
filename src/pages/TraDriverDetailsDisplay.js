@@ -137,15 +137,32 @@ function TraDriverDetailsDisplay() {
     <Layout>
 
 <div className="searchInput">
-                <Input.Search
-                    className="customInput"
-                    placeholder="Search by Driver Name"
-                    onSearch={handleSearch}
-                    enterButton={<Button className="customButton">Search</Button>} // Customized search button
-                />
+      <Input.Search
+        className="customInput"
+        placeholder="Search by Driver Name"
+        onSearch={handleSearch}
+        enterButton={<Button className="customButton">Search</Button>} // Customized search button
+        style={{ padding:10 ,width: 500  }} // Example: Set width inline style
+      />
             </div>
             <Table dataSource={filteredDregister.length > 0 ? filteredDregister : Dregister} columns={columns} />
-            <Button type="primary" className="update" danger onClick={() => navigate(`/TraDriverViwe`)}>VIWE VEHICLE DETAILS</Button>
+            <Button
+        type="primary"
+        className="update"
+        danger
+        onClick={() => navigate(`/TraDriverViwe`)}
+        style={{
+            backgroundColor: '#1f1300', // Background color
+            color: '#fff', // Text color
+            border: 'none', // Remove border
+            margin:10,
+            borderRadius: '5px', // Rounded corners
+            fontSize: '16px', // Font size
+            cursor: 'pointer', // Pointer cursor on hover
+          }} // Example: Set margin-top, font size, and font weight inline style
+      >
+        VIEW DRIVER DETAILS
+      </Button>
             <Modal
     title="Update Booking"
     open={isModalVisible}

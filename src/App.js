@@ -114,8 +114,6 @@ function App() {
          
           <Route path='/dregister' element={<ProtectedRoute><TraDriverRegister /></ProtectedRoute>} />
           <Route path='/vregister' element={<ProtectedRoute>< TraVehicleRegister/></ProtectedRoute>} />
- 
-
           <Route path='/TraBooking' element={<ProtectedRoute><TraBooking/></ProtectedRoute>} />
           <Route path='/TraBookingDisplay' element={<ProtectedRoute>< TraBookingDisplay /></ProtectedRoute>} />
           <Route path='/TraBookingUpdate/:id' element={<ProtectedRoute>< TraBookingUpdate /></ProtectedRoute>} />

@@ -151,6 +151,7 @@ function TraVehicleDetails() {
                     placeholder="Search by Vehicle Number"
                     onSearch={handleSearch}
                     enterButton={<Button className="customButton">Search</Button>} // Customized search button
+                    style={{ padding:10 ,width: 500  }} // Example: Set width inline style
                    
                 />
             
@@ -158,7 +159,23 @@ function TraVehicleDetails() {
             
             
                 <Table dataSource={filteredVregister.length > 0 ? filteredVregister : Vregister} columns={columns} />
-                <Button type="primary" className="update" danger onClick={() => navigate(`/TraVehicleviwe`)}>VIWE VEHICLE DETAILS</Button>
+                <Button
+        type="primary"
+        className="update"
+        danger
+        onClick={() => navigate(`/TraVehicleviwe`)}
+        style={{
+            backgroundColor: '#1f1300', // Background color
+            color: '#fff', // Text color
+            border: 'none', // Remove border
+            margin:10,
+            borderRadius: '5px', // Rounded corners
+            fontSize: '16px', // Font size
+            cursor: 'pointer', // Pointer cursor on hover
+          }} // Example: Set margin-top, font size, and font weight inline style
+      >
+        VIEW VEHICLE DETAILS
+      </Button>
             <Modal
     title="Update Booking"
     open={isModalVisible}

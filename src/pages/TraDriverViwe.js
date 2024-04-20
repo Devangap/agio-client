@@ -91,9 +91,20 @@ function TraDriverViwe() {
             <div ref={componentPDF} style={{ width: '100%' }}>
                 <Table dataSource={filteredDregister.length > 0 ? filteredDregister : Dregister} columns={columns} />
             </div>
-            <Button className='btn btn-success' onClick={generatePDF}>
-                Download Report
-            </Button>
+            <Button
+      style={{
+        backgroundColor: '#1f1300', // Background color
+        color: '#fff', // Text color
+        border: 'none', // Remove border
+        margin:10,
+        borderRadius: '5px', // Rounded corners
+        fontSize: '16px', // Font size
+        cursor: 'pointer', // Pointer cursor on hover
+      }}
+      onClick={generatePDF}
+    >
+      Download Report
+    </Button>
         </div>
             
         </Layout>

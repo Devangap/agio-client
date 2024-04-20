@@ -154,10 +154,26 @@ function TraBookingDisplayAdmin() {
             render: (_, record) => (
                 <>
                     <div className="d-flex">
-                        {record.status === "pending" && <Button type="primary" className="approve" onClick={() => { changestatus(record, 'approved'); }}>Approve</Button>}
-                        {record.status === "approved" && <Button type="primary" className="reject" onClick={() => changestatus(record, 'rejected')}>Reject</Button>}
+                        {record.status === "pending" && <Button type="primary" className="approve" onClick={() => { changestatus(record, 'approved'); }}  style={{
+            backgroundColor: '#1f1300', // Background color
+            color: '#fff', // Text color
+            border: 'none', // Remove border
+            margin:10,
+            borderRadius: '5px', // Rounded corners
+            fontSize: '16px', // Font size
+            cursor: 'pointer', // Pointer cursor on hover
+          }}>Approve</Button>}
+                        {record.status === "approved" && <Button type="primary" className="reject" onClick={() => changestatus(record, 'rejected')}  style={{
+            backgroundColor: '#1f1300', // Background color
+            color: '#fff', // Text color
+            border: 'none', // Remove border
+            margin:10,
+            borderRadius: '5px', // Rounded corners
+            fontSize: '16px', // Font size
+            cursor: 'pointer', // Pointer cursor on hover
+          }}>Reject</Button>}
                     </div>
-                    <Button type="primary">Delete</Button>
+                    
                 </>
             ),
         },
