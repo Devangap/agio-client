@@ -271,6 +271,7 @@ doc date picker
 .doc-date-picker-container {
     display: flex;
     flex-direction: row;
+    padding: 10px;
 }
 
 .date-list-container {
@@ -280,10 +281,10 @@ doc date picker
     align-items: center;
     background-color: white;
     
-    border-radius: 20px;
+    border-radius: 0px;
     box-shadow: 0 0 2px gray;
-    height: 58vh;
-    padding: 0px 15px 15px 15px;
+    height: 63vh;
+    padding: 0px;
     margin: 0 20px;
     width: 100%;
 }
@@ -297,13 +298,15 @@ doc date picker
     /*border: 1px solid gray;
     border-radius: 20px;
     box-shadow: 0 0 2px gray;*/
-    height: 50vh;
+    height: 58vh;
     padding: 5px 5px 5px 5px;
     margin: 0 20px;
     width: 100%;
+    
 }
 
 .single-date {
+    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -315,14 +318,87 @@ doc date picker
     height: wrap-content;
     padding: 15px;
     margin: 0 5px 5px 5px;
-    width: 100%;
+    width: match-parent;
+}
+
+.single-date-content {
+    
+    font-size: 15px;
+}
+
+.single-date-content-inputs {
+    
+    display: grid;
+    grid-template-columns: auto auto;
 }
 
 .single-date Input {
-    width: 200px !important;
+    width: 70px !important;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.single-date .single-date-date Input {
+    width: 180px !important;
+    font-weight: 700 !important;
+    color: black !important;
+    font-size: 18px;
+}
+
+.single-date label {
+    font-size: 14px !important;
+    
+    width: 80px;
+    height: 40px !important;
 }
 
 
+.doc-manage-parameters-container-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px;
+    width: 100%;
+    height: 60vh;
+}
+.doc-manage-parameters-container-secondary {
+    
+    padding: 40px;
+    background-color: white;
+    
+    border-radius: 20px;
+    box-shadow: 0 0 2px gray;
+}
+.doc-manage-parameters-inputs {
+
+}
+
+.doc-manage-parameters-inputs label {
+ 
+    font-size: 15px !important;
+    height: 40px !important;
+    width: 200px;
+
+}
+
+.doc-manage-parameters-inputs input {
+
+    width: 150px !important;
+}
+
+.doc-manage-parameters-save-button-container {
+
+    display: flex;
+    justify-content: right;
+}
+
+.doc-manage-parameters-save-button {
+    background-color: #FFC15E;
+    font-weight: bold;
+    border-color: #FFC15E;
+    border-radius: 20px;
+    align-self: center;
+}
 /*
 **
 **
@@ -337,9 +413,11 @@ medical-overview
     width: match-parent;
     max-height: 80vh;
     padding: 20px;
+    justify-content: center;
 }
 
 .doc-overview-secondary-1 {
+    
     display: flex;
     width: max-content;
     height: match-parent;
@@ -382,7 +460,7 @@ medical-overview
 
 .doc-overview-date-scheduled-count-list {
     height: 80vh;
-    width: 70vh;
+    width: min-content;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -418,8 +496,10 @@ medical-overview
 }
 
 .doc-overview-secondary-2 {
+    
     display: flex;
-    padding: 45px 10px 10px 10px;
+    padding: 45px 0px 10px 10px;
+    width: 100%;
 }
 
 
