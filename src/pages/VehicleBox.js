@@ -23,9 +23,11 @@ function VehicleBox() {
     <Layout>
       <div className="mybox">
         <div className="mybox1" onClick={handleVehicleRegistryClick}>
-          <span className='boxname'>Vehicle Registry</span>
+        <img className="images" src="/static/media/shuttle.3c55df9a0807cf05c4df.png"  />
+          <span className='boxname'>Vehicle Register</span>
         </div>
         <div className="mybox1" onClick={handleVehicleDetailsClick}>
+        <img className="images" src="/static/media/shuttle.3c55df9a0807cf05c4df.png"  />
           <span className='boxname'>Vehicle Details</span>
         </div>
         
