@@ -1,0 +1,90 @@
+/* Styling for the table header */
+.table-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+.table-header .h3{
+    margin-top: 10%;
+    margin:1.5%;
+    font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  color: #1F1300;
+  font-size: 24px;
+}
+  
+  /* Styling for the search container */
+  .booksearch-container {
+    margin-left: 1%;
+  }
+  
+  /* Styling for the primary update button */
+  .update {
+    margin-left: 2px;
+    text-align: center;
+  background-color: #ffc658 !important;
+  border-color: #ffc658 !important;
+  height: 33px !important;
+  width: 75px !important;
+  color: #fafafa !important;
+  font-size: 12px !important;
+  font-weight: bold;
+  border-radius: 5px !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  }
+  .pybtn{
+    margin-left: 2px;
+    text-align: center;
+  background-color: #ffc658 !important;
+  border-color: #ffc658 !important;
+  height: 33px !important;
+  width: 75px !important;
+  color: #1F1300 !important;
+  font-size: 12px !important;
+  font-weight: bold;
+  border-radius: 5px !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  }
+
+  .bookdetails{
+    margin-left: 10px;
+  background-color: #F7B05B !important;
+  border-color: #1F1300 !important;
+  height: 40px !important;
+  width: 200px !important;
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  border-radius: 10px !important;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  }
+  
+  /* Styling for the modal title */
+  .ant-modal-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #1f1300;
+  }
+  
+  /* Styling for form item labels */
+  .ant-form-item-label {
+    font-weight: bold;
+  }
+  
+  /* Styling for form submit button inside the modal */
+  .ant-form-item-control .ant-btn-primary {
+    background-color: #1f1300;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  

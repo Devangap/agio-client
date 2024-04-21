@@ -78,7 +78,11 @@ function Layout({ children }) {
 
             icon: 'ri-account-box-line',
         },
-       
+        {
+            name: 'Insurance',
+            path: '/insEmployee',
+            icon: 'ri-article-line',
+        },
     ];
     const adminMenu = [
         {
@@ -221,7 +225,7 @@ function Layout({ children }) {
         },
         {
             name: ' Inquiry ',
-            path: '/profile',
+            path: '/inquiryAdmin',
             icon: 'ri-account-box-line',
         },
         {
@@ -239,7 +243,7 @@ function Layout({ children }) {
         },
         {
             name: ' Insuarance ',
-            path: '/insClaimSubmit',
+            path: '/InsuranceManagerDisplay',
             icon: 'ri-account-box-line',
         },
         {

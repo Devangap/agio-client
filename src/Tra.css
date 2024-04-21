@@ -1,20 +1,81 @@
-#componentPDF {
-  width: 100%;
+/* Your CSS styles here */
+.payH {
+  margin-left: 100px;
+  margin-top: 10px;
+  color: #1F1300;
+  margin-bottom: 20px;
+  padding-top: 20px;
+
+}
+
+.payH h3 {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  color: #1F1300;
+  font-size: 24px;
+}
+.PayD{
+  
+  border-radius: 10px;
+  margin: 2%;
+  margin-left: 5%;
+  margin-right: 20%;
+  background-color: #EEEEEE;
+  margin-bottom: 20px;
+  padding-top: 20px;
+
+}
+.PayD h4{
+  margin-left: 50px;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+  color: #1F1300;
+  font-size: 24px;
+}
+
+.PayD li{
+  margin-left: 70px;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color:#000000 ;
+  font-size: 18px;
   margin-bottom: 20px;
 }
 
-/* Styling for the Download Report button */
-.btn-success {
-  background-color: #28a745;
-  color: #fff;
-  border-color: #28a745;
-  padding: 8px 16px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
+.input_file .bank_attch{
+  margin-left: 60px;
+  font-family: "Lato", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+  color:#000000 ;
+  font-size: 50px;
+  
+}
+.input_file .upbtn{
+  margin-top: 20px;
+  margin-left: 40px;
+  margin-bottom: 30px;
+  background-color: #1F1300 !important;
+  border-color: #1F1300 !important;
+  height: 40px !important;
+  width: 300px !important;
+  color: #F7B05B  !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  border-radius: 10px !important;
 }
 
-.btn-success:hover {
-  background-color: #218838;
-  border-color: #1e7e34;
+.sbtn .sbbtn{
+  margin-left: 40px;
+  background-color: #F7B05B !important;
+  border-color: #1F1300 !important;
+  height: 40px !important;
+  width: 300px !important;
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  border-radius: 10px !important;
 }
