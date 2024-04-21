@@ -19,6 +19,7 @@ function AnnEmpDisplay() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentAnnouncement, setCurrentAnnouncement] = useState(null);
     const [commentText, setCommentText] = useState('');
+    const [events, setEvents] = useState([]);
 
 
 
@@ -45,6 +46,22 @@ function AnnEmpDisplay() {
             message.error('Failed to fetch specific announcements');
         }
     };
+    useEffect(() => {
+        fetchEvents();
+    }, []);
+
+    const fetchEvents = async () => {
+        try {
+            const response = await axios.get('/api/employee/event');
+            if (!response.data.success) {
+                message.error(response.data.message || 'Failed to fetch events');
+            } else {
+                setEvents(response.data.getNotice);
+            }
+        } catch (error) {
+            message.error('Error retrieving events: ' + error.message);
+        }
+    };
     
     const fetchGeneralAnnouncements = async () => {
         try {
@@ -61,6 +78,26 @@ function AnnEmpDisplay() {
             message.error('Failed to fetch general announcements');
         }
     };
+    const getData = async () => {
+        try {
+            const response = await axios.post('/api/employee/get-employee-info-by-id', {}, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem('token')
+                },
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getData();
+    }, []);
+
+   
+
+
 
    
 
@@ -72,21 +109,25 @@ function AnnEmpDisplay() {
    
     const handleCommentSubmit = async (announcementId) => {
         try {
-            const response = await axios.post(`/api/employee/comments/${announcementId}`, { text: commentText },
-            
-            {
-                headers: {
-                  'Content-Type': 'application/json',
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-              }
-            )
-            console.log (announcementId)
-        ;
+            const empId = user.empid; // Directly using `empId` from `user` object
+            console.log(empId);
+    
+            const response = await axios.post(`/api/employee/comments/${announcementId}`, 
+                { text: commentText, empId: empId }, // Include `empId` in the request
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${localStorage.getItem("token")}`,
+                    },
+                }
+            );
+    
+            console.log(announcementId);
+    
             if (response.data.success) {
                 message.success('Comment added successfully');
-                setCommentText(''); // Clear comment text after submission
-                fetchSpecificAnnouncements(user.department); // Refetch announcements to update comments
+                setCommentText('');
+                fetchSpecificAnnouncements(user.department);
                 fetchGeneralAnnouncements();
             } else {
                 message.error(response.data.message || 'Failed to add comment');
@@ -94,13 +135,33 @@ function AnnEmpDisplay() {
         } catch (error) {
             message.error('Failed to add comment');
         }
-        console.log(commentText); // Ensure it's not empty or undefined
-
+        console.log(commentText);
     };
+    
 
     
     return (
         <Layout>
+             <div>
+             <Card style={{ border: '1px solid #ccc', borderRadius: '5px' }}>
+            <h2>Notices</h2>
+        
+            {events.length > 0 ? (
+                <div>
+                    {events.map(event => (
+                        <div key={event.id}>
+                            <h3>{event.title}</h3>
+                         
+                            <p>{event.description}</p>
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <p>No notices found.</p>
+            )}
+            </Card>
+        </div>
+            
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                 <h6>SPECIFIC ANNOUNCEMENTS</h6>
                 {specificAnnouncements.map(announcement => (
@@ -133,7 +194,7 @@ function AnnEmpDisplay() {
                         <Form onFinish={() => handleCommentSubmit(announcement._id)}>
                             <Form.Item>
                                 <Input
-                                    value={commentText}
+                                    
                                     onChange={(e) => setCommentText(e.target.value)}
                                     placeholder="Add a comment"
                                 />
@@ -177,7 +238,7 @@ function AnnEmpDisplay() {
                         <Form onFinish={() => handleCommentSubmit(announcement._id)}>
                             <Form.Item>
                                 <Input
-                                    value={commentText}
+                                    
                                     onChange={(e) => setCommentText(e.target.value)}
                                     placeholder="Add a comment"
                                 />

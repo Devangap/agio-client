@@ -1,7 +1,6 @@
 .leavesub {
-    background-color: #F7B05B !important;
-    border-color: #1F1300 !important;
-    height: 50px !important;
+    background-color: #ECB159!important;
+    height: 40px !important;
     width: 200px !important;
     align-items: center !important;
     color: #000000 !important;
@@ -11,25 +10,71 @@
     margin-top: 20px !important; /* Ensure the margin-top is applied */
     margin-right: 10px !important; /* 10px margin from the right */
     margin-left: auto !important; /* Move the button to the right */
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     display: flex; /* Enable flexbox */
     justify-content: center; /* Horizontally center content */
+    border: none !important; /* Remove the border */
 }
+
 .leave-type-card {
     margin-top: 20px;
-    margin-left: 10px;
-    margin-right: 10px;
-    width: 300px; /* Adjust width according to your preference */
-    background-color: #e1cdb1fa; /* Blue color */
-    margin-bottom: 16px; /* Add margin between cards */
+    margin-left: 40px;
+    margin-right: 40px;
+    width: 300px; 
+    height: 140px;/* Adjust width according to your preference */
+    background-color: #fafafa; /* Blue color */
+    margin-bottom: 80px; /* Add margin between cards */
     display: flex; /* Use flexbox */
-    flex-direction: column; /* Set flex direction to column */
-    justify-content: center; /* Vertically center content */
-    align-items: center; /* Horizontally center content */
-    
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
 }
 
 .leave-type-card p {
     color: #1F1300; /* Set text color to white */
-    text-align: center; /* Center align text */
+}
+
+.leavecalcomp {
+    background-color: #fafafa;
+    padding: 10px !important;
+    padding-right: 10px !important;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1020px !important;
+    margin: 0 auto; /* align to the middle of the page */
+    margin-bottom: 50px;
+   
+}
+
+.leave-description {
+    background-color: #FFEBB2;
+    border-radius: 10px;
+    padding: 30px !important;
+    margin-left: 10px !important;
+    font-size: 26px;
+    font-weight: bold;
+    color: #ECB159 !important;
+    width: 80px;
+}
+
+.Leaveempdisplay{
+    background-color: #fafafa;
+    padding: 10px !important;
+    padding-right: 10px !important;
+    border-radius: 10px;
+    padding-bottom: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1020px !important;
+    margin: 0 auto;
+    
+}
+
+.leaveTableemp .leaveTable {
+    width: 50% !important;
 }

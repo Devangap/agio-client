@@ -22,9 +22,11 @@ function TraDriverBox() {
     <Layout>
       <div className="mybox">
         <div className="mybox1" onClick={handleDriverRegistryClick}>
-          <span className='boxname'>Driver Registry</span>
+        <img className="images" src="/static/media/shuttle.3c55df9a0807cf05c4df.png"  />
+          <span className='boxname'>Driver Register</span>
         </div>
         <div className="mybox1" onClick={handleDriverDetailsClick}>
+        <img className="images" src="/static/media/shuttle.3c55df9a0807cf05c4df.png"  />
           <span className='boxname'>Drivers Details</span>
         </div>
         
