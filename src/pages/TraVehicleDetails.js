@@ -9,9 +9,7 @@ function TraVehicleDetails() {
     const [Vregister, setVregister] = useState([]);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [currentVregister, setCurrentVregister] = useState(null);
-    const [filteredVregister, setFilteredVregister] = useState([]);
     const [searchText, setSearchText] = useState('');
-
 
     const fetchVregister = async () => {
         try {
@@ -44,21 +42,6 @@ function TraVehicleDetails() {
         setIsModalVisible(true);
     };
 
-    const handleUpdate = async (values) => {
-        try {
-            const response = await axios.put(`/api/employee/updatevehicles/${currentVregister._id}`, values);
-            if (response.data.success) {
-                message.success('Vehicle updated successfully');
-                setIsModalVisible(false);
-                fetchVregister();
-            } else {
-                message.error(response.data.message);
-            }
-        } catch (error) {
-            message.error('Failed to update Vehicle');
-        }
-    };
-
     const renderLongText = (text) => {
         const maxLength = 10; // Set your desired maximum length here
         if (text && text.length > maxLength) {
@@ -83,6 +66,9 @@ function TraVehicleDetails() {
             title: 'Vehicle Number',
             dataIndex: 'vehicleNum',
             key: 'vehicleNum',
+            // Filter the data based on vehicle number (case-insensitive partial match)
+            filteredValue: searchText ? [searchText] : null,
+            onFilter: (value, record) => record.vehicleNum.toLowerCase().includes(value.toLowerCase()),
         },
         {
             title: 'Emissions Certificate Details',
@@ -147,4 +133,3 @@ function TraVehicleDetails() {
 }
 
 export default TraVehicleDetails;
- 
