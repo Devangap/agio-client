@@ -39,11 +39,11 @@
   .pybtn{
     margin-left: 2px;
     text-align: center;
-  background-color: #1F1300 !important;
-  border-color: #1F1300 !important;
+  background-color: #ffc658 !important;
+  border-color: #ffc658 !important;
   height: 33px !important;
   width: 75px !important;
-  color: #fafafa !important;
+  color: #1F1300 !important;
   font-size: 12px !important;
   font-weight: bold;
   border-radius: 5px !important;

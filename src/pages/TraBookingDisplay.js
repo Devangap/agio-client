@@ -109,7 +109,11 @@ function TraBookingDisplay() {
             render: (_, record) => (
                 <>
                     <Button type="primary" className="update" onClick={() => navigate(`/TraBookingUpdate/${record._id}`)}>Update</Button>
-                    <Button type="primary" className="pybtn" onClick={() => navigate(`/TraPayment`)}>Upload</Button>
+                    {record.status === 'approved' ? (
+                        <Button type="primary" className="pybtn" onClick={() => navigate(`/TraPayment`)}>Upload</Button>
+                    ) : (
+                        <Button type="primary" className="pybtn" disabled>Upload</Button>
+                    )}
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
                 </>
             ),
