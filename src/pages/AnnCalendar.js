@@ -139,6 +139,7 @@ function AnnCalendar() {
 
     return (
         <Layout>
+             <h1>Event Calendar</h1>
             <div style={{ height: 500, margin: '50px' }}>
                 <Calendar
                     localizer={localizer}

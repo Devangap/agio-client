@@ -63,7 +63,7 @@ function Layout({ children }) {
           },
         {
             name: 'Uniform',
-            path: '/profile',
+            path: '/UniformOrder',
             icon: 'ri-account-box-line',
         },
         {
@@ -83,6 +83,11 @@ function Layout({ children }) {
             path: '/insEmployee',
             icon: 'ri-article-line',
         },
+        { //banuka
+            name: "Performance",
+            path: '/rank',
+            icon: 'ri-home-line',
+        }//
     ];
     const adminMenu = [
         {
@@ -206,8 +211,18 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: ' uniform ',
-            path: '/profile',
+            name: ' Uniform Orders ',
+            path: '/UniformManagerView',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Order Overview ',
+            path: '/UniformTotals',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Uniform Inventory ',
+            path: '/UniformShirtInventory',
             icon: 'ri-account-box-line',
         },
         {
@@ -243,7 +258,7 @@ function Layout({ children }) {
         },
         {
             name: ' Insuarance ',
-            path: '/InsuranceManagerDisplay',
+            path: '/InsuranceManager',
             icon: 'ri-account-box-line',
         },
         {
@@ -261,7 +276,7 @@ function Layout({ children }) {
         },
         {
             name: 'Performance',
-            path: '/perf',
+            path: '/view',      //path to view page
             icon: 'ri-home-line',
         },
         {
