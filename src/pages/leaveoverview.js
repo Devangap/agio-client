@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
-import { Input ,Tabs} from 'antd';
+import { Input ,Tabs,Form,Card,Select} from 'antd';
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 
 import { Table, message } from 'antd';
@@ -10,6 +10,7 @@ import { showLoading, hideLoading } from '../redux/empalerts';
 import toast from 'react-hot-toast';
 
 function LeaveOverview() {
+    const { Option } = Select;
     const [totalMedicalLeaves, setTotalMedicalLeaves] = useState(0);
     const [totalGeneralLeaves, setTotalGeneralLeaves] = useState(0);
     const [totalAnnualLeaves, setTotalAnnualLeaves] = useState(0);
@@ -410,6 +411,58 @@ axios.get('/api/employee/yearly-annual-leaves')
 </div> */}
             
              <h4>Leave Overview</h4>
+             <Card>
+             <Form>
+    <Form.Item
+        name="Type"
+        label="Select leave type"
+        className='leavet'
+        rules={[{ required: true, message: 'Please select leave type!' }]}
+    >
+        <Select className="leave_Type" placeholder="Select leave type" >
+            <Option value="General">General</Option>
+            <Option value="Annual">Annual</Option>
+            <Option value="Medical">Medical</Option>
+        </Select>
+    </Form.Item>
+
+    <Form.Item
+        name="Year"
+        label="Select Year"
+        className='leavet'
+        rules={[{ required: true, message: 'Please select year!' }]}
+    >
+        <Select className="leave_Year" placeholder="Select year">
+            <Option value="2024">2024</Option>
+            <Option value="2025">2025</Option>
+            <Option value="2026">2026</Option>
+            {/* Add more years as needed */}
+        </Select>
+    </Form.Item>
+
+    <Form.Item
+        name="Month"
+        label="Select Month"
+        className='leavet'
+        rules={[{ required: true, message: 'Please select month!' }]}
+    >
+        <Select className="leave_Month" placeholder="Select month">
+            <Option value="January">January</Option>
+            <Option value="February">February</Option>
+            <Option value="March">March</Option>
+            <Option value="April">April</Option>
+            <Option value="May">May</Option>
+            <Option value="June">June</Option>
+            <Option value="July">July</Option>
+            <Option value="August">August</Option>
+            <Option value="September">September</Option>
+            <Option value="October">October</Option>
+            <Option value="November">November</Option>
+            <Option value="December">December</Option>
+        </Select>
+    </Form.Item>
+</Form>
+             </Card>
              <Tabs defaultActiveKey="monthly" onChange={(key) => setActiveTab(key)}>
                 <TabPane tab="Monthly" key="monthly">
                     {/* Monthly leave distribution content */}

@@ -152,7 +152,7 @@ function Layout({ children }) {
     ];
     const leavemenu = [
         {
-            name: ' Overview',
+            name: 'Leave Overview',
             path: '/leaveoverview',
             icon: 'ri-account-box-line',
         },
@@ -167,6 +167,11 @@ function Layout({ children }) {
             name: ' Calendar',
             path: '/LeaveCal',
             icon: 'ri-account-box-line',
+        },
+        {
+            name: 'Announcements',
+            path: '/AnnEmpDisplay',
+            icon: 'ri-survey-line',
         },
        
        

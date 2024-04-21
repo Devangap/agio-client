@@ -41,7 +41,7 @@
     border-radius: 5px;
     box-shadow: 0 0 2px gray;
     height: 80vh;
-    width: 1100px !important;
+    width: 1180px !important;
     overflow-x: auto; /* Add horizontal scrollbar */
     overflow-y: auto; /* Add vertical scrollbar */
 }

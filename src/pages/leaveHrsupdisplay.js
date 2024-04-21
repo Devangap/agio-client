@@ -190,11 +190,17 @@ function LeaveHrsupdisplay() {
             title: 'Start Date',
             dataIndex: 'startDate',
             key: 'startDate',
+            render: (text) => {
+                return new Date(text).toLocaleDateString('en-US');
+            }
         },
         {
             title: 'End Date',
             dataIndex: 'endDate',
             key: 'endDate',
+            render: (text) => {
+                return new Date(text).toLocaleDateString('en-US');
+            }
         },
         {
             title: 'Type',
@@ -217,20 +223,20 @@ function LeaveHrsupdisplay() {
             key: 'file',
             render: (_, record) => {
                 const filename = record?.file?.filename;
-    
+
                 const backendUrl = 'http://localhost:5001/';
-    
+
                 const filePath = filename ? `${backendUrl}uploads/${filename}` : '';
-                
+
                 // Render a download button if a file exists
                 return filename ? (
-                    <Button 
-                        type="link" 
-                        href={filePath} 
-                        target="_blank" 
+                    <Button
+                        type="link"
+                        href={filePath}
+                        target="_blank"
                         download={filename} // Add the download attribute
                     >
-                        Download PDF
+                        View PDF
                     </Button>
                 ) : null;
             },
@@ -248,10 +254,16 @@ function LeaveHrsupdisplay() {
             render: (_, record) => (
                 <>
                     <div className="d-flex">
-                        {record.status === "pending" && <Button type="primary" className="approve" onClick={() => { changestatus(record, 'approved'); changeLeaveCount(record); }}>Approve</Button>}
-                        {record.status === "approved" && <Button type="primary" className="reject" onClick={() => changestatus(record, 'rejected')}>Reject</Button>}
+                        {record.status === "pending" && (
+                            <>
+                                <Button type="primary" className="approvebut" onClick={() => { changestatus(record, 'approved'); changeLeaveCount(record); }}>Approve</Button>
+                                <Button type="primary" danger className="rejectbut" onClick={() => changestatus(record, 'rejected')}>Reject</Button>
+                            </>
+                        )}
+                        {record.status === "approved" && (
+                            <Button type="primary" danger className="rejectbut" onClick={() => changestatus(record, 'rejected')}>Reject</Button>
+                        )}
                     </div>
-                    <Button type="primary">Delete</Button>
                 </>
             ),
         },
@@ -259,17 +271,25 @@ function LeaveHrsupdisplay() {
 
     return (
         <Layout>
-            <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '20px' }}>
-                <Card title="Approved Leaves" style={{ width: 300 }}>
+            <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Card  title = "Approved Leaves "className="leave-type-card"  bordered={false}>
+            <div className="leave-description" style={{  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <h1>{approvedLeaves}</h1>
+                    </div>
                 </Card>
-                <Card title="Pending Leaves" style={{ width: 300 }}>
+                
+                <Card title="Pending Leaves" className="leave-type-card"  bordered={false}>
+                <div className="leave-description" style={{  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <h1>{pendingLeaves}</h1>
+                    </div>
                 </Card>
-                <Card title="Rejected Leaves" style={{ width: 300 }}>
+                <Card title="Rejected Leaves"  className="leave-type-card"  bordered={false}>
+                <div className="leave-description" style={{  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                     <h1>{rejectedLeaves}</h1>
+                    </div>
                 </Card>
             </div>
+            <div className = "remaining">
             <Input.Search
                 placeholder="Search by name"
                 allowClear
@@ -277,6 +297,7 @@ function LeaveHrsupdisplay() {
                 style={{ width: 200, marginBottom: 16 }}
             />
            <Table dataSource={filteredData} columns={columns} />
+           </div>
         </Layout>
     );
 }
