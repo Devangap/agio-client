@@ -5,6 +5,7 @@ import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
 import moment from 'moment';
+import "../TraForm.css";
 
 function TraBookingUpdate() {
 
@@ -62,25 +63,25 @@ function TraBookingUpdate() {
 
   return (
     <Layout>
-      <div className="annform">
-        <div className="AnnHRSup_form box p-3">
-          <h3 className='title'>Update Booking Details</h3>
+      <div className="bookform">
+        <div className="book_form box p-3">
+          <h3 className='booktitle'>Update Booking Details</h3>
           <Form layout='vertical' form={form} onFinish={onFinish}>
-            <div className="form-row">
-              <div className="item">
+            <div className="bookform-row">
+              <div className="bookitem">
                 <Form.Item label='Employee Name' name='EmpName'>
                   <Input placeholder='Employee Name' />
                 </Form.Item>
               </div>
             </div>
 
-            <div className="form-row">
-              <div className="item">
+            <div className="bookform-row">
+              <div className="bookitem">
               <Form.Item label='Employee Email' name='EmpEmail'>
             <Input placeholder='Employee Email' />
           </Form.Item>
               </div>
-              <div className="item">
+              <div className="bookitem">
               <Form.Item name="Type" label="Type">
             <Select className="Type" placeholder="Select Vehicle type">
               <Option value="Bus">Bus</Option>
@@ -89,7 +90,7 @@ function TraBookingUpdate() {
           </Form.Item>
               </div>
 
-              <div className="item">
+              <div className="bookitem">
           <Form.Item name="location" label="Select Location">
             <Select className="Type" placeholder="Select Location">
               <Option value="Colombo">Colombo</Option>
@@ -103,22 +104,23 @@ function TraBookingUpdate() {
         </div>
             </div>
 
-            <div className="form-row">
-              <div className="item">
+            <div className="bookform-row">
+              <div className="bookitem">
               <Form.Item label="Booking Date" name="bookingdate">
             <DatePicker className="date" />
           </Form.Item>
               </div>
             </div>
 
-            <div className="item">
+            <div className="bookitem">
             <Form.Item name="Details" label="Any Other Details">
           <Input.TextArea className='Description' />
         </Form.Item>
             </div>
 
-            <div className="Button-cons">
-              <Button className='primary-button my-2' htmlType='submit'>Update</Button>
+            <div className="bookButton-cons">
+              <Button className='bookprimary-button my-2' htmlType='submit'>Update</Button>
+              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraBookingDisplay`)}>Viwe Details</Button>
             </div>
           </Form>
         </div>

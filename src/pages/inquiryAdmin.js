@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
 import Layout from '../components/Layout';
+import '../inquiry.css';
 
 const { TextArea } = Input;
 
@@ -10,7 +11,6 @@ function AdminInquiries() {
   const [visible, setVisible] = useState(false);
   const [form] = Form.useForm();
   const [selectedInquiry, setSelectedInquiry] = useState(null);
-  const [confirmVisible, setConfirmVisible] = useState(false);
   const [selectedId, setSelectedId] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -28,23 +28,18 @@ function AdminInquiries() {
   }, []);
 
   const handleStatusUpdate = async (id) => {
-    setConfirmVisible(true);
-    setSelectedId(id);
-  };
-
-  const confirmStatusUpdate = async () => {
     try {
       const updatedInquiries = inquiries.map((inquiry) => {
-        if (inquiry._id === selectedId) {
+        if (inquiry._id === id) {
           inquiry.status = 'Done';
           axios
-            .put(`/api/employee/inquiry/${selectedId}/update-status`, {
+            .put(`/api/employee/inquiry/${id}/update-status`, {
               status: 'Done',
             })
             .then((response) => {
               setInquiries((prevInquiries) =>
                 prevInquiries.map((prevInquiry) =>
-                  prevInquiry._id === selectedId
+                  prevInquiry._id === id
                     ? { ...prevInquiry, status: 'Done' }
                     : prevInquiry
                 )
@@ -53,12 +48,10 @@ function AdminInquiries() {
             })
             .catch((error) => {
               console.error('Error updating status:', error);
-              message.error('Failed to update status');
             });
         }
         return inquiry;
       });
-      setConfirmVisible(false);
     } catch (error) {
       console.error('Error updating status:', error);
     }
@@ -112,7 +105,8 @@ function AdminInquiries() {
 
   const filteredInquiries = inquiries.filter(
     (inquiry) =>
-      inquiry.username.toLowerCase().includes(searchQuery.toLowerCase())
+      inquiry.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      inquiry.inquiryID.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleShowMore = (text) => {
@@ -128,6 +122,12 @@ function AdminInquiries() {
   };
 
   const columns = [
+    {
+      title: 'Inquiry ID',
+      dataIndex: 'inquiryID',
+      key: 'inquiryID',
+      width: 100,
+    },
     {
       title: 'Full Name',
       dataIndex: 'name',
@@ -156,13 +156,13 @@ function AdminInquiries() {
       title: 'Inquiry',
       dataIndex: 'describe',
       key: 'describe',
-      className: 'inquiry-column',
+      className: 'i-inquiry-column',
       render: (text) => (
         <>
           {text.length > 10 ? (
             <span>
               {text.substr(0, 10)}...
-              <Button type="link" onClick={() => handleShowMore(text)}>
+              <Button type="link" className="i-show-more-button" onClick={() => handleShowMore(text)}>
                 Show More
               </Button>
             </span>
@@ -182,7 +182,7 @@ function AdminInquiries() {
           {text && text.length > 10 ? (
             <span>
               {text.substr(0, 10)}...
-              <Button type="link" onClick={() => handleShowMore(text)}>
+              <Button type="link" className="i-show-more-button" onClick={() => handleShowMore(text)}>
                 Show More
               </Button>
             </span>
@@ -205,7 +205,7 @@ function AdminInquiries() {
           >
             {record.status === 'Pending' ? 'Pending' : 'Done'}
           </Button>
-          <Button onClick={() => handleReply(record._id)}>Reply</Button>
+          <Button className="reply-button" onClick={() => handleReply(record._id)}>Reply</Button>
         </>
       ),
     },
@@ -213,22 +213,24 @@ function AdminInquiries() {
 
   return (
     <Layout>
-      <div style={{ width: '1600px' }}>
-        <h1>All Inquiries</h1>
+      <div className="i-container">
+        <h1 className="i-title">All Inquiries</h1>
         <Input
-          placeholder="Search by username"
+          className="i-search-input"
+          placeholder="Search by username or inquiry ID"
           value={searchQuery}
           onChange={handleSearch}
         />
-        <Table dataSource={filteredInquiries} columns={columns} />
+        <Table dataSource={filteredInquiries} columns={columns} scroll={{ x: true, y: 400 }} />
 
         <Modal
           title="Write Reply"
           visible={visible}
           onCancel={() => setVisible(false)}
           footer={null}
+          className="i-modal"
         >
-          <Form form={form} onFinish={onFinishReply} layout="vertical">
+          <Form form={form} onFinish={onFinishReply} layout="vertical" className="i-form">
             <Form.Item
               label="Reply"
               name="reply"
@@ -236,23 +238,14 @@ function AdminInquiries() {
                 { required: true, message: 'Please input your reply!' },
               ]}
             >
-              <TextArea rows={4} />
+              <TextArea rows={4} className="i-reply-textarea" />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button type="primary" htmlType="submit" className="i-send-reply-button">
                 Send Reply
               </Button>
             </Form.Item>
           </Form>
-        </Modal>
-
-        <Modal
-          title="Confirm Update"
-          visible={confirmVisible}
-          onOk={confirmStatusUpdate}
-          onCancel={() => setConfirmVisible(false)}
-        >
-          Are you sure you want to mark this inquiry as Done?
         </Modal>
       </div>
     </Layout>

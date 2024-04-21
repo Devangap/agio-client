@@ -288,6 +288,7 @@ function Layout({ children }) {
     let menuToBeRendered = userMenu;
 
     if (user?.isAdmin) {
+       
         menuToBeRendered = adminMenu;
     } else if (user?.isDoctor) {
         menuToBeRendered = doctorMenu;
@@ -295,6 +296,7 @@ function Layout({ children }) {
 else if (user?.isAnnHrsup) {
     menuToBeRendered = Annhrsupmenu ;
 }else if (user?.isLeaveHrsup) {
+    
     menuToBeRendered = leavemenu ;
 }else if (user?.islogisticsMan) {
     menuToBeRendered = logisticmenu ;

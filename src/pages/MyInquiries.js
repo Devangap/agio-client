@@ -3,10 +3,9 @@ import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
 import { useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
+import '../inquiry.css';
 
 const { TextArea } = Input;
-
-// Existing imports...
 
 function MyInquiries() {
   const location = useLocation();
@@ -16,8 +15,9 @@ function MyInquiries() {
   const [form] = Form.useForm();
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [fullInquiry, setFullInquiry] = useState('');
-  const [fullReply, setFullReply] = useState(''); // New state for full reply
-  const username = location.state ? location.state.username : null;
+  const [fullReply, setFullReply] = useState('');
+  const [username, setUsername] = useState(location.state ? location.state.username : null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const fetchInquiries = async () => {
@@ -83,6 +83,11 @@ function MyInquiries() {
 
   const columns = [
     {
+      title: 'Inquiry ID',
+      dataIndex: 'inquiryID', 
+      key: 'inquiryID',
+    },
+    {
       title: 'Full Name',
       dataIndex: 'name',
       key: 'name',
@@ -142,19 +147,34 @@ function MyInquiries() {
       key: 'action',
       render: (_, record) => (
         <>
-          <Button type="primary" className="update" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button type="primary" className="iupdate" onClick={() => handleUpdate(record)} disabled={record.status === 'Done'}>
+            Update
+          </Button>
           <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
         </>
       ),
     },
   ];
 
+  // Filter inquiries based on search query
+  const filteredInquiries = inquiries.filter(inquiry => inquiry.inquiryID.includes(searchQuery));
+
   return (
     <Layout>
-      <div>
-        <h1>My Inquiries</h1>
-        <Table dataSource={inquiries} columns={columns} />
+      <div className="i-container">
+        <h1 className="i-title">My Inquiries</h1>
+        {/* Search Bar */}
+        <Input
+          placeholder="Search by Inquiry ID"
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          style={{ marginBottom: '1rem' }}
+        />
+        {/* Table */}
+        <Table dataSource={filteredInquiries} columns={columns}  />
 
+        {/* Modals */}
+        {/* Detail Modal */}
         <Modal
           title="Inquiry Details"
           visible={detailModalVisible}
@@ -164,14 +184,14 @@ function MyInquiries() {
           <p>{fullInquiry}</p>
           <p>{fullReply}</p>
         </Modal>
-
+        {/* Update Modal */}
         <Modal
           title="Update Inquiry"
           visible={updateModalVisible}
           onCancel={() => setUpdateModalVisible(false)}
           footer={null}
         >
-          <Form form={form} onFinish={onFinish} layout="vertical">
+          <Form form={form} onFinish={onFinish} layout="vertical" className="i-main_form">
             <Form.Item label="Full Name" name="name">
               <Input />
             </Form.Item>
@@ -188,7 +208,7 @@ function MyInquiries() {
               <TextArea rows={4} />
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button className="iupdate" type="primary" htmlType="submit">
                 Update
               </Button>
             </Form.Item>

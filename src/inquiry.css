@@ -198,4 +198,98 @@ label{
   .ant-btn-primary {
     margin-right: 8px;
   }
+  /* inquiry.css */
+
+/* Style for the main container */
+.i-container {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
+    padding: 20px;
+  }
   
+  /* Style for the title */
+  .i-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    
+  }
+  
+  /* Style for the search input */
+  .i-search-input {
+    margin-bottom: 20px;
+  }
+  
+  /* Style for the table */
+  .i-table {
+    width: 100%;
+  }
+  
+  /* Style for the action buttons */
+  .i-action-buttons {
+    display: flex;
+    gap: 10px;
+  }
+  
+  /* Style for the modal */
+  .i-modal {
+    max-width: 500px;
+  }
+  
+  /* Style for the form */
+  .i-form {
+    width: 100%;
+  }
+  
+  /* Style for the reply textarea */
+  .i-reply-textarea {
+    width: 100%;
+  }
+  
+  /* Style for the send reply button */
+  .i-send-reply-button {
+    margin-top: 10px;
+  }
+  
+  /* Style for the show more button */
+  .i-show-more-button {
+    margin-left: 10px;
+  }
+  .reply-button {
+    background-color: #F7B05B !important;
+    color: white; /* Optionally, set text color */
+  }
+  .iupdate{
+    background-color: #F7B05B !important;
+    color: white;
+  }
+  .i-send-reply-button{
+    background-color: #F7B05B !important;
+    color: rgb(253, 248, 248);
+    
+  }
+
+  .imain_form {
+    background-color: #FAFAFA; /* Background color */
+    border-radius: 20px; /* Border radius */
+    box-shadow: 0 0 2px rgba(128, 128, 128, 0.043); /* Box shadow */
+    padding: 20px; /* Padding */
+    max-width: 900px; /* Maximum width */
+    margin: 0 auto; /* Center the form */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    height: 600px; /* Height */
+    border: 1px solid #ddd; 
+}
+
+.iitem {
+  margin-right: 60px;
+  margin-left: 30px;
+  width: 500px; 
+}
+input,
+textarea {
+    width: 100%; 
+}
