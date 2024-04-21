@@ -320,7 +320,10 @@ const LeaveEmp = () => {
                 const response = await axios.put(`/api/employee/updateleave/${id}`, updatedValues); // Corrected the way to pass parameters
                 if (response.data.success) {
                     toast.success(response.data.message);
+                    fetchLeaveData ();
                     navigate('/leaveEmp');
+                    setUpdateModalVisible(false);
+                    showLoading();
                 } else {
                     toast.error(response.data.message);
                 }
@@ -605,7 +608,7 @@ const LeaveEmp = () => {
                 <div className="leaveform">
       <div className="leave_formbox p-3">
        
-        <Form layout="vertical" form={form} onFinish={handleUpdateFinish}>
+        <Form layout="vertical" form={form} >
         <div className="leave_form-row">
                         <div className="leave_item">
                             <Form.Item label='Employee Name' name='name'>
