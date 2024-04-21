@@ -24,9 +24,11 @@ function TraBookingBox() {
     <Layout>
       <div className="mybox">
         <div className="mybox1" onClick={handleBookingClick}>
+          <img className="images" src="/static/media/shuttle.3c55df9a0807cf05c4df.png"  />
           <span className='boxname'>Transport Booking</span>
         </div>
         <div className="mybox1" onClick={handleBookingDetailsClick}>
+        <img className="images" src="/static/media/shuttle.3c55df9a0807cf05c4df.png"  />
           <span className='boxname'>Booking Details</span>
         </div>
         

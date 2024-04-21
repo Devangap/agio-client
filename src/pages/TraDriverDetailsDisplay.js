@@ -104,7 +104,7 @@ function TraDriverDetailsDisplay() {
           <Button type="primary" className="update" onClick={() => navigate(`/TraDriverDetailsUpdate/${record._id}`)}>
             Update
           </Button>
-          <Button type="primary" className="update" danger onClick={() => handleDelete(record._id)}>
+          <Button  danger onClick={() => handleDelete(record._id)}>
             Delete
           </Button>
         </>

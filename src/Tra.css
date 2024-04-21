@@ -1,7 +1,7 @@
 /* Your CSS styles here */
 .payH {
   margin-left: 100px;
-  margin-top: 50px;
+  margin-top: 10px;
   color: #1F1300;
   margin-bottom: 20px;
   padding-top: 20px;
@@ -38,7 +38,7 @@
 .PayD li{
   margin-left: 70px;
   font-family: "Lato", sans-serif;
-  font-weight: 100;
+  font-weight: 400;
   font-style: normal;
   color:#000000 ;
   font-size: 18px;
@@ -51,7 +51,7 @@
   font-weight: 500;
   font-style: normal;
   color:#000000 ;
-  font-size: 38px;
+  font-size: 50px;
   
 }
 .input_file .upbtn{
