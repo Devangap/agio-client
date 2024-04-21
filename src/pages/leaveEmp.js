@@ -117,6 +117,7 @@ const LeaveEmp = () => {
             fetchLeave();
         }
     }, [selectedEvent, form, navigate, updateModalVisible]);
+   
     
 
     const fetchLeaveData = async () => {
@@ -303,11 +304,11 @@ const LeaveEmp = () => {
             toast.error("Something went wrong");
         }
     };
-    const handleUpdateFinish = async (values) => {
+    const handleUpdateFinish = async (id, values) => {
         try {
             // Extracting values from individual date pickers
-            const startDate = values.startDate;
-            const endDate = values.endDate;
+            const startDate = values?.startDate;
+            const endDate = values?.endDate;
     
             const updatedValues = {
                 ...values,
@@ -315,8 +316,8 @@ const LeaveEmp = () => {
                 endDate: endDate ? moment(endDate).format('YYYY-MM-DD') : undefined,
             };
     
-            if (values.id) {
-                const response = await axios.put(`/api/employee/updateleave/${id}`, updatedValues);
+            if (id) {
+                const response = await axios.put(`/api/employee/updateleave/${id}`, updatedValues); // Corrected the way to pass parameters
                 if (response.data.success) {
                     toast.success(response.data.message);
                     navigate('/leaveEmp');
@@ -331,7 +332,11 @@ const LeaveEmp = () => {
             toast.error('Failed to update leave data!');
         }
     };
-
+   
+    
+    
+    
+    
 
     const handleBeforeUpload = (file) => {
         const isPDF = file.type === 'application/pdf';
@@ -353,6 +358,8 @@ const LeaveEmp = () => {
         setFileList([file]);
         return false;
     };
+
+    console.log("DEVVVVV" , selectedEvent?._id)
 
     const handleRemove = () => {
         setFileList([]);
@@ -598,7 +605,7 @@ const LeaveEmp = () => {
                 <div className="leaveform">
       <div className="leave_formbox p-3">
        
-        <Form layout="vertical" form={form} onFinish={onFinish}>
+        <Form layout="vertical" form={form} onFinish={handleUpdateFinish}>
         <div className="leave_form-row">
                         <div className="leave_item">
                             <Form.Item label='Employee Name' name='name'>
@@ -665,7 +672,7 @@ const LeaveEmp = () => {
                         </Form.Item>
                     </div>
                     <div className="leave_Button-cons">
-                        <Button className='leave_primary-button my-2' htmlType='submit'  onClick={() => handleUpdateFinish()}>Update</Button>
+                    <Button className='leave_primary-button my-2' htmlType='submit' onClick={() => handleUpdateFinish(selectedEvent?._id, form.getFieldsValue())}>Update</Button>
                     </div>
                 </Form>
             </div>
