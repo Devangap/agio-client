@@ -1,4 +1,3 @@
-// Inquiry.js
 import React from 'react';
 import { Button, Form, Input, DatePicker } from 'antd';
 import '../inquiry.css';
@@ -7,6 +6,7 @@ import axios from "axios";
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import moment from 'moment';
 
 function Inquiry() {
   const navigate = useNavigate();
@@ -15,9 +15,17 @@ function Inquiry() {
   const onFinish = async (values) => {
     console.log('Received values of form:', values);
     try {
+      // Format the inquiry date using moment.js to strip the time component
+      const formattedDate = moment(values.inquirydate).format('YYYY-MM-DD');
+
       const response = await axios.post(
         '/api/employee/inquiry',
-        { ...values, userid: user?.userid, username: user?.username },
+        {
+          ...values,
+          userid: user?.userid,
+          username: user?.username,
+          inquirydate: formattedDate, // Use the formatted date
+        },
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -33,6 +41,17 @@ function Inquiry() {
     } catch (error) {
       toast.error("Something went wrong");
     }
+  };
+
+  const validatePhoneNumber = (_, value) => {
+    if (!value) {
+      return Promise.reject('Please input your phone number!');
+    }
+    const phoneNumberRegex = /^\+94\d{9}$/; // Regex to match +94 followed by 9 digits
+    if (!phoneNumberRegex.test(value)) {
+      return Promise.reject('Please enter a valid Sri Lankan phone number starting with +94 and containing 10 digits!');
+    }
+    return Promise.resolve();
   };
 
   const handleNavigate = () => {
@@ -55,8 +74,8 @@ function Inquiry() {
                   <Form.Item label="Pick a date" name="inquirydate" rules={[{ required: true, message: 'Please select inquiry date!' }]}>
                     <DatePicker className="date" />
                   </Form.Item>
-                  <Form.Item label='Phone Number' name='phoneNumber' rules={[{ required: true, message: 'Please input your phone number!' }]}>
-                    <Input placeholder='Phone Number' />
+                  <Form.Item label='Phone Number' name='phoneNumber' rules={[{ validator: validatePhoneNumber }]}>
+                    <Input placeholder='+94XXXXXXXXX' />
                   </Form.Item>
                   <Form.Item name="describe" label="Enter Inquiry" rules={[{ required: true, message: 'Please enter your inquiry!' }]}>
                     <Input.TextArea className='idescribe' />
