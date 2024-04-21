@@ -1,6 +1,8 @@
 
 import React from 'react';
+
 import {BrowserRouter, Routes, Route,Link,Router} from 'react-router-dom';
+
 
 
 import Main_register from './pages/Main_register';
@@ -59,6 +61,7 @@ import Inquiry from './pages/inquiry';
 
 import InsClaimSubmit from './pages/InsClaimSubmit';
 import InsEmployee from './pages/InsEmployee';
+import InsuranceManagerDisplay from './pages/InsuranceManagerDisplay';
 
 
 import { useSelector } from 'react-redux';
@@ -79,11 +82,13 @@ import TraBookingBox from './pages/TraBookingBox';
 
 import MyInquiries from './pages/MyInquiries';
 
+
 import InquiryAdmin from './pages/inquiryAdmin';
 
 import TraBookingDisplayAdmin from './pages/TraBookingDisplayAdmin';
 import TraVehicleviwe from './pages/TraVehicleviwe';
 import TraDriverViwe from './pages/TraDriverViwe';
+import TraPayment from './pages/TraPayment';
 
 
 
@@ -109,6 +114,26 @@ import MedicalAppointments from "./pages/MedicalAppointments";
 import MedParameters from "./pages/MedParameters";
 import MedOverview from "./pages/MedOverview";
 import MedReports from "./pages/MedReports";
+
+
+
+//performance
+import Getperformancerecords from "./pages/Perform_Getperformancerecords";
+import Updatedataform from "./pages/Perform_Updatedataform";
+
+
+import Targets from "./pages/perform_target";
+import Profile from "./pages/Perform_profile";
+import Goalprogress from "./pages/Perform_goalprogress";
+import Rewardsm from "./pages/Perform_Rewards";
+
+import Rank from "./pages/Perform_Rank";
+import Compare1 from "./pages/Perform_Compare1";
+
+import Charta from "./pages/Perform_Chart"
+
+
+
 
 
 function App() {
@@ -279,6 +304,8 @@ function App() {
           <Route path='/TraBookingDisplayAdmin' element={<ProtectedRoute><TraBookingDisplayAdmin/></ProtectedRoute>} />
           <Route path='/TraVehicleviwe' element={<ProtectedRoute><TraVehicleviwe/></ProtectedRoute>} />
           <Route path='/TraDriverViwe' element={<ProtectedRoute><TraDriverViwe/></ProtectedRoute>} />
+          <Route path='/TraPayment' element={<ProtectedRoute><TraPayment/></ProtectedRoute>} />
+
 
 
 
@@ -294,7 +321,26 @@ function App() {
           
 
           <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
+          <Route path='/insEmployee/:userId' element={<InsEmployee/>}/>
           <Route path='/insEmployee' element={<InsEmployee/>}/>
+          <Route path='/InsuranceManagerDisplay' element={<InsuranceManagerDisplay/>}/>
+
+          
+          /*performance*/
+
+          <Route path="/view" element={<ProtectedRoute><Getperformancerecords/></ProtectedRoute>}/>
+          <Route path="/update/:id" element={<ProtectedRoute><Updatedataform/></ProtectedRoute>}/>
+    
+          <Route path="/target" element = {<ProtectedRoute><Targets/></ProtectedRoute>}/>
+          <Route path="/profile" element = {<ProtectedRoute><Profile/></ProtectedRoute>}/>
+          <Route path="/progress" element = {<Goalprogress/>}/>
+          <Route path="/rewardsm" element = {<ProtectedRoute><Rewardsm/></ProtectedRoute>}/>
+          <Route path="/rank" element = {<Rank/>}/>
+          <Route path="/com/:id" element = {<ProtectedRoute><Compare1/></ProtectedRoute>}/> 
+          <Route path="/viewemp/:id" element = {<ProtectedRoute><Charta/></ProtectedRoute>}/> 
+
+         
+
 
 
         </Routes>
