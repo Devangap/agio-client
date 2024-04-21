@@ -610,11 +610,6 @@ medical-reports
     padding-left: 30px;
 }
 
-.doc-reports-secondary-2-section-2-data-summary table, td, th {
-    border: 1px solid #dfdfdf;
-    border-collapse: collapse;
-}
-
 .doc-reports-secondary-2-section-2-data-summary th {
     background-color: #eeeeee;
     text-align: center;
@@ -641,11 +636,6 @@ medical-reports
 .doc-reports-secondary-2-section-3-data-summary {
     width: 40%;
     padding-left: 30px;
-}
-
-.doc-reports-secondary-2-section-3-data-summary table, td, th {
-    border: 1px solid #dfdfdf;
-    border-collapse: collapse;
 }
 
 .doc-reports-secondary-2-section-3-data-summary th {
@@ -698,11 +688,6 @@ medical-reports
 .doc-reports-secondary-2-section-5-data-summary {
     width: 40%;
     padding-left: 30px;
-}
-
-.doc-reports-secondary-2-section-5-data-summary table, td, th {
-    border: 1px solid #dfdfdf;
-    border-collapse: collapse;
 }
 
 .doc-reports-secondary-2-section-5-data-summary th {

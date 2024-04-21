@@ -243,7 +243,7 @@ function Layout({ children }) {
         },
         {
             name: ' Insuarance ',
-            path: '/InsuranceManagerDisplay',
+            path: '/InsuranceManager',
             icon: 'ri-account-box-line',
         },
         {

@@ -62,6 +62,8 @@ import Inquiry from './pages/inquiry';
 import InsClaimSubmit from './pages/InsClaimSubmit';
 import InsEmployee from './pages/InsEmployee';
 import InsuranceManagerDisplay from './pages/InsuranceManagerDisplay';
+import InsuranceStatus from './pages/InsuranceStatus';
+import InsuranceManager from './pages/InsuranceManager';
 
 
 import { useSelector } from 'react-redux';
@@ -298,10 +300,12 @@ function App() {
           <Route path='/inquiryAdmin' element ={<ProtectedRoute><InquiryAdmin/></ProtectedRoute>} />
           
 
-          <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
-          <Route path='/insEmployee/:userId' element={<InsEmployee/>}/>
-          <Route path='/insEmployee' element={<InsEmployee/>}/>
-          <Route path='/InsuranceManagerDisplay' element={<InsuranceManagerDisplay/>}/>
+          <Route path='/insClaimSubmit' element={<ProtectedRoute><InsClaimSubmit/></ProtectedRoute>}/>
+          <Route path='/insEmployee/:userId' element={<ProtectedRoute><InsEmployee/></ProtectedRoute>}/>
+          <Route path='/insEmployee' element={<ProtectedRoute><InsEmployee/></ProtectedRoute>}/>
+          <Route path='/InsuranceManagerDisplay' element={<ProtectedRoute><InsuranceManagerDisplay/></ProtectedRoute>}/>
+          <Route path='/InsuranceStatus' element={<ProtectedRoute><InsuranceStatus/></ProtectedRoute>}/>
+          <Route path='/InsuranceManager' element={<ProtectedRoute><InsuranceManager/></ProtectedRoute>}/>
 
 
         </Routes>
