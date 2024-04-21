@@ -212,6 +212,7 @@ label{
   .i-title {
     font-size: 24px;
     margin-bottom: 20px;
+    
   }
   
   /* Style for the search input */
@@ -258,3 +259,35 @@ label{
     background-color: #F7B05B !important;
     color: white; /* Optionally, set text color */
   }
+  .iupdate{
+    background-color: #F7B05B !important;
+    color: white;
+  }
+
+  .imain_form {
+    background-color: #FAFAFA; /* Background color */
+    border-radius: 20px; /* Border radius */
+    box-shadow: 0 0 2px rgba(128, 128, 128, 0.043); /* Box shadow */
+    padding: 20px; /* Padding */
+    max-width: 900px; /* Maximum width */
+    margin: 0 auto; /* Center the form */
+    display: flex; /* Use flexbox */
+    flex-direction: column; /* Arrange items vertically */
+    align-items: center; /* Center items horizontally */
+    justify-content: center; /* Center items vertically */
+    height: 600px; /* Height */
+    border: 1px solid #ddd; 
+}
+
+.iitem {
+  margin-right: 60px;
+  margin-left: 30px;
+  width: 500px; 
+}
+input,
+textarea {
+    width: 100%; 
+}
+.i-phone-input {
+  width: 100px;
+}
