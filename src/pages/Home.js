@@ -93,6 +93,9 @@ function Home() {
       case 'Transport':
         navigate('/TraBookingBox');
         break;
+        case 'Inquiry':
+        navigate('/inquiry');
+        break;
       // Add other cases for each announcement
       default:
         navigate('/default-page');

@@ -1,33 +1,74 @@
-.uniform-order-container {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+/* UniformManagerView.css */
+
+/* Styles for the main container */
+.uniform-manager-view-container {
+  margin-top: 20px;
+}
+
+/* Styles for the search input and button */
+.uniform-manager-view-search-container {
+  margin-bottom: 10px;
+}
+
+
+/* Scope CSS rules to the parent container */
+.uniform-manager-view-container .custom-search-button {
+  /* Your custom CSS rules for the search button */
+  background-color: #F7B05B;
+  border-color: #1F1300;
+  height: 40px;
+  width: 100px;
+  color: #000000;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 10px;
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+
+.uniform-manager-view-search-input {
+  width: 200px;
+  margin-right: 10px;
+  margin-left: 10px;
   
-  .uniform-order-table {
-    width: 80%;
-  }
-  
-  .uniform-order-title {
-    color: #1F1300;
-    margin-bottom: 20px;
-  }
-  
-  .ant-table-thead > tr > th {
-    background-color: #FAFAFA;
-    color: #1F1300;
-    font-weight: bold;
-  }
-  
-  .ant-table-tbody > tr > td {
-    background-color: #FFFFFF;
-    color: #000000;
-  }
-  
-  .additional-charges-message {
-    color: #FF0000;
-    font-size: 14px;
-    margin-top: 10px;
-  }
-  
+}
+
+
+
+/* Styles for the download report button */
+.uniform-manager-view-download-report-button {
+  background-color: #F7B05B !important;
+  border-color: #1F1300 !important;
+  height: 40px !important;
+  width: 300px !important;
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  border-radius: 10px !important;
+  margin-right: 10px !important;
+  margin-left: 10px !important;
+}
+
+/* Styles for the modal */
+.uniform-manager-view-update-modal {
+  width: 400px;
+}
+
+/* Styles for form items in the modal */
+.uniform-manager-view-form-item-label {
+  margin-bottom: 8px;
+}
+
+/* Styles for action buttons in the table */
+.uniform-manager-view-action-buttons {
+  background-color: #F7B05B !important;
+  border-color: #1F1300 !important;
+  height: 40px !important;
+  width: 100px !important;
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  border-radius: 10px !important;
+  margin-right: 10px !important;
+}

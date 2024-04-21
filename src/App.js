@@ -99,6 +99,7 @@ import UniformSkirt from './pages/UniformSkirt';
 import UniformShirtInventory from './pages/UniformShirtInventory';
 import UniformOrderDetails from './pages/UniformOrderDetails';
 import UniformTotals from './pages/UniformTotals';
+import UniformCharts from './pages/UniformCharts';
 
 
 
@@ -279,13 +280,14 @@ function App() {
 
 
 
-          <Route path='/UniformOrder' element={<UniformOrder/>} />
-          <Route path='/UniformManagerView' element={<UniformManagerView/>} />
-          <Route path='/UniformShirt' element={<UniformShirt/>} />
-          <Route path='/UniformSkirt' element={<UniformSkirt/>} />
-          <Route path='/UniformShirtInventory' element={<UniformShirtInventory/>} />
-          <Route path='/UniformOrderDetails' element={<UniformOrderDetails/>} />
-          <Route path='/UniformTotals' element={<UniformTotals/>}/>
+          <Route path='/UniformOrder' element={<ProtectedRoute><UniformOrder/></ProtectedRoute>} />
+          <Route path='/UniformManagerView' element={<ProtectedRoute><UniformManagerView/></ProtectedRoute>} />
+          <Route path='/UniformShirt' element={<ProtectedRoute><UniformShirt/></ProtectedRoute>} />
+          <Route path='/UniformSkirt' element={<ProtectedRoute><UniformSkirt/></ProtectedRoute>} />
+          <Route path='/UniformShirtInventory' element={<ProtectedRoute><UniformShirtInventory/></ProtectedRoute>} />
+          <Route path='/UniformOrderDetails' element={<ProtectedRoute><UniformOrderDetails/></ProtectedRoute>} />
+          <Route path='/UniformTotals' element={<ProtectedRoute><UniformTotals/></ProtectedRoute>}/>
+          <Route path='/UniformCharts' element={<UniformCharts/>}/>
 
         
             /*transport  Navigation*/
