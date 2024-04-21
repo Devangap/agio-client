@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, message, Card, Modal } from 'antd';
+import { Table, Button, message, Modal } from 'antd';
 import Layout from '../components/Layout';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ function TraBookingDisplay() {
 
     const fetchBooking = async (userId) => {
         try {
-            const response = await axios.get(`/api/employee/getTraBooking3/${userId}`);
+            const response = await axios.get(`/api/employee/getTraBooking3/${userId}`);// get the user details
             console.log('Booking API Response:', response.data);
 
             if (response.data && response.data.bookings) {
@@ -35,10 +35,8 @@ function TraBookingDisplay() {
         }
     }, [user]);
 
-    const handleLeaveSubmission = () => {
-        navigate('/TraBooking');
-    };
-
+    
+// handle the user details part
     const handleDelete = async (id) => {
         try {
             await axios.delete(`/api/employee/deletebooking/${id}`);
@@ -54,6 +52,7 @@ function TraBookingDisplay() {
         setDescriptionModalVisible(true);
     };
 
+    // user booking colums
     const columns = [
         {
             title: 'Employee Name',
