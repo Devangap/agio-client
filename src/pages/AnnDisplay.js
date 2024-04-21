@@ -11,6 +11,7 @@ import { jsPDF } from 'jspdf';
 
 
 
+
 function AnnDisplay() {
     const navigate = useNavigate();
     
@@ -150,13 +151,16 @@ function AnnDisplay() {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
-                <>
-                    <Button type="primary" className="update" onClick={() => navigate(`/AnnUpdate/${record._id}`)}>Update</Button>
-                    <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
-                    <Button type="default" style={{ marginTop: '8px',marginLeft: '36px' }} onClick={() => handleDownload(record)}>Download</Button>
-                </>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
+    <Button type="primary" className="update" onClick={() => navigate(`/AnnUpdate/${record._id}`)} style={{ width: '150px', height: '40px', marginBottom: '8px' }}>Update</Button>
+    <Button danger onClick={() => handleDelete(record._id)} style={{ width: '150px', height: '40px', marginBottom: '8px' }}>Delete</Button>
+    <Button type="default" onClick={() => handleDownload(record)} style={{ width: '150px', height: '40px' }}>Download</Button>
+</div>
+
+            
             ),
         },
+        
     ];
 
     const showModal = (announcement) => {
@@ -198,19 +202,21 @@ function AnnDisplay() {
 
     return (
         <Layout>
+            <div className="annflex-container">
+            <div className="annscrollable-container">
 
          <div className="table-header">
-        <div className="search-container">
+        <div className="Annsearch-container">
             <Input
                 placeholder="Search announcements"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                style={{ marginBottom: 16, width: 200 }}
+                style={{ marginBottom: 16, width: 100, marginLeft:123 }}
             />
         </div>
     </div>
 
-            <Table dataSource={filteredAnnouncements} columns={columns} />
+            <Table dataSource={filteredAnnouncements} columns={columns}   />
 
             <Modal
     title="Update Announcement"
@@ -239,7 +245,8 @@ function AnnDisplay() {
     </Form>
 </Modal>
 
-        
+</div>
+</div>
 
         </Layout>
         

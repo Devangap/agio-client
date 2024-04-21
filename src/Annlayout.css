@@ -79,3 +79,19 @@
     font-size: 10px; /* Adjust size as needed */
     color: #333; /* Adjust color as needed */
 }
+.annscrollable-container {
+    overflow-y: auto; /* Enables vertical scrolling if content overflows */
+    height: 400px; /* Fixed height */
+    width: 100%; /* Full width of the flex container */
+    max-width: 1060px; /* Maximum width of the container */
+    border: 1px solid #ccc; /* Light grey border */
+    padding: 16px; /* Padding around the content */
+    max-height: 500px; /* Set a maximum height */
+    margin: 20px; /* Margin around the container */
+    border-radius: 10px; 
+    /*  */
+}
+
+.annflex-container {
+    height: calc(100vh - 120px); /* where 120px accounts for headers, footers, or other components */
+}
