@@ -3,6 +3,7 @@ import { Button, Form, Input, Select, message, Modal } from 'antd'; // Import me
 import { UploadOutlined } from '@ant-design/icons';
 import Layout from '../components/Layout';
 import '../UniformOrder.css';
+import shirt from '../Images/twoshirt.png'
 
 const { Option } = Select;
 
@@ -86,13 +87,17 @@ function UniformOrder() {
 
   return (
     <Layout>
+      <h1>Uniform Order Form</h1>
     <div className="uniform-order-container">
       <div className="uniform-order-form-container">
+      <h3 className="uniform-order-title"></h3>
         <div className="uniform-order-form-box p-3">
-          <h3 className="uniform-order-title">Uniform Order Form</h3>
+          
+          
           <Form layout="horizontal" onFinish={onFinish}>
             <div className="uniform-order-form-row">
               <div className="uniform-order-item">
+              <img className="uniformlogo-image" src={shirt} alt="Logo" /> {/* Image */}
                 <Form.Item
                   label="Employee Number"
                   name="employeeNumber"
@@ -150,7 +155,9 @@ function UniformOrder() {
                 Place Order
               </Button>
             </div>
+            
           </Form>
+          
           <Modal
             title="Additional Charges"
             visible={showExtraChargesModal}

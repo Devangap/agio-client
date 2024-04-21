@@ -1,55 +1,87 @@
-.inventory-container {
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .form-container {
-    box-shadow: 0 0 2px rgba(128, 128, 128, 0.043);
-    border-radius: 20px;
-    background-color: #FAFAFA;
-  }
-  
-  .form-box {
-    padding: 20px;
-  }
-  
-  .form-title {
-    color: #1F1300;
-    margin-bottom: 20px;
-  }
-  
-  .form-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  
-  .form-item {
-    margin-right: 20px;
-  }
-  
-  .button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 30px;
-  }
-  
-  .submit-button {
-    background-color: #F7B05B !important;
-    border-color: #1F1300 !important;
-    height: 40px !important;
-    width: 300px !important;
-    color: #000000 !important;
-    font-size: 16px !important;
-    font-weight: bold;
-    border-radius: 10px !important;
-  }
-  
-  .additional-message {
-    color: #FF0000;
-    font-size: 14px;
-    margin-top: 10px;
-  }
-  
+.inventory-page .inventory-container {
+  display: flex;
+  justify-content: space-around; /* Adjust as needed */
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.inventory-page .form-container {
+  flex: 1; /* Each form container will take up equal space */
+  height: 410px;
+  width: 100px; /* Adjust maximum width as needed */
+  margin: 10px; /* Add margin for spacing between forms */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.inventory-page form h2 {
+  margin: 0;
+  padding: 20px;
+  background-color: #1F1300;
+  color: #fff;
+  text-align: center;
+  font-size: 1.5rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.inventory-page table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.inventory-page th, .inventory-page td {
+  padding: 3px 10px;
+  text-align: left;
+}
+
+.inventory-page th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.inventory-page input[type='number'] {
+  width: 95% !important; /* Set the width to 50% */
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+
+.inventory-page button {
+  background-color: #F7B05B !important;
+  border-color: #1F1300 !important;
+  height: 40px !important;
+  width: 80px !important;
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  border-radius: 10px !important;
+}
+
+
+
+.inventory-page button3 {
+  background-color: #F7B05B !important;
+  border-color: #1F1300 !important;
+  height: 40px !important;
+  width: 300px !important;
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  border-radius: 10px !important;
+  margin-right: 10px !important; /* Add margin to the right */
+  display: flex !important;
+  justify-content: center !important; /* Center the buttons horizontally */
+  margin-top: 0px !important; /* Add space between the buttons and the content above */
+}
+
+.inventory-page button:hover {
+  background-color: #45a049;
+}
+
+.inventory-page button:active {
+  background-color: #3e8e41;
+}

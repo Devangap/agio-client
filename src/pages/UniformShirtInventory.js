@@ -4,6 +4,8 @@ import axios from 'axios';
 import '../UniformInventory.css'; // Import CSS file for styling
 import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast from react-toastify
 import 'react-toastify/dist/ReactToastify.css'; // Import CSS for react-toastify
+import { PDFDownloadLink } from '@react-pdf/renderer'; // Import PDFDownloadLink component
+import InventoryPDFDocument from './InventoryPDFDocument'; // Import the InventoryPDFDocument component
 
 const InventoryPage = () => {
   const [shirtInventory, setShirtInventory] = useState([]);
@@ -77,8 +79,18 @@ const InventoryPage = () => {
     }
   };
 
+  // Function to handle downloading inventory report
+  const handleDownloadReport = () => {
+    // Your code to download the inventory report
+    // For now, let's just log the button click event
+    console.log('Downloading report...');
+  };
+
   return (
+    <div className="inventory-page"> 
+    
     <Layout> {/* Wrap the content with the Layout component */}
+    <h1>Uniform Inventory</h1>
       <div className="inventory-container"> {/* Use a parent container to style both forms */}
         <form className="form-container">
           <h2>T-Shirt Inventory</h2>
@@ -86,7 +98,7 @@ const InventoryPage = () => {
             <thead>
               <tr>
                 <th>Size</th>
-                <th>Quantity</th>
+                <th>Total Quantity Available</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -124,7 +136,7 @@ const InventoryPage = () => {
             <thead>
               <tr>
                 <th>Waist Size</th>
-                <th>Quantity</th>
+                <th>Total Quantity Available</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -156,8 +168,24 @@ const InventoryPage = () => {
           </table>
         </form>
       </div>
+      <div className="buttons-container">
+        <button3 >View Graphically</button3>
+        {/* PDF Download Link to download the inventory report */}
+        <PDFDownloadLink
+          document={<InventoryPDFDocument shirtInventory={shirtInventory} skirtInventory={skirtInventory} />}
+          fileName="inventory_report.pdf"
+        >
+          {({ blob, url, loading, error }) => (
+            <button3 className="report-button" onClick={handleDownloadReport}>
+              {loading ? 'Generating Report...' : 'Download Report'}
+            </button3>
+          )}
+        </PDFDownloadLink>
+      </div>
       <ToastContainer /> {/* Render the ToastContainer to show toast messages */}
+      
     </Layout>
+    </div>
   );
 };
 

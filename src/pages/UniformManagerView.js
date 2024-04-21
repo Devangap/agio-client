@@ -168,6 +168,7 @@ function UniformOrders() {
   ];
 
   return (
+    <Layout>
     <div>
       <h1>Uniform Orders</h1>
       <div style={{ marginBottom: '10px' }}>
@@ -230,6 +231,7 @@ function UniformOrders() {
       </Modal>
       <Table dataSource={uniformOrders} columns={columns} />
     </div>
+    </Layout>
   );
 }
 

@@ -45,8 +45,8 @@ function UniformTotals() {
     <Layout>
       <div>
         <h1>Total Uniform Orders</h1>
-        <div className="scroll-container">
-          <div className="form">
+        <div className="totalsscroll-container">
+          <div className="totalsform">
             <FoamContainer title="Executive T-Shirts" imageSrc={shirtImage2}>
               <ul>
                 {sortByTShirtSize(executiveShirtTotals).map((total, index) => (
@@ -58,7 +58,7 @@ function UniformTotals() {
             </FoamContainer>
           </div>
 
-          <div className="form">
+          <div className="totalsform">
             <FoamContainer title="Factory Worker T-Shirts" imageSrc={shirtImage}>
               <ul>
                 {sortByTShirtSize(factoryWorkerShirtTotals).map((total, index) => (
@@ -70,7 +70,7 @@ function UniformTotals() {
             </FoamContainer>
           </div>
 
-          <div className="form">
+          <div className="totalsform">
             <FoamContainer title="Factory Worker Skirts" imageSrc={skirtImage}>
               <div>
                 <ul>
@@ -105,10 +105,10 @@ function UniformTotals() {
 }
 
 const FoamContainer = ({ title, children, imageSrc }) => (
-  <div className="container">
-    <div className="form-container">
+  <div className="totalscontainer">
+    <div className="totalsform-container">
       <h2 className="title">{title}</h2>
-      <div className="image-container">
+      <div className="totalsimage-container">
         <img className="image" src={imageSrc} alt={`${title} Mockup`} />
       </div>
       {children}
