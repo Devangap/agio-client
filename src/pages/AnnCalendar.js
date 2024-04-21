@@ -41,7 +41,7 @@ function AnnCalendar() {
         setIsEventModalVisible(false);
     };
 
-    const handleUpdateEvent = async () => {
+    const handleUpdateEvent = async () => { 
         form.validateFields().then(async (values) => {
             try {
                 const response = await axios.put(`/api/employee/updatevent/${selectedEvent.id}`, {
