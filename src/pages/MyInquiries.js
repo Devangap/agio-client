@@ -142,19 +142,19 @@ function MyInquiries() {
       dataIndex: 'status',
       key: 'status',
     },
-     {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <>
-        <Button type="primary" className="update" onClick={() => handleUpdate(record)} disabled={record.status === 'Done'}>
-          Update
-        </Button>
-        <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
-      </>
-    ),
-  },
-];
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <>
+          <Button type="primary" className="iupdate" onClick={() => handleUpdate(record)} disabled={record.status === 'Done'}>
+            Update
+          </Button>
+          <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
+        </>
+      ),
+    },
+  ];
 
   // Filter inquiries based on search query
   const filteredInquiries = inquiries.filter(inquiry => inquiry.inquiryID.includes(searchQuery));
@@ -171,7 +171,7 @@ function MyInquiries() {
           style={{ marginBottom: '1rem' }}
         />
         {/* Table */}
-        <Table dataSource={filteredInquiries} columns={columns} scroll={{ x: true, y: 400 }} />
+        <Table dataSource={filteredInquiries} columns={columns}  />
 
         {/* Modals */}
         {/* Detail Modal */}
@@ -192,7 +192,26 @@ function MyInquiries() {
           footer={null}
         >
           <Form form={form} onFinish={onFinish} layout="vertical" className="i-main_form">
-            {/* Form fields... */}
+            <Form.Item label="Full Name" name="name">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Username" name="username">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item label="Inquiry Date" name="inquirydate">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Phone Number" name="phoneNumber">
+              <Input />
+            </Form.Item>
+            <Form.Item label="Inquiry" name="describe">
+              <TextArea rows={4} />
+            </Form.Item>
+            <Form.Item>
+              <Button className="iupdate" type="primary" htmlType="submit">
+                Update
+              </Button>
+            </Form.Item>
           </Form>
         </Modal>
       </div>

@@ -61,7 +61,7 @@ function Inquiry() {
   return (
     <Layout>
       <div className="inquiry-container">
-        <div className="image-container"></div>
+        
         <div className="iform-container">
           <div className="imain_form box p-3">
             <h3 className='ititle'>Enter Inquiry Form</h3>
@@ -74,7 +74,7 @@ function Inquiry() {
                   <Form.Item label="Pick a date" name="inquirydate" rules={[{ required: true, message: 'Please select inquiry date!' }]}>
                     <DatePicker className="date" />
                   </Form.Item>
-                  <Form.Item label='Phone Number' name='phoneNumber' rules={[{ validator: validatePhoneNumber }]}>
+                  <Form.Item className="i-phone-input" label='Phone No' name='phoneNumber' rules={[{ validator: validatePhoneNumber,required: true, message: 'Please enter your phone number!' }]}>
                     <Input placeholder='+94XXXXXXXXX' />
                   </Form.Item>
                   <Form.Item name="describe" label="Enter Inquiry" rules={[{ required: true, message: 'Please enter your inquiry!' }]}>
