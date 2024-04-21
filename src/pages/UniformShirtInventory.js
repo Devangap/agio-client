@@ -169,16 +169,16 @@ const InventoryPage = () => {
         </form>
       </div>
       <div className="buttons-container">
-        <button3 >View Graphically</button3>
+        <button >View Graphically</button>
         {/* PDF Download Link to download the inventory report */}
         <PDFDownloadLink
           document={<InventoryPDFDocument shirtInventory={shirtInventory} skirtInventory={skirtInventory} />}
           fileName="inventory_report.pdf"
         >
           {({ blob, url, loading, error }) => (
-            <button3 className="report-button" onClick={handleDownloadReport}>
+            <button className="report-button" onClick={handleDownloadReport}>
               {loading ? 'Generating Report...' : 'Download Report'}
-            </button3>
+            </button>
           )}
         </PDFDownloadLink>
       </div>
