@@ -42,8 +42,8 @@
     box-shadow: 0 0 2px gray;
     height: 80vh;
     width: 1100px !important;
-    overflow-x: auto; /* Add horizontal scrollbar */
-    overflow-y: auto; /* Add vertical scrollbar */
+    /*overflow-x: auto;*/ /* Add horizontal scrollbar */
+    /*overflow-y: auto;*/ /* Add vertical scrollbar */
 }
 .menu {
     margin-top: 100px;

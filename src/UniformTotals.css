@@ -6,7 +6,7 @@
 
 .totalsscroll-container {
   display: flex;
-  overflow-x: auto;
+  /*overflow-x: auto;*/
   scroll-snap-type: x mandatory;
   padding: 20px 0; /* Add some padding for spacing */
 }
@@ -14,7 +14,7 @@
 .totalsform {
   flex: 0 0 300px; /* Set a fixed width for each form */
   margin-right: 45px; /* Adjust spacing between forms */
-  margin-left: 45px !important;
+  margin-left: 30px !important;
   scroll-snap-align: start;
   border-radius: 10px; /* Add border radius for rounded corners */
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */

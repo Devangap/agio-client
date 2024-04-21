@@ -10,6 +10,7 @@ import Layout from '../components/Layout';
 import { PDFDownloadLink } from '@react-pdf/renderer';
 import PDFDocument from './PDFDocument'; // Import the PDFDocument component
 
+
 function UniformTotals() {
   const [factoryWorkerShirtTotals, setFactoryWorkerShirtTotals] = useState([]);
   const [factoryWorkerSkirtTotals, setFactoryWorkerSkirtTotals] = useState([]);
@@ -88,7 +89,7 @@ function UniformTotals() {
         </div>
       </div>
       <div className="buttons-container">
-                  <button className="history-button">View History</button>
+                  <button className="history-button">View Inventory</button>
                   <PDFDownloadLink
     document={<PDFDocument executiveShirtTotals={executiveShirtTotals} factoryWorkerShirtTotals={factoryWorkerShirtTotals} factoryWorkerSkirtTotals={factoryWorkerSkirtTotals} />}
     fileName="uniform_report.pdf"
