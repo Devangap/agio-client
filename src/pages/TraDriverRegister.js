@@ -1,4 +1,3 @@
-
 import React from 'react';
 import axios from 'axios';
 import { Button, Form, Input, Select, DatePicker } from 'antd';
@@ -10,9 +9,17 @@ function TraDriverRegister() {
   const navigate = useNavigate();
   const { Option } = Select;
 
+  // Custom validator function for phone number
+  const validatePhoneNumber = (_, value) => {
+    const phoneNumber = value.replace(/\D/g, ''); // Remove non-numeric characters
+    if (phoneNumber.length !== 10) {
+      return Promise.reject('Please enter a 10-digit phone number');
+    }
+    return Promise.resolve();
+  };
+
   const onFinish = async (values) => {
     console.log('Received values of form', values);
-
 
     try {
       const response = await axios.post('/api/employee/Driveregister', values);
@@ -23,8 +30,7 @@ function TraDriverRegister() {
         toast.error(response.data.message);
       }
     } catch (error) {
-      toast.error("Something went wrong");
-
+      toast.error('Something went wrong');
     }
   };
 
@@ -91,7 +97,8 @@ function TraDriverRegister() {
                 name='driPnum'
                 rules={[
                   { required: true, message: 'Please enter Phone Number' },
-                  { pattern: /^[0-9]+$/, message: 'Please enter a valid Phone Number' }
+                  { pattern: /^[0-9]+$/, message: 'Please enter a valid Phone Number' },
+                  { validator: validatePhoneNumber } // Custom validator for 10-digit number
                 ]}
               >
                 <Input placeholder='Phone Number' />
@@ -99,7 +106,7 @@ function TraDriverRegister() {
             </div>
             <div className="bookButton-cons">
               <Button className='bookprimary-button my-2' htmlType='submit'>Submit</Button>
-              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraDriverDetailsDisplay`)}>Viwe Details</Button>
+              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraDriverDetailsDisplay`)}>View Details</Button>
             </div>
           </Form>
         </div>
@@ -109,4 +116,3 @@ function TraDriverRegister() {
 }
 
 export default TraDriverRegister;
-

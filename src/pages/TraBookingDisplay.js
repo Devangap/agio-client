@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Table, Button, message, Card } from 'antd';
+import { Table, Button, message, Card, Modal } from 'antd';
 import Layout from '../components/Layout';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,8 +7,9 @@ import { useSelector } from 'react-redux';
 
 function TraBookingDisplay() {
     const { user } = useSelector((state) => state.user);
-    const [booking, setbooking] = useState([]);
-    
+    const [booking, setBooking] = useState([]);
+    const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
+    const [selectedDescription, setSelectedDescription] = useState('');
     const navigate = useNavigate();
 
     const fetchBooking = async (userId) => {
@@ -17,9 +18,9 @@ function TraBookingDisplay() {
             console.log('Booking API Response:', response.data);
 
             if (response.data && response.data.bookings) {
-                setbooking(response.data.bookings);
+                setBooking(response.data.bookings);
             } else {
-                setbooking([]);
+                setBooking([]);
                 message.info('No booking data available');
             }
         } catch (error) {
@@ -28,15 +29,11 @@ function TraBookingDisplay() {
         }
     };
 
-
-
     useEffect(() => {
         if (user && user.userid) {
             fetchBooking(user.userid);
         }
-        
     }, [user]);
-
 
     const handleLeaveSubmission = () => {
         navigate('/TraBooking');
@@ -45,11 +42,16 @@ function TraBookingDisplay() {
     const handleDelete = async (id) => {
         try {
             await axios.delete(`/api/employee/deletebooking/${id}`);
-            setbooking(prev => prev.filter(item => item._id !== id));
+            setBooking(prev => prev.filter(item => item._id !== id));
             message.success('Booking deleted successfully');
         } catch (error) {
             message.error('Failed to delete booking');
         }
+    };
+
+    const showDescriptionModal = (description) => {
+        setSelectedDescription(description);
+        setDescriptionModalVisible(true);
     };
 
     const columns = [
@@ -63,36 +65,43 @@ function TraBookingDisplay() {
             dataIndex: 'EmpEmail',
             key: 'EmpEmail',
         },
-
         {
             title: 'Type',
             dataIndex: 'Type',
             key: 'Type',
-            
         },
-        
         {
             title: 'Select Location',
             dataIndex: 'location',
             key: 'location',
         },
-        
         {
             title: 'Booking Date',
             dataIndex: 'bookingdate',
             key: 'bookingdate',
             render: (text) => new Date(text).toLocaleDateString(),
         },
-        
         {
             title: 'Description',
             dataIndex: 'Details',
             key: 'Details',
+            render: (text) => (
+                <>
+                    {text.length > 10 ? (
+                        <span>
+                            {text.substring(0, 10)}...
+                            <Button type="link" onClick={() => showDescriptionModal(text)}>See more</Button>
+                        </span>
+                    ) : (
+                        text
+                    )}
+                </>
+            ),
         },
         {
             title: 'Status',
             dataIndex: 'status',
-            key: 'Description',
+            key: 'status',
         },
         {
             title: 'Action',
@@ -100,23 +109,29 @@ function TraBookingDisplay() {
             render: (_, record) => (
                 <>
                     <Button type="primary" className="update" onClick={() => navigate(`/TraBookingUpdate/${record._id}`)}>Update</Button>
-                    <Button type="primary" className="update" onClick={() => navigate(`/TraPayment`)}>Upload Payment</Button>
+                    {record.status === 'approved' ? (
+                        <Button type="primary" className="pybtn" onClick={() => navigate(`/TraPayment`)}>Upload</Button>
+                    ) : (
+                        <Button type="primary" className="pybtn" disabled>Upload</Button>
+                    )}
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
-                    
                 </>
             ),
         },
     ];
 
-    
-
     return (
         <Layout>
-
-
-
-            
             <Table dataSource={booking} columns={columns} />
+
+            <Modal
+                title="Description"
+                visible={descriptionModalVisible}
+                onCancel={() => setDescriptionModalVisible(false)}
+                footer={null}
+            >
+                <p>{selectedDescription}</p>
+            </Modal>
         </Layout>
     );
 }

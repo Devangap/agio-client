@@ -5,9 +5,13 @@ import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
+// Destructure Select Option from Ant Design
+const { Option } = Select;
+
 function TraVehicleRegister() {
   const navigate = useNavigate();
   const { Option } = Select;
+  
 
   const [numSeats, setNumSeats] = useState(null); // State to hold the number of seats
 
