@@ -120,6 +120,7 @@ function TraBookingUpdate() {
 
             <div className="bookButton-cons">
               <Button className='bookprimary-button my-2' htmlType='submit'>Update</Button>
+              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraBookingDisplay`)}>Viwe Details</Button>
             </div>
           </Form>
         </div>

@@ -100,8 +100,8 @@ function TraBookingDisplay() {
             render: (_, record) => (
                 <>
                     <Button type="primary" className="update" onClick={() => navigate(`/TraBookingUpdate/${record._id}`)}>Update</Button>
-                    <Button type="primary" className="update" onClick={() => navigate(`/TraPayment`)}>Upload Payment</Button>
-                    <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
+                    <Button type="primary" className="update" onClick={() => navigate(`/TraPayment`)}>Upload</Button>
+                    <Button type="primary" className="update" danger onClick={() => handleDelete(record._id)}>Delete</Button>
                     
                 </>
             ),
