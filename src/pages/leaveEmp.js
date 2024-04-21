@@ -332,6 +332,7 @@ const LeaveEmp = () => {
         }
     };
 
+
     const handleBeforeUpload = (file) => {
         const isPDF = file.type === 'application/pdf';
         if (!isPDF) {
