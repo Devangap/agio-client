@@ -37,50 +37,8 @@ function TraBookingDisplayAdmin() {
 
 
 
-  /*  const handleSeatCount = async (record) => {
-        try {
-            // Fetch the leave data using the leaveid
-            const responseBooking = await axios.get(`/api/employee/getTraBooking2/${record._id}`, {
-                headers: {
-                    Authorization: 'Bearer ' + token
-                }
-            });
-    
-            if (!responseBooking.data.success) {
-                toast.error("Failed to fetch leave data.");
-                return;
-            }
-    
-            const booking = responseBooking.data.bookings;
-            const bookings = booking; // Assuming the leave data is returned as an object
-    
-            // Check if the leave type is "Medical"
-            if (bookings.Type === 'Bus') {
-                // If it's a medical leave, deduct one from the medical_leave field
-                const responseDeduct = await axios.post(
-                    '/api/employee/deduct_seat_count',
-                    { userid: record.userid },
-                    {
-                        headers: {
-                            Authorization: 'Bearer ' + token
-                        }
-                    }
-                );
-    
-                if (responseDeduct.data.success) {
-                    toast.success(responseDeduct.data.message);
-                    fetchbooking(); // Refresh the leave data after deducting medical leave
-                } else {
-                    toast.error(responseDeduct.data.message);
-                }
-            } else {
-                toast.error("Leave is not of type Medical.");
-            }
-        } catch (error) {
-            toast.error("Error deducting medical leave.");
-        }
-    };*/
-
+  
+// changing status 
     const changestatus = async (record, status) => {
         try {
             dispatch(showLoading());
@@ -107,6 +65,7 @@ function TraBookingDisplayAdmin() {
         }
     };
 
+    // customer colums
     const columns = [
         {
             title: 'Employee Name',
@@ -154,7 +113,7 @@ function TraBookingDisplayAdmin() {
             render: (_, record) => (
                 <>
                     <div className="d-flex">
-                        {record.status === "pending" && <Button type="primary" className="update" onClick={() => { changestatus(record, 'approved'); }} >Add</Button>}
+                        {record.status === "pending" && <Button type="primary" className="update" onClick={() => { changestatus(record, 'approved'); }} >Approve</Button>}
                         {record.status === "approved" && <Button type="primary" className="update" onClick={() => changestatus(record, 'rejected')}>Reject</Button>}
                     </div>
                     

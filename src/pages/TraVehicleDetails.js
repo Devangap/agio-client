@@ -120,6 +120,16 @@ function TraVehicleDetails() {
             </div>
             <Table dataSource={Vregister} columns={columns} />
 
+            <Button classNames="bookdetails"
+        type="primary"
+        className="bookdetails"
+        danger
+        onClick={() => navigate(`/TraVehicleviwe`)}
+        
+      >
+        VIEW VEHICLE DETAILS
+      </Button>
+
             <Modal
                 title="Details"
                 visible={isModalVisible}

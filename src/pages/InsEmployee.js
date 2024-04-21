@@ -159,12 +159,16 @@ function InsEmployee() {
       },
     },
     {
+      title: "Method",
+      dataIndex: "method",
+    },
+    {
       title: "Action",
       key: "action",
       render: (text, record) => (
         <div className="insanchor">
-          <Button onClick={() => handleUpdate(record)}>Update</Button>
-          <Button onClick={() => handleDelete(record._id)}>Cancel</Button>
+          <Button className="insupdate" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button className="inscancel" onClick={() => handleDelete(record._id)}>Cancel</Button>
         </div>
       ),
     },
@@ -172,7 +176,7 @@ function InsEmployee() {
 
   return (
     <Layout>
-      <h2 className="ins-title">Claim List</h2>
+      <h2 className="ins-title">Insurance Claim Requsets List</h2>
       <hr />
       <Table columns={columns} dataSource={insuranceData} />
       <Modal
@@ -223,10 +227,10 @@ function InsEmployee() {
         </Form>
       </Modal>
 
-      <div className="institle">
-        <Button type="primary">
-          <Link to="/insClaimSubmit">File a new Insurance Claim Request</Link>
-        </Button>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Link to="/insClaimSubmit">
+          <Button type="primary" className="insStatusButton">File a new Insurance Claim Request</Button>
+        </Link>
       </div>
     </Layout>
   );

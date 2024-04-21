@@ -62,6 +62,8 @@ import Inquiry from './pages/inquiry';
 import InsClaimSubmit from './pages/InsClaimSubmit';
 import InsEmployee from './pages/InsEmployee';
 import InsuranceManagerDisplay from './pages/InsuranceManagerDisplay';
+import InsuranceStatus from './pages/InsuranceStatus';
+import InsuranceManager from './pages/InsuranceManager';
 
 
 import { useSelector } from 'react-redux';
@@ -99,6 +101,7 @@ import UniformSkirt from './pages/UniformSkirt';
 import UniformShirtInventory from './pages/UniformShirtInventory';
 import UniformOrderDetails from './pages/UniformOrderDetails';
 import UniformTotals from './pages/UniformTotals';
+import UniformCharts from './pages/UniformCharts';
 
 
 
@@ -130,7 +133,8 @@ import Rewardsm from "./pages/Perform_Rewards";
 import Rank from "./pages/Perform_Rank";
 import Compare1 from "./pages/Perform_Compare1";
 
-import Charta from "./pages/Perform_Chart"
+import Charta from "./pages/Perform_Chart";
+import Viewprofileadmin from "./pages/Perform_viewemp"; 
 
 
 
@@ -278,13 +282,14 @@ function App() {
 
 
 
-          <Route path='/UniformOrder' element={<UniformOrder/>} />
-          <Route path='/UniformManagerView' element={<UniformManagerView/>} />
-          <Route path='/UniformShirt' element={<UniformShirt/>} />
-          <Route path='/UniformSkirt' element={<UniformSkirt/>} />
-          <Route path='/UniformShirtInventory' element={<UniformShirtInventory/>} />
-          <Route path='/UniformOrderDetails' element={<UniformOrderDetails/>} />
-          <Route path='/UniformTotals' element={<UniformTotals/>}/>
+          <Route path='/UniformOrder' element={<ProtectedRoute><UniformOrder/></ProtectedRoute>} />
+          <Route path='/UniformManagerView' element={<ProtectedRoute><UniformManagerView/></ProtectedRoute>} />
+          <Route path='/UniformShirt' element={<ProtectedRoute><UniformShirt/></ProtectedRoute>} />
+          <Route path='/UniformSkirt' element={<ProtectedRoute><UniformSkirt/></ProtectedRoute>} />
+          <Route path='/UniformShirtInventory' element={<ProtectedRoute><UniformShirtInventory/></ProtectedRoute>} />
+          <Route path='/UniformOrderDetails' element={<ProtectedRoute><UniformOrderDetails/></ProtectedRoute>} />
+          <Route path='/UniformTotals' element={<ProtectedRoute><UniformTotals/></ProtectedRoute>}/>
+          <Route path='/UniformCharts' element={<UniformCharts/>}/>
 
         
             /*transport  Navigation*/
@@ -320,10 +325,12 @@ function App() {
           <Route path='/inquiryAdmin' element ={<ProtectedRoute><InquiryAdmin/></ProtectedRoute>} />
           
 
-          <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
-          <Route path='/insEmployee/:userId' element={<InsEmployee/>}/>
-          <Route path='/insEmployee' element={<InsEmployee/>}/>
-          <Route path='/InsuranceManagerDisplay' element={<InsuranceManagerDisplay/>}/>
+          <Route path='/insClaimSubmit' element={<ProtectedRoute><InsClaimSubmit/></ProtectedRoute>}/>
+          <Route path='/insEmployee/:userId' element={<ProtectedRoute><InsEmployee/></ProtectedRoute>}/>
+          <Route path='/insEmployee' element={<ProtectedRoute><InsEmployee/></ProtectedRoute>}/>
+          <Route path='/InsuranceManagerDisplay' element={<ProtectedRoute><InsuranceManagerDisplay/></ProtectedRoute>}/>
+          <Route path='/InsuranceStatus' element={<ProtectedRoute><InsuranceStatus/></ProtectedRoute>}/>
+          <Route path='/InsuranceManager' element={<ProtectedRoute><InsuranceManager/></ProtectedRoute>}/>
 
           
           /*performance*/
@@ -338,6 +345,7 @@ function App() {
           <Route path="/rank" element = {<Rank/>}/>
           <Route path="/com/:id" element = {<ProtectedRoute><Compare1/></ProtectedRoute>}/> 
           <Route path="/viewemp/:id" element = {<ProtectedRoute><Charta/></ProtectedRoute>}/> 
+          <Route path="/viewempbyname" element = {<ProtectedRoute><Viewprofileadmin/></ProtectedRoute>}/>
 
          
 

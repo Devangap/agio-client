@@ -20,17 +20,46 @@ function Main_login() {
       const response = await axios.post('/api/employee/Main_login', values);
       if (response.data.success) {
         toast.success(response.data.message);
-        toast("Redirecting to home page");
+        toast("Redirecting ...");
+
+        console.log(response.data);
+
+        const name = values.username_log;
+        console.log(name);
+        if (name === "Devanga") {
+          navigate("/leaveoverview");
+          
+        }
+        else if (name === "Shenal") {
+          navigate('/TraBookingDisplayAdmin');
+          
+        }else if (name === "Dulara") {
+          navigate("/AnnDisplay");
+          
+        }else if (name === "Dinura") {
+          navigate("/medical-overview");
+          
+        }else if (name === "Dushan") {
+          navigate("/UniformManagerView");
+          
+        }else if (name === "Banuka") {
+          navigate("/AnnDisplay");
+          
+        }else if (name === "Minuk") {
+          navigate("/inquiryAdmin");
+          
+        }
+        
+        else{
+          navigate("/");
+
+        }
         localStorage.setItem("token", response.data.data);
         console.log(response.data.data);
         console.log(values.username_log)
 
         // Check if username_log is "Devanaga"
-        if (values.username_log === "Devanga") {
-          navigate("/leaveoverview");
-        } else {
-          navigate("/");
-        }
+       
       } else {
         toast.error(response.data.message);
       }

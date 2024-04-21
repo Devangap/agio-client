@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
-import { Button, Form, Input, Select, DatePicker, Upload, message } from 'antd';
+import { Button, Form, Input, Select, DatePicker } from 'antd';
 import "../TraForm.css";
 import axios from "axios";
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
-import { useState } from 'react';
 import { useDispatch ,useSelector} from 'react-redux';
 import { showLoading ,hideLoading} from '../redux/empalerts';
 import { setUser } from '../redux/userSlice';
@@ -13,9 +12,9 @@ import Layout from '../components/Layout';
 
 function TraBooking() {
 
-  const { RangePicker } = DatePicker;
+  
   const { Option } = Select;
-  const [userData, setUserData] = useState({}); 
+   
 
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
@@ -42,14 +41,14 @@ function TraBooking() {
     console.log('Received values of form', values);
     try {
       dispatch(showLoading());
-      const response = await axios.post('/api/employee/TraBooking', {...values, userid: user?.userid}, {
+      const response = await axios.post('/api/employee/TraBooking', {...values, userid: user?.userid}, { // identyfy the user id
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       dispatch(hideLoading());
       if (response.data.success) {
-        navigate("/TraBookingDisplay");
+        navigate("/TraBookingDisplay"); // after form submit navigate to booking display 
       } else {
         toast.error(response.data.message);
       }
@@ -59,6 +58,7 @@ function TraBooking() {
     }
   };
 
+  //Customer email Validation
   const validateEmail = (rule, value, callback) => {
     if (!value) {
       callback('Please enter your email!');

@@ -1,17 +1,20 @@
-.container {
-  width: 100%;
+.totalsscontainer {
+  display: flex;
+  justify-content: center; /* Center the forms horizontally */
+  align-items: center; /* Center the forms vertically */
 }
 
-.scroll-container {
+.totalsscroll-container {
   display: flex;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   padding: 20px 0; /* Add some padding for spacing */
 }
 
-.form {
+.totalsform {
   flex: 0 0 300px; /* Set a fixed width for each form */
-  margin-right: 20px; /* Adjust spacing between forms */
+  margin-right: 45px; /* Adjust spacing between forms */
+  margin-left: 45px !important;
   scroll-snap-align: start;
   border-radius: 10px; /* Add border radius for rounded corners */
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
@@ -19,12 +22,18 @@
 }
 
 .title {
-  font-size: 1.5rem; /* Increase title font size for better readability */
-  text-align: center; /* Center align the title */
-  margin-top: 20px; /* Add some top margin for spacing */
+  margin: 0;
+  padding: 15px;
+  background-color: #1F1300;
+  color: #fff;
+  text-align: center;
+  font-size: 1.5rem;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
-.image-container {
+
+.totalsimage-container {
   text-align: center; /* Center align the image */
   margin-top: 20px; /* Add some top margin for spacing */
 }
@@ -36,7 +45,7 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
 }
 
-.list {
+.totalslist {
   list-style: none; /* Remove default list styles */
   padding: 0; /* Remove default padding */
 }
@@ -49,3 +58,23 @@
 .list li:last-child {
   border-bottom: none; /* Remove border bottom for last list item */
 }
+
+.buttons-container {
+  display: flex;
+  justify-content: center; /* Center the buttons horizontally */
+  margin-top: 20px; /* Add space between the buttons and the content above */
+}
+
+.history-button,
+.report-button {
+  background-color: #F7B05B !important;
+  border-color: #1F1300 !important;
+  height: 40px !important;
+  width: 300px !important;
+  color: #000000 !important;
+  font-size: 16px !important;
+  font-weight: bold;
+  border-radius: 10px !important;
+  margin-right: 10px; /* Add margin to the right */
+}
+
