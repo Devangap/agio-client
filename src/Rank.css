@@ -1,0 +1,39 @@
+
+    /* Center the table 
+
+    h2{
+        text-align: center;
+    }
+
+    .div0{
+        margin-top: 50px;
+    }
+    .div1 {
+        display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        
+    }
+    table {
+        border-collapse: collapse;
+        width: 80%;
+    }
+
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    button{
+    
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+        
+    }
+   
+*/

@@ -37,20 +37,7 @@ function TraDriverViwe() {
         onAfterPrint: () => alert("Data Saved in PDF")
     });
 
-   /* const handleUpdate = async values => {
-        try {
-            const response = await axios.put(`/api/employee/updatedrivers/${currentDregister._id}`, values);
-            if (response.data.success) {
-                message.success('Driver updated successfully');
-                setIsModalVisible(false);
-                fetchDregister();
-            } else {
-                message.error(response.data.message);
-            }
-        } catch (error) {
-            message.error('Failed to update Driver');
-        }
-    };*/
+  
 
     const columns = [
         {
@@ -89,18 +76,11 @@ function TraDriverViwe() {
         <Layout>
            <div>
             <div ref={componentPDF} style={{ width: '100%' }}>
+            <h3>ALL DRIVER DETAILS</h3>
                 <Table dataSource={filteredDregister.length > 0 ? filteredDregister : Dregister} columns={columns} />
             </div>
-            <Button
-      style={{
-        backgroundColor: '#1f1300', // Background color
-        color: '#fff', // Text color
-        border: 'none', // Remove border
-        margin:10,
-        borderRadius: '5px', // Rounded corners
-        fontSize: '16px', // Font size
-        cursor: 'pointer', // Pointer cursor on hover
-      }}
+            <Button className="bookdetails"
+      
       onClick={generatePDF}
     >
       Download Report

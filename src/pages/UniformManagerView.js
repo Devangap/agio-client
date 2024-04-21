@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Table, Input, Button, Select, Modal, Form, message } from 'antd';
 import moment from 'moment';
 import { Document, Page, Text, PDFDownloadLink } from '@react-pdf/renderer';
-import '../UniformManagerView.css';
+import Layout from '../components/Layout';
+import '../UniformManagerView.css'; // Updated import statement
 
 const { Option } = Select;
 
@@ -114,7 +115,7 @@ function UniformOrders() {
     return (
       <PDFDownloadLink document={ReportDocument} fileName={pdfName}>
         {({ loading }) => (
-          <Button type="primary" loading={loading}>
+          <Button className="uniform-manager-view-download-report-button" type="primary" loading={loading}>
             {loading ? 'Generating PDF...' : 'Download Report'}
           </Button>
         )}
@@ -159,32 +160,35 @@ function UniformOrders() {
       key: 'action',
       render: (text, record) => (
         <span>
-          <Button onClick={() => handleUpdate(record)}>Update</Button>
-          <Button onClick={() => handleDelete(record._id)}>Delete</Button>
+          <Button className="uniform-manager-view-action-buttons" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button className="uniform-manager-view-action-buttons" onClick={() => handleDelete(record._id)}>Delete</Button>
         </span>
       ),
     },
   ];
 
   return (
-    <div>
-      <h1>Uniform Orders</h1>
-      <div style={{ marginBottom: '10px' }}>
-        <Input
-          value={searchId}
-          onChange={handleSearchChange}
-          placeholder="Search by Employee Number"
-          style={{ width: 200, marginRight: 10 }}
-        />
-        <Button type="primary" onClick={handleSearch}>Search</Button>
-      </div>
-      {handleDownloadReport()}
-      <Modal
-        title="Update Uniform Order"
-        visible={modalVisible}
-        onCancel={handleCancel}
-        footer={null}
-      >
+    <Layout>
+      <div className="uniform-manager-view-container">
+        <h1>Uniform Orders</h1>
+        <div className="uniform-manager-view-search-container" style={{ marginBottom: '10px' }}>
+          <Input
+            className="uniform-manager-view-search-input"
+            value={searchId}
+            onChange={handleSearchChange}
+            placeholder="Search by Employee Number"
+          />
+          <Button className="custom-search-button" type="primary" onClick={handleSearch}>Search</Button>
+        </div>
+  
+        {handleDownloadReport()}
+        <Modal
+          className="uniform-manager-view-update-modal"
+          title="Update Uniform Order"
+          visible={modalVisible}
+          onCancel={handleCancel}
+          footer={null}
+        >
         <Form
           layout="vertical"
           onFinish={handleUpdateSubmit}
@@ -227,9 +231,12 @@ function UniformOrders() {
           </Form.Item>
         </Form>
       </Modal>
-      <Table dataSource={uniformOrders} columns={columns} />
+      <div style={{ overflowY: 'auto', maxHeight: 'calc(100vh - 200px)' }}>
+        <Table dataSource={uniformOrders} columns={columns} />
+      </div>
     </div>
-  );
+  </Layout>
+);
 }
 
 export default UniformOrders;

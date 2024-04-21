@@ -90,6 +90,7 @@ import InquiryAdmin from './pages/inquiryAdmin';
 import TraBookingDisplayAdmin from './pages/TraBookingDisplayAdmin';
 import TraVehicleviwe from './pages/TraVehicleviwe';
 import TraDriverViwe from './pages/TraDriverViwe';
+import TraPayment from './pages/TraPayment';
 
 
 
@@ -100,6 +101,7 @@ import UniformSkirt from './pages/UniformSkirt';
 import UniformShirtInventory from './pages/UniformShirtInventory';
 import UniformOrderDetails from './pages/UniformOrderDetails';
 import UniformTotals from './pages/UniformTotals';
+import UniformCharts from './pages/UniformCharts';
 
 
 
@@ -115,6 +117,26 @@ import MedicalAppointments from "./pages/MedicalAppointments";
 import MedParameters from "./pages/MedParameters";
 import MedOverview from "./pages/MedOverview";
 import MedReports from "./pages/MedReports";
+
+
+
+//performance
+import Getperformancerecords from "./pages/Perform_Getperformancerecords";
+import Updatedataform from "./pages/Perform_Updatedataform";
+
+
+import Targets from "./pages/perform_target";
+import Profile from "./pages/Perform_profile";
+import Goalprogress from "./pages/Perform_goalprogress";
+import Rewardsm from "./pages/Perform_Rewards";
+
+import Rank from "./pages/Perform_Rank";
+import Compare1 from "./pages/Perform_Compare1";
+
+import Charta from "./pages/Perform_Chart";
+import Viewprofileadmin from "./pages/Perform_viewemp"; 
+
+
 
 
 
@@ -260,13 +282,14 @@ function App() {
 
 
 
-          <Route path='/UniformOrder' element={<UniformOrder/>} />
-          <Route path='/UniformManagerView' element={<UniformManagerView/>} />
-          <Route path='/UniformShirt' element={<UniformShirt/>} />
-          <Route path='/UniformSkirt' element={<UniformSkirt/>} />
-          <Route path='/UniformShirtInventory' element={<UniformShirtInventory/>} />
-          <Route path='/UniformOrderDetails' element={<UniformOrderDetails/>} />
-          <Route path='/UniformTotals' element={<UniformTotals/>}/>
+          <Route path='/UniformOrder' element={<ProtectedRoute><UniformOrder/></ProtectedRoute>} />
+          <Route path='/UniformManagerView' element={<ProtectedRoute><UniformManagerView/></ProtectedRoute>} />
+          <Route path='/UniformShirt' element={<ProtectedRoute><UniformShirt/></ProtectedRoute>} />
+          <Route path='/UniformSkirt' element={<ProtectedRoute><UniformSkirt/></ProtectedRoute>} />
+          <Route path='/UniformShirtInventory' element={<ProtectedRoute><UniformShirtInventory/></ProtectedRoute>} />
+          <Route path='/UniformOrderDetails' element={<ProtectedRoute><UniformOrderDetails/></ProtectedRoute>} />
+          <Route path='/UniformTotals' element={<ProtectedRoute><UniformTotals/></ProtectedRoute>}/>
+          <Route path='/UniformCharts' element={<UniformCharts/>}/>
 
         
             /*transport  Navigation*/
@@ -286,6 +309,8 @@ function App() {
           <Route path='/TraBookingDisplayAdmin' element={<ProtectedRoute><TraBookingDisplayAdmin/></ProtectedRoute>} />
           <Route path='/TraVehicleviwe' element={<ProtectedRoute><TraVehicleviwe/></ProtectedRoute>} />
           <Route path='/TraDriverViwe' element={<ProtectedRoute><TraDriverViwe/></ProtectedRoute>} />
+          <Route path='/TraPayment' element={<ProtectedRoute><TraPayment/></ProtectedRoute>} />
+
 
 
 
@@ -306,6 +331,24 @@ function App() {
           <Route path='/InsuranceManagerDisplay' element={<ProtectedRoute><InsuranceManagerDisplay/></ProtectedRoute>}/>
           <Route path='/InsuranceStatus' element={<ProtectedRoute><InsuranceStatus/></ProtectedRoute>}/>
           <Route path='/InsuranceManager' element={<ProtectedRoute><InsuranceManager/></ProtectedRoute>}/>
+
+          
+          /*performance*/
+
+          <Route path="/view" element={<ProtectedRoute><Getperformancerecords/></ProtectedRoute>}/>
+          <Route path="/update/:id" element={<ProtectedRoute><Updatedataform/></ProtectedRoute>}/>
+    
+          <Route path="/target" element = {<ProtectedRoute><Targets/></ProtectedRoute>}/>
+          <Route path="/profile" element = {<ProtectedRoute><Profile/></ProtectedRoute>}/>
+          <Route path="/progress" element = {<Goalprogress/>}/>
+          <Route path="/rewardsm" element = {<ProtectedRoute><Rewardsm/></ProtectedRoute>}/>
+          <Route path="/rank" element = {<Rank/>}/>
+          <Route path="/com/:id" element = {<ProtectedRoute><Compare1/></ProtectedRoute>}/> 
+          <Route path="/viewemp/:id" element = {<ProtectedRoute><Charta/></ProtectedRoute>}/> 
+          <Route path="/viewempbyname" element = {<ProtectedRoute><Viewprofileadmin/></ProtectedRoute>}/>
+
+         
+
 
 
         </Routes>

@@ -22,6 +22,7 @@ import "../MedDatePicker.css";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 import { userSlice } from "../redux/userSlice";
+const reportHeaderImage = require("../Images/reportHeader1.png");
 
 
 
@@ -84,41 +85,6 @@ eventSource.onerror = function () {
 const generateMonthlyReport = () => {
 const lastDate = new Date(new Date().setDate(new Date().getDate()-1));
 const firstDate = new Date(lastDate.getFullYear(), 0, 1);
-
-
-
-const range = [
-    {
-        $D: firstDate.getDate(),
-        $H: 0,
-        $L: "en",
-        $M: firstDate.getMonth(),
-        $W: null,
-        $d: firstDate.toString(),
-        $isDayjsObject: true,
-        $m: 0,
-        $ms: 0,
-        $s: 0,
-        $u: undefined,
-        $x: {},
-        $y: firstDate.getFullYear(),
-    },
-    {
-        $D: lastDate.getDate(),
-        $H: 0,
-        $L: "en",
-        $M: lastDate.getMonth(),
-        $W: null,
-        $d: lastDate.toString(),
-        $isDayjsObject: true,
-        $m: 0,
-        $ms: 0,
-        $s: 0,
-        $u: undefined,
-        $x: {},
-        $y: lastDate.getFullYear(),
-    },
-]
 }
 
 
@@ -586,7 +552,7 @@ const MedReports = () => {
   return (
     <Layout>
       <div className="doc-reports-main">
-        <div className="doc-reports-secondary-1">
+        <div className="doc-reports-secondary-1" style={{paddingLeft: 20, paddingRight: 20, paddingTop: 20}}>
           <div className="doc-reports-secondary-1-label">
             Select time period&nbsp;:&nbsp;
           </div>
@@ -613,11 +579,13 @@ const MedReports = () => {
         <div
           className="doc-reports-secondary-2"
           key={monthObjects !== null ? monthObjects.length : 0}
+
         >
-            <div ref={section0To3Ref}>
+            <div ref={section0To3Ref} style={{paddingLeft: 20, paddingRight: 20, paddingTop: 20}}>
           <div className="doc-reports-secondary-2-title">
-            Medical Appointments Report
+          <img src={reportHeaderImage} alt="document header" style={{width: 700}}/>
           </div>
+          
           <div className="doc-reports-secondary-2-section-1">
             <legend className="doc-reports-secondary-2-section-title">
               Summary
@@ -738,22 +706,22 @@ const MedReports = () => {
               </div>
 
               <div className="doc-reports-secondary-2-section-2-data-summary">
-                <table>
+                <table style={{border: "1px solid #dfdfdf", borderCollapse: "collapse"}}>
                   <tr>
-                    <th>Month</th>
-                    <th>Dates</th>
-                    <th>Change %</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Month</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Dates</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Change %</th>
                   </tr>
 
                   {monthObjects?.map((month, index) => (
                     <tr>
-                      <td>{month.monthName}</td>
-                      <td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.monthName}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>
                         {month.availableDatesDateOnly?.map(
                           (date) => `${date},`
                         )}
-                      </td>
-                      <td>{`${month.availableDateChange}%`}</td>
+                      </td >
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{`${month.availableDateChange}%`}</td>
                     </tr>
                   ))}
                 </table>
@@ -796,20 +764,20 @@ const MedReports = () => {
               </div>
 
               <div className="doc-reports-secondary-2-section-3-data-summary">
-                <table>
+                <table style={{border: "1px solid #dfdfdf", borderCollapse: "collapse"}}>
                   <tr>
-                    <th>Month</th>
-                    <th>Scheduled</th>
-                    <th>Availabled</th>
-                    <th>Change %</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Month</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Scheduled</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Availabled</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Percentage</th>
                   </tr>
 
                   {monthObjects?.map((month, index) => (
                     <tr>
-                      <td>{month.monthName}</td>
-                      <td>{month.appointmentCount}</td>
-                      <td>{month.totalMaxAppointments}</td>
-                      <td>{`${month.availableDateChange}%`}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.monthName}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.appointmentCount}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.totalMaxAppointments}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{`${(month.appointmentCount/month.totalMaxAppointments).toFixed(2)}%`}</td>
                     </tr>
                   ))}
                 </table>
@@ -817,7 +785,7 @@ const MedReports = () => {
             </div>
           </div>
         </div>
-          <div className="doc-reports-secondary-2-section-4" ref={section4Ref}>
+          <div className="doc-reports-secondary-2-section-4" ref={section4Ref} style={{paddingLeft: 20, paddingRight: 20, paddingTop: 20}}>
             <div className="doc-reports-secondary-2-section-title">
               <p>Monthwise</p>
               <div
@@ -910,7 +878,7 @@ const MedReports = () => {
 
           <hr></hr>
 
-          <div className="doc-reports-secondary-2-section-5" ref={section5Ref}>
+          <div className="doc-reports-secondary-2-section-5" ref={section5Ref} style={{paddingLeft: 20, paddingRight: 20, paddingTop: 20}}>
             <div className="doc-reports-secondary-2-section-title">
               <p>Appointment Completion</p>
             </div>
@@ -948,20 +916,20 @@ const MedReports = () => {
                 </div>
 
                 <div className="doc-reports-secondary-2-section-5-data-summary">
-                <table>
+                <table style={{border: "1px solid #dfdfdf", borderCollapse: "collapse"}}>
                   <tr>
-                    <th>Month</th>
-                    <th>Completed</th>
-                    <th>Incompleted</th>
-                    <th>Completed %</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Month</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Completed</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Incompleted</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Completed %</th>
                   </tr>
 
                   {monthObjects?.map((month, index) => (
                     <tr>
-                      <td>{month.monthName}</td>
-                      <td>{month.completedAppointmentCount}</td>
-                      <td>{month.missedAppointmentCount}</td>
-                      <td>{`${month.appointmentCount !== 0 ? ((month.completedAppointmentCount)* 100)/(month.appointmentCount) : 0}%`}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.monthName}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.completedAppointmentCount}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.missedAppointmentCount}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{`${month.appointmentCount !== 0 ? ((month.completedAppointmentCount)* 100)/(month.appointmentCount) : 0}%`}</td>
                     </tr>
                   ))}
                 </table>
