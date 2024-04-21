@@ -48,6 +48,9 @@ function Main_login() {
         }else if (name === "Minuk") {
           navigate("/inquiryAdmin");
           
+        }else if (name === "Thinal") {
+          navigate("/AnnDisplay");
+          
         }
         
         else{
