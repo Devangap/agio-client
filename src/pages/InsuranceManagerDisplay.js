@@ -11,6 +11,7 @@ function InsuranceManagerDisplay() {
   const [visible, setVisible] = useState(false); 
   const [selectedInsurance, setSelectedInsurance] = useState(null); 
   const [updateModalVisible, setUpdateModalVisible] = useState(false); 
+  const [searchTerm, setSearchTerm] = useState(''); // Define searchTerm state
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
@@ -139,6 +140,41 @@ function InsuranceManagerDisplay() {
     }
   };
 
+  const handleSearch = async () => {
+    try {
+      if (!searchTerm.trim()) {
+        message.warning("Please enter an Employee ID to search.");
+        return;
+      }
+
+      dispatch(showLoading());
+      const response = await axios.get(
+        `/api/insurance/getInsuranceByEmployeeId/${searchTerm}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      console.log(response);
+      dispatch(hideLoading());
+      if (response.data.success) {
+        setInsuranceData(response.data.insuranceData);
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Error searching insurance data:", error);
+      message.error("Failed to search insurance data.");
+    }
+  };
+
+  const handleReset = () => {
+    getInsuranceData();
+    setSearchTerm("");
+  };
+
   const columns = [
     {
       title: "Name",
@@ -188,7 +224,7 @@ function InsuranceManagerDisplay() {
       render: (text, record) => (
         <div className="insactbutton">
           <Button className="insupdate" onClick={() => handleUpdate(record)}>Update</Button>
-          <Button className="inscancel"onClick={() => handleDelete(record._id)}>Cancel</Button>
+          <Button className="inscancel" onClick={() => handleDelete(record._id)}>Cancel</Button>
         </div>
       ),
     },
@@ -197,9 +233,21 @@ function InsuranceManagerDisplay() {
   return (
     <Layout>
       <div className="institle">
-        <h1>Insurance Requset Claim List</h1>
+        <h1>Insurance Request Claim List</h1>
       </div>
       <hr/>
+      <div style={{ marginBottom: 16 }}>
+        <Input
+          placeholder="Enter Employee ID"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ marginRight: 8, width: 200 }}
+        />
+        <Button type="primary" onClick={handleSearch} style={{ marginRight: 8 }}>
+          Search
+        </Button>
+        <Button onClick={handleReset}>Reset</Button>
+      </div>
       <div style={{ height: "400px", overflow: "auto" }}>
         <Table 
           columns={columns}

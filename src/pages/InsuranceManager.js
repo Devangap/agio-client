@@ -18,11 +18,11 @@ function InsuranceManager() {
   return (
       <Layout>
       <div className="insmybox">
-        <div className="mybox1" onClick={handleManagerDisplayClick}>
-          <span className='boxname'>Insurance Display</span>
+        <div className="insmybox1" onClick={handleManagerDisplayClick}>
+          <span className='insboxname'>Insurance Display</span>
         </div>
-        <div className="mybox1" onClick={handleStatusClick}>
-          <span className='boxname'>Insurance Details</span>
+        <div className="insmybox1" onClick={handleStatusClick}>
+          <span className='insboxname'>Insurance Details</span>
         </div>
         
       </div>
