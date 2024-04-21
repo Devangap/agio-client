@@ -352,6 +352,13 @@ doc date picker
     height: 40px !important;
 }
 
+.med-parameters-update-dates {
+    background-color: #FFC15E;
+    font-weight: bold;
+    border-color: #FFC15E;
+    border-radius: 20px;
+    align-self: center;
+}
 
 .doc-manage-parameters-container-main {
     display: flex;
@@ -518,7 +525,7 @@ medical-reports
     width: match-parent;
     height: 80vh;
     overflow-y: auto;
-    padding: 20px;
+    
 }
 
 .doc-reports-secondary-1 {
@@ -557,11 +564,7 @@ medical-reports
 }
 
 .doc-reports-secondary-2-title {
-    font-size: 25px;
-    font-weight: 500;
-    margin-bottom: 15px;
-    text-align: center;
-    color: #FFC15E;
+   text-align: center;
 }
 
 .doc-reports-secondary-2-section-title {
@@ -610,22 +613,7 @@ medical-reports
     padding-left: 30px;
 }
 
-.doc-reports-secondary-2-section-2-data-summary table, td, th {
-    border: 1px solid #dfdfdf;
-    border-collapse: collapse;
-}
 
-.doc-reports-secondary-2-section-2-data-summary th {
-    background-color: #eeeeee;
-    text-align: center;
-    font-weight: 500;
-    height: 40px;
-    width: 84px;
-}
-
-.doc-reports-secondary-2-section-2-data-summary td {
-    width: 84px;
-}
 
 
 .doc-reports-secondary-2-section-3-data {
@@ -643,22 +631,7 @@ medical-reports
     padding-left: 30px;
 }
 
-.doc-reports-secondary-2-section-3-data-summary table, td, th {
-    border: 1px solid #dfdfdf;
-    border-collapse: collapse;
-}
 
-.doc-reports-secondary-2-section-3-data-summary th {
-    background-color: #eeeeee;
-    text-align: center;
-    font-weight: 500;
-    height: 40px;
-    width: 84px;
-}
-
-.doc-reports-secondary-2-section-3-data-summary td {
-    width: 84px;
-}
 
 .doc-reports-secondary-2-section-4-data {
     
@@ -700,19 +673,3 @@ medical-reports
     padding-left: 30px;
 }
 
-.doc-reports-secondary-2-section-5-data-summary table, td, th {
-    border: 1px solid #dfdfdf;
-    border-collapse: collapse;
-}
-
-.doc-reports-secondary-2-section-5-data-summary th {
-    background-color: #eeeeee;
-    text-align: center;
-    font-weight: 500;
-    height: 40px;
-    width: 84px;
-}
-
-.doc-reports-secondary-2-section-5-data-summary td {
-    width: 84px;
-}
