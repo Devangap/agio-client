@@ -63,7 +63,7 @@ function Layout({ children }) {
           },
         {
             name: 'Uniform',
-            path: '/profile',
+            path: '/UniformOrder',
             icon: 'ri-account-box-line',
         },
         {
@@ -206,8 +206,18 @@ function Layout({ children }) {
             icon: 'ri-home-line',
         },
         {
-            name: ' uniform ',
-            path: '/profile',
+            name: ' Uniform Orders ',
+            path: '/UniformManagerView',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Order Overview ',
+            path: '/UniformTotals',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Uniform Inventory ',
+            path: '/UniformShirtInventory',
             icon: 'ri-account-box-line',
         },
         {

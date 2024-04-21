@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Layout from './AnnLayout'; // Import the Layout component
+import Layout from '../components/Layout';
 import axios from 'axios';
 import '../UniformInventory.css'; // Import CSS file for styling
 import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast from react-toastify
