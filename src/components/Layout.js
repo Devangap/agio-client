@@ -83,6 +83,11 @@ function Layout({ children }) {
             path: '/insEmployee',
             icon: 'ri-article-line',
         },
+        { //banuka
+            name: "Performance",
+            path: '/rank',
+            icon: 'ri-home-line',
+        }//
     ];
     const adminMenu = [
         {
@@ -261,7 +266,7 @@ function Layout({ children }) {
         },
         {
             name: 'Performance',
-            path: '/perf',
+            path: '/view',      //path to view page
             icon: 'ri-home-line',
         },
         {

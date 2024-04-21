@@ -130,7 +130,8 @@ import Rewardsm from "./pages/Perform_Rewards";
 import Rank from "./pages/Perform_Rank";
 import Compare1 from "./pages/Perform_Compare1";
 
-import Charta from "./pages/Perform_Chart"
+import Charta from "./pages/Perform_Chart";
+import Viewprofileadmin from "./pages/Perform_viewemp"; 
 
 
 
@@ -338,6 +339,7 @@ function App() {
           <Route path="/rank" element = {<Rank/>}/>
           <Route path="/com/:id" element = {<ProtectedRoute><Compare1/></ProtectedRoute>}/> 
           <Route path="/viewemp/:id" element = {<ProtectedRoute><Charta/></ProtectedRoute>}/> 
+          <Route path="/viewempbyname" element = {<ProtectedRoute><Viewprofileadmin/></ProtectedRoute>}/>
 
          
 

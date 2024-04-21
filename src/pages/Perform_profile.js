@@ -102,12 +102,13 @@ function Profile(){
               }
             ];
             setChartData(data);
-            setName(res.data[0].Name)
+            //setName(res.data[0].Name)
+            console.log(data)
             
     })
         .catch(err => console.log(err));
 
-        axios.get("/exceldata/gettargetempNo",{
+        axios.get("/exceldata/gettargetempid",{
           headers: {
             Authorization :`Bearer ${localStorage.getItem("token")}`,
           }

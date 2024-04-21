@@ -12,7 +12,7 @@ import Layout from "../components/Layout";
 
 function Barchart({data}){
   return(
-    <ResponsiveContainer width="100%" height={300}>
+    <ResponsiveContainer width="100%" height={400}>
       <BarChart
         data={data}
         margin={{ top: 5, right: 5, left: 5, bottom: 5 }}

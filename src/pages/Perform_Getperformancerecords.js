@@ -248,7 +248,8 @@ function Getperformancerecords(){
             </Upload>
             <Button type="dashed" onClick={showModal}>Goals</Button>
             <Button type="dashed" onClick={() => navigate('/rewardsm')}>Rewards</Button>
-            
+            <Button type="primary" onClick={() => navigate('/viewempbyname')}>Employees</Button>
+
             </div>
         
         </div>
