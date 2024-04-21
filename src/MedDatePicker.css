@@ -616,6 +616,7 @@ medical-reports
 
 
 
+
 .doc-reports-secondary-2-section-3-data {
     display: flex;
     flex-direction: row;
@@ -630,6 +631,7 @@ medical-reports
     width: 40%;
     padding-left: 30px;
 }
+
 
 
 
@@ -672,4 +674,5 @@ medical-reports
     width: 40%;
     padding-left: 30px;
 }
+
 
