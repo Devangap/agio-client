@@ -34,7 +34,7 @@ function Main_login() {
           navigate('/TraBookingDisplayAdmin');
           
         }else if (name === "Dulara") {
-          navigate("/AnnDisplay");
+          navigate("/");
           
         }else if (name === "Dinura") {
           navigate("/medical-overview");
@@ -43,7 +43,7 @@ function Main_login() {
           navigate("/UniformManagerView");
           
         }else if (name === "Banuka") {
-          navigate("/AnnDisplay");
+          navigate("/");
           
         }else if (name === "Minuk") {
           navigate("/inquiryAdmin");

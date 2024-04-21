@@ -7,6 +7,7 @@ import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import "../AnnEmpDisplay.css"
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 const { TabPane } = Tabs;
 function AnnEmpDisplay() {
@@ -145,25 +146,30 @@ function AnnEmpDisplay() {
     return (
         <Layout>
         <Tabs defaultActiveKey="notices">
-            <TabPane tab="Notices" key="notices">
-                <div>
-                    <Card className="notices-card" style={{ border: '1px solid #ccc', borderRadius: '5px' }}>
-                        <h2>Notices</h2>
-                        {events.length > 0 ? (
-                            <div>
-                                {events.map(event => (
-                                    <div key={event.id}>
-                                        <h3>{event.title}</h3>
-                                        <p>{event.description}</p>
-                                    </div>
-                                ))}
+    <TabPane tab="Notices" key="notices">
+        <div className="anncardsss">
+            <Card className="notices-card" style={{ border: '1px solid #ccc', borderRadius: '5px' }}>
+                <h2  >Notices</h2>
+                {events.length > 0 ? (
+                    <div>
+                        {events.slice(0).reverse().map(event => ( // Reversing the array
+                            <div className="anncard" key={event.id}>
+                                <h3 style={{ marginTop: "20px", color: 'rgb(66, 34, 2)}'}}>
+                                    <InfoCircleOutlined style={{ color: "#ECB159", marginRight: "10px" }}  />
+                                    {event.title}
+                                </h3>
+                                <p style={{ fontSize: '16px', marginLeft: "20px", justifyContent:'center'}}>{event.description}</p>
+                                <Button type="primary" style={{ float: "right", marginBottom:"100px", backgroundColor: "#ECB159"}}>RSVP</Button>
                             </div>
-                        ) : (
-                            <p>No notices found.</p>
-                        )}
-                    </Card>
-                </div>
-            </TabPane>
+                        ))}
+                    </div>
+                ) : (
+                    <p>No notices found.</p>
+                )}
+            </Card>
+        </div>
+    </TabPane>
+
             <TabPane tab="Announcements" key="announcements">
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     <h6>SPECIFIC ANNOUNCEMENTS</h6>

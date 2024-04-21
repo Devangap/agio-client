@@ -297,29 +297,25 @@ function Layout({ children }) {
 
     let menuToBeRendered = userMenu;
 
-    if (user?.isAdmin) {
-       
-        menuToBeRendered = adminMenu;
-    } else if (user?.isDoctor) {
-        menuToBeRendered = doctorMenu;
-    }
-else if (user?.isAnnHrsup) {
-    menuToBeRendered = Annhrsupmenu ;
-}else if (user?.isLeaveHrsup) {
-    
-    menuToBeRendered = leavemenu ;
-}else if (user?.islogisticsMan) {
-    menuToBeRendered = logisticmenu ;
-}else if (user?.isuniform) {
-    menuToBeRendered = uniformmenu ;
-}else if (user?.isinsu) {
-    menuToBeRendered = insuarancemenu ;
-}else if (user?.isinquiry) {
-    menuToBeRendered = inquirymenu  ;
-}else if (user?.isperfomace) {
-    menuToBeRendered = performancemenu ;
+if (user?.isAdmin) {
+    menuToBeRendered = adminMenu;
+} else if (user?.isDoctor) {
+    menuToBeRendered = doctorMenu;
+} else if (user?.isAnnHrsup) {
+    menuToBeRendered = Annhrsupmenu;
+} else if (user?.isLeaveHrsup) {
+    menuToBeRendered = leavemenu;
+} else if (user?.islogisticsMan) {
+    menuToBeRendered = logisticmenu;
+} else if (user?.isuniform) {
+    menuToBeRendered = uniformmenu;
+} else if (user?.isinsu) {
+    menuToBeRendered = insuarancemenu;
+} else if (user?.isinquiry) {
+    menuToBeRendered = inquirymenu;
+} else if (user?.isperfomace) {
+    menuToBeRendered = performancemenu;
 }
-
 
 useEffect(() => {
     // Check for authentication status on component mount

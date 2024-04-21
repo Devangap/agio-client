@@ -256,12 +256,12 @@ function LeaveHrsupdisplay() {
                     <div className="d-flex">
                         {record.status === "pending" && (
                             <>
-                                <Button type="primary" className="approvebut" onClick={() => { changestatus(record, 'approved'); changeLeaveCount(record); }}>Approve</Button>
-                                <Button type="primary" danger className="rejectbut" onClick={() => changestatus(record, 'rejected')}>Reject</Button>
+                                <Button type="primary" style={{   backgroundColor:'#ffc658'}} className="approvebut" onClick={() => { changestatus(record, 'approved'); changeLeaveCount(record); }}>Approve</Button>
+                                <Button type="primary" style={{  borderColor: 'red', color: 'red', backgroundColor:'white'}} className="rejectbut" onClick={() => changestatus(record, 'rejected')}>Reject</Button>
                             </>
                         )}
                         {record.status === "approved" && (
-                            <Button type="primary" danger className="rejectbut" onClick={() => changestatus(record, 'rejected')}>Reject</Button>
+                            <Button type="primary" style={{  borderColor: 'red', color: 'red', backgroundColor:'white'}}className="rejectbut" onClick={() => changestatus(record, 'rejected')}>Reject</Button>
                         )}
                     </div>
                 </>
@@ -290,12 +290,15 @@ function LeaveHrsupdisplay() {
                 </Card>
             </div>
             <div className = "remaining">
+            <div className = "searchleave">
             <Input.Search
                 placeholder="Search by name"
                 allowClear
                 onChange={(e) => handleSearch(e.target.value)}
                 style={{ width: 200, marginBottom: 16 }}
+            
             />
+            </div>
            <Table dataSource={filteredData} columns={columns} />
            </div>
         </Layout>

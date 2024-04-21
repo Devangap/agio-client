@@ -5,3 +5,25 @@
     margin-bottom: 20px;
     background-color: #fafafafa;
 }
+
+.anncard{
+    margin-top: 20px;
+    padding-top: 5px;
+    margin-left: 40px;
+    margin-right: 40px;
+    width: 1000px; 
+    border-radius: 10px;
+    height: 175px;/* Adjust width according to your preference */
+    background-color: #ebeae4; /* Blue color */
+    margin-bottom: 80px; /* Add margin between cards */
+    padding-bottom: 10px;
+  
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+
+}
+.anncard p {
+    color: #444; /* Dark Grey */
+    font-size: 16px;
+    margin-left: 20px;
+    justify-content: center;
+}

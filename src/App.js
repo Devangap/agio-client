@@ -192,10 +192,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/AnnHRsup" element={<AnnHRsup />} />
-          <Route path="/AnnDisplay" element={<AnnDisplay />} />
-          <Route path="/AnnUpdate/:id" element={<AnnUpdate />} />
-          <Route path="/LeaveHRsup" element={<LeaveHRsup />} />
+         
 
           <Route path="/home" element={<TraHome />} />
           <Route path="/dregister" element={<TraDriverRegister />} />
