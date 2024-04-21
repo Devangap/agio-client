@@ -154,7 +154,7 @@ function TraBookingDisplayAdmin() {
             render: (_, record) => (
                 <>
                     <div className="d-flex">
-                        {record.status === "pending" && <Button type="primary" className="update" onClick={() => { changestatus(record, 'approved'); }} >Add</Button>}
+                        {record.status === "pending" && <Button type="primary" className="update" onClick={() => { changestatus(record, 'approved'); }} >Approve</Button>}
                         {record.status === "approved" && <Button type="primary" className="update" onClick={() => changestatus(record, 'rejected')}>Reject</Button>}
                     </div>
                     
