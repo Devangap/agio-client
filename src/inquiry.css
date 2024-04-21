@@ -263,6 +263,11 @@ label{
     background-color: #F7B05B !important;
     color: white;
   }
+  .i-send-reply-button{
+    background-color: #F7B05B !important;
+    color: rgb(253, 248, 248);
+    
+  }
 
   .imain_form {
     background-color: #FAFAFA; /* Background color */
