@@ -61,7 +61,13 @@ function AnnHRsup() {
 
   // Function to handle file selection
   const handleBeforeUpload = file => {
-    setFileList([...fileList, file]); // Append file to fileList
+    const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isJpgOrPng) {
+      toast.error('You can only upload JPG/PNG file!');
+    }
+    if (isJpgOrPng) {
+      setFileList([...fileList, file]);
+    }
     return false; // Prevent automatic upload
   };
 

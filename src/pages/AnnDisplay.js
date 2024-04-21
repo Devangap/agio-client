@@ -22,6 +22,39 @@ function AnnDisplay() {
     const [searchText, setSearchText] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
     const [comments, setComments] = useState([]);
+    const [isAddModalVisible, setIsAddModalVisible] = useState(false); 
+   
+
+
+    const showModal1 = () => {
+        setIsAddModalVisible(true);
+    };
+
+    const handleCancel = () => {
+        setIsAddModalVisible(false);
+    };
+
+    const handleAddAnnouncement = async (values) => {
+        try {
+            const formData = new FormData();
+            Object.keys(values).forEach(key => {
+                formData.append(key, values[key]);
+            });
+            if (selectedFile) {
+                formData.append("file", selectedFile);
+            }
+            const response = await axios.post('/api/employee/createAnnHRsup', formData);
+            if (response.data.success) {
+                message.success('Announcement added successfully');
+                setIsAddModalVisible(false);
+                fetchAnnouncements(); // Refresh the announcements list
+            } else {
+                message.error(response.data.message);
+            }
+        } catch (error) {
+            message.error('Failed to add announcement');
+        }
+    };
 
 
     const fetchComments = async () => {
@@ -189,7 +222,7 @@ function AnnDisplay() {
             key: 'action',
             render: (_, record) => (
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'start' }}>
-    <Button type="primary" className="update" onClick={() => navigate(`/AnnUpdate/${record._id}`)} style={{ width: '150px', height: '40px', marginBottom: '8px' }}>Update</Button>
+    <Button type="primary" className="Annupdate" onClick={() => navigate(`/AnnUpdate/${record._id}`)} style={{ width: '150px', height: '40px', marginBottom: '8px' }}>Update</Button>
     <Button danger onClick={() => handleDelete(record._id)} style={{ width: '150px', height: '40px', marginBottom: '8px' }}>Delete</Button>
     <Button type="default" onClick={() => handleDownload(record)} style={{ width: '150px', height: '40px' }}>Download</Button>
 </div>
@@ -246,22 +279,36 @@ function AnnDisplay() {
 
     return (
         <Layout>
-            <div className="annflex-container">
+         
+         <h2 >Announcements</h2> 
             <div className="annscrollable-container">
+            
+            <Form.Item>
+            <Button
+                        type="primary"
+                        onClick={showModal}
+                        className="annadd"
+                    >
+                        Add Announcement
+                    </Button>
+        </Form.Item>
 
          <div className="table-header">
          
-        <div className="Annsearch-container">
-           <h2 >Announcements</h2> 
+       <div>
+       
+
+       </div>
+           
             <Input
             className='annsearch'
                 placeholder="Search announcements"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                style={{ marginBottom: 16, width: 100, marginLeft:123 }}
+                style={{ marginBottom: 10, width: 100, marginLeft:123 }}
             />
             
-        </div>
+        
     </div>
 
             <Table dataSource={filteredAnnouncements} columns={columns}   />
@@ -293,9 +340,35 @@ function AnnDisplay() {
         </Form.Item>
     </Form>
 </Modal>
+<Modal
+                    title="Add New Announcement"
+                    open={isAddModalVisible}
+                    onCancel={handleCancel}
+                    footer={null} // Use null here to remove default buttons
+                >
+                    <Form
+                        layout="vertical"
+                        onFinish={handleAddAnnouncement}
+                    >
+                        <Form.Item
+                            name="anntitle"
+                            label="Announcement Title"
+                            rules={[{ required: true, message: 'Please input the announcement title!' }]}
+                        >
+                            <Input />
+                        </Form.Item>
+                        {/* Add other fields as needed */}
+                        <Form.Item>
+                            <Button type="primary" htmlType="submit">
+                                Add Announcement
+                            </Button>
+                        </Form.Item>
+                    </Form>
+                </Modal>
 
 </div>
 <h2>Employee Comments</h2>
+<div annscrollable-container>
 <Table dataSource={comments} columns={commentColumns} />
 
 
