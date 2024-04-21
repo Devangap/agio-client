@@ -17,6 +17,7 @@ import '../leaveEmp.css';
 import '../leaveEmpform.css';
 import toast from 'react-hot-toast';
 import moment from 'moment';
+import '../calendar.css';
 
 const LeaveEmp = () => {
     const locales = {
@@ -47,6 +48,23 @@ const LeaveEmp = () => {
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
+    const holidayEvents = [
+        {
+          title: 'New Year',
+          start: new Date(moment().year(), 0, 1),
+          end: new Date(moment().year(), 0, 1),
+          allDay: true,
+          resource: 'holiday'
+        },
+        {
+          title: 'Christmas',
+          start: new Date(moment().year(), 11, 25),
+          end: new Date(moment().year(), 11, 25),
+          allDay: true,
+          resource: 'holiday'
+        }
+        // Add more holiday events as needed
+      ];
 
     const getData = async () => {
         try {
@@ -181,7 +199,7 @@ const LeaveEmp = () => {
     };
 
     const eventPropGetter = (event) => {
-        let color = '#8884d8';
+        let color = 'red';
 
         if (event.Type === 'Medical') {
             color = '#8884d8';
@@ -220,6 +238,7 @@ const LeaveEmp = () => {
             await axios.delete(`/api/employee/deleteleave/${id}`);
             setLeaveData(prev => prev.filter(item => item._id !== id));
             message.success('Leave deleted successfully');
+            fetchData(user?.userid);
         } catch (error) {
             message.error('Failed to delete leave');
         }
@@ -275,6 +294,7 @@ const LeaveEmp = () => {
             if (response.data.success) {
                 toast.success(response.data.message);
                 setSubmissionModalVisible(false)
+                fetchData(user?.userid);
             } else {
                 toast.error(response.data.message);
             }
@@ -296,7 +316,7 @@ const LeaveEmp = () => {
             };
     
             if (values.id) {
-                const response = await axios.put(`/api/employee/updateleave/${values.id}`, updatedValues);
+                const response = await axios.put(`/api/employee/updateleave/${id}`, updatedValues);
                 if (response.data.success) {
                     toast.success(response.data.message);
                     navigate('/leaveEmp');
@@ -360,21 +380,22 @@ const LeaveEmp = () => {
             title: 'Start Date',
             dataIndex: 'startDate',
             key: 'startDate',
+            render: (text) => {
+                return new Date(text).toLocaleDateString('en-US');
+            }
         },
         {
             title: 'End Date',
             dataIndex: 'endDate',
             key: 'endDate',
+            render: (text) => {
+                return new Date(text).toLocaleDateString('en-US');
+            }
         },
         {
             title: 'Type',
             dataIndex: 'Type',
             key: 'Type',
-        },
-        {
-            title: 'Department',
-            dataIndex: 'department',
-            key: 'department',
         },
         {
             title: 'Description',
@@ -386,6 +407,7 @@ const LeaveEmp = () => {
             dataIndex: 'status',
             key: 'Description',
         },
+    
         {
             title: 'Documents',
             dataIndex: 'filePath', // Adjust based on your data structure
@@ -405,7 +427,7 @@ const LeaveEmp = () => {
                         target="_blank"
                         download={filename} // Add the download attribute
                     >
-                        Download PDF
+                        View PDF
                     </Button>
                 ) : null;
             },
@@ -415,7 +437,7 @@ const LeaveEmp = () => {
             key: 'action',
             render: (_, record) => (
                 <>
-                    <Button type="primary" className="update" onClick={() => handleUpdateLeave(record)}>Update</Button>
+                   <Button type="primary" className="updateleaveemp" style={{ backgroundColor: '#ffc658' }} onClick={() => handleUpdateLeave(record)}>Update</Button>
                     <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
                 </>
             ),
@@ -423,20 +445,34 @@ const LeaveEmp = () => {
     ];
 
     const leaveTypes = [
-        { title: 'General Leave', description: `Available Leaves: ${user ? user.general_leave : ''}` },
-        { title: 'Annual Leave', description: `Available Leaves: ${user ? user.annual_leave : ''}` },
-        { title: 'Medical Leave', description: `Available Leaves: ${user ? user.medical_leave : ''}` },
+        { title: <div style={{ marginLeft: '20px', color: 'rgb(66, 34, 2)' }}>Remaining<br/>General Leaves</div>, description: `${user ? user.general_leave : ''}` },
+        { title: <div style={{ marginLeft: '20px', color: 'rgb(66, 34, 2)' }}>Remaining<br/>Annual Leaves</div>, description: `${user ? user.annual_leave : ''}` },
+        { title: <div style={{ marginLeft: '20px', color: 'rgb(66, 34, 2)' }}>Remaining<br/>Medical Leaves</div>, description: `${user ? user.medical_leave : ''}` },
     ];
+    const allEvents = [...leaveEvents, ...holidayEvents];
+
 
     return (
         <Layout>
-            <h1>Leave Calendar</h1>
-            <button className="leavesub" onClick={handleLeaveSubmission}>Leave Submission</button>
+            <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
+                {leaveTypes.map((type, index) => (
+                    <Card key={index} className="leave-type-card" title={type.title} bordered={false}>
+                            <div className="leave-description" style={{  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        <p style={{ color: '#ECB159' }}>{type.description}</p>
+                        </div>
+                    </Card>
+                ))}
+            </div>
+          
+            <div className = 'leavecalcomp'>
+            
+            
 
             <div>
+            <h3 style={{ color: 'rgb(66, 34, 2)', marginBottom:"30px"}}>Leave Calendar</h3>
                 <Calendar
                     localizer={localizer}
-                    events={leaveEvents} // Pass leave events to the calendar
+                    events={allEvents} // Pass leave events to the calendar
                     startAccessor="start"
                     endAccessor="end"
                     style={{ height: 500, margin: 50, fontFamily: 'Patrick Hand' }}
@@ -444,6 +480,8 @@ const LeaveEmp = () => {
                     onSelectEvent={handleEventClick} // Handle event click
                 />
             </div>
+            </div>
+          
 
             <Modal
                 title="Leave Details"
@@ -626,24 +664,20 @@ const LeaveEmp = () => {
                         </Form.Item>
                     </div>
                     <div className="leave_Button-cons">
-                        <Button className='leave_primary-button my-2' htmlType='submit'  onClick={() => handleUpdateFinish(form.getFieldsValue())}>Update</Button>
+                        <Button className='leave_primary-button my-2' htmlType='submit'  onClick={() => handleUpdateFinish()}>Update</Button>
                     </div>
                 </Form>
             </div>
             </div>
             </Modal>
 
-            <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
-                {leaveTypes.map((type, index) => (
-                    <Card key={index} className="leave-type-card" title={type.title} bordered={false}>
-                        <p>{type.description}</p>
-                    </Card>
-                ))}
+            <div className='Leaveempdisplay'>
+            <button className="leavesub" onClick={handleLeaveSubmission}>Leave Submission</button>
+            <Table className="leaveTableemp" dataSource={leaveData} columns={columns} />
             </div>
-
-            <Table dataSource={leaveData} columns={columns} />
         </Layout>
     );
 };
 
 export default LeaveEmp;
+
