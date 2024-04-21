@@ -117,6 +117,25 @@ import MedReports from "./pages/MedReports";
 
 
 
+//performance
+import Getperformancerecords from "./pages/Perform_Getperformancerecords";
+import Updatedataform from "./pages/Perform_Updatedataform";
+
+
+import Targets from "./pages/perform_target";
+import Profile from "./pages/Perform_profile";
+import Goalprogress from "./pages/Perform_goalprogress";
+import Rewardsm from "./pages/Perform_Rewards";
+
+import Rank from "./pages/Perform_Rank";
+import Compare1 from "./pages/Perform_Compare1";
+
+import Charta from "./pages/Perform_Chart"
+
+
+
+
+
 function App() {
 
   const{loading} = useSelector(state => state.alerts);
@@ -305,6 +324,23 @@ function App() {
           <Route path='/insEmployee/:userId' element={<InsEmployee/>}/>
           <Route path='/insEmployee' element={<InsEmployee/>}/>
           <Route path='/InsuranceManagerDisplay' element={<InsuranceManagerDisplay/>}/>
+
+          
+          /*performance*/
+
+          <Route path="/view" element={<ProtectedRoute><Getperformancerecords/></ProtectedRoute>}/>
+          <Route path="/update/:id" element={<ProtectedRoute><Updatedataform/></ProtectedRoute>}/>
+    
+          <Route path="/target" element = {<ProtectedRoute><Targets/></ProtectedRoute>}/>
+          <Route path="/profile" element = {<ProtectedRoute><Profile/></ProtectedRoute>}/>
+          <Route path="/progress" element = {<Goalprogress/>}/>
+          <Route path="/rewardsm" element = {<ProtectedRoute><Rewardsm/></ProtectedRoute>}/>
+          <Route path="/rank" element = {<Rank/>}/>
+          <Route path="/com/:id" element = {<ProtectedRoute><Compare1/></ProtectedRoute>}/> 
+          <Route path="/viewemp/:id" element = {<ProtectedRoute><Charta/></ProtectedRoute>}/> 
+
+         
+
 
 
         </Routes>
