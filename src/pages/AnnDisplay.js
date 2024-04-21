@@ -21,6 +21,43 @@ function AnnDisplay() {
     const [currentAnnouncement, setCurrentAnnouncement] = useState(null); 
     const [searchText, setSearchText] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
+    const [comments, setComments] = useState([]);
+
+
+    const fetchComments = async () => {
+        try {
+            const response = await axios.get('/api/employee/comments');
+            const mappedData = [];
+    
+            // Assuming each item in response.data can have multiple comments
+            response.data.forEach(item => {
+                item.comment.forEach(comment => {
+                    mappedData.push({
+                        key: `${item._id}_${comment._id}`, // Unique key for each comment
+                        anntitle: item.anntitle,
+                        commentText: comment.text,
+                        empId: comment.empId,
+                        createdAt: comment.createdAt, // Optional, if you want to display or use created date
+                    });
+                });
+            });
+            setComments(mappedData);
+        } catch (error) {
+            message.error("Failed to fetch comments");
+        }
+    };
+    
+    
+
+      useEffect(() => {
+        fetchAnnouncements();
+        fetchComments();
+      }, []);
+      
+      
+
+
+   
 
 
 
@@ -36,7 +73,7 @@ function AnnDisplay() {
             message.error("Failed to fetch announcements");
         }
     };
-
+    
 
     const handleDownload = async (announcement) => {
         const zip = new JSZip();
@@ -162,6 +199,13 @@ function AnnDisplay() {
         },
         
     ];
+    const commentColumns = [
+        { title: 'Announcement ID', dataIndex: 'key', key: 'announcementId' },
+        { title: 'Announcement Title', dataIndex: 'anntitle', key: 'anntitle' },
+        { title: 'Comment Text', dataIndex: 'commentText', key: 'commentText' },
+        { title: 'Employee ID', dataIndex: 'empId', key: 'empId' },
+    ];
+    
 
     const showModal = (announcement) => {
         setCurrentAnnouncement(announcement);
@@ -206,17 +250,22 @@ function AnnDisplay() {
             <div className="annscrollable-container">
 
          <div className="table-header">
+         
         <div className="Annsearch-container">
+           <h2 >Announcements</h2> 
             <Input
+            className='annsearch'
                 placeholder="Search announcements"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
                 style={{ marginBottom: 16, width: 100, marginLeft:123 }}
             />
+            
         </div>
     </div>
 
             <Table dataSource={filteredAnnouncements} columns={columns}   />
+            
 
             <Modal
     title="Update Announcement"
@@ -246,7 +295,12 @@ function AnnDisplay() {
 </Modal>
 
 </div>
+<h2>Employee Comments</h2>
+<Table dataSource={comments} columns={commentColumns} />
+
+
 </div>
+
 
         </Layout>
         
