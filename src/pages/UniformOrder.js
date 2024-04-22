@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Select, message, Modal } from 'antd'; // Import message and Modal from antd
+import { Button, Form, Input, Select, message, Modal } from 'antd'; 
 import { UploadOutlined } from '@ant-design/icons';
 import Layout from '../components/Layout';
 import '../UniformOrder.css';
@@ -21,7 +21,7 @@ function UniformOrder() {
     if (value === 'Executive') {
       setWaistSizeOptions([]);
     } else {
-      // Set the default waist size options for Factory Worker
+      
       setWaistSizeOptions(['28', '30', '32', '34', '36']);
     }
     setShowWaistSizeInput(value === 'Factory Worker');
@@ -48,7 +48,7 @@ function UniformOrder() {
       const data = await response.json();
       console.log(data); // Log the response from the server
 
-      // Show success message as a toast
+      
       message.success('Order placed successfully');
     } catch (error) {
       console.error('Error submitting form:', error);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Form, Input, Select, message } from 'antd'; // Import message from antd
+import { Button, Form, Input, Select, message } from 'antd'; 
 import '../ShirtInventory.css'; 
 
 
@@ -30,7 +30,7 @@ function ShirtInventory() {
       const data = await response.json();
       console.log(data); // Log the response from the server
   
-      // Show success message as a toast
+      
       message.success('Inventory updated successfully');
     } catch (error) {
       console.error('Error submitting form:', error);

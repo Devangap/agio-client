@@ -23,11 +23,11 @@
 }
 
 .uniform-order-title {
-  color: #fff !important; /* Set text color to white for better contrast */
-  background-color: #1F1300; /* Background color */
-  padding: 0px; /* Add padding for better appearance */
-  border-top-left-radius: 10x; /* Optional: Add border radius for rounded corners */
-  border-top-right-radius: 10px; /* Optional: Add border radius for rounded corners */
+  color: #fff !important; 
+  background-color: #1F1300; 
+  padding: 0px; 
+  border-top-left-radius: 10x; 
+  border-top-right-radius: 10px; 
  
 }
 
@@ -70,9 +70,9 @@
 
 .uniformlogo-image {
   position: absolute;
-  top: 200px; /* Adjust as needed */
-  right: 80px; /* Adjust as needed */
-  width: 500px; /* Adjust width */
-  height: auto; /* Maintain aspect ratio */
+  top: 200px; 
+  right: 80px; 
+  width: 500px; 
+  height: auto; 
 }
 

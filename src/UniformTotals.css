@@ -1,24 +1,24 @@
 .totalsscontainer {
   display: flex;
-  justify-content: center; /* Center the forms horizontally */
-  align-items: center; /* Center the forms vertically */
+  justify-content: center; 
+  align-items: center; 
 }
 
 .totalsscroll-container {
   display: flex;
-  /*overflow-x: auto;*/
+  
   scroll-snap-type: x mandatory;
-  padding: 20px 0; /* Add some padding for spacing */
+  padding: 20px 0;
 }
 
 .totalsform {
-  flex: 0 0 300px; /* Set a fixed width for each form */
-  margin-right: 45px; /* Adjust spacing between forms */
+  flex: 0 0 300px; 
+  margin-right: 45px; 
   margin-left: 30px !important;
   scroll-snap-align: start;
-  border-radius: 10px; /* Add border radius for rounded corners */
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
-  background-color: #fff; /* Set background color to white */
+  border-radius: 10px; 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
+  background-color: #fff; 
 }
 
 .title {
@@ -34,35 +34,35 @@
 
 
 .totalsimage-container {
-  text-align: center; /* Center align the image */
-  margin-top: 20px; /* Add some top margin for spacing */
+  text-align: center; 
+  margin-top: 20px; 
 }
 
 .image {
-  max-width: 80%; /* Limit image width to prevent overflow */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 10px; /* Add border radius for rounded corners */
-  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Add box shadow for depth */
+  max-width: 80%; 
+  height: auto; 
+  border-radius: 10px; 
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
 .totalslist {
-  list-style: none; /* Remove default list styles */
-  padding: 0; /* Remove default padding */
+  list-style: none; 
+  padding: 0; 
 }
 
 .list li {
-  padding: 10px 20px; /* Add padding to list items for spacing */
-  border-bottom: 1px solid #eee; /* Add border bottom for separation */
+  padding: 10px 20px; 
+  border-bottom: 1px solid #eee; 
 }
 
 .list li:last-child {
-  border-bottom: none; /* Remove border bottom for last list item */
+  border-bottom: none; 
 }
 
 .buttons-container {
   display: flex;
-  justify-content: center; /* Center the buttons horizontally */
-  margin-top: 20px; /* Add space between the buttons and the content above */
+  justify-content: center; 
+  margin-top: 20px; 
 }
 
 .history-button,
@@ -75,6 +75,6 @@
   font-size: 16px !important;
   font-weight: bold;
   border-radius: 10px !important;
-  margin-right: 10px; /* Add margin to the right */
+  margin-right: 10px; 
 }
 

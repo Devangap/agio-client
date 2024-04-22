@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
-import '../UniformInventory.css'; // Import CSS file for styling
-import { ToastContainer, toast } from 'react-toastify'; // Import ToastContainer and toast from react-toastify
-import 'react-toastify/dist/ReactToastify.css'; // Import CSS for react-toastify
-import { PDFDownloadLink } from '@react-pdf/renderer'; // Import PDFDownloadLink component
-import InventoryPDFDocument from './InventoryPDFDocument'; // Import the InventoryPDFDocument component
+import '../UniformInventory.css'; 
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css'; 
+import { PDFDownloadLink } from '@react-pdf/renderer'; 
+import InventoryPDFDocument from './InventoryPDFDocument'; 
 
  const InventoryPage = () => {
    const [shirtInventory, setShirtInventory] = useState([]);
@@ -15,7 +15,7 @@ import InventoryPDFDocument from './InventoryPDFDocument'; // Import the Invento
    useEffect(() => {
      const fetchShirtInventory = async () => {
        try {
-         const response = await axios.get('/api/UniformShirt'); // Update with your actual backend route
+         const response = await axios.get('/api/UniformShirt'); 
          setShirtInventory(response.data);
        } catch (error) {
          console.error('Error fetching shirt inventory:', error);
@@ -29,7 +29,7 @@ import InventoryPDFDocument from './InventoryPDFDocument'; // Import the Invento
    useEffect(() => {
      const fetchSkirtInventory = async () => {
        try {
-         const response = await axios.get('/api/UniformSkirt'); // Update with your actual backend route
+         const response = await axios.get('/api/UniformSkirt'); 
          setSkirtInventory(response.data);
        } catch (error) {
          console.error('Error fetching skirt inventory:', error);
@@ -81,17 +81,16 @@ import InventoryPDFDocument from './InventoryPDFDocument'; // Import the Invento
 
   // Function to handle downloading inventory report
   const handleDownloadReport = () => {
-    // Your code to download the inventory report
-    // For now, let's just log the button click event
+    
     console.log('Downloading report...');
   };
 
   return (
     <div className="inventory-page"> 
     
-    <Layout> {/* Wrap the content with the Layout component */}
+    <Layout> 
     <h1>Uniform Inventory</h1>
-      <div className="inventory-container"> {/* Use a parent container to style both forms */}
+      <div className="inventory-container"> 
         <form className="form-container">
           <h2>T-Shirt Inventory</h2>
           <table>
@@ -170,7 +169,7 @@ import InventoryPDFDocument from './InventoryPDFDocument'; // Import the Invento
       </div>
       <div className="buttons-container">
         <button >View Graphically</button>
-        {/* PDF Download Link to download the inventory report */}
+        
         <PDFDownloadLink
           document={<InventoryPDFDocument shirtInventory={shirtInventory} skirtInventory={skirtInventory} />}
           fileName="inventory_report.pdf"
@@ -182,7 +181,7 @@ import InventoryPDFDocument from './InventoryPDFDocument'; // Import the Invento
           )}
         </PDFDownloadLink>
       </div>
-      <ToastContainer /> {/* Render the ToastContainer to show toast messages */}
+      <ToastContainer /> 
       
     </Layout>
     </div>
