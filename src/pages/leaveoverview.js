@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
-import { Input ,Tabs} from 'antd';
+import { Input ,Tabs,Upload,Button} from 'antd';
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
 
 import { Table, message } from 'antd';
@@ -306,17 +306,17 @@ axios.get('/api/employee/yearly-annual-leaves')
             key: 'department',
         },
         {
-            title: 'Remaining Annual Leave count',
+            title: <div >Remaining<br/>Annual Leaves</div>,
             dataIndex: 'remainingAnnualLeave',
             key: 'remainingAnnualLeave',
         },
         {
-            title: 'Remaining General Leave count',
+            title: <div >Remaining<br/>General Leaves</div>,
             dataIndex: 'remainingGeneralLeave',
             key: 'remainingGeneralLeave',
         },
         {
-            title: 'Remaining Medical Leave count',
+            title: <div >Remaining<br/>Medical Leaves</div>,
             dataIndex: 'remainingMedicalLeave',
             key: 'remainingMedicalLeave',
         },
@@ -409,7 +409,8 @@ axios.get('/api/employee/yearly-annual-leaves')
     </ul>
 </div> */}
             
-             <h4>Leave Overview</h4>
+             <h3>Leave Overview</h3>
+             <div className = 'leavecalcomp'>
              <Tabs defaultActiveKey="monthly" onChange={(key) => setActiveTab(key)}>
                 <TabPane tab="Monthly" key="monthly">
                     {/* Monthly leave distribution content */}
@@ -494,7 +495,8 @@ axios.get('/api/employee/yearly-annual-leaves')
                     )}
                 </TabPane>
             </Tabs>
-             
+            </div>
+             <div className = "remainingover">
             <Input.Search
                 placeholder="Search by name or employee Id"
                 allowClear
@@ -502,6 +504,7 @@ axios.get('/api/employee/yearly-annual-leaves')
                 style={{ width: 200, marginBottom: 16 }}
             />
             <Table dataSource={filteredData} columns={columns} />
+            </div>
             
             {/* <div>
                 <h4>Pie Chart</h4>
@@ -511,6 +514,19 @@ axios.get('/api/employee/yearly-annual-leaves')
                     <Legend />
                 </PieChart>
             </div> */}
+            <Upload
+    name="csvFile"
+    action={'/exceldata/uploadexcel'}
+    beforeUpload={file => {
+        const isExcel = file.type === 'application/vnd.ms-excel' || file.type === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        if (!isExcel) {
+            message.error('You can only upload Excel files!');
+        }
+        return isExcel;
+    }}
+>
+    <Button>Insert Employee Attendance</Button>
+</Upload>
         </Layout>
     );
                             }
