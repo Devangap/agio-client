@@ -28,7 +28,6 @@ function InsEmployee() {
           },
         }
       );
-      console.log("aaaaaaaaaaa");
       console.log(response)
       dispatch(hideLoading());
       if (response.data.success) {
@@ -113,12 +112,17 @@ function InsEmployee() {
 
   const columns = [
     {
-      title: "Name",
+      title: "Number",
+      dataIndex: "insuranceID",
+      key: "insuranceID",
+    },
+    {
+      title: "Full Name",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Empid",
+      title: "EmployeeID",
       dataIndex: "id",
       key: "id",
     },
@@ -167,7 +171,7 @@ function InsEmployee() {
       key: "action",
       render: (text, record) => (
         <div className="insanchor">
-          <Button className="insupdate" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button className="update" onClick={() => handleUpdate(record)}>Update</Button>
           <Button className="inscancel" onClick={() => handleDelete(record._id)}>Cancel</Button>
         </div>
       ),

@@ -11,7 +11,7 @@ function InsuranceManagerDisplay() {
   const [visible, setVisible] = useState(false); 
   const [selectedInsurance, setSelectedInsurance] = useState(null); 
   const [updateModalVisible, setUpdateModalVisible] = useState(false); 
-  const [searchTerm, setSearchTerm] = useState(''); // Define searchTerm state
+  const [searchTerm, setSearchTerm] = useState(""); // Define searchTerm state
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
@@ -146,17 +146,17 @@ function InsuranceManagerDisplay() {
         message.warning("Please enter an Employee ID to search.");
         return;
       }
-
+      console.log("Search Term:", searchTerm);
       dispatch(showLoading());
       const response = await axios.get(
-        `/api/insurance/getInsuranceByEmployeeId/${searchTerm}`,
+        `/api/insurance/getInsuranceEmployee/${searchTerm}`,
         {
           headers: {
             Authorization: "Bearer " + token,
           },
         }
       );
-      console.log(response);
+      console.log("Search Response:", response.data);
       dispatch(hideLoading());
       if (response.data.success) {
         setInsuranceData(response.data.insuranceData);
@@ -177,7 +177,7 @@ function InsuranceManagerDisplay() {
 
   const columns = [
     {
-      title: "Name",
+      title: "Full Name",
       dataIndex: "name",
       key: 'name',
       render: (text, record) => (
@@ -185,7 +185,7 @@ function InsuranceManagerDisplay() {
       ),
     },
     {
-      title: "Empid",
+      title: "EmployeeID",
       dataIndex: "id",
       key: 'id',
     },
@@ -223,8 +223,8 @@ function InsuranceManagerDisplay() {
       key: 'action',
       render: (text, record) => (
         <div className="insactbutton">
-          <Button className="insupdate" onClick={() => handleUpdate(record)}>Update</Button>
-          <Button className="inscancel" onClick={() => handleDelete(record._id)}>Cancel</Button>
+          <Button className="update" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button className="inscancel"onClick={() => handleDelete(record._id)}>Cancel</Button>
         </div>
       ),
     },
@@ -233,10 +233,10 @@ function InsuranceManagerDisplay() {
   return (
     <Layout>
       <div className="institle">
-        <h1>Insurance Request Claim List</h1>
+        <h1>Insurance Requset Claim List</h1>
       </div>
       <hr/>
-      <div style={{ marginBottom: 16 }}>
+      <div className="insSearch">
         <Input
           placeholder="Enter Employee ID"
           value={searchTerm}
