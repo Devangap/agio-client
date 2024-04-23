@@ -4,18 +4,14 @@ import "../TraForm.css";
 import axios from "axios";
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router';
-import { useDispatch ,useSelector} from 'react-redux';
-import { showLoading ,hideLoading} from '../redux/empalerts';
+import { useDispatch, useSelector } from 'react-redux';
+import { showLoading, hideLoading } from '../redux/empalerts';
 import { setUser } from '../redux/userSlice';
+import moment from 'moment';
 import Layout from '../components/Layout';
 
-
 function TraBooking() {
-
-  
   const { Option } = Select;
-   
-
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
@@ -41,14 +37,14 @@ function TraBooking() {
     console.log('Received values of form', values);
     try {
       dispatch(showLoading());
-      const response = await axios.post('/api/employee/TraBooking', {...values, userid: user?.userid}, { // identyfy the user id
+      const response = await axios.post('/api/employee/TraBooking', { ...values, userid: user?.userid }, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem("token")}`,
         },
       });
       dispatch(hideLoading());
       if (response.data.success) {
-        navigate("/TraBookingDisplay"); // after form submit navigate to booking display 
+        navigate("/TraBookingDisplay");
       } else {
         toast.error(response.data.message);
       }
@@ -58,7 +54,7 @@ function TraBooking() {
     }
   };
 
-  //Customer email Validation
+  // Customer email Validation
   const validateEmail = (rule, value, callback) => {
     if (!value) {
       callback('Please enter your email!');
@@ -67,6 +63,12 @@ function TraBooking() {
     } else {
       callback();
     }
+  };
+
+  // Function to disable past dates (allow only future dates)
+  const disabledDate = (current) => {
+    // Disable dates before today (including today)
+    return current && current < moment().startOf('day');
   };
 
   return (
@@ -112,7 +114,7 @@ function TraBooking() {
             <div className="bookform-row">
               <div className="bookitem">
                 <Form.Item label="Booking Date" name="bookingdate" rules={[{ required: true, message: 'Please select booking date' }]}>
-                  <DatePicker className="date" />
+                  <DatePicker className="date" disabledDate={disabledDate} />
                 </Form.Item>
               </div>
             </div>
@@ -123,7 +125,7 @@ function TraBooking() {
             </div>
             <div className="bookButton-cons">
               <Button className='bookprimary-button my-2' htmlType='submit'>Submit</Button>
-              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraBookingDisplay`)}>Viwe Details</Button>
+              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraBookingDisplay`)}>View Details</Button>
             </div>
           </Form>
         </div>

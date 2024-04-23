@@ -31,8 +31,9 @@ function TraVehicleRegister() {
     }
   };
 
+  // checking the vehicle types and assing vehicle seat count
   const handleVehicleTypeChange = (value) => {
-    // Update number of seats based on selected vehicle type
+    
     if (value === 'bus') {
       setNumSeats(50);
     } else if (value === 'van') {

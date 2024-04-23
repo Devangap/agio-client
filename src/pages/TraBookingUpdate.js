@@ -10,7 +10,7 @@ import "../TraForm.css";
 function TraBookingUpdate() {
 
   const navigate = useNavigate();
-  const { id } = useParams(); // Assuming you're using react-router-dom v5 or v6
+  const { id } = useParams(); 
   const { Option } = Select;
   const [form] = Form.useForm();
 
