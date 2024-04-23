@@ -229,6 +229,7 @@ const LeaveEmp = () => {
     };
 
     const handleLeaveSubmission = () => {
+        form.resetFields();
         setSubmissionModalVisible(true); // Show submission modal
     };
 
@@ -296,6 +297,7 @@ const LeaveEmp = () => {
                 toast.success(response.data.message);
                 setSubmissionModalVisible(false)
                 fetchData(user?.userid);
+                window.location.reload();
             } else {
                 toast.error(response.data.message);
             }
@@ -320,7 +322,12 @@ const LeaveEmp = () => {
                 const response = await axios.put(`/api/employee/updateleave/${id}`, updatedValues); // Corrected the way to pass parameters
                 if (response.data.success) {
                     toast.success(response.data.message);
+                    fetchLeaveData ();
                     navigate('/leaveEmp');
+                    setUpdateModalVisible(false);
+                    form.resetFields();
+                    window.location.reload();
+                    showLoading();
                 } else {
                     toast.error(response.data.message);
                 }
@@ -496,11 +503,10 @@ const LeaveEmp = () => {
                 visible={modalVisible} // Control modal visibility
                 onCancel={handleCloseModal} // Handle modal close
                 footer={[
-                    <Button key="close" onClick={handleCloseModal}>Close</Button>,
+                    <Button key="close" onClick={handleCloseModal} style={{  borderColor: 'red', color: 'red' }}>Close</Button>,
                 ]}
             >
-                <p>Name: {selectedEvent?.title?.split(',')[0]?.trim()}</p>
-                <p>Type: {selectedEvent?.title?.split(',')[1]?.trim()}</p>
+               
                 {employeeDetails && (
                     <>
                         <p>Employee ID: {employeeDetails.empid}</p>
@@ -520,76 +526,89 @@ const LeaveEmp = () => {
             >
                 <div className="leaveform">
                     <div className="leave_formbox p-3">
-                        <Form layout='vertical' onFinish={onFinish}>
-                            <div className="leave_form-row">
-                                <div className="leave_item">
-                                    <Form.Item label='Employee Name' name='name'>
-                                        <Input placeholder='Employee name' />
-                                    </Form.Item>
-                                </div>
-                            </div>
-                            <div className="leave_form-row">
-                                <div className="leave_item">
-                                    <Form.Item
-                                        label="Start Date"
-                                        name="startDate"
-                                        rules={[{ required: false, message: 'Please input!' }]}
-                                    >
-                                        <DatePicker />
-                                    </Form.Item>
-                                    <Form.Item
-                                        label="End Date"
-                                        name="endDate"
-                                        rules={[{ required: false, message: 'Please input!' }]}
-                                    >
-                                        <DatePicker />
-                                    </Form.Item>
-                                </div>
-                            </div>
-                            <div className="leave_form-row">
-                                <div className="leave_item">
-                                    <Form.Item name="Type" label="Select leave type" className='leavet'>
-                                        <Select className="leave_Type" placeholder="Select leave type" onChange={handleLeaveTypeChange}>
-                                            <Option value="General">General</Option>
-                                            <Option value="Annual">Annual</Option>
-                                            <Option value="Medical">Medical</Option>
-                                        </Select>
-                                    </Form.Item>
-                                </div>
-                            </div>
-                            {leaveType === 'Medical' && ( // Conditionally render Form.Item component
-                                <Form.Item
-                                    label='Upload Medical Documents'
-                                    name='file'
-                                    rules={[
-                                        { required: true, message: 'Please upload a document' },
-                                        { validator: validateUploadField }
-                                    ]}
-                                    dependencies={['Type']}
-                                >
-                                    <Upload
-                                        beforeUpload={handleBeforeUpload}
-                                        onRemove={handleRemove}
-                                        fileList={fileList}
-                                        listType="picture"
-                                    >
-                                        <Button icon={<UploadOutlined />}>Select File</Button>
-                                    </Upload>
-                                </Form.Item>
-                            )}
-                            <div className="leave_form-row">
-                                <div className="leave_item">
-                                </div>
-                            </div>
-                            <div className="leave_item">
-                                <Form.Item name="Description" label="Description">
-                                    <Input.TextArea className='leave_Description' />
-                                </Form.Item>
-                            </div>
-                            <div className="leave_Button-cons">
-                                <Button className='leave_primary-button my-2' htmlType='submit'>Submit</Button>
-                            </div>
-                        </Form>
+                    <Form layout='vertical' onFinish={onFinish}>
+                    <div className="leave_form-row">
+                        <div className="leave_item">
+                            <Form.Item
+                                label='Employee Name'
+                                name='name'
+                                rules={[{ required: true, message: 'Please input employee name!' }]}
+                            >
+                                <Input placeholder='Employee name' />
+                            </Form.Item>
+                        </div>
+                    </div>
+                    <div className="leave_form-row">
+                        <div className="leave_item">
+                            <Form.Item
+                                label="Start Date"
+                                name="startDate"
+                                rules={[{ required: true, message: 'Please select start date!' }]}
+                            >
+                                <DatePicker />
+                            </Form.Item>
+                            <Form.Item
+                                label="End Date"
+                                name="endDate"
+                                rules={[{ required: true, message: 'Please select end date!' }]}
+                            >
+                                <DatePicker />
+                            </Form.Item>
+                        </div>
+                    </div>
+                    <div className="leave_form-row">
+                        <div className="leave_item">
+                            <Form.Item
+                                name="Type"
+                                label="Select leave type"
+                                className='leavet'
+                                rules={[{ required: true, message: 'Please select leave type!' }]}
+                            >
+                                <Select className="leave_Type" placeholder="Select leave type" onChange={handleLeaveTypeChange}>
+                                    <Option value="General">General</Option>
+                                    <Option value="Annual">Annual</Option>
+                                    <Option value="Medical">Medical</Option>
+                                </Select>
+                            </Form.Item>
+                        </div>
+                    </div>
+                    {leaveType === 'Medical' && (
+                        <Form.Item
+                            label='Upload Medical Documents'
+                            name='file'
+                            rules={[
+                                { required: true, message: 'Please upload a document' },
+                                { validator: validateUploadField }
+                            ]}
+                            dependencies={['Type']}
+                        >
+                            <Upload
+                                beforeUpload={handleBeforeUpload}
+                                onRemove={handleRemove}
+                                fileList={fileList}
+                                listType="picture"
+                            >
+                                <Button icon={<UploadOutlined />}>Select File</Button>
+                            </Upload>
+                        </Form.Item>
+                    )}
+                    <div className="leave_form-row">
+                        <div className="leave_item">
+                        </div>
+                    </div>
+                    <div className="leave_item">
+                        <Form.Item
+                            name="Description"
+                            label="Description"
+                            rules={[{ required: true, message: 'Please input description!' }]}
+                        >
+                            <Input.TextArea className='leave_Description' />
+                        </Form.Item>
+                    </div>
+                    <div className="leave_Button-cons">
+                        <Button className='leave_primary-button my-2' htmlType='submit'>Submit</Button>
+                    </div>
+                </Form>
                     </div>
                 </div>
             </Modal>
@@ -605,7 +624,7 @@ const LeaveEmp = () => {
                 <div className="leaveform">
       <div className="leave_formbox p-3">
        
-        <Form layout="vertical" form={form} onFinish={handleUpdateFinish}>
+        <Form layout="vertical" form={form} >
         <div className="leave_form-row">
                         <div className="leave_item">
                             <Form.Item label='Employee Name' name='name'>

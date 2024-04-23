@@ -15,7 +15,7 @@ function Inquiry() {
   const onFinish = async (values) => {
     console.log('Received values of form:', values);
     try {
-      // Format the inquiry date using moment.js to strip the time component
+      
       const formattedDate = moment(values.inquirydate).format('YYYY-MM-DD');
 
       const response = await axios.post(
@@ -24,7 +24,7 @@ function Inquiry() {
           ...values,
           userid: user?.userid,
           username: user?.username,
-          inquirydate: formattedDate, // Use the formatted date
+          inquirydate: formattedDate, //date update here
         },
         {
           headers: {
@@ -47,7 +47,7 @@ function Inquiry() {
     if (!value) {
       return Promise.reject('Please input your phone number!');
     }
-    const phoneNumberRegex = /^\+94\d{9}$/; // Regex to match +94 followed by 9 digits
+    const phoneNumberRegex = /^\+94\d{9}$/; //phone no. val
     if (!phoneNumberRegex.test(value)) {
       return Promise.reject('Please enter a valid Sri Lankan phone number starting with +94 and containing 10 digits!');
     }

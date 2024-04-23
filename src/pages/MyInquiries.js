@@ -156,25 +156,24 @@ function MyInquiries() {
     },
   ];
 
-  // Filter inquiries based on search query
+  
   const filteredInquiries = inquiries.filter(inquiry => inquiry.inquiryID.includes(searchQuery));
 
   return (
     <Layout>
       <div className="i-container">
         <h1 className="i-title">My Inquiries</h1>
-        {/* Search Bar */}
+        
         <Input
           placeholder="Search by Inquiry ID"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{ marginBottom: '1rem' }}
         />
-        {/* Table */}
+        
         <Table dataSource={filteredInquiries} columns={columns}  />
 
-        {/* Modals */}
-        {/* Detail Modal */}
+        
         <Modal
           title="Inquiry Details"
           visible={detailModalVisible}
@@ -184,7 +183,7 @@ function MyInquiries() {
           <p>{fullInquiry}</p>
           <p>{fullReply}</p>
         </Modal>
-        {/* Update Modal */}
+    
         <Modal
           title="Update Inquiry"
           visible={updateModalVisible}

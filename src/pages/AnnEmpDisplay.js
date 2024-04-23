@@ -2,15 +2,18 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Button, Modal, Form, Input, message } from 'antd';
+import { Card, Button, Modal, Form, Input, message ,Tabs} from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import "../AnnEmpDisplay.css"
+import { InfoCircleOutlined } from '@ant-design/icons';
 
-
+const { TabPane } = Tabs;
 function AnnEmpDisplay() {
     const navigate = useNavigate();
     const { user } = useSelector((state) => state.user);
+
 
     const [announcements, setAnnouncements] = useState([]);
 
@@ -142,117 +145,116 @@ function AnnEmpDisplay() {
     
     return (
         <Layout>
-             <div>
-             <Card style={{ border: '1px solid #ccc', borderRadius: '5px' }}>
-            <h2>Notices</h2>
-        
-            {events.length > 0 ? (
-                <div>
-                    {events.map(event => (
-                        <div key={event.id}>
-                            <h3>{event.title}</h3>
-                         
-                            <p>{event.description}</p>
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                <p>No notices found.</p>
-            )}
+        <Tabs defaultActiveKey="notices">
+    <TabPane tab="Notices" key="notices">
+        <div className="anncardsss">
+            <Card className="notices-card" style={{ border: '1px solid #ccc', borderRadius: '5px' }}>
+                <h2  >Notices</h2>
+                {events.length > 0 ? (
+                    <div>
+                        {events.slice(0).reverse().map(event => ( // Reversing the array
+                            <div className="anncard" key={event.id}>
+                                <h3 style={{ marginTop: "20px", color: 'rgb(66, 34, 2)}'}}>
+                                    <InfoCircleOutlined style={{ color: "#ECB159", marginRight: "10px" }}  />
+                                    {event.title}
+                                </h3>
+                                <p style={{ fontSize: '16px', marginLeft: "20px", justifyContent:'center'}}>{event.description}</p>
+                                <Button type="primary" style={{ float: "right", marginBottom:"100px", backgroundColor: "#ECB159"}}>RSVP</Button>
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <p>No notices found.</p>
+                )}
             </Card>
         </div>
-            
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                <h6>SPECIFIC ANNOUNCEMENTS</h6>
-                {specificAnnouncements.map(announcement => (
-                    <Card
-                        key={announcement._id}
-                        title={announcement.anntitle}
-                        style={{ width: 1000, margin: '16px' }}
-                        actions={[
-                             
-                        ]}
+    </TabPane>
 
-                    >
-                        <div>
-                            {announcement.file && (
-                                <>
-                                    <img
-                                        src={announcement.file.path ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
-                                        alt={announcement.file.filename}
-                                        style={{ width: '100px', height: '100px' }}
+            <TabPane tab="Announcements" key="announcements">
+                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <h6>SPECIFIC ANNOUNCEMENTS</h6>
+                    {specificAnnouncements.map(announcement => (
+                        <Card
+                            key={announcement._id}
+                            title={announcement.anntitle}
+                            style={{ width: 1000, margin: '16px' }}
+                            actions={[]}
+                        >
+                            <div>
+                                {announcement.file && (
+                                    <>
+                                        <img
+                                            src={announcement.file.path ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
+                                            alt={announcement.file.filename}
+                                            style={{ width: '100px', height: '100px' }}
+                                        />
+                                        <p>{announcement.file.filename}</p>
+                                    </>
+                                )}
+                            </div>
+                            <p><strong>Type:</strong> {announcement.Type}</p>
+                            <p><strong>Department:</strong> {announcement.Department}</p>
+                            <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
+                            <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
+                            <p><strong>Description:</strong> {announcement.Description}</p>
+                            <Form onFinish={() => handleCommentSubmit(announcement._id)}>
+                                <Form.Item>
+                                    <Input
+                                        onChange={(e) => setCommentText(e.target.value)}
+                                        placeholder="Add a comment"
                                     />
-                                    <p>{announcement.file.filename}</p>
-                                </>
-                            )}
-                        </div>
-                        <p><strong>Type:</strong> {announcement.Type}</p>
-                        <p><strong>Department:</strong> {announcement.Department}</p>
-                        <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
-                        <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
-                        <p><strong>Description:</strong> {announcement.Description}</p>
-                        <Form onFinish={() => handleCommentSubmit(announcement._id)}>
-                            <Form.Item>
-                                <Input
-                                    
-                                    onChange={(e) => setCommentText(e.target.value)}
-                                    placeholder="Add a comment"
-                                />
-                            </Form.Item>
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit" className='comment' name='comment'>Add Comment</Button>
-                            </Form.Item>
-                        </Form>
-                    </Card>
-                ))}
-            </div>
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit" className='comment' name='comment'>Add Comment</Button>
+                                </Form.Item>
+                            </Form>
+                        </Card>
+                    ))}
+                </div>
 
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-            <h6>GENERAL ANNOUNCEMENTS</h6>
-                {generalAnnouncements.map(announcement => (
-                    <Card
-                        key={announcement._id}
-                        title={announcement.anntitle}
-                        style={{ width: 300, margin: '16px' }}
-                        actions={[
-                           
-                        ]}
-                    >
-                        <div>
-                            {announcement.file && (
-                                <>
-                                    <img
-                                        src={announcement.file.path ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
-                                        alt={announcement.file.filename}
-                                        style={{ width: '100px', height: '100px' }}
+                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+                    <h6>GENERAL ANNOUNCEMENTS</h6>
+                    {generalAnnouncements.map(announcement => (
+                        <Card
+                            key={announcement._id}
+                            title={announcement.anntitle}
+                            style={{ width: 300, margin: '16px' }}
+                            actions={[]}
+                        >
+                            <div>
+                                {announcement.file && (
+                                    <>
+                                        <img
+                                            src={announcement.file.path ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
+                                            alt={announcement.file.filename}
+                                            style={{ width: '100px', height: '100px' }}
+                                        />
+                                        <p>{announcement.file.filename}</p>
+                                    </>
+                                )}
+                            </div>
+                            <p><strong>Type:</strong> {announcement.Type}</p>
+                            <p><strong>Department:</strong> {announcement.Department}</p>
+                            <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
+                            <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
+                            <p><strong>Description:</strong> {announcement.Description}</p>
+                            <Form onFinish={() => handleCommentSubmit(announcement._id)}>
+                                <Form.Item>
+                                    <Input
+                                        onChange={(e) => setCommentText(e.target.value)}
+                                        placeholder="Add a comment"
                                     />
-                                    <p>{announcement.file.filename}</p>
-                                </>
-                            )}
-                        </div>
-                        <p><strong>Type:</strong> {announcement.Type}</p>
-                        <p><strong>Department:</strong> {announcement.Department}</p>
-                        <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
-                        <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
-                        <p><strong>Description:</strong> {announcement.Description}</p>
-                        <Form onFinish={() => handleCommentSubmit(announcement._id)}>
-                            <Form.Item>
-                                <Input
-                                    
-                                    onChange={(e) => setCommentText(e.target.value)}
-                                    placeholder="Add a comment"
-                                />
-                            </Form.Item>
-                            <Form.Item>
-                                <Button type="primary" htmlType="submit" className='comment' name='comment'>Add Comment</Button>
-                            </Form.Item>
-                        </Form>
-                    </Card>
-                ))}
-            </div>
-
-            
-        </Layout>
+                                </Form.Item>
+                                <Form.Item>
+                                    <Button type="primary" htmlType="submit" className='comment' name='comment'>Add Comment</Button>
+                                </Form.Item>
+                            </Form>
+                        </Card>
+                    ))}
+                </div>
+            </TabPane>
+        </Tabs>
+    </Layout>
     );
 }
 
