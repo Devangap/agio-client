@@ -1,6 +1,6 @@
-import React, { useEffect} from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
-import { Button, Form, Input, Select, DatePicker} from 'antd';
+import { Button, Form, Input, Select, DatePicker } from 'antd';
 import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -10,7 +10,7 @@ import "../TraForm.css";
 function TraBookingUpdate() {
 
   const navigate = useNavigate();
-  const { id } = useParams(); 
+  const { id } = useParams();
   const { Option } = Select;
   const [form] = Form.useForm();
 
@@ -24,12 +24,12 @@ function TraBookingUpdate() {
             EmpName: data.EmpName,
             EmpEmail: data.EmpEmail,
             Type: data.Type,
-            location:data.location,
+            location: data.location,
             bookingdate: moment(data.bookingdate),
             Details: data.Details,
           });
         } else {
-          toast.error('Booking  not found!');
+          toast.error('Booking not found!');
           navigate('/TraBookingDisplay');
         }
       } catch (error) {
@@ -61,6 +61,12 @@ function TraBookingUpdate() {
     }
   };
 
+  // Function to disable past dates
+  const disabledDate = current => {
+    // Can not select days before today
+    return current && current < moment().startOf('day');
+  };
+
   return (
     <Layout>
       <div className="bookform">
@@ -77,50 +83,50 @@ function TraBookingUpdate() {
 
             <div className="bookform-row">
               <div className="bookitem">
-              <Form.Item label='Employee Email' name='EmpEmail'>
-            <Input placeholder='Employee Email' />
-          </Form.Item>
+                <Form.Item label='Employee Email' name='EmpEmail'>
+                  <Input placeholder='Employee Email' />
+                </Form.Item>
               </div>
               <div className="bookitem">
-              <Form.Item name="Type" label="Type">
-            <Select className="Type" placeholder="Select Vehicle type">
-              <Option value="Bus">Bus</Option>
-              <Option value="Van">Van</Option>
-            </Select>
-          </Form.Item>
+                <Form.Item name="Type" label="Type">
+                  <Select className="Type" placeholder="Select Vehicle type">
+                    <Option value="Bus">Bus</Option>
+                    <Option value="Van">Van</Option>
+                  </Select>
+                </Form.Item>
               </div>
 
               <div className="bookitem">
-          <Form.Item name="location" label="Select Location">
-            <Select className="Type" placeholder="Select Location">
-              <Option value="Colombo">Colombo</Option>
-              <Option value="Ja-ela">Ja-ela</Option>
-              <Option value="Kollupitiya">Kollupitiya</Option>
-              <Option value="Negambo">Negambo</Option>
-              <Option value="Panadura">Panadura</Option>
-              <Option value="Kaduwela">Kaduwela</Option>
-            </Select>
-          </Form.Item>
-        </div>
+                <Form.Item name="location" label="Select Location">
+                  <Select className="Type" placeholder="Select Location">
+                    <Option value="Colombo">Colombo</Option>
+                    <Option value="Ja-ela">Ja-ela</Option>
+                    <Option value="Kollupitiya">Kollupitiya</Option>
+                    <Option value="Negambo">Negambo</Option>
+                    <Option value="Panadura">Panadura</Option>
+                    <Option value="Kaduwela">Kaduwela</Option>
+                  </Select>
+                </Form.Item>
+              </div>
             </div>
 
             <div className="bookform-row">
               <div className="bookitem">
-              <Form.Item label="Booking Date" name="bookingdate">
-            <DatePicker className="date" />
-          </Form.Item>
+                <Form.Item label="Booking Date" name="bookingdate">
+                  <DatePicker className="date" disabledDate={disabledDate} />
+                </Form.Item>
               </div>
             </div>
 
             <div className="bookitem">
-            <Form.Item name="Details" label="Any Other Details">
-          <Input.TextArea className='Description' />
-        </Form.Item>
+              <Form.Item name="Details" label="Any Other Details">
+                <Input.TextArea className='Description' />
+              </Form.Item>
             </div>
 
             <div className="bookButton-cons">
               <Button className='bookprimary-button my-2' htmlType='submit'>Update</Button>
-              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraBookingDisplay`)}>Viwe Details</Button>
+              <Button className='bookprimary-button my-2' onClick={() => navigate(`/TraBookingDisplay`)}>View Details</Button>
             </div>
           </Form>
         </div>
@@ -129,4 +135,4 @@ function TraBookingUpdate() {
   )
 }
 
-export default TraBookingUpdate
+export default TraBookingUpdate;

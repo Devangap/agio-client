@@ -14,11 +14,16 @@ function TraBookingDisplay() {
 
     const fetchBooking = async (userId) => {
         try {
-            const response = await axios.get(`/api/employee/getTraBooking3/${userId}`);// get the user details
+            const response = await axios.get(`/api/employee/getTraBooking3/${userId}`);
             console.log('Booking API Response:', response.data);
 
             if (response.data && response.data.bookings) {
-                setBooking(response.data.bookings);
+                // Calculate remaining seats and update booking data
+                const updatedBookings = response.data.bookings.map((booking) => ({
+                    ...booking,
+                    remainingSeats: booking.Type === 'Bus' ? 50 - response.data.bookings.filter((b) => b.Type === 'Bus').length : 12 - response.data.bookings.filter((b) => b.Type === 'Van').length
+                }));
+                setBooking(updatedBookings);
             } else {
                 setBooking([]);
                 message.info('No booking data available');
@@ -35,24 +40,28 @@ function TraBookingDisplay() {
         }
     }, [user]);
 
-    
-// handle the user details part
-    const handleDelete = async (id) => {
-        try {
-            await axios.delete(`/api/employee/deletebooking/${id}`);
-            setBooking(prev => prev.filter(item => item._id !== id));
-            message.success('Booking deleted successfully');
-        } catch (error) {
-            message.error('Failed to delete booking');
-        }
-    };
-
     const showDescriptionModal = (description) => {
         setSelectedDescription(description);
         setDescriptionModalVisible(true);
     };
 
-    // user booking colums
+    const handleDelete = async (bookingId) => {
+        try {
+            const response = await axios.delete(`/api/employee/deleteTraBooking/${bookingId}`);
+            if (response.data && response.data.success) {
+                message.success('Booking deleted successfully');
+                // Refetch booking data after deletion
+                fetchBooking(user.userid);
+            } else {
+                message.error('Failed to delete booking');
+            }
+        } catch (error) {
+            console.error('Error deleting booking:', error);
+            message.error('Failed to delete booking');
+        }
+    };
+
+    // user booking columns
     const columns = [
         {
             title: 'Employee Name',
@@ -96,6 +105,11 @@ function TraBookingDisplay() {
                     )}
                 </>
             ),
+        },
+        {
+            title: 'Remaining Seats',
+            dataIndex: 'remainingSeats',
+            key: 'remainingSeats',
         },
         {
             title: 'Status',

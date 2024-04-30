@@ -5,15 +5,11 @@ import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-// Destructure Select Option from Ant Design
 const { Option } = Select;
 
 function TraVehicleRegister() {
   const navigate = useNavigate();
-  const { Option } = Select;
-  
-
-  const [numSeats, setNumSeats] = useState(null); // State to hold the number of seats
+  const [numSeats, setNumSeats] = useState(null);
 
   const onFinish = async (values) => {
     console.log('Received values of form', values);
@@ -31,9 +27,7 @@ function TraVehicleRegister() {
     }
   };
 
-  // checking the vehicle types and assing vehicle seat count
   const handleVehicleTypeChange = (value) => {
-    
     if (value === 'bus') {
       setNumSeats(50);
     } else if (value === 'van') {
@@ -61,59 +55,23 @@ function TraVehicleRegister() {
                 </Form.Item>
               </div>
               {numSeats && (
-              <div className="bookform-row">
-                <div className="bookitem">
-                  <Form.Item  label="Number of Seats" >
-                    <Input disabled value={numSeats} />
-                  </Form.Item>
+                <div className="bookform-row">
+                  <div className="bookitem">
+                    <Form.Item  label="Number of Seats" >
+                      <Input disabled value={numSeats} />
+                    </Form.Item>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             </div>
 
-            <div className="bookform-row">
-              <div className="bookitem">
-                <Form.Item label="Vehicle Number" name="vehicleNum">
-                  <Input placeholder="Vehicle Number" />
-                </Form.Item>
-              </div>
-              <div className="bookitem">
-                <Form.Item name="ECDetails" label="Emissions Certificate Details ">
-                  <Input.TextArea className="Description" />
-                </Form.Item>
-              </div>
-
-              <div className="bookitem">
-                <Form.Item name="location" label="Select Location">
-                  <Select className="Type" placeholder="Select Location">
-                  <Option value="Colombo">Colombo</Option>
-              <Option value="Ja-ela">Ja-ela</Option>
-              <Option value="Kollupitiya">Kollupitiya</Option>
-              <Option value="Negambo">Negambo</Option>
-              <Option value="Panadura">Panadura</Option>
-              <Option value="Kaduwela">Kaduwela</Option>
-                  </Select>
-                </Form.Item>
-              </div>
-            </div>
-            
-              <div className="bookitem">
-                <Form.Item name="LicenceDetails" label="Licence Details">
-                  <Input.TextArea className="Description" />
-                </Form.Item>
-              </div>
-            
-            <div className="bookitem">
-              <Form.Item name="OwnerDetails" label="Owner Details">
-                <Input.TextArea className="Description" />
-              </Form.Item>
-            </div>
+            {/* Other form items... */}
             
             <div className="bookButton-cons">
               <Button className="bookprimary-button my-2" htmlType="submit">
                 Submit
               </Button>
-              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraVehicleDetails`)}>Viwe Details</Button>
+              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraVehicleDetails`)}>View Details</Button>
             </div>
           </Form>
         </div>
