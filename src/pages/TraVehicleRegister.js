@@ -55,23 +55,59 @@ function TraVehicleRegister() {
                 </Form.Item>
               </div>
               {numSeats && (
-                <div className="bookform-row">
-                  <div className="bookitem">
-                    <Form.Item  label="Number of Seats" >
-                      <Input disabled value={numSeats} />
-                    </Form.Item>
-                  </div>
+              <div className="bookform-row">
+                <div className="bookitem">
+                  <Form.Item  label="Number of Seats" >
+                    <Input disabled value={numSeats} />
+                  </Form.Item>
                 </div>
-              )}
+              </div>
+            )}
             </div>
 
-            {/* Other form items... */}
+            <div className="bookform-row">
+              <div className="bookitem">
+                <Form.Item label="Vehicle Number" name="vehicleNum">
+                  <Input placeholder="Vehicle Number" />
+                </Form.Item>
+              </div>
+              <div className="bookitem">
+                <Form.Item name="ECDetails" label="Emissions Certificate Details ">
+                  <Input.TextArea className="Description" />
+                </Form.Item>
+              </div>
+
+              <div className="bookitem">
+                <Form.Item name="location" label="Select Location">
+                  <Select className="Type" placeholder="Select Location">
+                  <Option value="Colombo">Colombo</Option>
+              <Option value="Ja-ela">Ja-ela</Option>
+              <Option value="Kollupitiya">Kollupitiya</Option>
+              <Option value="Negambo">Negambo</Option>
+              <Option value="Panadura">Panadura</Option>
+              <Option value="Kaduwela">Kaduwela</Option>
+                  </Select>
+                </Form.Item>
+              </div>
+            </div>
+            
+              <div className="bookitem">
+                <Form.Item name="LicenceDetails" label="Licence Details">
+                  <Input.TextArea className="Description" />
+                </Form.Item>
+              </div>
+            
+            <div className="bookitem">
+              <Form.Item name="OwnerDetails" label="Owner Details">
+                <Input.TextArea className="Description" />
+              </Form.Item>
+            </div>
             
             <div className="bookButton-cons">
               <Button className="bookprimary-button my-2" htmlType="submit">
                 Submit
               </Button>
-              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraVehicleDetails`)}>View Details</Button>
+              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraVehicleDetails`)}>Viwe Details</Button>
             </div>
           </Form>
         </div>
