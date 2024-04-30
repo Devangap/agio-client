@@ -4,12 +4,12 @@ import { Button, Form, Input, Select, DatePicker} from 'antd';
 import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-import moment from 'moment';
+
 
 function TraVehicleDetailsUpdate() {
 
   const navigate = useNavigate();
-  const { id } = useParams(); // Assuming you're using react-router-dom v5 or v6
+  const { id } = useParams(); 
   const { Option } = Select;
   const [form] = Form.useForm();
 
