@@ -13,7 +13,7 @@
     margin-right: 40px;
     width: 1000px; 
     border-radius: 10px;
-    height: 175px;/* Adjust width according to your preference */
+    height: 200px;/* Adjust width according to your preference */
     background-color: #ebe8e4; /* Blue color */
     margin-bottom: 80px; /* Add margin between cards */
     padding-bottom: 10px;
@@ -25,5 +25,23 @@
     color: #444; /* Dark Grey */
     font-size: 16px;
     margin-left: 20px;
-    justify-content: center;
+    justify-content: center;
 }
+.Annspec {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: 30%;
+    width: auto;  /* Adjusted width to auto */
+    min-width: 300px; /* Minimum width can be set to ensure it doesn't get too small */
+    max-width: 1000px; /* Maximum width to prevent it from getting too large */
+    border-radius: 10px;
+    background-color: #ebe8e4;
+    margin-bottom: 80px;
+    padding: 5px 10px;  /* Adjusted padding */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+}
+

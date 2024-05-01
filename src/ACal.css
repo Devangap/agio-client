@@ -140,6 +140,27 @@ body {
 /* } */
 
 /* ---------------------- modal ------------------------ */
+/* const validatePhoneNumber = (rule, value) => {
+  const phoneRegex = /^[0-9]{10}$/;
+  if (!phoneRegex.test(value)) {
+    return Promise.reject('Please enter a valid 10-digit phone number!');
+  }
+  return Promise.resolve();
+  }; */
+/* <div className="item">
+              <Form.Item
+                label='Phone Number'
+                name='phoneNumber'
+                rules={[
+                  { required: true, message: 'Please input your phone number!' },
+                  { validator: validatePhoneNumber }
+                ]}
+                validateStatus={false}
+                help={false}
+              >
+                <Input placeholder='Phone Number' style={{borderRadius: "10px !important", border: "1px solid rgba(128, 128, 128, 0.521)", height: "40px !important", width: "400px !important"}} />
+              </Form.Item>
+            </div> */
 
 /* .modal form .form-label {
   font-family: "Monserrat", sans-serif;

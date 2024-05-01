@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Card, Button, Modal, Form, Input, message ,Tabs} from 'antd';
+import { Card, Button, Modal, Form, Input, message ,Tabs,Radio} from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -23,6 +23,11 @@ function AnnEmpDisplay() {
     const [currentAnnouncement, setCurrentAnnouncement] = useState(null);
     const [commentText, setCommentText] = useState('');
     const [events, setEvents] = useState([]);
+    const [isRSVPModalVisible, setIsRSVPModalVisible] = useState(false);
+    const [currentEvent, setCurrentEvent] = useState(null);
+    const [rsvpChoice, setRsvpChoice] = useState(null);
+
+
 
 
 
@@ -140,6 +145,51 @@ function AnnEmpDisplay() {
         }
         console.log(commentText);
     };
+
+    const showRSVPModal = (event) => {
+        setCurrentEvent(event);
+        setIsRSVPModalVisible(true);
+    };
+    
+    const handleRSVPClose = () => {
+        setIsRSVPModalVisible(false);
+        setCurrentEvent(null);
+        setRsvpChoice(null); // Reset the RSVP choice when closing the modal
+    };
+    
+    const handleRSVPSubmit = async () => {
+        if (!rsvpChoice) {
+            message.error('Please select your RSVP choice');
+            return; // Do nothing if no choice is made
+        }
+    
+        try {
+            const response = await axios.post(`/api/employee/rsvp/${currentEvent.id}`, {
+                choice: rsvpChoice,
+                empId: user.empid // Assuming you have user's empId
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+            });
+    
+            if (response.data.success) {
+                message.success('RSVP submitted successfully');
+                setRsvpChoice(null);
+                setIsRSVPModalVisible(false);
+                fetchEvents(); // Refresh the list of events or manage state update
+            } else {
+                message.error(response.data.message || 'Failed to submit RSVP');
+            }
+        } catch (error) {
+            message.error('Failed to submit RSVP');
+            console.error('RSVP submission error:', error);
+        }
+    };
+    
+    
+    
     
 
     
@@ -159,7 +209,8 @@ function AnnEmpDisplay() {
                                     {event.title}
                                 </h3>
                                 <p style={{ fontSize: '16px', marginLeft: "20px", justifyContent:'center'}}>{event.description}</p>
-                                <Button type="primary" style={{ float: "right", marginBottom:"100px", backgroundColor: "#ECB159"}}>RSVP</Button>
+                                <Button type="primary" style={{ float: "right", marginBottom: "100px", backgroundColor: "#ECB159"}}onClick={() => showRSVPModal(event)}>
+                                    RSVP</Button>
                             </div>
                         ))}
                     </div>
@@ -174,10 +225,10 @@ function AnnEmpDisplay() {
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     <h6>SPECIFIC ANNOUNCEMENTS</h6>
                     {specificAnnouncements.map(announcement => (
-                        <Card
+                        <Card className='Annspec'
                             key={announcement._id}
                             title={announcement.anntitle}
-                            style={{ width: 1000, margin: '16px' }}
+                            
                             actions={[]}
                         >
                             <div>
@@ -194,8 +245,8 @@ function AnnEmpDisplay() {
                             </div>
                             <p><strong>Type:</strong> {announcement.Type}</p>
                             <p><strong>Department:</strong> {announcement.Department}</p>
-                            <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
-                            <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
+                            {/* <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
+                            <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p> */}
                             <p><strong>Description:</strong> {announcement.Description}</p>
                             <Form onFinish={() => handleCommentSubmit(announcement._id)}>
                                 <Form.Item>
@@ -216,9 +267,10 @@ function AnnEmpDisplay() {
                     <h6>GENERAL ANNOUNCEMENTS</h6>
                     {generalAnnouncements.map(announcement => (
                         <Card
+                        className='Annspec'
                             key={announcement._id}
                             title={announcement.anntitle}
-                            style={{ width: 300, margin: '16px' }}
+                            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                             actions={[]}
                         >
                             <div>
@@ -254,6 +306,32 @@ function AnnEmpDisplay() {
                 </div>
             </TabPane>
         </Tabs>
+        <Modal
+    title="RSVP to Event"
+    visible={isRSVPModalVisible}
+    onOk={handleRSVPSubmit}
+    onCancel={handleRSVPClose}
+    footer={[
+        <Button key="back" onClick={handleRSVPClose}>
+            Cancel
+        </Button>,
+        <Button key="submit" type="primary" onClick={handleRSVPSubmit} disabled={!rsvpChoice}>
+            Submit
+        </Button>,
+    ]}
+>
+    {currentEvent && (
+        <div>
+            <h2>{currentEvent.title}</h2>
+            <p>{currentEvent.description}</p>
+            <Radio.Group onChange={(e) => setRsvpChoice(e.target.value)} value={rsvpChoice}>
+                <Radio value="in">I'm in</Radio>
+                <Radio value="out">I'm out</Radio>
+            </Radio.Group>
+        </div>
+    )}
+</Modal>
+
     </Layout>
     );
 }
