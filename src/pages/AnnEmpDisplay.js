@@ -164,9 +164,10 @@ function AnnEmpDisplay() {
         }
     
         try {
-            const response = await axios.post(`/api/employee/rsvp/${currentEvent.id}`, {
+            const response = await axios.post(`/api/employee/rsvp/${currentEvent._id}`, {
                 choice: rsvpChoice,
                 empId: user.empid // Assuming you have user's empId
+                
             }, {
                 headers: {
                     'Content-Type': 'application/json',
@@ -186,7 +187,7 @@ function AnnEmpDisplay() {
             message.error('Failed to submit RSVP');
             console.error('RSVP submission error:', error);
         }
-    };
+    };console.log(currentEvent?._id)
     
     
     
