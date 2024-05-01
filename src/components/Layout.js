@@ -123,11 +123,7 @@ function Layout({ children }) {
         },
       ];
     const Annhrsupmenu = [
-        {
-            name: 'Home',
-            path: '/AnnHRsup',
-            icon: 'ri-home-line',
-        },
+       
         {
             name: ' Announcements',
             path: '/AnnDisplay',
@@ -143,11 +139,7 @@ function Layout({ children }) {
             path: '/AnnCalendar',
             icon: 'ri-account-box-line',
         },
-        {
-            name: ' Profile',
-            path: '/profile',
-            icon: 'ri-account-box-line',
-        },
+        
         
     ];
     const leavemenu = [

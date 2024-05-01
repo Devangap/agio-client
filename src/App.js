@@ -135,6 +135,7 @@ import Compare1 from "./pages/Perform_Compare1";
 
 import Charta from "./pages/Perform_Chart";
 import Viewprofileadmin from "./pages/Perform_viewemp"; 
+import TraBookingdisplayAll from './pages/TraBookingdisplayAll';
 
 
 
@@ -250,7 +251,7 @@ function App() {
         
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
           <Route path='/LeaveEmp' element={<ProtectedRoute><LeaveEmp /></ProtectedRoute>} />
-          <Route path='/LeaveEmpform' element={<ProtectedRoute><LeaveEmpform /></ProtectedRoute>} />
+          
           <Route path='/LeaveHrsupdisplay' element={<ProtectedRoute><LeaveHrsupdisplay /></ProtectedRoute>} />
           <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
           <Route path='/LeaveUpdate/:id' element={<ProtectedRoute><LeaveUpdate/></ProtectedRoute>} />
@@ -279,14 +280,7 @@ function App() {
 
 
 
-          <Route path='/UniformOrder' element={<ProtectedRoute><UniformOrder/></ProtectedRoute>} />
-          <Route path='/UniformManagerView' element={<ProtectedRoute><UniformManagerView/></ProtectedRoute>} />
-          <Route path='/UniformShirt' element={<ProtectedRoute><UniformShirt/></ProtectedRoute>} />
-          <Route path='/UniformSkirt' element={<ProtectedRoute><UniformSkirt/></ProtectedRoute>} />
-          <Route path='/UniformShirtInventory' element={<ProtectedRoute><UniformShirtInventory/></ProtectedRoute>} />
-          <Route path='/UniformOrderDetails' element={<ProtectedRoute><UniformOrderDetails/></ProtectedRoute>} />
-          <Route path='/UniformTotals' element={<ProtectedRoute><UniformTotals/></ProtectedRoute>}/>
-          <Route path='/UniformCharts' element={<UniformCharts/>}/>
+          
 
         
             /*transport  Navigation*/
@@ -307,6 +301,7 @@ function App() {
           <Route path='/TraVehicleviwe' element={<ProtectedRoute><TraVehicleviwe/></ProtectedRoute>} />
           <Route path='/TraDriverViwe' element={<ProtectedRoute><TraDriverViwe/></ProtectedRoute>} />
           <Route path='/TraPayment' element={<ProtectedRoute><TraPayment/></ProtectedRoute>} />
+          <Route path='/TraBookingdisplayAll' element={<ProtectedRoute><TraBookingdisplayAll/></ProtectedRoute>} />
 
 
 

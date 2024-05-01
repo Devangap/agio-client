@@ -20,6 +20,15 @@ function AnnCalendar() {
     const [isEventModalVisible, setIsEventModalVisible] = useState(false);
     const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
 
+    function disableNotToday(current) {
+       
+        return current && current.format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD');
+    }
+    function disablePastDates(current) {
+        
+        return current && current < moment().startOf('day');
+    }
+
     const locales = { 'en-US': enUS };
 
     const localizer = dateFnsLocalizer({
@@ -131,7 +140,7 @@ function AnnCalendar() {
     };
 
     const handleAddNotice = () => {
-        form.resetFields(); // Resets all form fields to initial values or empty if no initial values are set
+        form.resetFields(); 
         setIsModalVisible(true);
     };
     const handleOk = () => form.submit();
@@ -170,12 +179,20 @@ function AnnCalendar() {
                         <Form.Item label="Title" name="title" rules={[{ required: true, message: 'Please input the title!' }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item label="Submission Date" name="submission">
-                            <DatePicker format="YYYY-MM-DD" />
+                        <Form.Item label="Start Date" name="submission">
+    <DatePicker 
+        className="date" 
+        disabledDate={disablePastDates}  
+    />
+</Form.Item>
+                        
+                        <Form.Item label="End Date" name="expiryDate">
+                        <DatePicker 
+        className="date" 
+        disabledDate={disablePastDates}  
+    />
                         </Form.Item>
-                        <Form.Item label="Expiry Date" name="expiryDate">
-                            <DatePicker format="YYYY-MM-DD" />
-                        </Form.Item>
+                        
                         <Form.Item label="Description" name="description">
                             <Input.TextArea />
                         </Form.Item>
