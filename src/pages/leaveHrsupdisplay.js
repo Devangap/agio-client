@@ -11,6 +11,7 @@ import toast from 'react-hot-toast';
 function LeaveHrsupdisplay() {
     const [leaveData, setLeaveData] = useState([]);
     const {user} = useSelector((state) => state.user);
+    const [showSuggestDateModal, setShowSuggestDateModal] = useState(false);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const token = localStorage.getItem('token');
@@ -150,6 +151,10 @@ function LeaveHrsupdisplay() {
             toast.error("Error deducting leave.");
         }
     };
+    const handleSuggestDate = (record) => {
+        // Logic to handle suggesting a date
+        setShowSuggestDateModal(true);
+    };
 
     const changestatus = async (record, status) => {
         try {
@@ -263,6 +268,9 @@ function LeaveHrsupdisplay() {
                         {record.status === "approved" && (
                             <Button type="primary" style={{  borderColor: 'red', color: 'red', backgroundColor:'white'}}className="rejectbut" onClick={() => changestatus(record, 'rejected')}>Reject</Button>
                         )}
+                        {record.status === "rejected" && (
+                <Button type="primary" style={{ borderColor: 'green', color: 'green', backgroundColor: 'white' }} className="suggestDateButton"onClick={() => handleSuggestDate(record)} >Suggest Date</Button>
+            )}
                     </div>
                 </>
             ),
@@ -271,6 +279,15 @@ function LeaveHrsupdisplay() {
 
     return (
         <Layout>
+             <Modal
+                title="Suggest Date"
+                visible={showSuggestDateModal}
+                onCancel={() => setShowSuggestDateModal(false)}
+                footer={null}
+            >
+                {/* Content of the modal */}
+                <p>Suggest a date here...</p>
+            </Modal>
             <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
             <Card  title = "Approved Leaves "className="leave-type-card"  bordered={false}>
             <div className="leave-description" style={{  display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
