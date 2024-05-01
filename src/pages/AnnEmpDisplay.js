@@ -174,10 +174,10 @@ function AnnEmpDisplay() {
                 <div style={{ display: 'flex', flexWrap: 'wrap' }}>
                     <h6>SPECIFIC ANNOUNCEMENTS</h6>
                     {specificAnnouncements.map(announcement => (
-                        <Card
+                        <Card className='Annspec'
                             key={announcement._id}
                             title={announcement.anntitle}
-                            style={{ width: 1000, margin: '16px' }}
+                            
                             actions={[]}
                         >
                             <div>
@@ -194,8 +194,8 @@ function AnnEmpDisplay() {
                             </div>
                             <p><strong>Type:</strong> {announcement.Type}</p>
                             <p><strong>Department:</strong> {announcement.Department}</p>
-                            <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
-                            <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
+                            {/* <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
+                            <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p> */}
                             <p><strong>Description:</strong> {announcement.Description}</p>
                             <Form onFinish={() => handleCommentSubmit(announcement._id)}>
                                 <Form.Item>
@@ -216,9 +216,10 @@ function AnnEmpDisplay() {
                     <h6>GENERAL ANNOUNCEMENTS</h6>
                     {generalAnnouncements.map(announcement => (
                         <Card
+                        className='Annspec'
                             key={announcement._id}
                             title={announcement.anntitle}
-                            style={{ width: 300, margin: '16px' }}
+                            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
                             actions={[]}
                         >
                             <div>

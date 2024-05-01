@@ -11,6 +11,8 @@ import { jsPDF } from 'jspdf';
 import toast from 'react-hot-toast';
 import { useSelector } from 'react-redux';
 import { UploadOutlined } from '@ant-design/icons';
+import moment from 'moment';
+
 
 
 const { Option } = Select;
@@ -29,28 +31,60 @@ function AnnDisplay() {
     const [comments, setComments] = useState([]);
     const [isAddModalVisible, setIsAddModalVisible] = useState(false); 
     const [fileList, setFileList] = useState([]);
+
+    const [expandedRows, setExpandedRows] = useState({});
+    const [isDesModalVisible, setIsDesModalVisible] = useState(false);
+    const [modalContent, setModalContent] = useState('');
+    function disableNotToday(current) {
+      
+      return current && current.format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD');
+  }
+  function disablePastDates(current) {
+    
+    return current && current < moment().startOf('day');
+}
+
+
+    const showModal2 = (content) => {
+    setModalContent(content);
+    setIsDesModalVisible(true);
+  };
+  const handleCancel2 = () => {
+    setIsDesModalVisible(false);
+  };
+
+
+const toggleDescription = (key) => {
+  const newExpandedRows = { ...expandedRows, [key]: !expandedRows[key] };
+  setExpandedRows(newExpandedRows);
+};
+
+
+
+
+
     const onFinish = async (values) => {
-        // Ensure expiredate is properly defined
+       
         if (!values.expiredate) {
             message.error('Please select an expiration date');
             return;
         }
     
-        // Create a new FormData instance
+        
         const formData = new FormData();
-        // Append each file to FormData
+        
         fileList.forEach(file => {
             formData.append('file', file);
         });
-        // Append other form values to FormData
+        
         Object.keys(values).forEach(key => {
             formData.append(key, values[key]);
         });
-        // Append user ID to FormData
+        
         formData.append('userid', user?.userid);
     
         try {
-            // Make POST request to upload the form data
+            
             const response = await axios.post('/api/employee/AnnHRsup', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -58,9 +92,12 @@ function AnnDisplay() {
                 },
             });
     
-            // Handle response
+           
             if (response.data.success) {
                 toast.success(response.data.message);
+                handleCancel();
+                window.location.reload();
+               
                 navigate('/AnnDisplay');
             } else {
                 toast.error(response.data.message);
@@ -91,7 +128,7 @@ function AnnDisplay() {
             if (response.data.success) {
                 message.success('Announcement added successfully');
                 setIsAddModalVisible(false);
-                fetchAnnouncements(); // Refresh the announcements list
+                fetchAnnouncements(); 
             } else {
                 message.error(response.data.message);
             }
@@ -106,15 +143,15 @@ function AnnDisplay() {
             const response = await axios.get('/api/employee/comments');
             const mappedData = [];
     
-            // Assuming each item in response.data can have multiple comments
+            
             response.data.forEach(item => {
                 item.comment.forEach(comment => {
                     mappedData.push({
-                        key: `${item._id}_${comment._id}`, // Unique key for each comment
+                        key: `${item._id}_${comment._id}`,
                         anntitle: item.anntitle,
                         commentText: comment.text,
                         empId: comment.empId,
-                        createdAt: comment.createdAt, // Optional, if you want to display or use created date
+                        createdAt: comment.createdAt, 
                     });
                 });
             });
@@ -142,9 +179,8 @@ function AnnDisplay() {
     const fetchAnnouncements = async () => {
         try {
             const response = await axios.get('/api/employee/getAnnHRsup');
-            // Assuming response.data.announcements is an array of announcements
-            // Add a unique key (e.g., id) to each announcement for the Table component
-            const dataWithKey = response.data.announcements.map(item => ({ ...item, key: item._id })); // Adjust according to your data structure
+          
+            const dataWithKey = response.data.announcements.map(item => ({ ...item, key: item._id })); 
             setAnnouncements(dataWithKey);
         } catch (error) {
             message.error("Failed to fetch announcements");
@@ -158,7 +194,7 @@ function AnnDisplay() {
         if (isJpgOrPng) {
           setFileList([...fileList, file]);
         }
-        return false; // Prevent automatic upload
+        return false; 
       };
     
 
@@ -226,6 +262,7 @@ function AnnDisplay() {
             title: 'Announcement Title',
             dataIndex: 'anntitle',
             key: 'anntitle',
+            width: 150,
         },
         {
             title: 'Upload Date',
@@ -242,6 +279,7 @@ function AnnDisplay() {
             title: 'Department',
             dataIndex: 'Department',
             key: 'Department',
+            
         },
 
         {
@@ -255,14 +293,11 @@ function AnnDisplay() {
             dataIndex: 'filePath', // Adjust based on your data structure
             key: 'file',
             render: (text, record) => {
-              // Make sure `record` and `record.file` are valid objects before trying to access `filename`
+             
               const filename = record?.file?.filename;
-              
-              // Update this URL to match your backend server's URL and port
-              // For example, if your backend is running on http://localhost:3000
+            
               const backendUrl = 'http://localhost:5001/';
           
-              // Construct the file path with the full URL
               const filePath = filename ? `${backendUrl}uploads/${filename}` : '';
               console.log(filePath)
               return filename ? (
@@ -273,11 +308,29 @@ function AnnDisplay() {
               ) : null;
             },
           },
-        {
+          {
             title: 'Description',
             dataIndex: 'Description',
             key: 'Description',
-        },
+            render: (text, record) => {
+              const isExpanded = expandedRows[record.key];
+              return (
+                <>
+                  {text.length > 6 ? (
+                    <>
+                      {text.substring(0, 6)}... 
+                      <a onClick={() => showModal2(text)}>More</a>
+                    </>
+                  ) : (
+                    text
+                  )}
+                </>
+              );
+            }
+            
+            
+          },
+          
         {
             title: 'Action',
             key: 'action',
@@ -315,12 +368,12 @@ function AnnDisplay() {
               formData.append("file", selectedFile);
             }
         
-            // Assuming you have the announcement ID in currentAnnouncement._id
+            
             const response = await axios.put(`/api/annWorkouts/updateAnnHRsup/${currentAnnouncement._id}`, values);
             if (response.data.success) {
                 message.success('Announcement updated successfully');
                 setIsModalVisible(false);
-                // Refresh the announcements list to reflect the update
+                
                 fetchAnnouncements();
             } else {
                 message.error(response.data.message);
@@ -344,7 +397,7 @@ const handleRemove = file => {
     return (
         <Layout>
          
-         <h2 >Announcements</h2> 
+         <h3 >Announcements</h3> 
             <div className="annscrollable-container">
             
             <Form.Item>
@@ -371,13 +424,26 @@ const handleRemove = file => {
                 placeholder="Search announcements"
                 value={searchText}
                 onChange={(e) => setSearchText(e.target.value)}
-                style={{ marginBottom: 10, width: 100, marginLeft:123 }}
+                style={{ marginBottom: 10, width: 100, marginLeft:180 }}
             />
             
         
     </div>
 
             <Table dataSource={filteredAnnouncements} columns={columns}   />
+
+            <Modal
+        title="Full Description"
+        visible={isDesModalVisible}
+        onCancel={handleCancel2}
+        footer={[
+          <Button key="back" onClick={handleCancel2}>
+            Close
+          </Button>
+        ]}
+      >
+        <p>{modalContent}</p>
+      </Modal>
             
 
             <Modal
@@ -424,9 +490,12 @@ const handleRemove = file => {
             {/* Upload Date and Type */}
             <div className="form-row">
               <div className="item">
-                <Form.Item label="Upload Date" name="uploaddate">
-                  <DatePicker className="date" />
-                </Form.Item>
+              <Form.Item label="Upload Date" name="uploaddate">
+    <DatePicker 
+        className="date" 
+        disabledDate={disableNotToday}  // Use the function here
+    />
+</Form.Item>
               </div>
               <div className="item">
                 <Form.Item name="Type" label="Type">
@@ -437,7 +506,7 @@ const handleRemove = file => {
                 </Form.Item>
               </div>
             </div>
-            {/* Department (Specific announcement type) */}
+          
             {announcementType === 'Specific' && (
               <div className="form-row">
                 <div className="item">
@@ -456,12 +525,16 @@ const handleRemove = file => {
                 </div>
               </div>
             )}
-            {/* Expire Date and Upload Media */}
+            
             <div className="form-row">
               <div className="item">
-                <Form.Item label="Expire Date" name="expiredate">
-                  <DatePicker className="date" />
-                </Form.Item>
+              <Form.Item label="Expire Date" name="expiredate">
+    <DatePicker 
+        className="date" 
+        disabledDate={disablePastDates}  
+    />
+</Form.Item>
+
               </div>
               <div className="itemUpload">
                 <Form.Item label='Upload Media' name='file'>
@@ -482,7 +555,7 @@ const handleRemove = file => {
                 <Input.TextArea className='Description' />
               </Form.Item>
             </div>
-            {/* Submit Button */}
+            
             <div className="Button-cons">
               <Button className='primary-button my-2' htmlType='submit'>Submit</Button>
             </div>
@@ -490,7 +563,7 @@ const handleRemove = file => {
                 </Modal>
 
 </div>
-<h2>Employee Comments</h2>
+<h3>Employee Comments</h3>
 <div annscrollable-container>
 <Table dataSource={comments} columns={commentColumns} />
 
