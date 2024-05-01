@@ -33,6 +33,12 @@ function TraBooking() {
     getData();
   }, []);
 
+  // Function to disable dates after the current date
+  const disabledDate = (current) => {
+    // Disable dates after today (including today)
+    return current && current > moment().endOf('day');
+  };
+
   const onFinish = async (values) => {
     console.log('Received values of form', values);
     try {
@@ -63,12 +69,6 @@ function TraBooking() {
     } else {
       callback();
     }
-  };
-
-  // Function to disable past dates (allow only future dates)
-  const disabledDate = (current) => {
-    // Disable dates before today (including today)
-    return current && current < moment().startOf('day');
   };
 
   return (
@@ -126,6 +126,7 @@ function TraBooking() {
             <div className="bookButton-cons">
               <Button className='bookprimary-button my-2' htmlType='submit'>Submit</Button>
               <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraBookingDisplay`)}>View Details</Button>
+              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraBookingdisplayAll`)}>View Available Seats</Button>
             </div>
           </Form>
         </div>

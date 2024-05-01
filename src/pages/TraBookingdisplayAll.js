@@ -1,3 +1,4 @@
+// Frontend code
 import React, { useEffect, useState } from 'react';
 import { Table, Button, message, Modal } from 'antd';
 import Layout from '../components/Layout';
@@ -5,7 +6,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-function TraBookingDisplay() {
+function TraBookingdisplayAll() {
     const { user } = useSelector((state) => state.user);
     const [booking, setBooking] = useState([]);
     const [descriptionModalVisible, setDescriptionModalVisible] = useState(false);
@@ -23,9 +24,9 @@ function TraBookingDisplay() {
 
     const [isTodayBooking, setIsTodayBooking] = useState(false);
 
-    const fetchBooking = async (userId) => {
+    const fetchBooking = async () => {
         try {
-            const response = await axios.get(`/api/employee/getTraBooking3/${userId}`);
+            const response = await axios.get('/api/employee/getTraBooking');
             console.log('Booking API Response:', response.data);
 
             if (response.data && response.data.bookings) {
@@ -60,19 +61,16 @@ function TraBookingDisplay() {
     };
 
     useEffect(() => {
-        if (user && user.userid) {
-            fetchBooking(user.userid);
-        }
-    }, [user]);
+        fetchBooking();
+    }, []);
 
-    
     // Function to reset remaining seats to total seats
     const resetRemainingSeats = () => {
         setRemainingSeats({ Bus: totalSeats.Bus, Van: totalSeats.Van });
     };
 
-     // Check for a new day and reset remaining seats accordingly
-     useEffect(() => {
+    // Check for a new day and reset remaining seats accordingly
+    useEffect(() => {
         const interval = setInterval(() => {
             const now = new Date();
             if (now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
@@ -195,47 +193,37 @@ function TraBookingDisplay() {
                 </>
             ),
         },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-        },
-        {
-            title: 'Action',
-            key: 'action',
-            render: (_, record) => (
-                <>
-                    <Button type="primary" className="update" onClick={() => navigate(`/TraBookingUpdate/${record._id}`)} disabled={record.status === 'approved' || record.status === 'rejected'}>
-                        Update
-                    </Button>
-                    {record.status === 'approved' ? (
-                        <Button type="primary" className="pybtn" onClick={() => navigate(`/TraPayment`)}>Upload</Button>
-                    ) : (
-                        <Button type="primary" className="pybtn" disabled>Upload</Button>
-                    )}
-                    <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
-                </>
-            ),
-        },
+        
     ];
-
 
     return (
         <Layout>
             {/* Display Total Seats for Each Vehicle Type */}
-            {/* <div className='traseat'>
-            <div className='seat-count'>
-                <div>Total Bus Seats: {totalSeats.Bus}</div>
-                <div>Remaining Bus Seats: {remainingSeats.Bus}</div>
-                
-            </div>
-            <div  className='seat-count' >
-                <div>Total Van Seats: {totalSeats.Van}</div>
-                <div>Remaining Van Seats: {remainingSeats.Van}</div>
-            </div>
-            </div>*/}
+           {/*} <div className='traseat'>
+                <div className='seat-count'>
+                    <div>Total Bus Seats: {totalSeats.Bus}</div>
+                    <div>Remaining Bus Seats: {remainingSeats.Bus}</div>
+                </div>
+                <div className='seat-count'>
+                    <div>Total Van Seats: {totalSeats.Van}</div>
+                    <div>Remaining Van Seats: {remainingSeats.Van}</div>
+                </div>
+    </div>*/}
 
-            
+            <div className="myboxS">
+        <div className="mybox1S" >
+        
+                    <div>Total Bus Seats: {totalSeats.Bus}</div>
+                    <div>Remaining Bus Seats: {remainingSeats.Bus}</div>
+                
+        </div>
+        <div className="mybox1S" >
+        <div>Total Van Seats: {totalSeats.Van}</div>
+                    <div>Remaining Van Seats: {remainingSeats.Van}</div>
+        </div>
+        
+      </div>
+
 
             {/* Table to display bookings */}
             <Table dataSource={booking} columns={columns} />
@@ -243,16 +231,16 @@ function TraBookingDisplay() {
             {/* Description Modal */}
             <Modal
                 title="Description"
-                visible={descriptionModalVisible} 
+                visible={descriptionModalVisible}
                 onCancel={() => setDescriptionModalVisible(false)}
                 footer={null}
             >
                 <p>{selectedDescription}</p>
             </Modal>
-            <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraBooking`)}>BOOKING</Button>
-            <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraBookingdisplayAll`)}>View Available Seats</Button>
+
+            <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraBookingDisplay`)}>View Own Details</Button>
         </Layout>
     );
 }
 
-export default TraBookingDisplay;
+export default TraBookingdisplayAll;
