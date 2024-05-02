@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Button, Form, Input, Select, DatePicker } from 'antd';
 import Layout from '../components/Layout';
@@ -13,6 +13,9 @@ function TraBookingUpdate() {
   const { id } = useParams();
   const { Option } = Select;
   const [form] = Form.useForm();
+  const [vehicleType, setVehicleType] = useState(null);
+  const [isTypeDisabled, setIsTypeDisabled] = useState(true);
+  const [isLocationDisabled, setIsLocationDisabled] = useState(true);
 
   useEffect(() => {
     const fetchbooking = async () => {
@@ -28,6 +31,7 @@ function TraBookingUpdate() {
             bookingdate: moment(data.bookingdate),
             Details: data.Details,
           });
+          setVehicleType(data.Type); // Set the initial vehicle type
         } else {
           toast.error('Booking not found!');
           navigate('/TraBookingDisplay');
@@ -67,6 +71,29 @@ function TraBookingUpdate() {
     return current && current < moment().startOf('day');
   };
 
+  // Function to dynamically render location options based on selected vehicle type
+  const renderLocationOptions = () => {
+    if (vehicleType === 'Bus') {
+      return (
+        <>
+          <Option value="BusLocation1">Kollupitiya</Option>
+          <Option value="BusLocation2">Moratuwa</Option>
+          <Option value="BusLocation3">Panadura</Option>
+        </>
+      );
+    } else if (vehicleType === 'Van') {
+      return (
+        <>
+          <Option value="VanLocation1">Ja-Ela</Option>
+          <Option value="VanLocation2">Katunayake</Option>
+          <Option value="VanLocation3">Negambo</Option>
+        </>
+      );
+    } else {
+      return null;
+    }
+  };
+
   return (
     <Layout>
       <div className="bookform">
@@ -89,7 +116,7 @@ function TraBookingUpdate() {
               </div>
               <div className="bookitem">
                 <Form.Item name="Type" label="Type">
-                  <Select className="Type" placeholder="Select Vehicle type">
+                  <Select className="Type" placeholder="Select Vehicle type" onChange={setVehicleType} disabled={isTypeDisabled}>
                     <Option value="Bus">Bus</Option>
                     <Option value="Van">Van</Option>
                   </Select>
@@ -98,13 +125,8 @@ function TraBookingUpdate() {
 
               <div className="bookitem">
                 <Form.Item name="location" label="Select Location">
-                  <Select className="Type" placeholder="Select Location">
-                    <Option value="Colombo">Colombo</Option>
-                    <Option value="Ja-ela">Ja-ela</Option>
-                    <Option value="Kollupitiya">Kollupitiya</Option>
-                    <Option value="Negambo">Negambo</Option>
-                    <Option value="Panadura">Panadura</Option>
-                    <Option value="Kaduwela">Kaduwela</Option>
+                  <Select className="Type" placeholder="Select Location" disabled={isLocationDisabled}>
+                    {renderLocationOptions()}
                   </Select>
                 </Form.Item>
               </div>
@@ -136,3 +158,4 @@ function TraBookingUpdate() {
 }
 
 export default TraBookingUpdate;
+
