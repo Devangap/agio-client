@@ -161,6 +161,11 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
+            name: ' Employee Attendance',
+            path: '/empatt',
+            icon: 'ri-account-box-line',
+        },
+        {
             name: 'Announcements',
             path: '/AnnEmpDisplay',
             icon: 'ri-survey-line',
