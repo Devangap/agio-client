@@ -162,7 +162,7 @@ function Layout({ children }) {
         },
         {
             name: ' Employee Attendance',
-            path: '/empatt',
+            path: '/Leaveempatt',
             icon: 'ri-account-box-line',
         },
         {

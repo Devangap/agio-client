@@ -166,7 +166,8 @@ function AnnEmpDisplay() {
         try {
             const response = await axios.post(`/api/employee/rsvp/${currentEvent._id}`, {
                 choice: rsvpChoice,
-                empId: user.empid // Assuming you have user's empId
+                empId: user.empid ,
+                department:user.department// Assuming you have user's empId
                 
             }, {
                 headers: {
