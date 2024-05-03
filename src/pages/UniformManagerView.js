@@ -77,7 +77,7 @@ function UniformOrders() {
 
   const handleSearch = () => {
     if (searchId.trim() === "") {
-      message.warning("Please enter a valid ID");
+      message.warning("Please enter a valid ID"); //Validation to ensure a valid ID is entered
       return;
     }
 

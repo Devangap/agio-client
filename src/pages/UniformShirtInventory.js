@@ -114,7 +114,7 @@ import InventoryPDFDocument from './InventoryPDFDocument';
                         const newQuantity = parseInt(e.target.value);
                         if (!isNaN(newQuantity)) {
                           setShirtInventory(prevState =>
-                            prevState.map(item => (item._id === shirt._id ? { ...item, quantity: newQuantity } : item))
+                            prevState.map(item => (item._id === shirt._id ? { ...item, quantity: newQuantity } : item)) //validation to only include numeric values
                           );
                         }
                       }}

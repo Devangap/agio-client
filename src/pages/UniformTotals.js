@@ -88,7 +88,7 @@ function UniformTotals() {
         </div>
       </div>
       <div className="buttons-container">
-                  <button className="history-button">View Inventory</button>
+                  <button className="history-button">View Graphically</button>
                   <PDFDownloadLink
     document={<PDFDocument executiveShirtTotals={executiveShirtTotals} factoryWorkerShirtTotals={factoryWorkerShirtTotals} factoryWorkerSkirtTotals={factoryWorkerSkirtTotals} />}
     fileName="uniform_report.pdf"
