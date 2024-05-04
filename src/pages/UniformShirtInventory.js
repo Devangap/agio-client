@@ -168,7 +168,7 @@ import InventoryPDFDocument from './InventoryPDFDocument';
         </form>
       </div>
       <div className="buttons-container">
-        <button >View Graphically</button>
+        <button >Compare Inventory</button>
         
         <PDFDownloadLink
           document={<InventoryPDFDocument shirtInventory={shirtInventory} skirtInventory={skirtInventory} />}

@@ -29,6 +29,10 @@ function UniformTotals() {
       console.error('Error fetching uniform totals:', error);
     }
   };
+  const handleStatusButtonClick = () => {
+    // Redirect to the UniformStatus page
+    window.location.href = '/UniformCharts'; // Replace '/uniform-status' with the path of your UniformStatus.js page
+  };
 
   const sortByTShirtSize = (data) => {
     return data.sort((a, b) => {
@@ -40,6 +44,8 @@ function UniformTotals() {
   const sortByWaistSize = (data) => {
     return data.sort((a, b) => parseInt(a._id) - parseInt(b._id));
   };
+
+  
 
   return (
     <Layout>
@@ -88,7 +94,7 @@ function UniformTotals() {
         </div>
       </div>
       <div className="buttons-container">
-                  <button className="history-button">View Graphically</button>
+                  <button className="history-button" onClick={handleStatusButtonClick} >View Graphically</button>
                   <PDFDownloadLink
     document={<PDFDocument executiveShirtTotals={executiveShirtTotals} factoryWorkerShirtTotals={factoryWorkerShirtTotals} factoryWorkerSkirtTotals={factoryWorkerSkirtTotals} />}
     fileName="uniform_report.pdf"
