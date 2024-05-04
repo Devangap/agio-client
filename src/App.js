@@ -100,10 +100,9 @@ import UniformShirtInventory from './pages/UniformShirtInventory';
 import UniformOrderDetails from './pages/UniformOrderDetails';
 import UniformTotals from './pages/UniformTotals';
 import UniformCharts from './pages/UniformCharts';
-import UniformStatus from './pages/UniformStatus'
-
-
-
+import UniformStatus from './pages/UniformStatus';
+import UniformCoView from './pages/UniformCoView';
+import UniformSupplier from './pages/UniformSupplier';
 
 
 
@@ -289,7 +288,8 @@ function App() {
           <Route path='/UniformTotals' element={<ProtectedRoute><UniformTotals/></ProtectedRoute>}/>
           <Route path='/UniformCharts' element={<ProtectedRoute><UniformCharts/></ProtectedRoute>}/>
           <Route path='/UniformStatus' element={<ProtectedRoute><UniformStatus/></ProtectedRoute>}/>
-
+          <Route path='/UniformCoView' element={<ProtectedRoute><UniformCoView/></ProtectedRoute>}/>
+          <Route path='/UniformSupplier' element={<ProtectedRoute><UniformSupplier/></ProtectedRoute>}/>
         
             /*transport  Navigation*/
          

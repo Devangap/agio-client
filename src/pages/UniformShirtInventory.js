@@ -79,6 +79,11 @@ import InventoryPDFDocument from './InventoryPDFDocument';
      }
    };
 
+   const handleStatusButtonClick = () => {
+    // Redirect to the UniformStatus page
+    window.location.href = '/UniformCoView'; 
+  };
+
   // Function to handle downloading inventory report
   const handleDownloadReport = () => {
     
@@ -134,7 +139,7 @@ import InventoryPDFDocument from './InventoryPDFDocument';
           <table>
             <thead>
               <tr>
-                <th>Waist Size</th>
+                <th>Size</th>
                 <th>Total Quantity Available</th>
                 <th>Action</th>
               </tr>
@@ -168,7 +173,7 @@ import InventoryPDFDocument from './InventoryPDFDocument';
         </form>
       </div>
       <div className="buttons-container">
-        <button >Compare Inventory</button>
+        <button type="primary" onClick={handleStatusButtonClick}>View Graphically</button>
         
         <PDFDownloadLink
           document={<InventoryPDFDocument shirtInventory={shirtInventory} skirtInventory={skirtInventory} />}

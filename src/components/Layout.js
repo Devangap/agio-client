@@ -221,6 +221,11 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
+            name: ' Supplier Details ',
+            path: '/UniformSupplier',
+            icon: 'ri-account-box-line',
+        },
+        {
             name: 'Leave',
             path: '/leaveEmp',
             icon: 'ri-calendar-line',
