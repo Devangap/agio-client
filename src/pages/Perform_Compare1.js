@@ -319,7 +319,7 @@ function Compare(){
           </div>
           </div>
 
-      <div style={{ display: "flex", justifyContent: "space-between" , height: '80%', overflowY: 'auto'}}>
+      <div style={{ display: "flex", justifyContent: "space-between" , height: '80%'}}>
         <div style={{ flex:1}}>
           
         <div style={{boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)'}}><AreaProgressChart dataC={charcdatacutsemp1} maxval={max}/>

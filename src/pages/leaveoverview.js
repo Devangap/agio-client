@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
-import { Input ,Tabs} from 'antd';
+import { Input ,Tabs,Upload,Button,Modal} from 'antd';
 import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
+import { Document, Page, pdfjs ,Text,PDFDownloadLink,View,StyleSheet} from '@react-pdf/renderer';
 
 import { Table, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
@@ -16,6 +17,7 @@ function LeaveOverview() {
     const [showChart, setShowChart] = useState(false); // State to manage chart visibility
     const dispatch = useDispatch();
     const [leaveData, setLeaveData] = useState([]);
+    const [leaveData2, setLeaveData2] = useState([]);
     const token = localStorage.getItem('token');
     const [searchText, setSearchText] = useState('');
     const [monthlyMedicalLeaves, setMonthlyMedicalLeaves] = useState({});
@@ -29,11 +31,44 @@ const [yearlyGeneralLeaves, setYearlyGeneralLeaves] = useState({});
 const [yearlyAnnualLeaves, setYearlyAnnualLeaves] = useState({});
 const TabPane = Tabs;
 const [activeTab, setActiveTab] = useState('monthly'); 
+const [modalIsOpen, setIsOpen] = useState(false);
+function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
 
     const handleSearch = (value) => {
         setSearchText(value);
     };
+    const fetchLeaveDataForReport = async () => {
+        try {
+            const response = await fetch('api/employee/getleave');
+            const data = await response.json();
+    
+            if (!data.success) {
+                console.error(data.message);
+                return;
+            }
+    
+            const leaveDataa = data.leave;
+            setLeaveData2(leaveDataa);
+        } catch (error) {
+            console.error("Failed to retrieve leave details:", error);
+        }
+    };
+    
+    // Example usage
+    (async () => {
+        const leaveDataa = await fetchLeaveDataForReport();
+        if (leaveDataa) {
+            console.log(leaveDataa);
+            // Use leaveData as needed
+        }
+    })();
 
     const fetchData = async () => {
         try {
@@ -306,23 +341,102 @@ axios.get('/api/employee/yearly-annual-leaves')
             key: 'department',
         },
         {
-            title: 'Remaining Annual Leave count',
+            title: <div >Remaining<br/>Annual Leaves</div>,
             dataIndex: 'remainingAnnualLeave',
             key: 'remainingAnnualLeave',
         },
         {
-            title: 'Remaining General Leave count',
+            title: <div >Remaining<br/>General Leaves</div>,
             dataIndex: 'remainingGeneralLeave',
             key: 'remainingGeneralLeave',
         },
         {
-            title: 'Remaining Medical Leave count',
+            title: <div >Remaining<br/>Medical Leaves</div>,
             dataIndex: 'remainingMedicalLeave',
             key: 'remainingMedicalLeave',
         },
     ];
-    
-
+  console.log(leaveData2)
+  const styles = StyleSheet.create({
+    page: {
+      flexDirection: 'row',
+      backgroundColor: '#E4E4E4'
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+      flexGrow: 1
+    },
+    table: {
+      display: "table",
+      width: "auto",
+      borderStyle: "solid",
+      borderWidth: 1,
+      borderRightWidth: 0,
+      borderBottomWidth: 0
+    },
+    tableRow: {
+      margin: "auto",
+      flexDirection: "row"
+    },
+    tableColHeader: {
+      width: "25%",
+      borderStyle: "solid",
+      borderBottomColor: "#000",
+      backgroundColor: "#f2f2f2",
+      textAlign: "center",
+      fontWeight: "bold"
+    },
+    tableCol: {
+      width: "25%",
+      borderStyle: "solid",
+      borderBottomColor: "#000",
+      textAlign: "center"
+    },
+    textCenter: {
+      textAlign: "center"
+    }
+  });
+  
+  const handleDownloadReport = (leaveData) => {
+    const ReportDocument = (
+      <Document>
+        <Page size="A4" style={styles.page}>
+          <View style={styles.section}>
+            <Text style={styles.textCenter}>Leave Report</Text>
+            <View style={styles.table}>
+              <View style={styles.tableRow}>
+                {/* <Text style={styles.tableColHeader}>UserID</Text> */}
+                <Text style={styles.tableColHeader}>Name</Text>
+                <Text style={styles.tableColHeader}>Type</Text>
+                <Text style={styles.tableColHeader}>Description</Text>
+              </View>
+              {leaveData2.map((data) => (
+                <View style={styles.tableRow} key={data._id}>
+                  {/* <Text style={styles.tableCol}>{data.userid}</Text> */}
+                  <Text style={styles.tableCol}>{data.name}</Text>
+                  <Text style={styles.tableCol}>{data.Type}</Text>
+                  <Text style={styles.tableCol}>{data.Description}</Text>
+                </View>
+              ))}
+            </View>
+          </View>
+        </Page>
+      </Document>
+    );
+  
+    const pdfName = 'leave_report.pdf';
+  
+    return (
+      <PDFDownloadLink document={ReportDocument} fileName={pdfName}>
+        {({ loading }) => (
+          <Button style={{ marginLeft :"900px" ,marginBottom:"20px"}} className="leavedownload" type="primary" loading={loading}>
+            {loading ? 'Generating PDF...' : 'Download Report'}
+          </Button>
+        )}
+      </PDFDownloadLink>
+    );
+  };
     // Data for the pie chart
     const pieChartData = [
         { name: 'Medical Leaves', value: totalMedicalLeaves },
@@ -409,7 +523,36 @@ axios.get('/api/employee/yearly-annual-leaves')
     </ul>
 </div> */}
             
-             <h4>Leave Overview</h4>
+             <h3>Leave Overview</h3>
+             <Upload
+    name="csvFile"
+    action={'api/employee/uploadexcelattendance'}
+    beforeUpload={file => {
+        const isCSV = file.type === 'text/csv' || (file.type === 'application/vnd.ms-excel' && file.name.endsWith('.csv'));
+        if (!isCSV) {
+            message.error('You can only upload CSV files!');
+        }
+        return isCSV;
+    }}
+>
+<Button className='LinsertEmp' style={{ float: 'right',marginLeft:887 }}>Insert Employee Attendance</Button>
+
+
+</Upload>
+{handleDownloadReport()}
+<Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+       
+        contentLabel="Example Modal"
+      >
+        <h2>Generate Reports</h2>
+        <div>
+          <p>Put your report generation content here.</p>
+          <Button onClick={closeModal}>Close</Button>
+        </div>
+      </Modal>
+             <div className = 'leavecalcomp'>
              <Tabs defaultActiveKey="monthly" onChange={(key) => setActiveTab(key)}>
                 <TabPane tab="Monthly" key="monthly">
                     {/* Monthly leave distribution content */}
@@ -494,7 +637,8 @@ axios.get('/api/employee/yearly-annual-leaves')
                     )}
                 </TabPane>
             </Tabs>
-             
+            </div>
+             <div className = "remainingover">
             <Input.Search
                 placeholder="Search by name or employee Id"
                 allowClear
@@ -502,6 +646,7 @@ axios.get('/api/employee/yearly-annual-leaves')
                 style={{ width: 200, marginBottom: 16 }}
             />
             <Table dataSource={filteredData} columns={columns} />
+            </div>
             
             {/* <div>
                 <h4>Pie Chart</h4>
@@ -511,6 +656,7 @@ axios.get('/api/employee/yearly-annual-leaves')
                     <Legend />
                 </PieChart>
             </div> */}
+            
         </Layout>
     );
                             }

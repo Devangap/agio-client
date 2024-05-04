@@ -4,11 +4,14 @@ import { showLoading, hideLoading } from "../redux/empalerts";
 import { Table, Button, message, Modal, Form, Input } from 'antd'; 
 import axios from "axios";
 import { useDispatch } from "react-redux";
+import { Link } from 'react-router-dom';
 
 function InsuranceManagerDisplay() {
   const [insuranceData, setInsuranceData] = useState([]);
   const [visible, setVisible] = useState(false); 
   const [selectedInsurance, setSelectedInsurance] = useState(null); 
+  const [updateModalVisible, setUpdateModalVisible] = useState(false); 
+  const [searchTerm, setSearchTerm] = useState(''); // Define searchTerm state
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
@@ -48,7 +51,7 @@ function InsuranceManagerDisplay() {
 
   const handleUpdate = (record) => {
     setSelectedInsurance(record); 
-    setVisible(true); 
+    setUpdateModalVisible(true); 
   }
 
   const handleDelete = async (id) => {
@@ -71,6 +74,7 @@ function InsuranceManagerDisplay() {
 
   const handleCancel = () => {
     setVisible(false);
+    setUpdateModalVisible(false); 
   }
 
   const handleSave = async () => {
@@ -117,12 +121,68 @@ function InsuranceManagerDisplay() {
     }
   };
   
+  const handleInsuranceUpdate = async (insuranceType) => {
+    try {
+      dispatch(showLoading());
+      const response = await axios.put(`/api/insurance/changeMethod/${selectedInsurance._id}`, { method: insuranceType });
+      dispatch(hideLoading());
+      if (response.data.success) {
+        message.success(response.data.message);
+        setVisible(false);
+        setInsuranceData(insuranceData.map(item => item._id === selectedInsurance._id ? response.data.insurance : item));
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Error updating insurance method:", error);
+      message.error("Failed to update insurance method.");
+    }
+  };
+
+  const handleSearch = async () => {
+    try {
+      if (!searchTerm.trim()) {
+        message.warning("Please enter an Employee ID to search.");
+        return;
+      }
+
+      dispatch(showLoading());
+      const response = await axios.get(
+        `/api/insurance/getInsuranceByEmployeeId/${searchTerm}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      console.log(response);
+      dispatch(hideLoading());
+      if (response.data.success) {
+        setInsuranceData(response.data.insuranceData);
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Error searching insurance data:", error);
+      message.error("Failed to search insurance data.");
+    }
+  };
+
+  const handleReset = () => {
+    getInsuranceData();
+    setSearchTerm("");
+  };
 
   const columns = [
     {
       title: "Name",
       dataIndex: "name",
       key: 'name',
+      render: (text, record) => (
+        <span className="insanchor" onClick={() => { setVisible(true); setSelectedInsurance(record); }}>{text}</span>
+      ),
     },
     {
       title: "Empid",
@@ -163,8 +223,8 @@ function InsuranceManagerDisplay() {
       key: 'action',
       render: (text, record) => (
         <div className="insactbutton">
-          <Button onClick={() => handleUpdate(record)}>Update</Button>
-          <Button onClick={() => handleDelete(record._id)}>Cancel</Button>
+          <Button className="insupdate" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button className="inscancel" onClick={() => handleDelete(record._id)}>Cancel</Button>
         </div>
       ),
     },
@@ -172,30 +232,77 @@ function InsuranceManagerDisplay() {
 
   return (
     <Layout>
-      <h1>Claim List</h1>
+      <div className="institle">
+        <h1>Insurance Request Claim List</h1>
+      </div>
       <hr/>
-      <Table
-        columns={columns}
-        dataSource={insuranceData}
-      />
+      <div style={{ marginBottom: 16 }}>
+        <Input
+          placeholder="Enter Employee ID"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          style={{ marginRight: 8, width: 200 }}
+        />
+        <Button type="primary" onClick={handleSearch} style={{ marginRight: 8 }}>
+          Search
+        </Button>
+        <Button onClick={handleReset}>Reset</Button>
+      </div>
+      <div style={{ height: "400px", overflow: "auto" }}>
+        <Table 
+          columns={columns}
+          dataSource={insuranceData}
+          pagination={false} 
+        />
+      </div>
+      
+      <Modal
+        title="Choose the Insurance Method"
+        visible={visible}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" onClick={handleCancel}>Cancel</Button>,
+        ]}
+      >
+        {selectedInsurance && (
+          <div>
+            <p>Name: {selectedInsurance.name}</p>
+            <p>Empid: {selectedInsurance.id}</p>
+            <p>Number: {selectedInsurance.phoneNumber}</p>
+            <p>Description: {selectedInsurance.description}</p>
+            <div>
+              <Button onClick={() => handleInsuranceUpdate('24h Insurance')}>24h Insurance</Button>
+              <Button onClick={() => handleInsuranceUpdate('Sri Lanka Insurance')}>Sri Lanka Insurance</Button>
+            </div>
+          </div>
+        )}
+      </Modal>
+      
       <Modal
         title="Update Insurance"
-        visible={visible}
+        visible={updateModalVisible}
         onOk={handleSave}
         onCancel={handleCancel}
       >
-        <Form layout="vertical">
-          <Form.Item label="Full Name">
-            <Input value={selectedInsurance?.name} onChange={e => setSelectedInsurance({...selectedInsurance, name: e.target.value})} />
-          </Form.Item>
-          <Form.Item label="Phone Number">
-            <Input value={selectedInsurance?.phoneNumber} onChange={e => setSelectedInsurance({...selectedInsurance, phoneNumber: e.target.value})} />
-          </Form.Item>
-          <Form.Item label="Description">
-            <Input value={selectedInsurance?.description} onChange={e => setSelectedInsurance({...selectedInsurance, description: e.target.value})} />
-          </Form.Item>
-        </Form>
+        {selectedInsurance && (
+          <Form layout="vertical">
+            <Form.Item label="Full Name">
+              <Input value={selectedInsurance?.name} onChange={e => setSelectedInsurance({...selectedInsurance, name: e.target.value})} />
+            </Form.Item>
+            <Form.Item label="Phone Number">
+              <Input value={selectedInsurance?.phoneNumber} onChange={e => setSelectedInsurance({...selectedInsurance, phoneNumber: e.target.value})} />
+            </Form.Item>
+            <Form.Item label="Description">
+              <Input value={selectedInsurance?.description} onChange={e => setSelectedInsurance({...selectedInsurance, description: e.target.value})} />
+            </Form.Item>
+          </Form>
+        )}
       </Modal>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Link to="/InsuranceStatus">
+          <Button className="insupdate" >View Status</Button>
+        </Link>
+      </div>
     </Layout>
   );
 }

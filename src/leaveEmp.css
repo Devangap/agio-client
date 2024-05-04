@@ -78,3 +78,35 @@
 .leaveTableemp .leaveTable {
     width: 50% !important;
 }
+
+.remaining{
+    background-color: #fafafa;
+    padding: 10px !important;
+   
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1300px !important;
+    margin: 0 auto; /* align to the middle of the page */
+    margin-bottom: 50px;
+
+}
+.remainingover{
+    background-color: #fafafa;
+    padding: 10px !important;
+   
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 1000px !important;
+    margin: 0 auto; /* align to the middle of the page */
+    margin-bottom: 50px;
+
+}
+.searchleave{
+    margin-right: 1000px;
+}

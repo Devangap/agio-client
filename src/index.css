@@ -1,4 +1,4 @@
- @import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 *{
     .lato-regular {
         font-family: "Lato", sans-serif;
@@ -6,7 +6,8 @@
         font-style: normal;
       }
 }
-/*
+
+
 /* antd override */
 /* input{
     border-radius: 2px !important;
@@ -83,8 +84,7 @@ label{
     margin-left: -50px;
     border-bottom-left-radius: 10px;
 
-}
-*/
+}*/
 .spinner-parent{
     display : flex;
     justify-content: center;
@@ -104,7 +104,7 @@ label{
     width : 80px;
     height : 80px;
 
-}
+} 
 
 
 

@@ -5,15 +5,11 @@ import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-// Destructure Select Option from Ant Design
 const { Option } = Select;
 
 function TraVehicleRegister() {
   const navigate = useNavigate();
-  const { Option } = Select;
-  
-
-  const [numSeats, setNumSeats] = useState(null); // State to hold the number of seats
+  const [numSeats, setNumSeats] = useState(null);
 
   const onFinish = async (values) => {
     console.log('Received values of form', values);
@@ -32,7 +28,6 @@ function TraVehicleRegister() {
   };
 
   const handleVehicleTypeChange = (value) => {
-    // Update number of seats based on selected vehicle type
     if (value === 'bus') {
       setNumSeats(50);
     } else if (value === 'van') {

@@ -7,10 +7,11 @@ import getDay from 'date-fns/getDay';
 import enUS from 'date-fns/locale/en-US';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Layout from '../components/Layout';
-import { Modal, Form, Input, DatePicker, Button } from 'antd';
+import { Modal, Form, Input, DatePicker, Button, Table } from 'antd';
 import moment from 'moment';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+const { Column } = Table;
 
 function AnnCalendar() {
     const [form] = Form.useForm();
@@ -19,6 +20,17 @@ function AnnCalendar() {
     const [selectedEvent, setSelectedEvent] = useState(null);
     const [isEventModalVisible, setIsEventModalVisible] = useState(false);
     const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
+    const [notices, setNotices] = useState([]); // Define notices state
+    const [columns, setColumns] = useState([]);
+
+    function disableNotToday(current) {
+       
+        return current && current.format('YYYY-MM-DD') !== moment().format('YYYY-MM-DD');
+    }
+    function disablePastDates(current) {
+        
+        return current && current < moment().startOf('day');
+    }
 
     const locales = { 'en-US': enUS };
 
@@ -92,14 +104,65 @@ function AnnCalendar() {
                 title: notice.title,
                 start: new Date(notice.submission),
                 end: new Date(notice.expiryDate),
-                description: notice.description
+                description: notice.description,
+                // Initialize department choice counts for each notice
+                departmentChoiceCounts: {}
             }));
+    
+            // Process each notice
+            notices.forEach((notice, noticeIndex) => {
+                // Initialize department choice counts for the current notice
+                const departmentChoiceCounts = {};
+                
+                // Count choice occurrences by department for the current notice
+                response.data.getNotice[noticeIndex].response.forEach(response => {
+                    if (response.choice === "in") {
+                        const department = response.department;
+                        departmentChoiceCounts[department] = (departmentChoiceCounts[department] || 0) + 1;
+                    }
+                });
+                
+                // Set the department choice counts for the current notice
+                notices[noticeIndex].departmentChoiceCounts = departmentChoiceCounts;
+            });
+    
+            // Generate columns dynamically based on department names
+            const departmentColumns = Object.keys(notices.reduce((acc, curr) => {
+                for (const department in curr.departmentChoiceCounts) {
+                    acc[department] = true;
+                }
+                return acc;
+            }, {})).map(department => ({
+                title: department,
+                dataIndex: department,
+                key: department,
+                render: (text, record) => (record.departmentChoiceCounts[department] || 0) // Render 0 if the count is not available
+            }));
+    
+            // Define base columns
+            const baseColumns = [
+                {
+                    title: 'Title',
+                    dataIndex: 'title',
+                    key: 'title',
+                },
+                
+                
+            ];
+    
+            setColumns([...baseColumns, ...departmentColumns]);
             setEvents(notices);
+            setNotices(notices);
         } catch (error) {
+            console.error("Error fetching notices:", error);
             toast.error("Error fetching notices");
-            console.error("Error in fetchNotices:", error);
         }
     };
+    
+    
+    
+    
+    
 
     useEffect(() => {
         fetchNotices();
@@ -131,14 +194,19 @@ function AnnCalendar() {
     };
 
     const handleAddNotice = () => {
-        form.resetFields(); // Resets all form fields to initial values or empty if no initial values are set
+        form.resetFields(); 
         setIsModalVisible(true);
     };
+    
+
     const handleOk = () => form.submit();
     const handleCancel = () => setIsModalVisible(false);
+    
+
 
     return (
         <Layout>
+             <h1>Event Calendar</h1>
             <div style={{ height: 500, margin: '50px' }}>
                 <Calendar
                     localizer={localizer}
@@ -169,12 +237,20 @@ function AnnCalendar() {
                         <Form.Item label="Title" name="title" rules={[{ required: true, message: 'Please input the title!' }]}>
                             <Input />
                         </Form.Item>
-                        <Form.Item label="Submission Date" name="submission">
-                            <DatePicker format="YYYY-MM-DD" />
+                        <Form.Item label="Start Date" name="submission">
+    <DatePicker 
+        className="date" 
+        disabledDate={disablePastDates}  
+    />
+</Form.Item>
+                        
+                        <Form.Item label="End Date" name="expiryDate">
+                        <DatePicker 
+        className="date" 
+        disabledDate={disablePastDates}  
+    />
                         </Form.Item>
-                        <Form.Item label="Expiry Date" name="expiryDate">
-                            <DatePicker format="YYYY-MM-DD" />
-                        </Form.Item>
+                        
                         <Form.Item label="Description" name="description">
                             <Input.TextArea />
                         </Form.Item>
@@ -230,6 +306,9 @@ function AnnCalendar() {
                         </Form.Item>
                     </Form>
                 </Modal>
+                <div style={{ height: 500, width: '80%' }}>
+                <Table dataSource={notices} columns={columns} />
+                    </div>
             </div>
         </Layout>
     );

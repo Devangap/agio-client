@@ -14,7 +14,7 @@
 .main_login_form_log {
     width: 950px;
     height: 450px;
-    background-color: #E5E4E2;
+    
 }
 
 input {
@@ -41,7 +41,7 @@ label {
     color: black;
 }
 
-.t3primary-button {
+.primary-button {
     background-color: #F7B05B !important;
     border-color: #1F1300 !important;
     height: 40px !important;
@@ -62,7 +62,7 @@ label {
     margin-bottom: 40px;
 }
 
-.t3Button-conslog {
+.Button-conslog {
     margin-top: 30px;
     margin-left: 500px;
 }
@@ -87,11 +87,11 @@ label {
     border-radius: 10px;
     margin-right: 40px;
 }
-.t3anchor{
+.anchor{
     color: black !important;
     text-decoration: underline ;
     font-size: 16px !important;
 }
-.t3anchor:hover{
+.anchor:hover{
     text-decoration: underline !important;
 } */
