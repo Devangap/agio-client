@@ -64,8 +64,9 @@ const MedOverview = () => {
       width: 100,
       render: (_, record) => (
         <div>
-          <Button style={{marginBottom: 5, backgroundColor: "#dfdfdf"}} onClick={() => {updateCompletionStatusOfAppointment(record.key, "completed")}}>Complete</Button>
-          <Button onClick={() => {updateCompletionStatusOfAppointment(record.key, "missed")}}>Absent</Button>
+          <Button style={{marginBottom: 5, backgroundColor: "#dfdfdf", width: 100}} onClick={() => {updateCompletionStatusOfAppointment(record.key, "completed")}}>Complete</Button>
+          <br></br>
+          <Button style={{width: 100}} onClick={() => {updateCompletionStatusOfAppointment(record.key, "missed")}}>Absent</Button>
         </div>
       ),
     },
@@ -368,6 +369,7 @@ const MedOverview = () => {
 
       // Log the response
       console.log(`@updateCompletionStatusOfAppointment() @MedOverview() Response => ${response.data.message}`);
+      toast.success(`Updated status for employee`);
       
     } catch (error) {
       console.log("Error occured when updating the completion status for an appointment @updateCompletionStatusOfAppointment() @MedReports() => ", error);
@@ -479,7 +481,7 @@ const MedOverview = () => {
 
 
         <div className="doc-overview-secondary-2">
-        <Table columns={columns} dataSource={scheduledListForSpecificDay} scroll={{y: 240}} pagination={false} style={{width: 380}} bordered={true}/>
+        <Table columns={columns} dataSource={scheduledListForSpecificDay} scroll={{y: 240}} pagination={false} style={{width: 550}} bordered={true}/>
         </div>
       </div>
     </Layout>
