@@ -1,3 +1,5 @@
+// Frontend: TraVehicleRegister.jsx
+
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Form, Input, Select } from 'antd';
@@ -10,6 +12,7 @@ const { Option } = Select;
 function TraVehicleRegister() {
   const navigate = useNavigate();
   const [numSeats, setNumSeats] = useState(null);
+  const [numBuses, setNumBuses] = useState(1); // State to track the number of buses
 
   const onFinish = async (values) => {
     console.log('Received values of form', values);
@@ -28,13 +31,11 @@ function TraVehicleRegister() {
   };
 
   const handleVehicleTypeChange = (value) => {
-    let numSeats;
     if (value === 'bus') {
-      numSeats = 50;
+      setNumSeats(100 * numBuses); // Update total seats for multiple buses
     } else if (value === 'van') {
-      numSeats = 24;
+      setNumSeats(24);
     }
-    setNumSeats(numSeats);
   };
 
   return (
@@ -57,14 +58,14 @@ function TraVehicleRegister() {
                 </Form.Item>
               </div>
               {numSeats && (
-              <div className="bookform-row">
-                <div className="bookitem">
-                  <Form.Item label="Number of Seats">
-                    <Input disabled value={numSeats} />
-                  </Form.Item>
+                <div className="bookform-row">
+                  <div className="bookitem">
+                    <Form.Item  label="Number of Seats" >
+                      <Input disabled value={numSeats} />
+                    </Form.Item>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             </div>
 
             <div className="bookform-row">
@@ -82,22 +83,22 @@ function TraVehicleRegister() {
               <div className="bookitem">
                 <Form.Item name="location" label="Select Location">
                   <Select className="Type" placeholder="Select Location">
-                  <Option value="Colombo">Colombo</Option>
-              <Option value="Ja-ela">Ja-ela</Option>
-              <Option value="Kollupitiya">Kollupitiya</Option>
-              <Option value="Negambo">Negambo</Option>
-              <Option value="Panadura">Panadura</Option>
-              <Option value="Kaduwela">Kaduwela</Option>
+                    <Option value="Colombo">Colombo</Option>
+                    <Option value="Ja-ela">Ja-ela</Option>
+                    <Option value="Kollupitiya">Kollupitiya</Option>
+                    <Option value="Negambo">Negambo</Option>
+                    <Option value="Panadura">Panadura</Option>
+                    <Option value="Kaduwela">Kaduwela</Option>
                   </Select>
                 </Form.Item>
               </div>
             </div>
             
-              <div className="bookitem">
-                <Form.Item name="LicenceDetails" label="Licence Details">
-                  <Input.TextArea className="Description" />
-                </Form.Item>
-              </div>
+            <div className="bookitem">
+              <Form.Item name="LicenceDetails" label="Licence Details">
+                <Input.TextArea className="Description" />
+              </Form.Item>
+            </div>
             
             <div className="bookitem">
               <Form.Item name="OwnerDetails" label="Owner Details">
@@ -109,7 +110,7 @@ function TraVehicleRegister() {
               <Button className="bookprimary-button my-2" htmlType="submit">
                 Submit
               </Button>
-              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraVehicleDetails`)}>Viwe Details</Button>
+              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraVehicleDetails`)}>View Details</Button>
             </div>
           </Form>
         </div>

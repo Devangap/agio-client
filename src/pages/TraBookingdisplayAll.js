@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import bus from '../Images/bus.png'
+import van from '../Images/van.png'
 
 function TraBookingdisplayAll() {
     const { user } = useSelector((state) => state.user);
@@ -158,14 +160,21 @@ function TraBookingdisplayAll() {
     return (
         <Layout>
             {/* Display Total Seats for Each Vehicle Type */}
-            <div className='seat-count'>
-                <div>Total Bus Seats: {totalSeats.Bus}</div>
-                <div>Remaining Bus Seats: {remainingSeats.Bus}</div>
-            </div>
-            <div className='seat-count'>
-                <div>Total Van Seats: {totalSeats.Van}</div>
-                <div>Remaining Van Seats: {remainingSeats.Van}</div>
-            </div>
+            <div className="myboxS">
+        <div className="mybox1S" >
+        <img className="images" src={bus}  />
+                    <div>Total Bus Seats: {totalSeats.Bus}</div>
+                    <div>Remaining Bus Seats: {remainingSeats.Bus}</div>
+                
+        </div>
+        <div className="mybox1S" >
+        <img className="images" src={van}  />
+        <div>Total Van Seats: {totalSeats.Van}</div>
+                    <div>Remaining Van Seats: {remainingSeats.Van}</div>
+        </div>
+        
+      </div>
+
 
             {/* Table to display bookings */}
             <Table dataSource={booking} columns={columns} />
