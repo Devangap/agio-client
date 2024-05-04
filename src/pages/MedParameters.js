@@ -13,10 +13,6 @@ import Swal from "sweetalert2";
 import moment from "moment";
 import dayjs from "dayjs";
 
-
-
-
-
 /*
 get the length of the current month
 */
@@ -76,7 +72,8 @@ const MedParameters = () => {
   // Default parameter values
   const [defaultParameterValues, setDefaultParameterValues] = useState(null);
 
-
+  // Render datepicker
+  const [datePickerKey, setDatePickerKey] = useState(false);
 
   /* =============== Manage Dates ===================== */
 
@@ -152,81 +149,34 @@ const MedParameters = () => {
         newDates.push(removedDate);
 
         setSelectedDates(newDates); // Select the date
-        
       } else {
-        const confirmation = window.confirm(
+        Swal.fire({
+          title: `The date: ${new Date(removedDate).toLocaleDateString()} is already saved`,
+          text: "Are you sure you want to delete the selected date?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            handleDeleteDate(
+              dates,
+              removedIsoDate,
+              removedDateObj,
+              currentDateObjectList,
+              cleanedDateObjectList
+            );
+          } else {
+            handleCancelDeleteDate(dates, removedDate);
+          }
+        });
+
+        /*const confirmation = window.confirm(
           `The date: ${new Date(
             removedDate
           ).toLocaleDateString()} is already saved\nAre you sure you want to remove the selected date?`
-        );
-
-        console.log("confirmation out:", confirmation);
-        if (confirmation) {
-          // Confirm to deselct the date
-          setSelectedDates(dates); // Deselect the date
-
-          // Delete the record
-          try {
-            const deleteResponse = await axios.post(
-              "/api/medDoctor/medical-available-dates-delete-existing",
-              { id: removedDateObj._id },
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-              }
-            );
-
-            if (deleteResponse.data.success) {
-              Swal.fire({
-                title: "Deleted!",
-                text: `Deleted the saved record for the date: ${new Date(
-                  removedDateObj.date
-                ).toLocaleDateString()}`,
-                icon: "success",
-              });
-              
-            } else {
-              Swal.fire({
-                title: "Deleted!",
-                text: `Deleting the saved record for the date: ${new Date(
-                  removedDateObj.date
-                ).toLocaleDateString()} failed`,
-                icon: "error",
-              });
-              
-            }
-          } catch (error) {
-            console.log(
-              "Error occured when deleting the record for the date ID: ",
-              removedDateObj._id
-            );
-           
-          }
-
-          // Get the date object list without the deselected date's object
-          for (let dateObj of currentDateObjectList) {
-            if (dateObj.date == removedIsoDate) {
-              continue;
-            } else {
-              cleanedDateObjectList.push(dateObj);
-            }
-          }
-
-          //console.log("Cleaned Object List @onChange @medParameters: ",cleanedDateObjectList);
-
-          // Set existing date list to not containt the deselected object
-          //setCheckedExistingDates(cleanedDateObjectList);
-          // Re-render the existing available dates to reflect changes
-          getExistingAvailableDates();
-        } else {
-          // If reject deselecting date
-
-          var newDates = dates;
-          newDates.push(new Date(removedDate));
-
-          setSelectedDates(newDates); // Re-select the deselected date
-        }
+        );*/
       }
     } else {
       /* If the date is not saved */
@@ -250,6 +200,84 @@ const MedParameters = () => {
     }
   };
 
+  /*
+  Handle saved date deletion
+  */
+  const handleDeleteDate = async (
+    dates,
+    removedIsoDate,
+    removedDateObj,
+    currentDateObjectList,
+    cleanedDateObjectList
+  ) => {
+    // Confirm to deselct the date
+    setSelectedDates(dates); // Deselect the date
+
+    // Delete the record
+    try {
+      const deleteResponse = await axios.post(
+        "/api/medDoctor/medical-available-dates-delete-existing",
+        { id: removedDateObj._id },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (deleteResponse.data.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: `Deleted the saved record for the date: ${new Date(
+            removedDateObj.date
+          ).toLocaleDateString()}`,
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Deleted!",
+          text: `Deleting the saved record for the date: ${new Date(
+            removedDateObj.date
+          ).toLocaleDateString()} failed`,
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      console.log(
+        "Error occured when deleting the record for the date ID: ",
+        removedDateObj._id
+      );
+    }
+
+    // Get the date object list without the deselected date's object
+    for (let dateObj of currentDateObjectList) {
+      if (dateObj.date == removedIsoDate) {
+        continue;
+      } else {
+        cleanedDateObjectList.push(dateObj);
+      }
+    }
+
+    //console.log("Cleaned Object List @onChange @medParameters: ",cleanedDateObjectList);
+
+    // Set existing date list to not containt the deselected object
+    //setCheckedExistingDates(cleanedDateObjectList);
+    // Re-render the existing available dates to reflect changes
+    getExistingAvailableDates();
+  };
+
+  /*
+  handle saved date delete cancellation
+  */
+  const handleCancelDeleteDate = (dates, removedDate) => {
+    // If reject deselecting date
+
+    var newDates = dates;
+    newDates.push(new Date(removedDate));
+
+    setSelectedDates(newDates); // Re-select the deselected date
+    setDatePickerKey(!datePickerKey); // Re-render the datepicker
+  };
 
   /*
   Store multiple dates selected as strings
@@ -259,7 +287,6 @@ const MedParameters = () => {
     dateList.push(date.toString());
   }
   dateList.sort().reverse();
-
 
   /* 
   Data submission - update dates
@@ -295,7 +322,6 @@ const MedParameters = () => {
           // If there is a saved record for the corresponding date
           // only update it's fields
           if (response_check_similar.data.success) {
-
             response_update_similar = await axios.post(
               "/api/medDoctor/medical-update-available-date",
 
@@ -375,7 +401,6 @@ const MedParameters = () => {
           );
         }
       }
-      
 
       // Re-render the saved date record to reflect he changes made
       getExistingAvailableDates();
@@ -387,7 +412,6 @@ const MedParameters = () => {
           icon: "success",
         });
       }
-      
     } catch (error) {
       dispatch(hideLoading());
       console.log(
@@ -402,7 +426,7 @@ const MedParameters = () => {
   /*
   Set current parameter values as default inputs
   */
-  
+
   const getDefaultValues = async () => {
     try {
       const existingRecord = await axios.post(
@@ -447,7 +471,9 @@ const MedParameters = () => {
       );
 
       // Log the response
-      console.log(`@saveParameters() @MedParameters() existing record Response => ${existingRecord.data.message}`);
+      console.log(
+        `@saveParameters() @MedParameters() existing record Response => ${existingRecord.data.message}`
+      );
 
       // If a record already exists, only update the fields
       if (existingRecord.data.success) {
@@ -469,7 +495,9 @@ const MedParameters = () => {
         );
 
         // Log the response
-        console.log(`@saveParameters() @MedParameters() update record Response => ${updateExisting.data.message}`);
+        console.log(
+          `@saveParameters() @MedParameters() update record Response => ${updateExisting.data.message}`
+        );
 
         if (updateExisting.data.success) {
           Swal.fire({
@@ -479,7 +507,6 @@ const MedParameters = () => {
           });
           getDefaultValues();
         } else {
-          
           Swal.fire({
             title: "Error",
             text: "Something went wrong",
@@ -505,7 +532,9 @@ const MedParameters = () => {
         );
 
         // Log the response
-        console.log(`@saveParameters() @MedParameters() new record Response => ${newRecord.data.message}`);
+        console.log(
+          `@saveParameters() @MedParameters() new record Response => ${newRecord.data.message}`
+        );
 
         if (newRecord.data.success) {
           Swal.fire({
@@ -525,7 +554,10 @@ const MedParameters = () => {
       }
     } catch (error) {
       dispatch(hideLoading());
-      console.log("Error occured when saving parameters @saveParameters() @MedParameters() => ", error);
+      console.log(
+        "Error occured when saving parameters @saveParameters() @MedParameters() => ",
+        error
+      );
     }
   };
 
@@ -545,9 +577,10 @@ const MedParameters = () => {
       }
     );
 
-    
     // Log the response
-    console.log(`@getExistingAvailableDates() @MedParameters() Response => ${existingAvailableDates.data.message}`);
+    console.log(
+      `@getExistingAvailableDates() @MedParameters() Response => ${existingAvailableDates.data.message}`
+    );
 
     if (existingAvailableDates.data.success) {
       const existingAvailableDateObjectList =
@@ -636,11 +669,17 @@ const MedParameters = () => {
 
     // Sort the date object list in ascending order
     newDateObjectList.sort(function (a, b) {
-      a = Number(a.date.split("T")[0].split("-")[0] + a.date.split("T")[0].split("-")[1] + a.date.split("T")[0].split("-")[2]);
-      b = Number(b.date.split("T")[0].split("-")[0] + b.date.split("T")[0].split("-")[1] + b.date.split("T")[0].split("-")[2]);
-      return (
-        Number(a - b)
+      a = Number(
+        a.date.split("T")[0].split("-")[0] +
+          a.date.split("T")[0].split("-")[1] +
+          a.date.split("T")[0].split("-")[2]
       );
+      b = Number(
+        b.date.split("T")[0].split("-")[0] +
+          b.date.split("T")[0].split("-")[1] +
+          b.date.split("T")[0].split("-")[2]
+      );
+      return Number(a - b);
     });
 
     // Update the date object list to reflect the newly created
@@ -652,8 +691,6 @@ const MedParameters = () => {
   };
 
   //***useEffect was here
-
-
 
   /* =============== Use Effects =============== */
 
@@ -672,9 +709,6 @@ const MedParameters = () => {
     setDateObjects();
   }, [updateDates]);
 
-
-
-  
   /* =============== Form validations => Manage parameters =============== */
 
   // Handle max appointments value change in parameters
@@ -745,24 +779,23 @@ const MedParameters = () => {
     }
   };
 
-  
-
-  
   return (
     <Layout>
       <Tabs>
         <Tabs.TabPane tab="Manage Dates" key={0}>
           <div className="doc-date-picker-container">
-            <div className="doc-date-picker">
+            <div className="doc-date-picker" key={datePickerKey}>
               <DatePicker
                 selectedDates={selectedDates}
                 selectsMultiple
-                onChange={(dates) => {defaultParameterValues !== null ? onChange(dates) : 
-                  Swal.fire({
-                    icon: "error",
-                    title: "Oops...",
-                    text: `Set the default parameters first!`,
-                  });
+                onChange={(dates) => {
+                  defaultParameterValues !== null
+                    ? onChange(dates)
+                    : Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: `Set the default parameters first!`,
+                      });
                 }}
                 excludeDates={[
                   new Object({
@@ -778,10 +811,7 @@ const MedParameters = () => {
               />
             </div>
 
-            
-
             <div className="date-list-container">
-              
               <div className="date-list" key={dateListKey}>
                 <ul>
                   {dateObjectsList.map((dateObject) => {
