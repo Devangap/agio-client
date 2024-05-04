@@ -1,4 +1,3 @@
-// Frontend code
 import React, { useEffect, useState } from 'react';
 import { Table, Button, message, Modal } from 'antd';
 import Layout from '../components/Layout';
@@ -13,16 +12,52 @@ function TraBookingdisplayAll() {
     const [selectedDescription, setSelectedDescription] = useState('');
     const navigate = useNavigate();
 
-    // Define state to track booked seats for the current date
-    const [bookedSeats, setBookedSeats] = useState({});
-    
     // Static total seats for each vehicle type
     const totalSeats = { Bus: 100, Van: 24 };
 
     // State variables to hold remaining seats for each vehicle type
     const [remainingSeats, setRemainingSeats] = useState({ Bus: 100, Van: 24 });
 
-    const [isTodayBooking, setIsTodayBooking] = useState(false);
+    // Function to reset remaining seats to total seats
+    const resetRemainingSeats = () => {
+        setRemainingSeats({ Bus: totalSeats.Bus, Van: totalSeats.Van });
+    };
+
+    // Define function to show description modal
+    const showDescriptionModal = (description) => {
+        setSelectedDescription(description);
+        setDescriptionModalVisible(true);
+    };
+
+    // Check for a new day and reset remaining seats accordingly
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const now = new Date();
+            if (now.getHours() === 4 && now.getMinutes() === 0 && now.getSeconds() === 0) {
+                // Reset remaining seats
+                resetRemainingSeats();
+                
+                // Fetch bookings from the previous day and delete them
+                const yesterday = new Date();
+                yesterday.setDate(yesterday.getDate() - 1);
+                const formattedDate = yesterday.toLocaleDateString();
+                
+                axios.get(`/api/employee/getTraBooking?date=${formattedDate}`)
+                    .then(response => {
+                        if (response.data && response.data.bookings) {
+                            response.data.bookings.forEach(async (booking) => {
+                                await axios.delete(`/api/employee/deletebooking/${booking._id}`);
+                            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching or deleting bookings from the previous day:', error);
+                    });
+            }
+        }, 1000); // Check every second
+
+        return () => clearInterval(interval);
+    }, []);
 
     const fetchBooking = async () => {
         try {
@@ -30,14 +65,6 @@ function TraBookingdisplayAll() {
             console.log('Booking API Response:', response.data);
 
             if (response.data && response.data.bookings) {
-                // Update bookedSeats state
-                const booked = {};
-                response.data.bookings.forEach((booking) => {
-                    const bookingDate = new Date(booking.bookingdate).toLocaleDateString();
-                    booked[booking._id] = { ...booking, bookingDate };
-                });
-                setBookedSeats(booked);
-
                 // Update remaining seats
                 const remaining = { Bus: totalSeats.Bus, Van: totalSeats.Van };
                 response.data.bookings.forEach((booking) => {
@@ -64,88 +91,20 @@ function TraBookingdisplayAll() {
         fetchBooking();
     }, []);
 
-    // Function to reset remaining seats to total seats
-    const resetRemainingSeats = () => {
-        setRemainingSeats({ Bus: totalSeats.Bus, Van: totalSeats.Van });
-    };
-
-    // Check for a new day and reset remaining seats accordingly
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const now = new Date();
-            if (now.getHours() === 0 && now.getMinutes() === 0 && now.getSeconds() === 0) {
-                resetRemainingSeats();
-            }
-        }, 1000); // Check every second
-
-        return () => clearInterval(interval);
-    }, []);
-
-    // Handle booking creation
-    const handleBooking = async (type) => {
-        try {
-            // Check if there are remaining seats for the selected type
-            if (remainingSeats[type] > 0) {
-                // Make your booking API call here
-                // Assuming you have the necessary data to create a booking
-                const newBooking = {
-                    userId: user.userid,
-                    Type: type,
-                    bookingdate: new Date().toLocaleDateString(), // Assuming booking date is today
-                    Details: 'Sample Description', // Sample description
-                };
-                // Make POST request to create a new booking
-                const response = await axios.post('/api/employee/TraBooking', newBooking);
-                // Update state with the new booking
-                const updatedBooking = {
-                    ...response.data,
-                    bookingDate: new Date(response.data.bookingdate).toLocaleDateString()
-                };
-                // Update booked seats state
-                setBookedSeats(prevState => ({
-                    ...prevState,
-                    [response.data._id]: updatedBooking
-                }));
-                setBooking([...booking, updatedBooking]);
-                // Update remaining seats state
-                setRemainingSeats(prevState => ({
-                    ...prevState,
-                    [type]: prevState[type] - 1
-                }));
-                // Update isTodayBooking state
-                setIsTodayBooking(response.data.isTodayBooking);
-                message.success('Booking created successfully');
-            } else {
-                message.error('No remaining seats available');
-            }
-        } catch (error) {
-            console.error('Error creating booking:', error);
-            message.error('Failed to create booking');
-        }
-    };
-
     // handle the user details part
-    const handleDelete = async (id) => {
+    const handleDelete = async (id, type) => {
         try {
             await axios.delete(`/api/employee/deletebooking/${id}`);
-            // Remove the booking from booked seats
-            const { [id]: deletedBooking, ...restBookedSeats } = bookedSeats;
-            setBookedSeats(restBookedSeats);
             // Update remaining seats state
             setRemainingSeats(prevState => ({
                 ...prevState,
-                [deletedBooking.Type]: prevState[deletedBooking.Type] + 1
+                [type]: prevState[type] + 1
             }));
             setBooking(prev => prev.filter(item => item._id !== id));
             message.success('Booking deleted successfully');
         } catch (error) {
             message.error('Failed to delete booking');
         }
-    };
-
-    const showDescriptionModal = (description) => {
-        setSelectedDescription(description);
-        setDescriptionModalVisible(true);
     };
 
     // User booking columns
@@ -199,31 +158,14 @@ function TraBookingdisplayAll() {
     return (
         <Layout>
             {/* Display Total Seats for Each Vehicle Type */}
-           {/*} <div className='traseat'>
-                <div className='seat-count'>
-                    <div>Total Bus Seats: {totalSeats.Bus}</div>
-                    <div>Remaining Bus Seats: {remainingSeats.Bus}</div>
-                </div>
-                <div className='seat-count'>
-                    <div>Total Van Seats: {totalSeats.Van}</div>
-                    <div>Remaining Van Seats: {remainingSeats.Van}</div>
-                </div>
-    </div>*/}
-
-            <div className="myboxS">
-        <div className="mybox1S" >
-        
-                    <div>Total Bus Seats: {totalSeats.Bus}</div>
-                    <div>Remaining Bus Seats: {remainingSeats.Bus}</div>
-                
-        </div>
-        <div className="mybox1S" >
-        <div>Total Van Seats: {totalSeats.Van}</div>
-                    <div>Remaining Van Seats: {remainingSeats.Van}</div>
-        </div>
-        
-      </div>
-
+            <div className='seat-count'>
+                <div>Total Bus Seats: {totalSeats.Bus}</div>
+                <div>Remaining Bus Seats: {remainingSeats.Bus}</div>
+            </div>
+            <div className='seat-count'>
+                <div>Total Van Seats: {totalSeats.Van}</div>
+                <div>Remaining Van Seats: {remainingSeats.Van}</div>
+            </div>
 
             {/* Table to display bookings */}
             <Table dataSource={booking} columns={columns} />

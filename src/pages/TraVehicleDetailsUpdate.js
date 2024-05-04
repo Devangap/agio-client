@@ -93,12 +93,12 @@ function TraVehicleDetailsUpdate() {
               <div className="bookitem">
           <Form.Item name="location" label="Select Location">
             <Select className="Type" placeholder="Select Location">
-              <Option value="Colombo">Colombo</Option>
+              <Option value="Moratuwa">Moratuwa</Option>
               <Option value="Ja-ela">Ja-ela</Option>
               <Option value="Kollupitiya">Kollupitiya</Option>
               <Option value="Negambo">Negambo</Option>
               <Option value="Panadura">Panadura</Option>
-              <Option value="Kaduwela">Kaduwela</Option>
+              <Option value="Katunayake">Katunayake</Option>
             </Select>
           </Form.Item>
         </div>

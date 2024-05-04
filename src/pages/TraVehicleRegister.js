@@ -28,11 +28,13 @@ function TraVehicleRegister() {
   };
 
   const handleVehicleTypeChange = (value) => {
+    let numSeats;
     if (value === 'bus') {
-      setNumSeats(50);
+      numSeats = 50;
     } else if (value === 'van') {
-      setNumSeats(12);
+      numSeats = 24;
     }
+    setNumSeats(numSeats);
   };
 
   return (
@@ -57,7 +59,7 @@ function TraVehicleRegister() {
               {numSeats && (
               <div className="bookform-row">
                 <div className="bookitem">
-                  <Form.Item  label="Number of Seats" >
+                  <Form.Item label="Number of Seats">
                     <Input disabled value={numSeats} />
                   </Form.Item>
                 </div>
