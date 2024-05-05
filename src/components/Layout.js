@@ -139,6 +139,11 @@ function Layout({ children }) {
             path: '/AnnCalendar',
             icon: 'ri-account-box-line',
         },
+        {
+            name: ' Report',
+            path: '/AnnReport',
+            icon: 'ri-bar-chart-line',
+        },
         
         
     ];

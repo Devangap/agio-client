@@ -28,6 +28,7 @@ import AnnCalHead from './pages/AnnCalHead';
 
 import AnnCalendar from './pages/AnnCalendar';
 import AnnCalendarForm from './pages/AnnCalendarForm';
+import AnnReport from './pages/AnnReport';
 
 import LeaveCal from './pages/LeaveCal'
 
@@ -276,6 +277,7 @@ function App() {
 
           <Route path="/AnnCalendar"element={<ProtectedRoute><AnnCalendar /></ProtectedRoute>} />
           <Route path="/AnnCalendarForm"element={<ProtectedRoute><AnnCalendarForm /></ProtectedRoute>} />
+          <Route path="/AnnReport"element={<ProtectedRoute><AnnReport /></ProtectedRoute>} />
 
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
