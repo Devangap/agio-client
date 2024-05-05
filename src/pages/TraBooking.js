@@ -35,7 +35,7 @@ function TraBooking() {
     getData();
   }, []);
 
-  // Function to disable past and future dates
+  // date disable 
   const disabledDate = (current) => {
     return current && (current < moment().startOf('day') || current > moment().endOf('day'));
   };
