@@ -4,6 +4,8 @@ import { UploadOutlined } from '@ant-design/icons';
 import Layout from '../components/Layout';
 import '../UniformOrder.css';
 import shirt from '../Images/twoshirt.png'
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const { Option } = Select;
 
@@ -47,14 +49,13 @@ function UniformOrder() {
   
       const data = await response.json();
       console.log(data); // Log the response from the server
-
-      
-      message.success('Order placed successfully');
+  
+      toast.success('Order placed successfully');
     } catch (error) {
       console.error('Error submitting form:', error);
+      toast.error('Failed to place order');
     }
   };
-
   const calculateAmount = () => {
     // Define charges for t-shirts and skirts
     const tshirtCharge = 1250;
@@ -88,6 +89,7 @@ function UniformOrder() {
   return (
     <Layout>
       <h1>Uniform Order Form</h1>
+      <ToastContainer position="top-center" autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
     <div className="uniform-order-container">
       <div className="uniform-order-form-container">
       <h3 className="uniform-order-title"></h3>

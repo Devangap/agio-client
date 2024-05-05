@@ -6,6 +6,8 @@ import { Document, Page, Text, PDFDownloadLink, Image, StyleSheet, View } from '
 import Layout from '../components/Layout';
 import '../UniformManagerView.css'; 
 import logoImage from '../Images/logo.png';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 
@@ -50,23 +52,23 @@ function UniformOrders() {
   const handleUpdateSubmit = async (values) => {
     try {
       await axios.put(`/api/uniformOrder/${updateRecord._id}`, values);
-      message.success('Uniform order updated successfully');
       fetchUniformOrders();
       setModalVisible(false);
+      toast.success('Uniform order updated successfully');
     } catch (error) {
       console.error('Error updating uniform order:', error);
-      message.error('Failed to update uniform order');
+      toast.error('Failed to update uniform order');
     }
   };
 
   const handleDelete = async (key) => {
     try {
       await axios.delete(`/api/uniformOrder/${key}`);
-      message.success('Uniform order deleted successfully');
       fetchUniformOrders();
+      toast.success('Uniform order deleted successfully');
     } catch (error) {
       console.error('Error deleting uniform order:', error);
-      message.error('Failed to delete uniform order');
+      toast.error('Failed to delete uniform order');
     }
   };
 
@@ -84,13 +86,13 @@ function UniformOrders() {
 
   const handleSearch = () => {
     if (searchId.trim() === "") {
-      message.warning("Please enter a valid ID"); //Validation to ensure a valid ID is entered
+      toast.success("Please enter a valid ID");
       return;
     }
 
     const foundOrder = uniformOrders.find(order => order.employeeNumber === searchId);
     if (!foundOrder) {
-      message.info("No order found with that ID");
+      toast.success("No order found with that ID");
       return;
     }
 
@@ -297,6 +299,18 @@ function UniformOrders() {
           />
           <Button className="custom-search-button" type="primary" onClick={handleSearch}>Search</Button>
         </div>
+
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
   
         <div style={{ marginBottom: '10px' }}>
           {handleDownloadReport()}

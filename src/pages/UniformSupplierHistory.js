@@ -25,18 +25,6 @@ const OrderHistory = () => {
     }
   };
 
-  const handleUpdate = (record) => {
-    setUpdateRecord(record);
-    setUpdateModalVisible(true);
-    form.setFieldsValue({
-      orderId: record.orderId,
-      supplierName: record.supplierName,
-      type: record.type,
-      numberOfUnits: record.numberOfUnits,
-      cost: record.cost,
-    });
-  };
-
   const handleDelete = async (record) => {
     Modal.confirm({
       title: 'Confirm Deletion',
@@ -97,7 +85,7 @@ const OrderHistory = () => {
           numberOfUnits: values.numberOfUnits,
           cost: values.cost,
         };
-        await axios.patch(`/api/supplierDetails/supplierDetails/${updateRecord._id}`, updatedRecord);
+        await axios.put(`/api/supplierDetails/supplierDetails/${updateRecord._id}`, updatedRecord);
         fetchOrderHistory();
         message.success('Order updated successfully');
         setUpdateModalVisible(false);
@@ -113,6 +101,23 @@ const OrderHistory = () => {
 
   const handleUpdateModalCancel = () => {
     setUpdateModalVisible(false);
+  };
+
+  const handleUpdateSubmit = async (values) => {
+    try {
+      const updatedRecord = {
+        ...updateRecord,
+        numberOfUnits: values.numberOfUnits,
+        cost: values.cost,
+      };
+      await axios.put(`/api/supplierDetails/supplierDetails/${updateRecord._id}`, updatedRecord);
+      fetchOrderHistory();
+      message.success('Order updated successfully');
+      setUpdateModalVisible(false);
+    } catch (error) {
+      console.error('Error updating order:', error);
+      message.error('Failed to update order. Please try again later.');
+    }
   };
 
   const columns = [
@@ -158,7 +163,17 @@ const OrderHistory = () => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
-          <Button className="order-history-action-buttons" type="primary" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button className="order-history-action-buttons" type="primary" onClick={() => {
+            setUpdateRecord(record);
+            setUpdateModalVisible(true);
+            form.setFieldsValue({
+              orderId: record.orderId,
+              supplierName: record.supplierName,
+              type: record.type,
+              numberOfUnits: record.numberOfUnits,
+              cost: record.cost,
+            });
+          }}>Update</Button>
           <Button className="order-history-action-buttons" type="danger" onClick={() => handleDelete(record)}>Delete</Button>
         </Space>
       ),
@@ -196,6 +211,7 @@ const OrderHistory = () => {
           <Form
             form={form}
             layout="vertical"
+            onFinish={handleUpdateSubmit}
           >
             <Form.Item label="Order ID" name="orderId">
               <Input disabled />

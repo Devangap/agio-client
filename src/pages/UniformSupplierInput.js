@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import Layout from '../components/Layout';
+import { ToastContainer, toast } from 'react-toastify'; // Import toast components
 import 'react-datepicker/dist/react-datepicker.css';
+import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
 import '../uniforminput.css';
 import oneclicklogo from '../Images/oneclick.png';
 import runwaylogo from '../Images/runway.png';
@@ -45,12 +47,20 @@ const SupplierForm = () => {
       const cost = calculateCost();
       const res = await axios.post('/api/supplierDetails/supplierDetails', { ...formData, cost });
       console.log(res.data); // Handle response as needed
-      // Show confirmation message
-      alert('Supplier detail submitted successfully!');
+      // Show confirmation toast message
+      toast.success('Supplier detail submitted successfully!', {
+        position: "top-center", // Adjusted position to top-center
+        autoClose: 3000, // Close the toast after 3 seconds
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
     } catch (error) {
       console.error(error.response.data); // Handle error response
       // Show error message
-      alert('Error submitting supplier detail. Please try again.');
+      toast.error('Error submitting supplier detail. Please try again.');
     }
   };
 
@@ -64,6 +74,7 @@ const SupplierForm = () => {
 
   return (
     <Layout>
+      <ToastContainer position="top-center" /> {/* Include ToastContainer component and set position to top-center */}
       <h1>Supplier Details Form</h1>
       <div className="supplier-form-container">
         <form onSubmit={handleSubmit} className="supplier-form">
