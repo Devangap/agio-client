@@ -224,88 +224,113 @@ function AnnEmpDisplay() {
     </TabPane>
 
             <TabPane tab="Announcements" key="announcements">
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    <h6>SPECIFIC ANNOUNCEMENTS</h6>
-                    {specificAnnouncements.map(announcement => (
-                        <Card className='Annspec'
-                            key={announcement._id}
-                            title={announcement.anntitle}
-                            
-                            actions={[]}
-                        >
-                            <div>
-                                {announcement.file && (
-                                    <>
-                                        <img
-                                            src={announcement.file.path ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
-                                            alt={announcement.file.filename}
-                                            style={{ width: '100px', height: '100px' }}
-                                        />
-                                        <p>{announcement.file.filename}</p>
-                                    </>
-                                )}
-                            </div>
-                            <p><strong>Type:</strong> {announcement.Type}</p>
-                            <p><strong>Department:</strong> {announcement.Department}</p>
-                            {/* <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
-                            <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p> */}
-                            <p><strong>Description:</strong> {announcement.Description}</p>
-                            <Form onFinish={() => handleCommentSubmit(announcement._id)}>
-                                <Form.Item>
-                                    <Input
-                                        onChange={(e) => setCommentText(e.target.value)}
-                                        placeholder="Add a comment"
-                                    />
-                                </Form.Item>
-                                <Form.Item>
-                                    <Button type="primary" htmlType="submit" className='comment' name='comment'>Add Comment</Button>
-                                </Form.Item>
-                            </Form>
-                        </Card>
-                    ))}
-                </div>
+            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+  <h6>SPECIFIC ANNOUNCEMENTS</h6>
+  {specificAnnouncements.map(announcement => (
+    <Card className='Annspec'
+      key={announcement._id}
+      title={announcement.anntitle}
+      actions={[]}
+    >
+      <div>
+        {/* Check if announcement.file is defined */}
+        {announcement.file && (
+  <div>
+    <img
+      src={announcement.file.filename ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
+      alt={announcement.file.filename}
+      style={{ width: '400px', height: '250px' }}
+    />
+    
+  </div>
+)}
+        {/* Check if announcement has a video */}
+        {announcement.video && (
+          <div>
+            <video controls width="100" height="100" style={{ width: '400px', height: '250px' }}>
+  <source src={`http://localhost:5001/uploads/${announcement.video}`} type="video/mp4" />
+</video>
+           
+          </div>
+        )}
+      </div>
+      <p><strong>Type:</strong> {announcement.Type}</p>
+      <p><strong>Department:</strong> {announcement.Department}</p>
+      {/* <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
+      <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p> */}
+      <p><strong>Description:</strong> {announcement.Description}</p>
+      <Form onFinish={() => handleCommentSubmit(announcement._id)}>
+        <Form.Item>
+          <Input
+            onChange={(e) => setCommentText(e.target.value)}
+            placeholder="Add a comment"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className='comment' name='comment'>Add Comment</Button>
+        </Form.Item>
+      </Form>
+    </Card>
+  ))}
+</div>
 
-                <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                    <h6>GENERAL ANNOUNCEMENTS</h6>
-                    {generalAnnouncements.map(announcement => (
-                        <Card
-                        className='Annspec'
-                            key={announcement._id}
-                            title={announcement.anntitle}
-                            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-                            actions={[]}
-                        >
-                            <div>
-                                {announcement.file && (
-                                    <>
-                                        <img
-                                            src={announcement.file.path ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
-                                            alt={announcement.file.filename}
-                                            style={{ width: '100px', height: '100px' }}
-                                        />
-                                        <p>{announcement.file.filename}</p>
-                                    </>
-                                )}
-                            </div>
-                            <p><strong>Type:</strong> {announcement.Type}</p>
-                            <p><strong>Department:</strong> {announcement.Department}</p>
-                            <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
-                            <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
-                            <p><strong>Description:</strong> {announcement.Description}</p>
-                            <Form onFinish={() => handleCommentSubmit(announcement._id)}>
-                                <Form.Item>
-                                    <Input
-                                        onChange={(e) => setCommentText(e.target.value)}
-                                        placeholder="Add a comment"
-                                    />
-                                </Form.Item>
-                                <Form.Item>
-                                    <Button type="primary" htmlType="submit" className='comment' name='comment'>Add Comment</Button>
-                                </Form.Item>
-                            </Form>
-                        </Card>
-                    ))}
-                </div>
+
+<div style={{ display: 'flex', flexWrap: 'wrap' }}>
+  <h6>GENERAL ANNOUNCEMENTS</h6>
+  {generalAnnouncements.map(announcement => (
+    <Card
+      className='Annspec'
+      key={announcement._id}
+      title={announcement.anntitle}
+      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
+      actions={[]}
+    >
+      <div>
+        {/* Check if announcement has a file */}
+        
+
+{announcement.file && (
+  <div>
+    <img
+      src={announcement.file.filename ? `http://localhost:5001/uploads/${announcement.file.filename}` : ''}
+      alt={announcement.file.filename}
+      style={{ width: '400px', height: '250px' }}
+    />
+    
+  </div>
+)}
+        {/* Check if announcement has a video */}
+        {announcement.video && (
+          <div>
+            <video controls width="100" height="100" style={{ width: '400px', height: '250px' }}>
+  <source src={`http://localhost:5001/uploads/${announcement.video}`} type="video/mp4" />
+</video>
+           
+          </div>
+        )}
+      </div>
+      <p><strong>Type:</strong> {announcement.Type}</p>
+      <p><strong>Department:</strong> {announcement.Department}</p>
+      <p><strong>Upload Date:</strong> {new Date(announcement.uploaddate).toLocaleDateString()}</p>
+      <p><strong>Expire Date:</strong> {new Date(announcement.expiredate).toLocaleDateString()}</p>
+      <p><strong>Description:</strong> {announcement.Description}</p>
+      <Form onFinish={() => handleCommentSubmit(announcement._id)}>
+        <Form.Item>
+          <Input
+            onChange={(e) => setCommentText(e.target.value)}
+            placeholder="Add a comment"
+          />
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className='comment' name='comment'>Add Comment</Button>
+        </Form.Item>
+      </Form>
+    </Card>
+  ))}
+</div>
+
+
+
             </TabPane>
         </Tabs>
         <Modal
