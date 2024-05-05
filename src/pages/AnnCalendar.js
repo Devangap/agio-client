@@ -99,15 +99,18 @@ function AnnCalendar() {
     const fetchNotices = async () => {
         try {
             const response = await axios.get('/api/employee/event');
-            const notices = response.data.getNotice.map(notice => ({
-                id: notice._id,
-                title: notice.title,
-                start: new Date(notice.submission),
-                end: new Date(notice.expiryDate),
-                description: notice.description,
-                // Initialize department choice counts for each notice
-                departmentChoiceCounts: {}
-            }));
+            const notices = response.data.getNotice.map(notice => {
+                const totalResponses = notice.response.length; // Assuming `response` is an array of all responses for the notice
+                return {
+                    id: notice._id,
+                    title: notice.title,
+                    start: new Date(notice.submission),
+                    end: new Date(notice.expiryDate),
+                    description: notice.description,
+                    totalResponses, // Add this property
+                    departmentChoiceCounts: {}
+                };
+            });
     
             // Process each notice
             notices.forEach((notice, noticeIndex) => {
@@ -139,18 +142,24 @@ function AnnCalendar() {
                 render: (text, record) => (record.departmentChoiceCounts[department] || 0) // Render 0 if the count is not available
             }));
     
-            // Define base columns
+            // Define base columns, excluding Total Responses initially
             const baseColumns = [
                 {
                     title: 'Title',
                     dataIndex: 'title',
                     key: 'title',
-                },
-                
-                
+                }
             ];
     
-            setColumns([...baseColumns, ...departmentColumns]);
+            // Add Total Responses column at last
+            const totalResponsesColumn = {
+                title: 'Total Responses',
+                dataIndex: 'totalResponses',
+                key: 'totalResponses'
+            };
+    
+            // Combining base columns, department columns, and Total Responses column at the end
+            setColumns([...baseColumns, ...departmentColumns, totalResponsesColumn]);
             setEvents(notices);
             setNotices(notices);
         } catch (error) {
@@ -158,6 +167,7 @@ function AnnCalendar() {
             toast.error("Error fetching notices");
         }
     };
+    
     
     
     
@@ -216,7 +226,7 @@ function AnnCalendar() {
                     style={{ height: '100%', fontFamily: 'Patrick Hand' }}
                     onSelectEvent={handleEventClick}
                 />
-                <Button type="primary" onClick={handleAddNotice}>
+                <Button type="primary" onClick={handleAddNotice} style={{ marginBottom:70}}>
                     Add Notice
                 </Button>
                 <Modal
