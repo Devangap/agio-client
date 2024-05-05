@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Table, Button, Space, Input, message } from 'antd';
+import { Table, Button, Space, Input, message, Modal, Form, InputNumber } from 'antd';
 import Layout from '../components/Layout';
-import '../OrderHistory.css'; // Import the CSS file
+import '../OrderHistory.css';
 
 const OrderHistory = () => {
   const [orderHistory, setOrderHistory] = useState([]);
   const [searchId, setSearchId] = useState("");
+  const [updateModalVisible, setUpdateModalVisible] = useState(false);
+  const [updateRecord, setUpdateRecord] = useState(null);
+  const [form] = Form.useForm();
 
   useEffect(() => {
     fetchOrderHistory();
@@ -18,25 +21,46 @@ const OrderHistory = () => {
       setOrderHistory(response.data);
     } catch (error) {
       console.error('Error fetching order history:', error);
+      message.error('Failed to fetch order history. Please try again later.');
     }
   };
 
   const handleUpdate = (record) => {
-    console.log('Update clicked for record:', record);
+    setUpdateRecord(record);
+    setUpdateModalVisible(true);
+    form.setFieldsValue({
+      orderId: record.orderId,
+      supplierName: record.supplierName,
+      type: record.type,
+      numberOfUnits: record.numberOfUnits,
+      cost: record.cost,
+    });
   };
 
-  const handleDelete = (record) => {
-    console.log('Delete clicked for record:', record);
+  const handleDelete = async (record) => {
+    Modal.confirm({
+      title: 'Confirm Deletion',
+      content: 'Are you sure you want to delete this order?',
+      onOk: async () => {
+        try {
+          await axios.delete(`/api/supplierDetails/supplierDetails/${record._id}`);
+          fetchOrderHistory();
+          message.success('Order deleted successfully');
+        } catch (error) {
+          console.error('Error deleting order:', error);
+          message.error('Failed to delete order. Please try again later.');
+        }
+      },
+    });
   };
 
   const formatDate = (date) => {
-    const formattedDate = new Date(date).toLocaleDateString('en-GB');
-    return formattedDate;
+    return new Date(date).toLocaleDateString('en-GB');
   };
 
   const handleSearch = () => {
     if (searchId.trim() === "") {
-      message.warning("Please enter a valid ID"); // Validation to ensure a valid ID is entered
+      message.warning("Please enter a valid ID");
       return;
     }
 
@@ -58,13 +82,37 @@ const OrderHistory = () => {
   };
 
   const handleStatusButtonClick = () => {
-    // Redirect to the UniformStatus page
     window.location.href = '/UniformSupplier'; 
   };
 
   const handleStatusButtonClick2 = () => {
-    // Redirect to the UniformStatus page
     window.location.href = '/UniformSupplierInput'; 
+  };
+
+  const handleUpdateModalOk = () => {
+    form.validateFields().then(async (values) => {
+      try {
+        const updatedRecord = {
+          ...updateRecord,
+          numberOfUnits: values.numberOfUnits,
+          cost: values.cost,
+        };
+        await axios.patch(`/api/supplierDetails/supplierDetails/${updateRecord._id}`, updatedRecord);
+        fetchOrderHistory();
+        message.success('Order updated successfully');
+        setUpdateModalVisible(false);
+      } catch (error) {
+        console.error('Error updating order:', error);
+        message.error('Failed to update order. Please try again later.');
+      }
+    }).catch((errorInfo) => {
+      console.error('Validation error:', errorInfo);
+      message.error('Please fill all required fields correctly.');
+    });
+  };
+
+  const handleUpdateModalCancel = () => {
+    setUpdateModalVisible(false);
   };
 
   const columns = [
@@ -106,15 +154,15 @@ const OrderHistory = () => {
       width: 120,
     },
     {
-        title: 'Action',
-        key: 'action',
-        render: (text, record) => (
-          <Space size="middle">
-            <Button className="order-history-action-buttons" type="primary" onClick={() => handleUpdate(record)}>Update</Button>
-            <Button className="order-history-action-buttons" type="danger" onClick={() => handleDelete(record)}>Delete</Button>
-          </Space>
-        ),
-      },
+      title: 'Action',
+      key: 'action',
+      render: (text, record) => (
+        <Space size="middle">
+          <Button className="order-history-action-buttons" type="primary" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button className="order-history-action-buttons" type="danger" onClick={() => handleDelete(record)}>Delete</Button>
+        </Space>
+      ),
+    },
   ];
 
   return (
@@ -128,15 +176,44 @@ const OrderHistory = () => {
             onChange={handleSearchChange}
             placeholder="Search by Order ID"
           />
-          <Button className="custom-search-button" onClick={handleSearch}>Search</Button> {/* Apply custom search button class */}
+          <Button className="custom-search-button" onClick={handleSearch}>Search</Button>
         </div>
         <div style={{ marginBottom: '10px' }}>
           <Button className="uniform-manager-view-download-report-button" type="primary" onClick={handleStatusButtonClick2}>New Order</Button>
           <Button className="uniform-manager-view-download-report-button" type="primary" onClick={handleStatusButtonClick}>Suppliers</Button>
         </div>
         <div className="order-history-table-container">
-          <Table dataSource={orderHistory} columns={columns} scroll={{ y: 400 }} /> {/* Apply vertical scroll */}
+          <Table dataSource={orderHistory} columns={columns} scroll={{ y: 400 }} />
         </div>
+        <Modal
+          title="Update Order Details"
+          visible={updateModalVisible}
+          onOk={handleUpdateModalOk}
+          onCancel={handleUpdateModalCancel}
+          okText="Update"
+          cancelText="Cancel"
+        >
+          <Form
+            form={form}
+            layout="vertical"
+          >
+            <Form.Item label="Order ID" name="orderId">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item label="Supplier Name" name="supplierName">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item label="Type" name="type">
+              <Input disabled />
+            </Form.Item>
+            <Form.Item label="Number of Units" name="numberOfUnits" rules={[{ required: true, message: 'Please enter number of units' }]}>
+              <InputNumber min={1} />
+            </Form.Item>
+            <Form.Item label="Cost" name="cost">
+              <InputNumber min={0} disabled />
+            </Form.Item>
+          </Form>
+        </Modal>
       </div>
     </Layout>
   );
