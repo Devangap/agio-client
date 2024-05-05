@@ -15,6 +15,7 @@ function AnnHRsup() {
   // State variables
   const [announcementType, setAnnouncementType] = useState('');
   const [fileList, setFileList] = useState([]);
+  const [videoList, setVideoList] = useState([]); // New state variable for video files
   const { user } = useSelector((state) => state.user);
   const navigate = useNavigate();
 
@@ -24,7 +25,11 @@ function AnnHRsup() {
     const formData = new FormData();
     // Append each file to FormData
     fileList.forEach(file => {
-      formData.append('file', file);
+      formData.append('image', file);
+    });
+    // Append each video to FormData
+    videoList.forEach(video => {
+      formData.append('video', video);
     });
     // Append other form values to FormData
     Object.keys(values).forEach(key => {
@@ -35,7 +40,7 @@ function AnnHRsup() {
 
     try {
       // Make POST request to upload the form data
-      const response = await axios.post('/api/employee/AnnHRsup', formData, {
+      const response = await axios.post('/api/employee/AnnHRsup2', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -55,12 +60,16 @@ function AnnHRsup() {
   };
 
   // Function to handle file removal
-  const handleRemove = file => {
-    setFileList(prevFileList => prevFileList.filter(f => f !== file));
+  const handleRemove = (file, isImage) => {
+    if (isImage) {
+      setFileList(prevFileList => prevFileList.filter(f => f !== file));
+    } else {
+      setVideoList(prevVideoList => prevVideoList.filter(v => v !== file));
+    }
   };
 
-  // Function to handle file selection
-  const handleBeforeUpload = file => {
+  // Function to handle file selection for images
+  const handleImageBeforeUpload = file => {
     const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
     if (!isJpgOrPng) {
       toast.error('You can only upload JPG/PNG file!');
@@ -71,6 +80,17 @@ function AnnHRsup() {
     return false; // Prevent automatic upload
   };
 
+  // Function to handle file selection for videos
+  const handleVideoBeforeUpload = file => {
+    const isMP4 = file.type === 'video/mp4' || (file.type === '' && file.name.endsWith('.mp4'));
+    if (!isMP4) {
+      toast.error('You can only upload MP4 files!');
+    }
+    if (isMP4) {
+      setVideoList([...videoList, file]);
+    }
+    return false; // Prevent automatic upload
+};
   // Function to handle announcement type change
   const handleTypeChange = value => {
     setAnnouncementType(value);
@@ -113,16 +133,15 @@ function AnnHRsup() {
                 <div className="item">
                   <Form.Item label="Department" name="Department">
                     <Select placeholder="Select department">
-                    <Option value="HR">HR</Option>
-             
-             <Option value="Logistics">Logistics</Option>
-             <Option value="Procurement Department">Procurement Department</Option>
-             <Option value="Quality Assurance">Quality Assurance</Option>
-             <Option value="Production Department">Production Department</Option>
-             <Option value="Sales and Marketing">Sales and Marketing</Option>
-             <Option value="Finance and Accounting ">Finance and Accounting </Option>
+                      <Option value="HR">HR</Option>
+                      <Option value="Logistics">Logistics</Option>
+                      <Option value="Procurement Department">Procurement Department</Option>
+                      <Option value="Quality Assurance">Quality Assurance</Option>
+                      <Option value="Production Department">Production Department</Option>
+                      <Option value="Sales and Marketing">Sales and Marketing</Option>
+                      <Option value="Finance and Accounting ">Finance and Accounting </Option>
                     </Select>
-                  </Form.Item>
+                  </Form.Item> 
                 </div>
               </div>
             )}
@@ -134,14 +153,26 @@ function AnnHRsup() {
                 </Form.Item>
               </div>
               <div className="itemUpload">
-                <Form.Item label='Upload Media' name='file'>
+                {/* Upload Images */}
+                <Form.Item label='Upload Images' name='file'>
                   <Upload 
-                    beforeUpload={handleBeforeUpload} 
-                    onRemove={handleRemove} 
+                    beforeUpload={handleImageBeforeUpload} 
+                    onRemove={(file) => handleRemove(file, true)} 
                     fileList={fileList} 
                     listType="picture"
                   >
-                    <Button icon={<UploadOutlined />}>Select File</Button>
+                    <Button icon={<UploadOutlined />}>Select Image</Button>
+                  </Upload>
+                </Form.Item>
+                {/* Upload Videos */}
+                <Form.Item label='Upload Videos' name='video'>
+                  <Upload 
+                    beforeUpload={handleVideoBeforeUpload} 
+                    onRemove={(file) => handleRemove(file, false)} 
+                    fileList={videoList} 
+                    listType="picture"
+                  >
+                    <Button icon={<UploadOutlined />}>Select Video</Button>
                   </Upload>
                 </Form.Item>
               </div>
@@ -163,5 +194,4 @@ function AnnHRsup() {
   );
 }
 
-export default AnnHRsup;
-
+export default AnnHRsup;
