@@ -103,8 +103,8 @@ import UniformCharts from './pages/UniformCharts';
 import UniformStatus from './pages/UniformStatus';
 import UniformCoView from './pages/UniformCoView';
 import UniformSupplier from './pages/UniformSupplier';
-
-
+import UniformSupplierInput from './pages/UniformSupplierInput';
+import UniformSupplierHistory from './pages/UniformSupplierHistory';
 
 
 
@@ -290,6 +290,10 @@ function App() {
           <Route path='/UniformStatus' element={<ProtectedRoute><UniformStatus/></ProtectedRoute>}/>
           <Route path='/UniformCoView' element={<ProtectedRoute><UniformCoView/></ProtectedRoute>}/>
           <Route path='/UniformSupplier' element={<ProtectedRoute><UniformSupplier/></ProtectedRoute>}/>
+          <Route path='/UniformSupplierInput' element={<ProtectedRoute><UniformSupplierInput/></ProtectedRoute>}/>
+          <Route path='/UniformSupplierHistory' element={<ProtectedRoute><UniformSupplierHistory/></ProtectedRoute>}/>
+
+
         
             /*transport  Navigation*/
          

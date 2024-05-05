@@ -21,8 +21,14 @@ const SupplierDetails = () => {
     window.open(website, '_blank');
   };
 
+  const handleStatusButtonClick = () => {
+    // Redirect to the UniformStatus page
+    window.location.href = '/UniformSupplierHistory'; 
+  };
+
   return (
     <Layout>
+      <h1>Uniform Suppliers</h1>
       <div className="container">
         <div className="supplier-form">
           <div className="supplier">
@@ -54,7 +60,7 @@ const SupplierDetails = () => {
         </div>
         
       </div>
-      <p><button className="historybutton">Order History</button></p>
+      <p><button className="historybutton" onClick={handleStatusButtonClick}>Order History</button></p>
       
     </Layout>
   );

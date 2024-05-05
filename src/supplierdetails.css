@@ -4,7 +4,7 @@
   }
   
   .supplier-form {
-    margin-top: 30px;
+    margin-top: 5px;
     width: 530px;
     margin-right: 10px;
     margin-left: 10px;
@@ -28,34 +28,35 @@
   }
   
   .details p {
-    margin: 10px 0;
+    margin: 0px 0;
     font-size: 18px;
     color: #333;
   }
   
   .details button {
     background-color: #F7B05B !important;
-    border-color: #1F1300 !important;
+    border: 2px solid #1F1300 !important; 
     height: 40px !important;
     width: 300px !important;
     color: #000000 !important;
     font-size: 16px !important;
-    font-weight: bold;
+    font-weight: bold; 
     border-radius: 10px !important;
   }
 
   .historybutton {
     background-color: #F7B05B !important;
-    border-color: #1F1300 !important;
+    position: relative;
+    border: 2px solid #1F1300 !important; /* Added border style */
     height: 40px !important;
     width: 300px !important;
     color: #000000 !important;
-    font-size: 16px !important;
-    font-weight: bold;
+    font-size: 18px !important;
+    font-weight: bold !important;
     border-radius: 10px !important;
     margin-left: 400px;
-  }
-  
+    margin-bottom: 10px;
+}
   .details button:hover {
     background-color: #0056b3;
   }
