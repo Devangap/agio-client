@@ -1,6 +1,6 @@
 import axios from "axios";
 import Layout from "../components/Layout";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { List, Card, Table, Space, Button } from "antd";
 import "../MedDatePicker.css";
 import { CheckCircleTwoTone, CloseCircleTwoTone } from "@ant-design/icons";
@@ -212,6 +212,9 @@ const MedOverview = () => {
   // Date card list key
   const [renderCount, setRenderCount] = useState(0);
   const [animatedValue, setAnimatedValue] = useState(null);
+
+  // To check the change of availableDateDetailsToDisplay
+  const previousAvailableDateDetailsToDisplay = useRef([]);
 
   /* ============= Functions ============== */
 
