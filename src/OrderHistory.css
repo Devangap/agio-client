@@ -1,0 +1,62 @@
+/* OrderHistory.css */
+
+.order-history-container {
+    margin-top: 20px;
+  }
+  
+  .order-history-search-container {
+    margin-bottom: 10px;
+  }
+  
+  .order-history-container .custom-search-button {
+    background-color: #F7B05B;
+    border-color: #1F1300;
+    height: 40px;
+    width: 100px;
+    color: #000000;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .order-history-search-input {
+    width: 200px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  
+  .order-history-download-report-button {
+    background-color: #F7B05B !important;
+    border-color: #1F1300 !important;
+    height: 40px !important;
+    width: 300px !important;
+    color: #000000 !important;
+    font-size: 16px !important;
+    font-weight: bold;
+    border-radius: 10px !important;
+    margin-right: 10px !important;
+    margin-left: 10px !important;
+  }
+  
+  .order-history-update-modal {
+    width: 400px;
+  }
+  
+  .order-history-form-item-label {
+    margin-bottom: 8px;
+  }
+  
+  .order-history-action-buttons {
+    background-color: #F7B05B !important;
+    border-color: #1F1300 !important;
+    height: 40px !important;
+    width: 100px !important;
+    color: #000000 !important;
+    font-size: 16px !important;
+    font-weight: bold;
+    border-radius: 10px !important;
+    margin-right: 10px !important;
+  }
+  

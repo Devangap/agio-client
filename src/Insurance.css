@@ -22,7 +22,7 @@
   }
   
   .ins-title {
-    padding-left: 19px;
+    padding-left: 14px;
     margin-top: 140px;
   }
 
@@ -107,42 +107,44 @@
 }
 
 .custom-upload {
-  width: 160px; /* Adjust the width as needed */
+  width: 160px; 
 }
 
 .file-name {
   overflow: hidden;
   text-overflow: ellipsis;
-  width: 160px; /* Adjust the width as needed */
+  width: 160px; 
 }
 
 .inscustom-modal .ant-modal-footer {
-  text-align: center; /* Center-align the buttons */
+  text-align: center; 
 }
 
 .insupdate {
-  margin-right: 16px; /* Adjust the gap as desired */
+  margin-right: 16px; 
   background-color: #4096ff;
   color: white;
 }
 
 .insupdate:hover, .insupdate:focus {
-  background-color: #CA9220; /* Darker shade for hover/focus */
+  background-color: #CA9220; 
   border-color: #CA9220;
 }
 
 .inscancel {
-  background-color: transparent; /* Transparent background */
-  color: #ff0000; /* Red text color */
-  border: 2px solid #ff0000; /* Red outline */
+  background-color: transparent; 
+  color: #ff0000; 
+  border: 2px solid #ff0000; 
 }
 
 .inscancel:hover, .inscancel:focus {
-  background-color: #ff0000; /* Red background on hover/focus */
-  color: white; /* White text color on hover/focus */
+  background-color: #ff0000; 
+  color: white; 
 }
 
 .insStatusButton {
+  background-color: #ffc658;
+  color: white;
   text-Align: "center"; 
   margin-Top: "20px";
 }
@@ -157,8 +159,8 @@
 .insmybox1 {
   width: 200px;
   height: 100px;
-  background-color: #f8f8f8; /* Light close to white color */
-  border: 2px solid #1890ff; /* Blue border */
+  background-color: #f8f8f8; 
+  border: 2px solid #1890ff; 
   border-radius: 10px;
   margin: 10px;
   display: flex;
@@ -170,17 +172,82 @@
 }
 
 .insmybox1:hover {
-  background-color: #e6f7ff; /* Light blue background on hover */
-  color: #1890ff; /* Blue text on hover */
-  border-color: #1890ff; /* Blue border on hover */
+  background-color: #e6f7ff; 
+  color: #1890ff; 
+  border-color: #1890ff; 
 }
 
 .insmybox1 .boxname {
   font-size: 15px;
-  color: #1890ff; /* Blue text color */
+  color: #1890ff; 
   text-align: center;
   text-transform: uppercase;
   font-family: "Lato", sans-serif;
   font-weight: bold;
   font-style: normal;
+}
+
+.insSearch{
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.insadditional-info {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.insinfo-card {
+  width: 200px;
+  margin: 0 10px;
+}
+
+.insinfo-value {
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+  color: blue;
+}
+
+.insinfo-title {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #666;
+  font-size: 18px;
+}
+
+.inschart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.inschart-wrapper {
+  width: 49%;  
+}
+
+.insdownloadbutton{
+  margin-Bottom: '20px'; 
+  margin-Left: '14px';
+  margin-Top: '5px';
+}
+
+.right-button-container {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px; 
+}
+
+.insreport {
+  margin-right: 8px; 
+}
+
+.insreportdownload {
+  margin-right: 16px; 
+  background-color: #ffc658;
+  color: white;
 }
