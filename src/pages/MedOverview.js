@@ -658,7 +658,7 @@ const MedOverview = () => {
           <Table
             columns={columns}
             dataSource={scheduledListForSpecificDay}
-            scroll={{ y: 240 }}
+            scroll={{ y: 360 }}
             pagination={false}
             style={{ width: 550 }}
             bordered={true}

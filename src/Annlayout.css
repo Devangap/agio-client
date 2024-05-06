@@ -14,7 +14,6 @@
     top: 0; /* Position at the top */
     left: 0; /* Move all the way to the left */
     bottom: 0; /* Extend to the bottom */
-    overflow-y: auto;
 }
 
 .content {

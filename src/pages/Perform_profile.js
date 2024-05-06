@@ -54,7 +54,7 @@ function AreaProgressChartdrywet({dataC , max ,targetstate}) {
 
 function Barchart({data}){
   return(
-    <ResponsiveContainer width={650} height={450}>
+    <ResponsiveContainer width={600} height={450}>
       <BarChart
         data={data}
         margin={{ top: 5, right: 5, left: 5, bottom: 5 }}

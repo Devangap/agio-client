@@ -614,7 +614,7 @@ axios.get('/api/employee/yearly-annual-leaves')
             onChange={(date, dateString) => setSelectedMonth(dateString)}
           />
         </div>
-        <Button type="primary" onClick={handleButtonClick3} >Generate Charts</Button>
+        <Button style={{  marginTop: '0px',backgroundColor: '#ffc658',color:"#000000"}} type="primary" onClick={handleButtonClick3} >Generate Charts</Button>
       </Modal>
              
 

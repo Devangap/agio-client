@@ -239,7 +239,7 @@ function Getperformancerecords(){
                     
                     </Form>
                     </div>
-            <div style={{flex:0,marginTop:"10px"}}>
+            <div style={{flex:0,marginTop:"10px",paddingLeft:150}}>
             
             
             <Upload name = "csvFile" action={'/exceldata/uploadexcel'} onChange={reloadPage}>
