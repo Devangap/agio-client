@@ -129,11 +129,14 @@ label{
 .idescribe{
     width : 500px;
 }
-.iContainer {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+.ifixed-container {
+  position: fixed;
+  top: 120px;
+  left: 22%; /* Adjust this value to set the distance from the left side */
+  width: 80%; /* Adjust this value to set the width of the container */
+  height: 100%;
+  overflow-y: auto; 
+}
   
   /* Title */
   .iTitle {

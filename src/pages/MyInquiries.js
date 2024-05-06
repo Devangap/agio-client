@@ -85,8 +85,6 @@ const MyInquiries = () => {
     }
   };
 
-
-
   const handleDownload = async(selectedInquiry) => {
     // Create a new jsPDF instance with A4 dimensions
     const doc = new jsPDF({
@@ -95,55 +93,52 @@ const MyInquiries = () => {
       format: 'a4',
     });
     const logoWidth = 50; 
-      const logoHeight = 50;
-      const centerX = (doc.internal.pageSize.getWidth() - logoWidth) / 2;
-      const centerY = 15;
-      const logo = new Image();
-      logo.src = logoImage;
-      await new Promise(resolve => {
-        logo.onload = () => resolve();
-      });
-      doc.addImage(logo, 'PNG', centerX, centerY, logoWidth, logoHeight);
+    const logoHeight = 50;
+    const centerX = (doc.internal.pageSize.getWidth() - logoWidth) / 2;
+    const centerY = 15;
+    const logo = new Image();
+    logo.src = logoImage;
+    await new Promise(resolve => {
+      logo.onload = () => resolve();
+    });
+    doc.addImage(logo, 'PNG', centerX, centerY, logoWidth, logoHeight);
 
-    
-  
     // Set padding
     const padding = 10;
     const usableWidth = doc.internal.pageSize.width - (padding * 2);
-  
+
     // Format the content for the selected inquiry
     const content = `
-  Inquiry ID: ${selectedInquiry.inquiryID}
-  
-  Full Name: ${selectedInquiry.name}
-  
-  Username: ${selectedInquiry.username}
-  
-  Inquiry Date: ${selectedInquiry.inquirydate}
-  
-  Phone Number: ${selectedInquiry.phoneNumber}
-  
-  Inquiry: ${selectedInquiry.describe}
-  
-  Reply: ${selectedInquiry.reply || 'No reply'}
-  
-  Status: ${selectedInquiry.status}
-  `;
-  
+      Inquiry ID: ${selectedInquiry.inquiryID}
+      
+      Full Name: ${selectedInquiry.name}
+      
+      Username: ${selectedInquiry.username}
+      
+      Inquiry Date: ${selectedInquiry.inquirydate}
+      
+      Phone Number: ${selectedInquiry.phoneNumber}
+      
+      Inquiry: ${selectedInquiry.describe}
+      
+      Reply: ${selectedInquiry.reply || 'No reply'}
+      
+      Status: ${selectedInquiry.status}
+    `;
+
     // Calculate height of text
     const lines = doc.splitTextToSize(content, usableWidth);
     const textHeight = lines.length * 6; // Assuming font size is 12 and line height is 6
-  
+
     // Calculate Y position to center text vertically
     const startY = (doc.internal.pageSize.height - textHeight) / 2;
-  
+
     // Add content to the PDF
     doc.text(padding, startY, lines);
-  
+
     // Save the PDF
     doc.save('inquiry_details.pdf');
   };
-  
 
   const columns = [
     {
@@ -224,6 +219,7 @@ const MyInquiries = () => {
   const handleSearch = (e) => {
     setSearchQuery(e.target.value);
   };
+
   const filteredInquiries = inquiries.filter(
     (inquiry) =>
       inquiry.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -232,7 +228,7 @@ const MyInquiries = () => {
 
   return (
     <Layout>
-      <div className="i-container">
+      <div className="ifixed-container">
         <h1 className="i-title">My Inquiries</h1>
         <Input
           placeholder="Search by Inquiry ID"
