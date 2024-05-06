@@ -11,7 +11,7 @@ function TraVehicleDetails() {
     const [currentVregister, setCurrentVregister] = useState(null);
     const [searchText, setSearchText] = useState('');
 
-    const fetchVregister = async () => {
+    const fetchVregister = async () => {  // fetch to vehicle 
         try {
             const response = await axios.get('/api/employee/getVehicles');
             const dataWithKey = response.data.vehicles.map(item => ({ ...item, key: item._id }));
@@ -25,6 +25,8 @@ function TraVehicleDetails() {
     useEffect(() => {
         fetchVregister();
     }, []);
+
+    // handle to delete 
 
     const handleDelete = async (id) => {
         try {
@@ -42,6 +44,7 @@ function TraVehicleDetails() {
         setIsModalVisible(true);
     };
 
+    // 
     const renderLongText = (text) => {
         const maxLength = 10; // Set your desired maximum length here
         if (text && text.length > maxLength) {

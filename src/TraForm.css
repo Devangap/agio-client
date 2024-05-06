@@ -53,4 +53,54 @@ h3{
   transition: background-color 0.3s ease;
   }
 
+  .seat-count{
+    margin-top: 5px;
+    margin-left: 70%;
+    margin-right: 10%;
+    width: 300px;
+    height: 140px;
+    background-color: #fafafa;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
+}
+.myboxS {
+  display: flex;
+  justify-content: center;
+  
+  height: 70vh;
+}
+
+.mybox1S {
+  background-color: #fafafa;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  margin: 10px;
+  text-align: center;
+  width: 250px;
+  height: 200px;
+  margin-top: 100px !important;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.mybox1S:hover {
+  background-color: #e0e0e0;
+}
+
+.mybox1S .boxname {
+  font-size: 15px;
+  color: #333;
+  text-align: center;
+  text-transform: uppercase;
+  font-family: "Lato", sans-serif;
+font-weight: bold;
+font-style: normal;
+}
+  
+
   

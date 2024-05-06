@@ -8,8 +8,10 @@ import { useDispatch } from "react-redux";
 import { showLoading, hideLoading } from "../redux/empalerts";
 import { toast } from "react-hot-toast";
 import axios from "axios";
-import { Button, Form, Input, Tabs } from "antd";
+import { Button, Form, Input, Tabs, TimePicker, Space } from "antd";
 import Swal from "sweetalert2";
+import moment from "moment";
+import dayjs from "dayjs";
 
 /*
 get the length of the current month
@@ -70,13 +72,16 @@ const MedParameters = () => {
   // Default parameter values
   const [defaultParameterValues, setDefaultParameterValues] = useState(null);
 
+  // Render datepicker
+  const [datePickerKey, setDatePickerKey] = useState(false);
+
   /* =============== Manage Dates ===================== */
 
   /*
   Manage selected and deselectd dates
   */
   const onChange = async (dates) => {
-    console.log("@onChange @medParameters dates:", dates);
+    //console.log("@onChange @medParameters dates:", dates);
 
     const currentDateList = [];
     const previousDateList = dateList;
@@ -144,90 +149,34 @@ const MedParameters = () => {
         newDates.push(removedDate);
 
         setSelectedDates(newDates); // Select the date
-        //
       } else {
-        const confirmation = window.confirm(
+        Swal.fire({
+          title: `The date: ${new Date(removedDate).toLocaleDateString()} is already saved`,
+          text: "Are you sure you want to delete the selected date?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            handleDeleteDate(
+              dates,
+              removedIsoDate,
+              removedDateObj,
+              currentDateObjectList,
+              cleanedDateObjectList
+            );
+          } else {
+            handleCancelDeleteDate(dates, removedDate);
+          }
+        });
+
+        /*const confirmation = window.confirm(
           `The date: ${new Date(
             removedDate
           ).toLocaleDateString()} is already saved\nAre you sure you want to remove the selected date?`
-        );
-
-        console.log("confirmation out:", confirmation);
-        if (confirmation) {
-          // Confirm to deselct the date
-          setSelectedDates(dates); // Deselect the date
-
-          // Delete the record
-          try {
-            const deleteResponse = await axios.post(
-              "/api/medDoctor/medical-available-dates-delete-existing",
-              { id: removedDateObj._id },
-              {
-                headers: {
-                  Authorization: `Bearer ${localStorage.getItem("token")}`,
-                },
-              }
-            );
-
-            if (deleteResponse.data.success) {
-              Swal.fire({
-                title: "Deleted!",
-                text: `Deleted the saved record for the date: ${new Date(
-                  removedDateObj.date
-                ).toLocaleDateString()}`,
-                icon: "success",
-              });
-              /*toast.success(
-                `Deleted the saved record for the date: ${removedDateObj.date}`
-              );*/
-            } else {
-              Swal.fire({
-                title: "Deleted!",
-                text: `Deleting the saved record for the date: ${new Date(
-                  removedDateObj.date
-                ).toLocaleDateString()} failed`,
-                icon: "error",
-              });
-              /*toast.error(
-                `Deleting the saved record for the date: ${removedDateObj.date} failed`
-              );*/
-            }
-          } catch (error) {
-            console.log(
-              "Error occured when deleting the record for the date ID: ",
-              removedDateObj._id
-            );
-            /*toast.error(
-              "Error occured when deleting the record for the selected date"
-            );*/
-          }
-
-          // Get the date object list without the deselected date's object
-          for (let dateObj of currentDateObjectList) {
-            if (dateObj.date == removedIsoDate) {
-              continue;
-            } else {
-              cleanedDateObjectList.push(dateObj);
-            }
-          }
-
-          console.log(
-            "Cleaned Object List @onChange @medParameters: ",
-            cleanedDateObjectList
-          );
-
-          // Set existing date list to not containt the deselected object
-          //setCheckedExistingDates(cleanedDateObjectList);
-          // Re-render the existing available dates to reflect changes
-          getExistingAvailableDates();
-        } else {
-          // If reject deselecting date
-
-          var newDates = dates;
-          newDates.push(new Date(removedDate));
-
-          setSelectedDates(newDates); // Re-select the deselected date
-        }
+        );*/
       }
     } else {
       /* If the date is not saved */
@@ -249,6 +198,85 @@ const MedParameters = () => {
       // Re-render the date-list component
       setDateListKey(cleanedDateObjectList.length);
     }
+  };
+
+  /*
+  Handle saved date deletion
+  */
+  const handleDeleteDate = async (
+    dates,
+    removedIsoDate,
+    removedDateObj,
+    currentDateObjectList,
+    cleanedDateObjectList
+  ) => {
+    // Confirm to deselct the date
+    setSelectedDates(dates); // Deselect the date
+
+    // Delete the record
+    try {
+      const deleteResponse = await axios.post(
+        "/api/medDoctor/medical-available-dates-delete-existing",
+        { id: removedDateObj._id },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (deleteResponse.data.success) {
+        Swal.fire({
+          title: "Deleted!",
+          text: `Deleted the saved record for the date: ${new Date(
+            removedDateObj.date
+          ).toLocaleDateString()}`,
+          icon: "success",
+        });
+      } else {
+        Swal.fire({
+          title: "Deleted!",
+          text: `Deleting the saved record for the date: ${new Date(
+            removedDateObj.date
+          ).toLocaleDateString()} failed`,
+          icon: "error",
+        });
+      }
+    } catch (error) {
+      console.log(
+        "Error occured when deleting the record for the date ID: ",
+        removedDateObj._id
+      );
+    }
+
+    // Get the date object list without the deselected date's object
+    for (let dateObj of currentDateObjectList) {
+      if (dateObj.date == removedIsoDate) {
+        continue;
+      } else {
+        cleanedDateObjectList.push(dateObj);
+      }
+    }
+
+    //console.log("Cleaned Object List @onChange @medParameters: ",cleanedDateObjectList);
+
+    // Set existing date list to not containt the deselected object
+    //setCheckedExistingDates(cleanedDateObjectList);
+    // Re-render the existing available dates to reflect changes
+    getExistingAvailableDates();
+  };
+
+  /*
+  handle saved date delete cancellation
+  */
+  const handleCancelDeleteDate = (dates, removedDate) => {
+    // If reject deselecting date
+
+    var newDates = dates;
+    newDates.push(new Date(removedDate));
+
+    setSelectedDates(newDates); // Re-select the deselected date
+    setDatePickerKey(!datePickerKey); // Re-render the datepicker
   };
 
   /*
@@ -294,8 +322,6 @@ const MedParameters = () => {
           // If there is a saved record for the corresponding date
           // only update it's fields
           if (response_check_similar.data.success) {
-            //toast.dismiss(response_check_similar.data.message);
-
             response_update_similar = await axios.post(
               "/api/medDoctor/medical-update-available-date",
 
@@ -357,27 +383,35 @@ const MedParameters = () => {
           text: "Please select a date first",
           icon: "info",
         });
-        //toast.error("No dates are selected");
       }
 
       dispatch(hideLoading());
 
-      if (response_add_date.data.success) {
-        Swal.fire({
-          title: "Success",
-          text: "New available date created",
-          icon: "success",
-        });
-        //toast.success(response_add_date.data.message);
-      } else {
-        console.log(
-          "@updateDates() MedParameters() => ",
-          response_add_date.data.message
-        );
+      if (response_add_date) {
+        if (response_add_date.data.success) {
+          Swal.fire({
+            title: "Success",
+            text: "Updated the dates",
+            icon: "success",
+          });
+        } else {
+          console.log(
+            "@updateDates() MedParameters() => ",
+            response_add_date.data.message
+          );
+        }
       }
 
       // Re-render the saved date record to reflect he changes made
       getExistingAvailableDates();
+
+      if (!response_add_date) {
+        Swal.fire({
+          title: "Success",
+          text: "Updated the dates",
+          icon: "success",
+        });
+      }
     } catch (error) {
       dispatch(hideLoading());
       console.log(
@@ -392,33 +426,31 @@ const MedParameters = () => {
   /*
   Set current parameter values as default inputs
   */
-  useEffect(() => {
-    const getDefaultValues = async () => {
-      try {
-        const existingRecord = await axios.post(
-          "/api/medDoctor/medical-parameters-find-existing",
-          {},
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
 
-        if (existingRecord.data.success) {
-          setDefaultParameterValues(existingRecord.data.fetched);
+  const getDefaultValues = async () => {
+    try {
+      const existingRecord = await axios.post(
+        "/api/medDoctor/medical-parameters-find-existing",
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      } catch (error) {
-        console.log(
-          "Error occured when getting default parameter values: ",
-          error
-        );
-      }
-    };
+      );
 
-    // call the method and store the current values
-    getDefaultValues();
-  }, []);
+      if (existingRecord.data.success) {
+        setDefaultParameterValues(existingRecord.data.fetched);
+      }
+    } catch (error) {
+      console.log(
+        "Error occured when getting default parameter values: ",
+        error
+      );
+    }
+  };
+
+  //***useEffect was here
 
   /* 
   Data submission - parameters
@@ -437,7 +469,11 @@ const MedParameters = () => {
           },
         }
       );
-      console.log("Read parameter record ", existingRecord.data);
+
+      // Log the response
+      console.log(
+        `@saveParameters() @MedParameters() existing record Response => ${existingRecord.data.message}`
+      );
 
       // If a record already exists, only update the fields
       if (existingRecord.data.success) {
@@ -458,10 +494,24 @@ const MedParameters = () => {
           }
         );
 
+        // Log the response
+        console.log(
+          `@saveParameters() @MedParameters() update record Response => ${updateExisting.data.message}`
+        );
+
         if (updateExisting.data.success) {
-          toast.success(updateExisting.data.message);
+          Swal.fire({
+            title: "Success",
+            text: "Updated the parameters",
+            icon: "success",
+          });
+          getDefaultValues();
         } else {
-          toast.error(updateExisting.data.message);
+          Swal.fire({
+            title: "Error",
+            text: "Something went wrong",
+            icon: "error",
+          });
         }
         dispatch(hideLoading());
       } else {
@@ -481,17 +531,33 @@ const MedParameters = () => {
           }
         );
 
+        // Log the response
+        console.log(
+          `@saveParameters() @MedParameters() new record Response => ${newRecord.data.message}`
+        );
+
         if (newRecord.data.success) {
-          toast.success(newRecord.data.message);
+          Swal.fire({
+            title: "Success",
+            text: "Saved new parameters",
+            icon: "success",
+          });
+          getDefaultValues();
         } else {
-          toast.error(newRecord.data.message);
+          Swal.fire({
+            title: "Error",
+            text: "Something went wrong",
+            icon: "error",
+          });
         }
         dispatch(hideLoading());
       }
     } catch (error) {
       dispatch(hideLoading());
-      toast.error("Error occured when saving parameters");
-      console.log(error);
+      console.log(
+        "Error occured when saving parameters @saveParameters() @MedParameters() => ",
+        error
+      );
     }
   };
 
@@ -511,17 +577,16 @@ const MedParameters = () => {
       }
     );
 
-    //
+    // Log the response
+    console.log(
+      `@getExistingAvailableDates() @MedParameters() Response => ${existingAvailableDates.data.message}`
+    );
+
     if (existingAvailableDates.data.success) {
       const existingAvailableDateObjectList =
         existingAvailableDates.data.fetched;
 
-      console.log(
-        "@getExistingAvailableDates @medParamters Fetched data: ",
-        existingAvailableDateObjectList
-      );
-
-      // Sort the date Objects list
+      //console.log("@getExistingAvailableDates @medParamters Fetched data: ", existingAvailableDateObjectList);
 
       // Update the date objects list
       setDateObjectsList(existingAvailableDateObjectList);
@@ -543,24 +608,15 @@ const MedParameters = () => {
       // Update the IDs of the already saved dates
       setSavedDatesIds(savedDateIdsList);
 
-      console.log(
-        "@existingAvailableDates @medParameters Date List for selectedDate: ",
-        existingAvailableDatesList
-      );
-      console.log(
-        "@existingAvailableDates @medParameters date Objects List: ",
-        dateObjectsList
-      );
+      //console.log("@existingAvailableDates @medParameters Date List for selectedDate: ", existingAvailableDatesList);
+      //console.log("@existingAvailableDates @medParameters date Objects List: ", dateObjectsList);
 
       // => Should I re-render the date-list component here? <=
       // setDateListKey(dateObjectsList.length);
     }
   };
 
-  useEffect(() => {
-    // Call the method
-    getExistingAvailableDates();
-  }, []);
+  //***useEffect was here
 
   /*
   Set dateObjects on date selection
@@ -573,10 +629,7 @@ const MedParameters = () => {
     var newDateObjectList = dateObjectsList;
 
     //getExistingAvailableDates();
-    console.log(
-      "@setDateObjects @medParameters Date objects list: ",
-      dateObjectsList
-    );
+    //console.log("@setDateObjects @medParameters Date objects list: ", dateObjectsList);
 
     // Iterate through the selected dates
     for (let d of dateList) {
@@ -616,10 +669,17 @@ const MedParameters = () => {
 
     // Sort the date object list in ascending order
     newDateObjectList.sort(function (a, b) {
-      return (
-        Number(a.date.split("T")[0].split("-")[2]) -
-        Number(b.date.split("T")[0].split("-")[2])
+      a = Number(
+        a.date.split("T")[0].split("-")[0] +
+          a.date.split("T")[0].split("-")[1] +
+          a.date.split("T")[0].split("-")[2]
       );
+      b = Number(
+        b.date.split("T")[0].split("-")[0] +
+          b.date.split("T")[0].split("-")[1] +
+          b.date.split("T")[0].split("-")[2]
+      );
+      return Number(a - b);
     });
 
     // Update the date object list to reflect the newly created
@@ -630,20 +690,113 @@ const MedParameters = () => {
     setDateListKey(dateObjectsList.length);
   };
 
+  //***useEffect was here
+
+  /* =============== Use Effects =============== */
+
+  // getDefaultValues()
+  useEffect(() => {
+    getDefaultValues();
+  }, []);
+
+  // getExistingAvailableDates()
+  useEffect(() => {
+    getExistingAvailableDates();
+  }, []);
+
+  // setDateObjects()
   useEffect(() => {
     setDateObjects();
   }, [updateDates]);
+
+  /* =============== Form validations => Manage parameters =============== */
+
+  // Handle max appointments value change in parameters
+  const handleMaxAppointmentsValueChange = (value) => {
+    var saveButtonElement = document.getElementById(
+      "doc-manage-parameters-save-button"
+    );
+    if (value >= 20 && value <= 80) {
+      saveButtonElement.disabled = false;
+    } else {
+      saveButtonElement.disabled = true;
+    }
+  };
+
+  // Handle avg session time value change in parameters
+  const handleAverageSessionTimeValueChange = (value) => {
+    var saveButtonElement = document.getElementById(
+      "doc-manage-parameters-save-button"
+    );
+    if (value >= 10 && value <= 30) {
+      saveButtonElement.disabled = false;
+    } else {
+      saveButtonElement.disabled = true;
+    }
+  };
+
+  // Handle appointment start time value change in parameters
+  const handleAppointmentsStartTimeValueChange = (value) => {
+    var saveButtonElement = document.getElementById(
+      "doc-manage-parameters-save-button"
+    );
+    const selectedTimeParameters = moment(value, "HH:mm");
+    const startTimeParameters = moment("08:00", "HH:mm");
+    const endTimeParameters = moment("11:30", "HH:mm");
+    if (
+      selectedTimeParameters.isBetween(
+        startTimeParameters,
+        endTimeParameters,
+        undefined,
+        "[]"
+      )
+    ) {
+      saveButtonElement.disabled = false;
+    } else {
+      saveButtonElement.disabled = true;
+    }
+  };
+
+  // Handle appointments end time value change in parameters
+  const handleAppointmentsEndTimeValueChange = (value) => {
+    var saveButtonElement = document.getElementById(
+      "doc-manage-parameters-save-button"
+    );
+    const selectedTimeParameters = moment(value, "HH:mm");
+    const startTimeParameters = moment("12:30", "HH:mm");
+    const endTimeParameters = moment("17:30", "HH:mm");
+    if (
+      selectedTimeParameters.isBetween(
+        startTimeParameters,
+        endTimeParameters,
+        undefined,
+        "[]"
+      )
+    ) {
+      saveButtonElement.disabled = false;
+    } else {
+      saveButtonElement.disabled = true;
+    }
+  };
 
   return (
     <Layout>
       <Tabs>
         <Tabs.TabPane tab="Manage Dates" key={0}>
           <div className="doc-date-picker-container">
-            <div className="doc-date-picker">
+            <div className="doc-date-picker" key={datePickerKey}>
               <DatePicker
                 selectedDates={selectedDates}
                 selectsMultiple
-                onChange={(dates) => onChange(dates)}
+                onChange={(dates) => {
+                  defaultParameterValues !== null
+                    ? onChange(dates)
+                    : Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: `Set the default parameters first!`,
+                      });
+                }}
                 excludeDates={[
                   new Object({
                     date: new Date(),
@@ -657,6 +810,7 @@ const MedParameters = () => {
                 minDate={new Date()}
               />
             </div>
+
             <div className="date-list-container">
               <div className="date-list" key={dateListKey}>
                 <ul>
@@ -666,6 +820,11 @@ const MedParameters = () => {
                     const dateToId =
                       dateString.split(" ")[1] + dateString.split(" ")[2];
 
+                    const startTime = dateObject.startTime;
+                    const endTime = dateObject.endTime;
+                    //console.log("dates => ", startTime, endTime);
+
+                    // Handle max appointment value change
                     const handleMaxAppointmentCountValueChange = (value) => {
                       console.log(
                         `Max App. value for: ${dateObject.date}`,
@@ -674,9 +833,22 @@ const MedParameters = () => {
                       var singleDateElement = document.getElementById(
                         dateObject.date
                       );
-                      singleDateElement.style.backgroundColor = "#dfdfdf";
+
+                      var updateButtonElement = document.getElementById(
+                        "med-parameters-update-dates"
+                      );
+
+                      if (value >= 20 && value <= 80) {
+                        dateObject.maxAppointmentCount = value;
+                        singleDateElement.style.backgroundColor = "#dfdfdf";
+                        updateButtonElement.disabled = false;
+                      } else {
+                        singleDateElement.style.backgroundColor = "#ffcbd1";
+                        updateButtonElement.disabled = true;
+                      }
                     };
 
+                    // Handle start time value change
                     const handleStartTimeValueChange = (value) => {
                       console.log(
                         `StartTime value for: ${dateObject.date}`,
@@ -686,19 +858,64 @@ const MedParameters = () => {
                       var singleDateElement = document.getElementById(
                         dateObject.date
                       );
-                      singleDateElement.style.backgroundColor = "#dfdfdf";
+
+                      var updateButtonElement = document.getElementById(
+                        "med-parameters-update-dates"
+                      );
+
+                      const selectedTime = moment(value, "HH:mm");
+                      const startTime = moment("08:00", "HH:mm");
+                      const endTime = moment("11:30", "HH:mm");
+                      if (
+                        selectedTime.isBetween(
+                          startTime,
+                          endTime,
+                          undefined,
+                          "[]"
+                        )
+                      ) {
+                        dateObject.endTime = value;
+                        singleDateElement.style.backgroundColor = "#dfdfdf";
+                        updateButtonElement.disabled = false;
+                      } else {
+                        singleDateElement.style.backgroundColor = "#ffcbd1";
+                        updateButtonElement.disabled = true;
+                      }
                     };
 
+                    // Handle end time value change
                     const handleEndTimeValueChange = (value) => {
                       console.log(
                         `EndTime value for: ${dateObject.date}`,
                         value
                       );
-                      dateObject.endTime = value;
+
                       var singleDateElement = document.getElementById(
                         dateObject.date
                       );
-                      singleDateElement.style.backgroundColor = "#dfdfdf";
+
+                      var updateButtonElement = document.getElementById(
+                        "med-parameters-update-dates"
+                      );
+
+                      const selectedTime = moment(value, "HH:mm");
+                      const startTime = moment("12:30", "HH:mm");
+                      const endTime = moment("17:30", "HH:mm");
+                      if (
+                        selectedTime.isBetween(
+                          startTime,
+                          endTime,
+                          undefined,
+                          "[]"
+                        )
+                      ) {
+                        dateObject.endTime = value;
+                        singleDateElement.style.backgroundColor = "#dfdfdf";
+                        updateButtonElement.disabled = false;
+                      } else {
+                        singleDateElement.style.backgroundColor = "#ffcbd1";
+                        updateButtonElement.disabled = true;
+                      }
                     };
 
                     return (
@@ -735,11 +952,26 @@ const MedParameters = () => {
                                 />
                               </Form.Item>
 
-                              <Form.Item
-                                label="Maximum"
-                                name={`maximum_${dateToId}`}
-                              >
-                                {/*
+                              <div className="single-date-content-inputs-section">
+                                <Form.Item
+                                  label="Maximum"
+                                  name={`maximum_${dateToId}`}
+                                  rules={[
+                                    {
+                                      validator: (_, value) => {
+                                        if (value >= 20 && value <= 80) {
+                                          return Promise.resolve();
+                                        }
+                                        return Promise.reject(
+                                          new Error(
+                                            "Value must be between 20 and 80"
+                                          )
+                                        );
+                                      },
+                                    },
+                                  ]}
+                                >
+                                  {/*
                             (e) => handleMaxAppointmentCountValueChange(e.target.value) creates 
                             an arrow function that takes the event (e) as an argument and calls 
                             handleMaxAppointmentCountValueChange with e.target.value.
@@ -747,32 +979,67 @@ const MedParameters = () => {
                             e.target.value represents the current value of the input element.
                             */}
 
-                                <Input
-                                  id={`max_input_${dateToId}`}
-                                  style={{
-                                    width: 20,
-                                  }}
-                                  value={dateObject.maxAppointmentCount}
-                                  defaultValue={dateObject.maxAppointmentCount}
-                                  onChange={(e) => {
-                                    handleMaxAppointmentCountValueChange(
-                                      e.target.value
-                                    );
-                                  }}
-                                />
-                              </Form.Item>
+                                  <Input
+                                    id={`max_input_${dateToId}`}
+                                    required
+                                    style={{
+                                      width: 20,
+                                    }}
+                                    value={dateObject.maxAppointmentCount}
+                                    defaultValue={
+                                      dateObject.maxAppointmentCount
+                                    }
+                                    onChange={(e) => {
+                                      handleMaxAppointmentCountValueChange(
+                                        e.target.value
+                                      );
+                                    }}
+                                  />
+                                </Form.Item>
+                              </div>
 
                               <Form.Item
                                 label="Start Time"
                                 name={`startTime_${dateToId}`}
+                                rules={[
+                                  {
+                                    validator: (_, value) => {
+                                      const selectedTime = moment(
+                                        value,
+                                        "HH:mm"
+                                      );
+                                      const startTime = moment(
+                                        "08:00",
+                                        "HH:mm"
+                                      );
+                                      const endTime = moment("11:30", "HH:mm");
+                                      if (
+                                        selectedTime.isBetween(
+                                          startTime,
+                                          endTime,
+                                          undefined,
+                                          "[]"
+                                        )
+                                      ) {
+                                        return Promise.resolve();
+                                      }
+                                      return Promise.reject(
+                                        new Error(
+                                          "Please select a time between 8:00 AM and 11:30 AM"
+                                        )
+                                      );
+                                    },
+                                  },
+                                ]}
                               >
                                 <Input
+                                  type="Time"
                                   id={`startTime_input_${dateToId}`}
                                   style={{
                                     width: 20,
                                   }}
-                                  value={dateObject.startTime}
-                                  defaultValue={dateObject.startTime}
+                                  value={startTime}
+                                  defaultValue={startTime}
                                   onChange={(e) =>
                                     handleStartTimeValueChange(e.target.value)
                                   }
@@ -782,14 +1049,45 @@ const MedParameters = () => {
                               <Form.Item
                                 label="Finish Time"
                                 name={`finishTime_${dateToId}`}
+                                rules={[
+                                  {
+                                    validator: (_, value) => {
+                                      const selectedTime = moment(
+                                        value,
+                                        "HH:mm"
+                                      );
+                                      const startTime = moment(
+                                        "12:30",
+                                        "HH:mm"
+                                      );
+                                      const endTime = moment("17:30", "HH:mm");
+                                      if (
+                                        selectedTime.isBetween(
+                                          startTime,
+                                          endTime,
+                                          undefined,
+                                          "[]"
+                                        )
+                                      ) {
+                                        return Promise.resolve();
+                                      }
+                                      return Promise.reject(
+                                        new Error(
+                                          "Please select a time between 12:30 PM and 17:30 PM"
+                                        )
+                                      );
+                                    },
+                                  },
+                                ]}
                               >
                                 <Input
+                                  type="Time"
                                   id={`finishTime_input_${dateToId}`}
                                   style={{
                                     width: 20,
                                   }}
-                                  value={dateObject.endTime}
-                                  defaultValue={dateObject.endTime}
+                                  value={endTime}
+                                  defaultValue={endTime}
                                   onChange={(e) =>
                                     handleEndTimeValueChange(e.target.value)
                                   }
@@ -804,6 +1102,7 @@ const MedParameters = () => {
                 </ul>
               </div>
               <Button
+                id="med-parameters-update-dates"
                 className="med-parameters-update-dates"
                 onClick={() => updateDates(dateList)}
               >
@@ -820,98 +1119,197 @@ const MedParameters = () => {
             <div className="doc-manage-parameters-container-secondary">
               <Form onFinish={saveParameters}>
                 <div className="doc-manage-parameters-inputs">
-                  <Form.Item
-                    label="Maximum appointments"
-                    name="max_appointments"
-                  >
-                    <Input
-                      type="Number"
-                      required={defaultParameterValues != null ? false : true}
-                      defaultValue={
-                        defaultParameterValues != null
-                          ? defaultParameterValues.maxAppointments
-                          : null
-                      }
-                      placeholder={
-                        defaultParameterValues != null ? null : "Enter value"
-                      }
-                      value={
-                        defaultParameterValues != null
-                          ? defaultParameterValues.maxAppointments
-                          : null
-                      }
+                  <div className="doc-manage-parameters-inputs-section">
+                    <Form.Item
+                      label="Maximum appointments"
                       name="max_appointments"
-                    />
-                  </Form.Item>
+                      rules={[
+                        {
+                          validator: (_, value) => {
+                            if (value >= 20 && value <= 80) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error("Value must be between 20 and 80")
+                            );
+                          },
+                        },
+                      ]}
+                    >
+                      <Input
+                        type="Number"
+                        required={defaultParameterValues != null ? false : true}
+                        defaultValue={
+                          defaultParameterValues != null
+                            ? defaultParameterValues.maxAppointments
+                            : null
+                        }
+                        placeholder={
+                          defaultParameterValues != null ? null : "Enter value"
+                        }
+                        value={
+                          defaultParameterValues != null
+                            ? defaultParameterValues.maxAppointments
+                            : null
+                        }
+                        name="max_appointments"
+                        //onChange={handleMaxAppointmentsValueChange}
+                        onChange={(e) => {
+                          handleMaxAppointmentsValueChange(e.target.value);
+                        }}
+                      />
+                    </Form.Item>
+                  </div>
 
-                  <Form.Item
-                    label="Average session time (Min)"
-                    name="average_session_time"
-                  >
-                    <Input
-                      type="Number"
-                      required={defaultParameterValues != null ? false : true}
-                      defaultValue={
-                        defaultParameterValues != null
-                          ? defaultParameterValues.avgSessionTime
-                          : null
-                      }
-                      placeholder={
-                        defaultParameterValues != null ? null : "Enter value"
-                      }
-                      value={
-                        defaultParameterValues != null
-                          ? defaultParameterValues.avgSessionTime
-                          : null
-                      }
+                  <div className="doc-manage-parameters-inputs-section">
+                    <Form.Item
+                      label="Average session time (Min)"
                       name="average_session_time"
-                    />
-                  </Form.Item>
+                      rules={[
+                        {
+                          validator: (_, value) => {
+                            if (value >= 10 && value <= 30) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error("Value must be between 10 and 30")
+                            );
+                          },
+                        },
+                      ]}
+                    >
+                      <Input
+                        type="Number"
+                        required={defaultParameterValues != null ? false : true}
+                        defaultValue={
+                          defaultParameterValues != null
+                            ? defaultParameterValues.avgSessionTime
+                            : null
+                        }
+                        placeholder={
+                          defaultParameterValues != null ? null : "Enter value"
+                        }
+                        value={
+                          defaultParameterValues != null
+                            ? defaultParameterValues.avgSessionTime
+                            : null
+                        }
+                        name="average_session_time"
+                        //onChange={handleAverageSessionTimeValueChange}
+                        onChange={(e) => {
+                          handleAverageSessionTimeValueChange(e.target.value);
+                        }}
+                      />
+                    </Form.Item>
+                  </div>
 
-                  <Form.Item
-                    label="Appointments start time"
-                    name="appointments_start_time"
-                  >
-                    <Input
-                      type="Time"
-                      required={defaultParameterValues != null ? false : true}
-                      defaultValue={
-                        defaultParameterValues != null
-                          ? defaultParameterValues.startTime
-                          : null
-                      }
-                      value={
-                        defaultParameterValues != null
-                          ? defaultParameterValues.startTime
-                          : null
-                      }
+                  <div className="doc-manage-parameters-inputs-section">
+                    <Form.Item
+                      label="Appointments start time"
                       name="appointments_start_time"
-                    />
-                  </Form.Item>
+                      rules={[
+                        {
+                          validator: (_, value) => {
+                            const selectedTime = moment(value, "HH:mm");
+                            const startTime = moment("08:00", "HH:mm");
+                            const endTime = moment("11:30", "HH:mm");
+                            if (
+                              selectedTime.isBetween(
+                                startTime,
+                                endTime,
+                                undefined,
+                                "[]"
+                              )
+                            ) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error(
+                                "Please select a time between 8:00 AM and 11:30 AM"
+                              )
+                            );
+                          },
+                        },
+                      ]}
+                    >
+                      <Input
+                        type="Time"
+                        required={defaultParameterValues != null ? false : true}
+                        defaultValue={
+                          defaultParameterValues != null
+                            ? defaultParameterValues.startTime
+                            : null
+                        }
+                        value={
+                          defaultParameterValues != null
+                            ? defaultParameterValues.startTime
+                            : null
+                        }
+                        name="appointments_start_time"
+                        //onChange={handleAppointmentsStartTimeValueChange}
+                        onChange={(e) => {
+                          handleAppointmentsStartTimeValueChange(
+                            e.target.value
+                          );
+                        }}
+                      />
+                    </Form.Item>
+                  </div>
 
-                  <Form.Item
-                    label="Appointments end time"
-                    name="appointments_end_time"
-                  >
-                    <Input
-                      type="Time"
-                      required={defaultParameterValues != null ? false : true}
-                      defaultValue={
-                        defaultParameterValues != null
-                          ? defaultParameterValues.endTime
-                          : null
-                      }
-                      value={
-                        defaultParameterValues != null
-                          ? defaultParameterValues.endTime
-                          : null
-                      }
+                  <div className="doc-manage-parameters-inputs-section">
+                    <Form.Item
+                      label="Appointments end time"
                       name="appointments_end_time"
-                    />
-                  </Form.Item>
+                      rules={[
+                        {
+                          validator: (_, value) => {
+                            const selectedTime = moment(value, "HH:mm");
+                            const startTime = moment("12:30", "HH:mm");
+                            const endTime = moment("17:30", "HH:mm");
+                            if (
+                              selectedTime.isBetween(
+                                startTime,
+                                endTime,
+                                undefined,
+                                "[]"
+                              )
+                            ) {
+                              return Promise.resolve();
+                            }
+                            return Promise.reject(
+                              new Error(
+                                "Please select a time between 12:30 PM and 5:30 PM"
+                              )
+                            );
+                          },
+                        },
+                      ]}
+                    >
+                      <Input
+                        type="Time"
+                        required={defaultParameterValues != null ? false : true}
+                        defaultValue={
+                          defaultParameterValues != null
+                            ? defaultParameterValues.endTime
+                            : null
+                        }
+                        value={
+                          defaultParameterValues != null
+                            ? defaultParameterValues.endTime
+                            : null
+                        }
+                        name="appointments_end_time"
+                        //onChange={handleAppointmentsEndTimeValueChange}
+                        onChange={(e) => {
+                          handleAppointmentsEndTimeValueChange(e.target.value);
+                        }}
+                      />
+                    </Form.Item>
+                  </div>
                 </div>
                 <div className="doc-manage-parameters-save-button-container">
                   <Button
+                    id="doc-manage-parameters-save-button"
                     className="doc-manage-parameters-save-button"
                     htmlType="submit"
                   >
