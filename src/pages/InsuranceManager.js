@@ -22,7 +22,7 @@ function InsuranceManager() {
           <span className='insboxname'>Insurance Display</span>
         </div>
         <div className="insmybox1" onClick={handleStatusClick}>
-          <span className='insboxname'>Insurance Details</span>
+          <span className='insboxname'>Insurance Overview</span>
         </div>
         
       </div>

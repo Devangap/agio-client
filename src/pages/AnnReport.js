@@ -99,7 +99,7 @@ function AnnReport() {
                     format="YYYY-MM"
                     style={{ width: '100%' }}
                 />
-                  <button onClick={downloadPdfReport} style={{ }}>
+                  <button onClick={downloadPdfReport} className='leavesub'>
                 Download Report
                 </button>
                 <Table

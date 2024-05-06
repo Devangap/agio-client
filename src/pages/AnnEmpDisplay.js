@@ -225,10 +225,11 @@ function AnnEmpDisplay() {
 
             <TabPane tab="Announcements" key="announcements">
             <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-  <h6>SPECIFIC ANNOUNCEMENTS</h6>
+  <h4>Specific Announcements</h4>
   {specificAnnouncements.map(announcement => (
     <Card className='Annspec'
       key={announcement._id}
+      style={{ width: '800px' ,marginLeft: '290px'}} 
       title={announcement.anntitle}
       actions={[]}
     >
@@ -275,16 +276,17 @@ function AnnEmpDisplay() {
 </div>
 
 
-<div style={{ display: 'flex', flexWrap: 'wrap' }}>
-  <h6>GENERAL ANNOUNCEMENTS</h6>
+<div style={{ display: 'flex', flexWrap: 'wrap', marginBottom:'60' }}>
+<h4>General Announcements</h4>
   {generalAnnouncements.map(announcement => (
-    <Card
-      className='Annspec'
-      key={announcement._id}
-      title={announcement.anntitle}
-      style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-      actions={[]}
-    >
+    
+        <Card 
+          className='Annspec'
+          key={announcement._id}
+          title={announcement.anntitle}
+          style={{ width: '800px' ,marginLeft: '290px'}} // Adjust width here
+          actions={[]}
+        >
       <div>
         {/* Check if announcement has a file */}
         

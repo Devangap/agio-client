@@ -27,10 +27,10 @@ export default function Target(){
 
             
             console.log(formData);
-            // Assuming you have an endpoint to save the form data
+           
             await axios.post("/exceldata/settarget",formData);
             message.success("Form data submitted successfully!");
-            navigate("/view"); // Redirect to homepage or any other route
+            navigate("/view"); 
         } catch (error) {
             message.error("Failed to submit form data!");
             console.error(error);

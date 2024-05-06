@@ -3,6 +3,10 @@ import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
 import Layout from '../components/Layout';
 import '../inquiry.css';
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+import logoImage from '../Images/logo.png';
 
 const { TextArea } = Input;
 
@@ -120,6 +124,57 @@ function AdminInquiries() {
       onOk() {},
     });
   };
+  const handleDownload = async(record) => {
+    
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4',
+    });
+    const logoWidth = 50; 
+    const logoHeight = 50;
+    const centerX = (doc.internal.pageSize.getWidth() - logoWidth) / 2;
+    const centerY = 15;
+    const logo = new Image();
+    logo.src = logoImage;
+    await new Promise(resolve => {
+      logo.onload = () => resolve();
+    });
+    doc.addImage(logo, 'PNG', centerX, centerY, logoWidth, logoHeight);
+  
+    const padding = 10;
+    const usableWidth = doc.internal.pageSize.width - (padding * 2);
+  
+    const content = `
+  Inquiry ID: ${record.inquiryID}
+  
+  Full Name: ${record.name}
+  
+  Username: ${record.username}
+  
+  Inquiry Date: ${record.inquirydate}
+  
+  Phone Number: ${record.phoneNumber}
+  
+  Inquiry: ${record.describe}
+  
+  Reply: ${record.reply || 'No reply'}
+  
+  Status: ${record.status}
+  `;
+  
+  
+    const lines = doc.splitTextToSize(content, usableWidth);
+    const textHeight = lines.length * 6; 
+    
+    const startY = (doc.internal.pageSize.height - textHeight) / 2;
+  
+    // Add content to the PDF
+    doc.text(padding, startY, lines);
+  
+    // Save the PDF
+    doc.save('inquiry_details.pdf');
+  };
 
   const columns = [
     {
@@ -206,6 +261,7 @@ function AdminInquiries() {
             {record.status === 'Pending' ? 'Pending' : 'Done'}
           </Button>
           <Button className="reply-button" onClick={() => handleReply(record._id)}>Reply</Button>
+          <Button type="link" onClick={() => handleDownload(record)}>Download</Button>
         </>
       ),
     },

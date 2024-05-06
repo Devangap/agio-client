@@ -908,6 +908,7 @@ const MedicalAppointments = () => {
               onOk={handleReschedule}
               confirmLoading={confirmLoading}
               onCancel={handlePopupCancelForReschedule}
+              width={550}
             >
               <div className="emp-appointment-container-secondary-1">
                 <div>
