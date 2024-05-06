@@ -28,6 +28,7 @@ import AnnCalHead from './pages/AnnCalHead';
 
 import AnnCalendar from './pages/AnnCalendar';
 import AnnCalendarForm from './pages/AnnCalendarForm';
+import AnnReport from './pages/AnnReport';
 
 import LeaveCal from './pages/LeaveCal'
 
@@ -47,6 +48,7 @@ import Main_Notifications from './pages/Main_Notifications';
 import LeaveHrsupdisplay from './pages/leaveHrsupdisplay'
 import LeaveUpdate from './pages/leaveUpdate';
 import Leaveempatt from './pages/Leaveempatt';
+import LeaveReport from './pages/LeaveReport';
 
 import TraProtectedRoute from './components/TraProtectedRoute';
 import TraPublicRoute from './components/TraPublicRoute';
@@ -259,6 +261,8 @@ function App() {
           <Route path='/Leaveoverview' element={<ProtectedRoute><Leaveoverview/></ProtectedRoute>} />
           <Route path='/LeaveCal' element={<ProtectedRoute><LeaveCal/></ProtectedRoute>} />
           <Route path='/Leaveempatt' element={<ProtectedRoute><Leaveempatt/></ProtectedRoute>} />
+          
+          <Route path='/LeaveReport' element={<ProtectedRoute><LeaveReport/></ProtectedRoute>} />
 
           <Route path='/Main_Register' element={<Main_register />} />
           <Route path='/Main_Login' element={<Main_login />} />
@@ -276,6 +280,7 @@ function App() {
 
           <Route path="/AnnCalendar"element={<ProtectedRoute><AnnCalendar /></ProtectedRoute>} />
           <Route path="/AnnCalendarForm"element={<ProtectedRoute><AnnCalendarForm /></ProtectedRoute>} />
+          <Route path="/AnnReport"element={<ProtectedRoute><AnnReport /></ProtectedRoute>} />
 
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 

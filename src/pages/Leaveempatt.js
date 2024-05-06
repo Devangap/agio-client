@@ -70,7 +70,18 @@ function Leaveempatt() {
             );
         } else if (!record.attendance && !record.leaveSubmission) {
             return (
-                <Button onClick={() => handleSendWarning(record)}>Send Warning</Button> // Call handleSendWarning function on button click
+                <Button
+                type="primary"
+                className="updateleaveemp"
+                style={{ backgroundColor: '#ffc658' }}
+                onClick={() => handleSendWarning(record)}
+            >
+                Send Warning
+            </Button>
+            );
+        } else if (!record.attendance && record.warningSent) { // Add condition to check if warning is already sent
+            return (
+                <span>Warning Sent</span>
             );
         } else {
             return '-';
@@ -79,7 +90,7 @@ function Leaveempatt() {
 
     const handleSendWarning = (record) => {
         // Set the selected employee details
-        setSelectedEmployee(record);
+        setSelectedEmployee({ ...record, warningSent: true }); // Set the warningSent flag
         // Set the modal visible
         setWarningModalVisible(true);
     };
@@ -160,7 +171,16 @@ console.log('Modified Empid:', modifiedEmpid);
     return (
         <div>
             <Layout>
-                <h1>Leave Employee Attendance</h1>
+            <h3
+    style={{
+        fontWeight: 'bold',
+        marginTop: '10px',
+        marginRight: '10px',
+        marginBottom: '30px'
+    }}
+>
+    Leave Employee Attendance
+</h3>
                 <DatePicker
                     onChange={handleDateChange}
                     value={selectedDate}
@@ -180,9 +200,9 @@ console.log('Modified Empid:', modifiedEmpid);
                         return isCSV;
                     }}
                 >
-                    <Button className="LinsertEmp" style={{ float: 'right' }}>
-                        Insert Employee Attendance
-                    </Button>
+                    <Button className="LinsertEmp" style={{ marginLeft: "500px",marginTop: "-100px",backgroundColor: '#ffc658' }}>
+    Insert Employee Attendance
+</Button>
                 </Upload>
                 {attendanceData && attendanceData.length > 0 && (
                     <Table

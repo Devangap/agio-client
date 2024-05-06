@@ -153,17 +153,7 @@ function AnnHRsup() {
                 </Form.Item>
               </div>
               <div className="itemUpload">
-                {/* Upload Images */}
-                <Form.Item label='Upload Images' name='file'>
-                  <Upload 
-                    beforeUpload={handleImageBeforeUpload} 
-                    onRemove={(file) => handleRemove(file, true)} 
-                    fileList={fileList} 
-                    listType="picture"
-                  >
-                    <Button icon={<UploadOutlined />}>Select Image</Button>
-                  </Upload>
-                </Form.Item>
+                
                 {/* Upload Videos */}
                 <Form.Item label='Upload Videos' name='video'>
                   <Upload 
