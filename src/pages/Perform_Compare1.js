@@ -68,7 +68,7 @@ function AreaProgressChartdrywet({dataC , maxval}) {
                 <div
                   className="bar-item-filled"
                   style={{
-                    width: `${(progressbar.value * 100)/(maxval+2)}%`,
+                    width: `${(progressbar.value * 100)/(maxval+100)}%`,
                   }}
                 ></div>
               </div>
@@ -97,8 +97,8 @@ function CompareChart({dataC}){
           style={{ boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)" }}
         >
           
-          <XAxis type="number" display = "none" /> {/* Use type="number" for vertical orientation */}
-          <YAxis dataKey="name" type="category" display = "none"/> {/* Use type="category" for vertical orientation */}
+          <XAxis type="number" display = "none" /> 
+          <YAxis dataKey="name" type="category" display = "none"/> 
           
           
           <Bar dataKey="Emp1" fill="#8884d8" >
@@ -298,8 +298,8 @@ function Compare(){
     return(
       
         <Layout >
-        <div style={{display:"flex",justifyContent:"space-around",backgroundColor:'#e3e1e1',height:"50px",alignItems:"center",marginBottom:"20px"}}>
-        <div style={{textAlign:"center",fontSize:20,backgroundColor:'#e3e1e1',borderTopRightRadius:5,width:"300px"}}>
+        <div style={{display:"flex",justifyContent:"space-around",backgroundColor:'#fafaf0',height:"50px",alignItems:"center",marginBottom:"20px",borderRadius:20}}>
+        <div style={{textAlign:"center",fontSize:20,backgroundColor:'#fafaf0',borderTopRightRadius:5,width:"300px"}}>
           <div >{Employee1Name}</div>
           </div>          <div>
             <Radio.Group value={formdata} onChange={(e)=>{
@@ -309,20 +309,20 @@ function Compare(){
                         setFormData({...formdata, time: e.target.value})
                     }}
                     style={{ display: 'block' }}>
-            <Radio.Button  value="week">Week</Radio.Button>
-            <Radio.Button value="month">Month</Radio.Button>
-            <Radio.Button value="year">Year</Radio.Button>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }}  value="week">Week</Radio.Button>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }} value="month">Month</Radio.Button>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }} value="year">Year</Radio.Button>
           </Radio.Group>
           </div>
-          <div style={{textAlign:"center",fontSize:20,backgroundColor:'#e3e1e1',borderTopRightRadius:5,width:"300px"}}>
+          <div style={{textAlign:"center",fontSize:20,backgroundColor:'#fafaf0',borderTopRightRadius:5,width:"300px"}}>
           <div >{Employee2Name}</div>
           </div>
           </div>
 
-      <div style={{ display: "flex", justifyContent: "space-between" , height: '80%', overflowY: 'auto'}}>
+      <div style={{ display: "flex", justifyContent: "space-between" , height: '80%'}}>
         <div style={{ flex:1}}>
           
-        <div style={{boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)'}}><AreaProgressChart dataC={charcdatacutsemp1} maxval={max}/>
+        <div style={{}}><AreaProgressChart dataC={charcdatacutsemp1} maxval={max}/>
         <AreaProgressChartdrywet dataC={drywetemp1} maxval={ymax}/>
         </div>
         </div>
@@ -331,7 +331,7 @@ function Compare(){
             
         </div>
         <div style={{ flex:1}}>
-        <div style={{boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.1)'}}>
+        <div style={{}}>
           <AreaProgressChart dataC={charcdatacutsemp2} maxval={max}/>
           <AreaProgressChartdrywet dataC={drywetemp2} maxval={ymax}/>
         </div>  

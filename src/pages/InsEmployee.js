@@ -16,27 +16,52 @@ function InsEmployee() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const { userId } = useParams();
+  
+  const getEmployeeData = async () => {
+    try {
+        dispatch(showLoading());
+        const response = await axios.post(
+            '/api/employee/get-employee-info-by-id',
+            {},
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            }
+        );
+        dispatch(hideLoading());
+        if (response.data.success) {
+            return response.data.data.empid;
+        } else {
+            throw new Error("Failed to fetch employee data");
+        }
+    } catch (error) {
+        dispatch(hideLoading());
+        console.error("Error fetching employee data:", error);
+        throw error;
+    }
+  };
 
   const getInsuranceData = async () => {
     try {
-      dispatch(showLoading());
-      const response = await axios.get(
-        `/api/insurance/getInsuranceEmployee/${userId}`,
-        {
-          headers: {
-            Authorization: "Bearer " + token, 
-          },
+        dispatch(showLoading());
+        const empid = await getEmployeeData();
+        const response = await axios.get(
+            `/api/insurance/getInsuranceEmployee/${empid}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + token, 
+                },
+            }
+        );
+        console.log(response)
+        dispatch(hideLoading());
+        if (response.data.success) {
+            setInsuranceData(response.data.insuranceData);
         }
-      );
-      console.log("aaaaaaaaaaa");
-      console.log(response)
-      dispatch(hideLoading());
-      if (response.data.success) {
-        setInsuranceData(response.data.insuranceData);
-      }
     } catch (error) {
-      dispatch(hideLoading());
-      console.error("Error fetching insurance data:", error);
+        dispatch(hideLoading());
+        console.error("Error fetching insurance data:", error);
     }
   };
 
@@ -113,12 +138,17 @@ function InsEmployee() {
 
   const columns = [
     {
-      title: "Name",
+      title: "Number",
+      dataIndex: "insuranceID",
+      key: "insuranceID",
+    },
+    {
+      title: "Full Name",
       dataIndex: "name",
       key: "name",
     },
     {
-      title: "Empid",
+      title: "EmployeeID",
       dataIndex: "id",
       key: "id",
     },
@@ -159,12 +189,16 @@ function InsEmployee() {
       },
     },
     {
+      title: "Method",
+      dataIndex: "method",
+    },
+    {
       title: "Action",
       key: "action",
       render: (text, record) => (
         <div className="insanchor">
-          <Button onClick={() => handleUpdate(record)}>Update</Button>
-          <Button onClick={() => handleDelete(record._id)}>Cancel</Button>
+          <Button className="update" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button className="inscancel" onClick={() => handleDelete(record._id)}>Cancel</Button>
         </div>
       ),
     },
@@ -172,7 +206,7 @@ function InsEmployee() {
 
   return (
     <Layout>
-      <h2 className="ins-title">Claim List</h2>
+      <h2 className="ins-title">Insurance Claim Requsets List</h2>
       <hr />
       <Table columns={columns} dataSource={insuranceData} />
       <Modal
@@ -223,10 +257,10 @@ function InsEmployee() {
         </Form>
       </Modal>
 
-      <div className="institle">
-        <Button type="primary">
-          <Link to="/insClaimSubmit">File a new Insurance Claim Request</Link>
-        </Button>
+      <div style={{ textAlign: "center", marginTop: "20px" }}>
+        <Link to="/insClaimSubmit">
+          <Button type="primary" className="insStatusButton">File a new Insurance Claim Request</Button>
+        </Link>
       </div>
     </Layout>
   );

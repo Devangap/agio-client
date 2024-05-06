@@ -4,10 +4,13 @@ import { Table, Button, message, Modal, Form, Input } from 'antd';
 import { useLocation } from 'react-router-dom';
 import Layout from '../components/Layout';
 import '../inquiry.css';
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const { TextArea } = Input;
 
-function MyInquiries() {
+const MyInquiries = () => {
   const location = useLocation();
   const [inquiries, setInquiries] = useState([]);
   const [updateModalVisible, setUpdateModalVisible] = useState(false);
@@ -81,10 +84,58 @@ function MyInquiries() {
     }
   };
 
+
+
+  const handleDownload = (selectedInquiry) => {
+    // Create a new jsPDF instance with A4 dimensions
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4',
+    });
+  
+    // Set padding
+    const padding = 10;
+    const usableWidth = doc.internal.pageSize.width - (padding * 2);
+  
+    // Format the content for the selected inquiry
+    const content = `
+  Inquiry ID: ${selectedInquiry.inquiryID}
+  
+  Full Name: ${selectedInquiry.name}
+  
+  Username: ${selectedInquiry.username}
+  
+  Inquiry Date: ${selectedInquiry.inquirydate}
+  
+  Phone Number: ${selectedInquiry.phoneNumber}
+  
+  Inquiry: ${selectedInquiry.describe}
+  
+  Reply: ${selectedInquiry.reply || 'No reply'}
+  
+  Status: ${selectedInquiry.status}
+  `;
+  
+    // Calculate height of text
+    const lines = doc.splitTextToSize(content, usableWidth);
+    const textHeight = lines.length * 6; // Assuming font size is 12 and line height is 6
+  
+    // Calculate Y position to center text vertically
+    const startY = (doc.internal.pageSize.height - textHeight) / 2;
+  
+    // Add content to the PDF
+    doc.text(padding, startY, lines);
+  
+    // Save the PDF
+    doc.save('inquiry_details.pdf');
+  };
+  
+
   const columns = [
     {
       title: 'Inquiry ID',
-      dataIndex: 'inquiryID', 
+      dataIndex: 'inquiryID',
       key: 'inquiryID',
     },
     {
@@ -151,30 +202,32 @@ function MyInquiries() {
             Update
           </Button>
           <Button danger onClick={() => handleDelete(record._id)}>Delete</Button>
+          <Button type="link" onClick={() => handleDownload(record)}>Download</Button>
         </>
       ),
     },
   ];
 
-  // Filter inquiries based on search query
-  const filteredInquiries = inquiries.filter(inquiry => inquiry.inquiryID.includes(searchQuery));
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+  };
+  const filteredInquiries = inquiries.filter(
+    (inquiry) =>
+      inquiry.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      inquiry.inquiryID.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <Layout>
       <div className="i-container">
         <h1 className="i-title">My Inquiries</h1>
-        {/* Search Bar */}
         <Input
           placeholder="Search by Inquiry ID"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           style={{ marginBottom: '1rem' }}
         />
-        {/* Table */}
-        <Table dataSource={filteredInquiries} columns={columns}  />
-
-        {/* Modals */}
-        {/* Detail Modal */}
+        <Table dataSource={filteredInquiries} columns={columns} scroll={{ x: true, y: 400 }} />
         <Modal
           title="Inquiry Details"
           visible={detailModalVisible}
@@ -184,7 +237,6 @@ function MyInquiries() {
           <p>{fullInquiry}</p>
           <p>{fullReply}</p>
         </Modal>
-        {/* Update Modal */}
         <Modal
           title="Update Inquiry"
           visible={updateModalVisible}
@@ -217,6 +269,6 @@ function MyInquiries() {
       </div>
     </Layout>
   );
-}
+};
 
 export default MyInquiries;

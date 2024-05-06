@@ -28,6 +28,7 @@ import AnnCalHead from './pages/AnnCalHead';
 
 import AnnCalendar from './pages/AnnCalendar';
 import AnnCalendarForm from './pages/AnnCalendarForm';
+import AnnReport from './pages/AnnReport';
 
 import LeaveCal from './pages/LeaveCal'
 
@@ -46,6 +47,8 @@ import LeaveEmpform from './pages/leaveEmpform';
 import Main_Notifications from './pages/Main_Notifications';
 import LeaveHrsupdisplay from './pages/leaveHrsupdisplay'
 import LeaveUpdate from './pages/leaveUpdate';
+import Leaveempatt from './pages/Leaveempatt';
+import LeaveReport from './pages/LeaveReport';
 
 import TraProtectedRoute from './components/TraProtectedRoute';
 import TraPublicRoute from './components/TraPublicRoute';
@@ -62,6 +65,8 @@ import Inquiry from './pages/inquiry';
 import InsClaimSubmit from './pages/InsClaimSubmit';
 import InsEmployee from './pages/InsEmployee';
 import InsuranceManagerDisplay from './pages/InsuranceManagerDisplay';
+import InsuranceStatus from './pages/InsuranceStatus';
+import InsuranceManager from './pages/InsuranceManager';
 
 
 import { useSelector } from 'react-redux';
@@ -131,7 +136,13 @@ import Rewardsm from "./pages/Perform_Rewards";
 import Rank from "./pages/Perform_Rank";
 import Compare1 from "./pages/Perform_Compare1";
 
-import Charta from "./pages/Perform_Chart"
+import Charta from "./pages/Perform_Chart";
+
+import Viewprofileadmin from "./pages/Perform_viewemp";
+import Chartadmin from "./pages/Perform_viewempAdmin" 
+ 
+import TraBookingdisplayAll from './pages/TraBookingdisplayAll';
+
 
 
 
@@ -189,10 +200,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/AnnHRsup" element={<AnnHRsup />} />
-          <Route path="/AnnDisplay" element={<AnnDisplay />} />
-          <Route path="/AnnUpdate/:id" element={<AnnUpdate />} />
-          <Route path="/LeaveHRsup" element={<LeaveHRsup />} />
+         
 
           <Route path="/home" element={<TraHome />} />
           <Route path="/dregister" element={<TraDriverRegister />} />
@@ -250,12 +258,15 @@ function App() {
         
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
           <Route path='/LeaveEmp' element={<ProtectedRoute><LeaveEmp /></ProtectedRoute>} />
-          <Route path='/LeaveEmpform' element={<ProtectedRoute><LeaveEmpform /></ProtectedRoute>} />
+          
           <Route path='/LeaveHrsupdisplay' element={<ProtectedRoute><LeaveHrsupdisplay /></ProtectedRoute>} />
           <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
           <Route path='/LeaveUpdate/:id' element={<ProtectedRoute><LeaveUpdate/></ProtectedRoute>} />
           <Route path='/Leaveoverview' element={<ProtectedRoute><Leaveoverview/></ProtectedRoute>} />
           <Route path='/LeaveCal' element={<ProtectedRoute><LeaveCal/></ProtectedRoute>} />
+          <Route path='/Leaveempatt' element={<ProtectedRoute><Leaveempatt/></ProtectedRoute>} />
+          
+          <Route path='/LeaveReport' element={<ProtectedRoute><LeaveReport/></ProtectedRoute>} />
 
           <Route path='/Main_Register' element={<Main_register />} />
           <Route path='/Main_Login' element={<Main_login />} />
@@ -273,6 +284,7 @@ function App() {
 
           <Route path="/AnnCalendar"element={<ProtectedRoute><AnnCalendar /></ProtectedRoute>} />
           <Route path="/AnnCalendarForm"element={<ProtectedRoute><AnnCalendarForm /></ProtectedRoute>} />
+          <Route path="/AnnReport"element={<ProtectedRoute><AnnReport /></ProtectedRoute>} />
 
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
@@ -313,6 +325,7 @@ function App() {
           <Route path='/TraVehicleviwe' element={<ProtectedRoute><TraVehicleviwe/></ProtectedRoute>} />
           <Route path='/TraDriverViwe' element={<ProtectedRoute><TraDriverViwe/></ProtectedRoute>} />
           <Route path='/TraPayment' element={<ProtectedRoute><TraPayment/></ProtectedRoute>} />
+          <Route path='/TraBookingdisplayAll' element={<ProtectedRoute><TraBookingdisplayAll/></ProtectedRoute>} />
 
 
 
@@ -328,10 +341,12 @@ function App() {
           <Route path='/inquiryAdmin' element ={<ProtectedRoute><InquiryAdmin/></ProtectedRoute>} />
           
 
-          <Route path='/insClaimSubmit' element={<InsClaimSubmit/>}/>
-          <Route path='/insEmployee/:userId' element={<InsEmployee/>}/>
-          <Route path='/insEmployee' element={<InsEmployee/>}/>
-          <Route path='/InsuranceManagerDisplay' element={<InsuranceManagerDisplay/>}/>
+          <Route path='/insClaimSubmit' element={<ProtectedRoute><InsClaimSubmit/></ProtectedRoute>}/>
+          <Route path='/insEmployee/:userId' element={<ProtectedRoute><InsEmployee/></ProtectedRoute>}/>
+          <Route path='/insEmployee' element={<ProtectedRoute><InsEmployee/></ProtectedRoute>}/>
+          <Route path='/InsuranceManagerDisplay' element={<ProtectedRoute><InsuranceManagerDisplay/></ProtectedRoute>}/>
+          <Route path='/InsuranceStatus' element={<ProtectedRoute><InsuranceStatus/></ProtectedRoute>}/>
+          <Route path='/InsuranceManager' element={<ProtectedRoute><InsuranceManager/></ProtectedRoute>}/>
 
           
           /*performance*/
@@ -346,6 +361,8 @@ function App() {
           <Route path="/rank" element = {<Rank/>}/>
           <Route path="/com/:id" element = {<ProtectedRoute><Compare1/></ProtectedRoute>}/> 
           <Route path="/viewemp/:id" element = {<ProtectedRoute><Charta/></ProtectedRoute>}/> 
+          <Route path="/viewempadmin/:id" element = {<ProtectedRoute><Chartadmin/></ProtectedRoute>}/> 
+          <Route path="/viewempbyname" element = {<ProtectedRoute><Viewprofileadmin/></ProtectedRoute>}/>
 
          
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
-import { Table, Button, message, Modal, Form, Input } from 'antd';
+import { Table, Button, message} from 'antd';
 import Layout from '../components/Layout';
 import { useNavigate } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
@@ -81,7 +81,7 @@ function TraDriverViwe() {
             </div>
             <Button className="bookdetails"
       
-      onClick={generatePDF}
+      onClick={generatePDF} // report genarate
     >
       Download Report
     </Button>

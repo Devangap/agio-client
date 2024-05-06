@@ -208,7 +208,7 @@ Employee
 }
 
 .emp-reschedule-button {
-    background-color: #FFC15E;
+    background-color: #ffc15e8a;
     font-weight: bold;
     border-color: #FFC15E;
     border-radius: 20px;
@@ -239,6 +239,28 @@ Employee
  .ant-tabs-nav-list {
     margin-left: 10px !important;
  }
+
+ .search-input {
+    display: flex;
+    flex-direction: row;
+    height: 42px;
+    background-color: #eeeeee;
+    border: 1px solid #eeeeee;
+    border-radius: 9px;
+ }
+
+ .search-input-text {
+    display: flex;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    width: 50px;
+    font-size: 20px;
+ }
+
+
+
+
 
 
 
@@ -329,11 +351,11 @@ doc date picker
 .single-date-content-inputs {
     
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 250px 250px;
 }
 
 .single-date Input {
-    width: 70px !important;
+    width: 150px !important;
     margin-right: 10px;
     text-align: center;
 }
@@ -378,6 +400,10 @@ doc date picker
 }
 .doc-manage-parameters-inputs {
 
+}
+
+.doc-manage-parameters-inputs-section {
+    width: 355px;
 }
 
 .doc-manage-parameters-inputs label {
@@ -507,8 +533,24 @@ medical-overview
     display: flex;
     padding: 45px 0px 10px 10px;
     width: 100%;
+    margin-left: 15px;
 }
 
+@keyframes scale {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.2);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  .value-animation {
+    animation: scale 0.5s ease-in-out;
+  }
 
 
 /*
@@ -616,6 +658,7 @@ medical-reports
 
 
 
+
 .doc-reports-secondary-2-section-3-data {
     display: flex;
     flex-direction: row;
@@ -630,6 +673,7 @@ medical-reports
     width: 40%;
     padding-left: 30px;
 }
+
 
 
 
@@ -672,4 +716,5 @@ medical-reports
     width: 40%;
     padding-left: 30px;
 }
+
 

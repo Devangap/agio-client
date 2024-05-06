@@ -7,8 +7,12 @@ import { useDispatch } from "react-redux";
 
 function InsuranceManagerDisplay() {
   const [insuranceData, setInsuranceData] = useState([]);
+  const [insuranceData2, setInsuranceData2] = useState([]);
   const [visible, setVisible] = useState(false); 
   const [selectedInsurance, setSelectedInsurance] = useState(null); 
+  const [updateModalVisible, setUpdateModalVisible] = useState(false); 
+  const [searchTerm1, setSearchTerm1] = useState("");  
+  const [searchTerm2, setSearchTerm2] = useState(""); 
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
 
@@ -48,7 +52,7 @@ function InsuranceManagerDisplay() {
 
   const handleUpdate = (record) => {
     setSelectedInsurance(record); 
-    setVisible(true); 
+    setUpdateModalVisible(true); 
   }
 
   const handleDelete = async (id) => {
@@ -71,6 +75,7 @@ function InsuranceManagerDisplay() {
 
   const handleCancel = () => {
     setVisible(false);
+    setUpdateModalVisible(false); 
   }
 
   const handleSave = async () => {
@@ -117,15 +122,142 @@ function InsuranceManagerDisplay() {
     }
   };
   
+  const handleInsuranceUpdate = async (insuranceType) => {
+    try {
+      dispatch(showLoading());
+      const response = await axios.put(`/api/insurance/changeMethod/${selectedInsurance._id}`, { method: insuranceType });
+      dispatch(hideLoading());
+      if (response.data.success) {
+        message.success(response.data.message);
+        setVisible(false);
+        setInsuranceData(insuranceData.map(item => item._id === selectedInsurance._id ? response.data.insurance : item));
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Error updating insurance method:", error);
+      message.error("Failed to update insurance method.");
+    }
+  };
+
+  const handleSearch1 = async () => { 
+    try {
+      if (!searchTerm1.trim()) {
+        message.warning("Please enter an Employee ID to search.");
+        return;
+      }
+      dispatch(showLoading());
+      const response = await axios.get(
+        `/api/insurance/getInsuranceEmployee/${searchTerm1}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      dispatch(hideLoading());
+      if (response.data.success) {
+        setInsuranceData(response.data.insuranceData);
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Error searching insurance data:", error);
+      message.error("Failed to search insurance data.");
+    }
+  };
+
+  const handleReset = () => {
+    getInsuranceData();
+    setSearchTerm1("");
+  };
+
+  const handleSearch2 = async () => { 
+    try {
+      if (!searchTerm2.trim()) {
+        message.warning("Please enter an Employee ID to search.");
+        return;
+      }
+      dispatch(showLoading());
+      const response = await axios.get(
+        `/api/insurance/getInsuranceEmployee/${searchTerm2}`,
+        {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+      dispatch(hideLoading());
+      if (response.data.success) {
+        setInsuranceData2(response.data.insuranceData); 
+      } else {
+        message.error(response.data.message);
+      }
+    } catch (error) {
+      dispatch(hideLoading());
+      console.error("Error searching insurance data:", error);
+      message.error("Failed to search insurance data.");
+    }
+  }
+  
+  const handleReset2 = () => {
+    setSearchTerm2("");
+  };
+
+  const handleDownload = async (record) => {
+    try {
+      const response = await axios.get(`/api/insurance/generate-pdf/${record.id}`, {
+        responseType: 'blob',
+      });
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', `insurance_claim_${record.id}.pdf`);
+      document.body.appendChild(link);
+      link.click();
+    } catch (error) {
+      console.error('Error downloading PDF:', error);
+      message.error('Failed to download PDF');
+    }
+  };
+
+  const handlereport = async () => {
+    try {
+      const response = await axios.post("/api/insurance/generate-allpdf", { insuranceData: insuranceData }, { responseType: 'blob' });
+
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'insurance_reports.pdf');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error('Error downloading reports:', error);
+      message.error('Failed to download reports');
+    }
+  };
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: 'name',
+      title: "Number",
+      dataIndex: "insuranceID",
+      key: "insuranceID",
     },
     {
-      title: "Empid",
+      title: "Full Name",
+      dataIndex: "name",
+      key: 'name',
+      render: (text, record) => (
+        <span className="insanchor" onClick={() => { setVisible(true); setSelectedInsurance(record); }}>{text}</span>
+      ),
+    },
+    {
+      title: "EmployeeID",
       dataIndex: "id",
       key: 'id',
     },
@@ -163,8 +295,47 @@ function InsuranceManagerDisplay() {
       key: 'action',
       render: (text, record) => (
         <div className="insactbutton">
-          <Button onClick={() => handleUpdate(record)}>Update</Button>
-          <Button onClick={() => handleDelete(record._id)}>Cancel</Button>
+          <Button className="update" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button className="inscancel"onClick={() => handleDelete(record._id)}>Cancel</Button>
+        </div>
+      ),
+    },
+  ];
+
+  const columns2 = [
+    {
+      title: "Number",
+      dataIndex: "insuranceID",
+      key: "insuranceID",
+    },
+    {
+      title: "Full Name",
+      dataIndex: "name",
+      key: 'name',
+    },
+    {
+      title: "EmployeeID",
+      dataIndex: "id",
+      key: 'id',
+    },
+    {
+      title: "Status",
+      dataIndex: "status",
+      render: (text, record) => (
+        <div className="insstatus"> 
+          {record.status === "Pending" && <h1 className="insanchor" >Approve</h1>}
+          {record.status === "approved" && <h1 className="insanchor" >Reject</h1>}
+          {record.status === "rejected" && <h1 className="insanchor" >Approve</h1>}
+        </div>
+      )
+    },
+    
+    {
+      title: "Action",
+      key: 'action',
+      render: (text, record) => (
+        <div className="insactbutton">
+          <Button className="insreportdownload" onClick={() => handleDownload(record)}>Download</Button>
         </div>
       ),
     },
@@ -172,30 +343,101 @@ function InsuranceManagerDisplay() {
 
   return (
     <Layout>
-      <h1>Claim List</h1>
+      <div className="institle">
+        <h1>Insurance Requset Claim List</h1>
+      </div>
       <hr/>
-      <Table
-        columns={columns}
-        dataSource={insuranceData}
-      />
+      <div className="insSearch">
+        <Input
+          placeholder="Enter Employee ID"
+          value={searchTerm1}
+          onChange={(e) => setSearchTerm1(e.target.value)}
+          style={{ marginRight: 8, width: 200 }}
+        />
+        <Button type="primary" onClick={handleSearch1} style={{ marginRight: 8 }}>
+          Search
+        </Button>
+        <Button onClick={handleReset} style={{ marginRight: 8 }}>
+          Reset
+        </Button>
+        <Button onClick={handlereport} className="insreport">
+          Download Reports
+        </Button>
+      </div>
+      <div>
+        <Table 
+          columns={columns}
+          dataSource={insuranceData}
+          pagination={false}
+          scroll={{ x: 'max-content' }} 
+        />
+      </div>
+      
+      <Modal
+        title="Choose the Insurance Method"
+        visible={visible}
+        onCancel={handleCancel}
+        footer={[
+          <Button key="cancel" onClick={handleCancel}>Cancel</Button>,
+        ]}
+      >
+        {selectedInsurance && (
+          <div>
+            <p>Name: {selectedInsurance.name}</p>
+            <p>Empid: {selectedInsurance.id}</p>
+            <p>Number: {selectedInsurance.phoneNumber}</p>
+            <p>Description: {selectedInsurance.description}</p>
+            <div>
+              <Button onClick={() => handleInsuranceUpdate('24h Insurance')}>24h Insurance</Button>
+              <Button onClick={() => handleInsuranceUpdate('Sri Lanka Insurance')}>Sri Lanka Insurance</Button>
+            </div>
+          </div>
+        )}
+      </Modal>
+      
       <Modal
         title="Update Insurance"
-        visible={visible}
+        visible={updateModalVisible}
         onOk={handleSave}
         onCancel={handleCancel}
       >
-        <Form layout="vertical">
-          <Form.Item label="Full Name">
-            <Input value={selectedInsurance?.name} onChange={e => setSelectedInsurance({...selectedInsurance, name: e.target.value})} />
-          </Form.Item>
-          <Form.Item label="Phone Number">
-            <Input value={selectedInsurance?.phoneNumber} onChange={e => setSelectedInsurance({...selectedInsurance, phoneNumber: e.target.value})} />
-          </Form.Item>
-          <Form.Item label="Description">
-            <Input value={selectedInsurance?.description} onChange={e => setSelectedInsurance({...selectedInsurance, description: e.target.value})} />
-          </Form.Item>
-        </Form>
+        {selectedInsurance && (
+          <Form layout="vertical">
+            <Form.Item label="Full Name">
+              <Input value={selectedInsurance?.name} onChange={e => setSelectedInsurance({...selectedInsurance, name: e.target.value})} />
+            </Form.Item>
+            <Form.Item label="Phone Number">
+              <Input value={selectedInsurance?.phoneNumber} onChange={e => setSelectedInsurance({...selectedInsurance, phoneNumber: e.target.value})} />
+            </Form.Item>
+            <Form.Item label="Description">
+              <Input value={selectedInsurance?.description} onChange={e => setSelectedInsurance({...selectedInsurance, description: e.target.value})} />
+            </Form.Item>
+          </Form>
+        )}
       </Modal>
+      <div className="institle">
+        <h1>Download Employee's Insurance Claim Report</h1>
+      </div>
+      <hr/>
+      <div className="insSearch">
+        <Input
+          placeholder="Enter Employee ID"
+          value={searchTerm2}
+          onChange={(e) => setSearchTerm2(e.target.value)}
+          style={{ marginRight: 8, width: 200 }}
+        />
+        <Button type="primary" onClick={handleSearch2} style={{ marginRight: 8 }}>
+          Search
+        </Button>
+        <Button onClick={handleReset2}>Reset</Button>
+      </div>
+      <div style={{ height: "500px", overflow: "auto" }}>
+        <Table 
+          columns={columns2}
+          dataSource={insuranceData2}
+          pagination={false} 
+        />
+      </div>
     </Layout>
   );
 }

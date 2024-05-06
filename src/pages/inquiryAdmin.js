@@ -3,6 +3,9 @@ import axios from 'axios';
 import { Table, Button, message, Modal, Form, Input } from 'antd';
 import Layout from '../components/Layout';
 import '../inquiry.css';
+import { saveAs } from 'file-saver';
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 
 const { TextArea } = Input;
 
@@ -120,6 +123,50 @@ function AdminInquiries() {
       onOk() {},
     });
   };
+  const handleDownload = (record) => {
+    // Create a new jsPDF instance with A4 dimensions
+    const doc = new jsPDF({
+      orientation: 'portrait',
+      unit: 'mm',
+      format: 'a4',
+    });
+  
+    // Set padding
+    const padding = 10;
+    const usableWidth = doc.internal.pageSize.width - (padding * 2);
+  
+    // Format the content for the selected inquiry
+    const content = `
+  Inquiry ID: ${record.inquiryID}
+  
+  Full Name: ${record.name}
+  
+  Username: ${record.username}
+  
+  Inquiry Date: ${record.inquirydate}
+  
+  Phone Number: ${record.phoneNumber}
+  
+  Inquiry: ${record.describe}
+  
+  Reply: ${record.reply || 'No reply'}
+  
+  Status: ${record.status}
+  `;
+  
+    // Calculate height of text
+    const lines = doc.splitTextToSize(content, usableWidth);
+    const textHeight = lines.length * 6; // Assuming font size is 12 and line height is 6
+  
+    // Calculate Y position to center text vertically
+    const startY = (doc.internal.pageSize.height - textHeight) / 2;
+  
+    // Add content to the PDF
+    doc.text(padding, startY, lines);
+  
+    // Save the PDF
+    doc.save('inquiry_details.pdf');
+  };
 
   const columns = [
     {
@@ -206,6 +253,7 @@ function AdminInquiries() {
             {record.status === 'Pending' ? 'Pending' : 'Done'}
           </Button>
           <Button className="reply-button" onClick={() => handleReply(record._id)}>Reply</Button>
+          <Button type="link" onClick={() => handleDownload(record)}>Download</Button>
         </>
       ),
     },

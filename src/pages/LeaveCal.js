@@ -9,6 +9,7 @@ import 'react-big-calendar/lib/css/react-big-calendar.css';
 import Layout from '../components/Layout';
 import axios from 'axios'; // Import axios for making API requests
 import { Modal, Button } from 'antd'; // Import Modal and Button from Ant Design
+import '../leaveEmp.css';
 
 
 const LeaveCal = () => {
@@ -109,8 +110,12 @@ const LeaveCal = () => {
 
     return (
         <Layout>
-            <h1>Leave Calendar</h1>
-            <button>Add Leave</button>
+            <h3 style={{ color: 'rgb(66, 34, 2)', marginBottom:"30px"}}>Leave Calendar</h3>
+          
+
+            <div className = 'leavecalcomp'>
+            
+            
 
             <div>
                 <Calendar
@@ -123,6 +128,8 @@ const LeaveCal = () => {
                     onSelectEvent={handleEventClick} // Handle event click
                 />
             </div>
+            </div>
+
 
             <Modal
                 title="Leave Details"

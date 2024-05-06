@@ -1,16 +1,18 @@
 import React from 'react'
-import { Button, Form, Input } from 'antd'
+import {Button, Form ,  Input,Select, DatePicker } from 'antd'
 import '../mainlogin.css';
 
-import { Link, useNavigate } from 'react-router-dom'
+import {Link, useNavigate }from 'react-router-dom'
 import axios from "axios";
 import toast from 'react-hot-toast';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { showLoading, hideLoading } from '../redux/empalerts';
 
 function Main_login() {
+  const { Option } = Select;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  
 
   const onFinish = async (values) => {
     dispatch(showLoading());
@@ -34,7 +36,9 @@ function Main_login() {
           navigate('/TraBookingDisplayAdmin');
           
         }else if (name === "Dulara") {
-          navigate("/AnnDisplay");
+
+          navigate("/InsuranceManager");
+
           
         }else if (name === "Dinura") {
           navigate("/medical-overview");
@@ -43,10 +47,13 @@ function Main_login() {
           navigate("/UniformManagerView");
           
         }else if (name === "Banuka") {
-          navigate("/AnnDisplay");
+          navigate("/view");
           
         }else if (name === "Minuk") {
           navigate("/inquiryAdmin");
+          
+        }else if (name === "Thinal") {
+          navigate("/AnnDisplay");
           
         }
         
@@ -71,6 +78,8 @@ function Main_login() {
     }
   }
 
+  
+  
   return (
     <div className="mainlog">
       <div className="main_login_form_log boxx_log p-3">
@@ -82,25 +91,33 @@ function Main_login() {
             <Form layout='vertical' onFinish={onFinish}>
               <div className="logincontent">
                 <div className='login'>
-                  <div className='field'>
-                    <Form.Item label='Username' name='username_log'>
-                      <Input placeholder='Username'  /> 
+                    <div className='field'>
+                    <Form.Item
+    label='Username'
+    name='username_log'
+    style={{ marginLeft: '450px' }} // Add left margin of 200px
+>
+    <Input placeholder='Username' />
+</Form.Item>
+                    </div>
+                    <Form.Item label='Password' name='password_log'
+                    style={{ marginLeft: '450px' }}>
+                        <Input placeholder='Password'
+                        />
+                        
                     </Form.Item>
-                  </div>
-                  <Form.Item label='Password' name='password_log'>
-                    <Input.Password placeholder='Password'  style={{ width: '400px', height: '50px' }} />
-                  </Form.Item>
                 </div>
                 <div className="Button-conslog">
-                  <Button className='primary-button my-2' htmlType='submit'>LOGIN</Button>
+                    <Button className='primary-button my-2' htmlType='submit'>LOG IN</Button>
                 </div>
-              </div>
-            </Form>
-          </div>
-        </div>
-      </div>
+            </div>
+        </Form>
     </div>
+</div>
+</div>
+</div>
   )
 }
 
 export default Main_login
+
