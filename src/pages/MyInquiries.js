@@ -7,6 +7,7 @@ import '../inquiry.css';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import logoImage from '../Images/logo.png';
 
 const { TextArea } = Input;
 
@@ -86,13 +87,25 @@ const MyInquiries = () => {
 
 
 
-  const handleDownload = (selectedInquiry) => {
+  const handleDownload = async(selectedInquiry) => {
     // Create a new jsPDF instance with A4 dimensions
     const doc = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
       format: 'a4',
     });
+    const logoWidth = 50; 
+      const logoHeight = 50;
+      const centerX = (doc.internal.pageSize.getWidth() - logoWidth) / 2;
+      const centerY = 15;
+      const logo = new Image();
+      logo.src = logoImage;
+      await new Promise(resolve => {
+        logo.onload = () => resolve();
+      });
+      doc.addImage(logo, 'PNG', centerX, centerY, logoWidth, logoHeight);
+
+    
   
     // Set padding
     const padding = 10;

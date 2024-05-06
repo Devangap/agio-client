@@ -6,6 +6,7 @@ import '../inquiry.css';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
+import logoImage from '../Images/logo.png';
 
 const { TextArea } = Input;
 
@@ -123,19 +124,27 @@ function AdminInquiries() {
       onOk() {},
     });
   };
-  const handleDownload = (record) => {
-    // Create a new jsPDF instance with A4 dimensions
+  const handleDownload = async(record) => {
+    
     const doc = new jsPDF({
       orientation: 'portrait',
       unit: 'mm',
       format: 'a4',
     });
+    const logoWidth = 50; 
+    const logoHeight = 50;
+    const centerX = (doc.internal.pageSize.getWidth() - logoWidth) / 2;
+    const centerY = 15;
+    const logo = new Image();
+    logo.src = logoImage;
+    await new Promise(resolve => {
+      logo.onload = () => resolve();
+    });
+    doc.addImage(logo, 'PNG', centerX, centerY, logoWidth, logoHeight);
   
-    // Set padding
     const padding = 10;
     const usableWidth = doc.internal.pageSize.width - (padding * 2);
   
-    // Format the content for the selected inquiry
     const content = `
   Inquiry ID: ${record.inquiryID}
   
@@ -154,11 +163,10 @@ function AdminInquiries() {
   Status: ${record.status}
   `;
   
-    // Calculate height of text
-    const lines = doc.splitTextToSize(content, usableWidth);
-    const textHeight = lines.length * 6; // Assuming font size is 12 and line height is 6
   
-    // Calculate Y position to center text vertically
+    const lines = doc.splitTextToSize(content, usableWidth);
+    const textHeight = lines.length * 6; 
+    
     const startY = (doc.internal.pageSize.height - textHeight) / 2;
   
     // Add content to the PDF
