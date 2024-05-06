@@ -71,7 +71,7 @@ const UniformOrdersChart = () => {
 
   return (
     <Layout>
-      <div style={{ height: '500px', overflowY: 'auto', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+      <div style={{ height: '1500px', overflowY: 'auto', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
         <h2>Executive T-shirts</h2>
         <canvas id="executiveChart" style={{ width: '100%', height: '400px' }} />
 
