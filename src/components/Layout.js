@@ -152,7 +152,7 @@ function Layout({ children }) {
     ];
     const leavemenu = [
         {
-            name: ' Overview',
+            name: 'Leave Overview',
             path: '/leaveoverview',
             icon: 'ri-account-box-line',
         },
@@ -160,6 +160,16 @@ function Layout({ children }) {
         {
             name: ' Leave requests',
             path: '/leaveHrsupdisplay',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Leave Report',
+            path: '/LeaveReport',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Attendance',
+            path: '/Leaveempatt',
             icon: 'ri-account-box-line',
         },
        

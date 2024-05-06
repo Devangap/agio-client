@@ -581,7 +581,7 @@ const showModal4 = () => {
     footer={null} // Use null here to remove default buttons
     centered // This will center the modal vertically
 >
-    <div className='annaddannoun' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' ,marginRight: "5000px" ,justifyContent:'center',height:'100%'} }>
+    <div className='annaddannoun' style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' ,marginRight: "1000px" ,justifyContent:'center',height:'100%'} }>
         <Button type="primary" onClick={() => showModal1('image')} className='annaddimage' >
             Upload Image
         </Button>
