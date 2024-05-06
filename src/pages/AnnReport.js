@@ -3,6 +3,7 @@ import Layout from '../components/Layout';
 import { DatePicker,Table } from 'antd';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import logoImage from "../Images/logo.png"
 
 const { MonthPicker } = DatePicker; 
 function AnnReport() {
@@ -42,8 +43,29 @@ function AnnReport() {
             render: text => new Date(text).toLocaleDateString() // Format the date
         }
     ];
-    const downloadPdfReport = () => {
+    const downloadPdfReport = async () => {
         const doc = new jsPDF();
+        const logo = new Image(); // Initialize logo before using it
+        logo.src = logoImage;
+        const logoWidth = 50;
+        const logoHeight = 50;
+        const centerX = (doc.internal.pageSize.getWidth() - logoWidth) / 2;
+        const centerY = 15;
+    
+        await new Promise(resolve => {
+            logo.onload = () => resolve();
+        });
+    
+        // Add the logo to the top of the page
+        doc.addImage(logo, 'PNG', centerX, centerY, logoWidth, logoHeight);
+    
+        // Apply inline CSS for the table
+        doc.setDrawColor(0); // Set border color to black
+        doc.setFillColor(22, 160, 133); // Set fill color for table header
+        doc.setFont('helvetica', 'bold'); // Set font for table header
+    
+        // Adjust startY to move the table down
+        const startY = 100; // Adjust as needed
     
         autoTable(doc, {
             theme: 'striped',
@@ -54,15 +76,16 @@ function AnnReport() {
                 ann.Department,
                 new Date(ann.uploaddate).toLocaleDateString()
             ]),
-            startY: 20,
-            headStyles: { fillColor: [22, 160, 133] }, // Add your own styling here
+            startY: startY, // Move the table down
             margin: { top: 20 }
         });
     
+        // Add title
+        doc.setFontSize(14);
         doc.text('Monthly Announcements Report', 14, 15);
-        doc.save(`Monthly-Report-${selectedMonth?.format('YYYY-MM')}.pdf`);
-    }
     
+        doc.save(`Monthly-Report-${selectedMonth?.format('YYYY-MM')}.pdf`);
+    };
     
 
     return (

@@ -402,9 +402,12 @@ const MedReports = () => {
       missedAppointmentCount += m.missedAppointmentCount;
     }
 
+    if (totalAppointments != 0 && totalAvailabledAppointments != 0){
     totalAppointmentsPercentage = (
       totalAppointments / totalAvailabledAppointments
-    ).toFixed(3);
+    ).toFixed(3);} else {
+      totalAppointmentsPercentage = Number(0).toFixed(3);
+    }
 
     const s = {
       startingMonth: startingMonth,
