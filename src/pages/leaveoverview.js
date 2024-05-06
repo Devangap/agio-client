@@ -1,16 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import axios from 'axios';
-import { Input ,Tabs,Upload,Button,Modal} from 'antd';
-import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar } from 'recharts';
+import { Input ,Tabs,Upload,Button,Modal,Select, DatePicker} from 'antd';
+import { BarChart, CartesianGrid, XAxis, YAxis, Tooltip, Legend, Bar ,ResponsiveContainer} from 'recharts';
 import { Document, Page, pdfjs ,Text,PDFDownloadLink,View,StyleSheet} from '@react-pdf/renderer';
+import { PieChart, Pie, Cell } from 'recharts';
 
 import { Table, message } from 'antd';
 import { useSelector, useDispatch } from 'react-redux';
 import { showLoading, hideLoading } from '../redux/empalerts';
 import toast from 'react-hot-toast';
-
+const { Option } = Select;
 function LeaveOverview() {
+    const [secondModalVisible, setSecondModalVisible] = useState(false);
+    const [selectedDepartment, setSelectedDepartment] = useState('');
+    const [selectedMonth, setSelectedMonth] = useState('');
     const [totalMedicalLeaves, setTotalMedicalLeaves] = useState(0);
     const [totalGeneralLeaves, setTotalGeneralLeaves] = useState(0);
     const [totalAnnualLeaves, setTotalAnnualLeaves] = useState(0);
@@ -27,6 +31,8 @@ function LeaveOverview() {
     const [quarterlyGeneralLeaves, setQuarterlyGeneralLeaves] = useState({});
     const [quarterlyAnnualLeaves, setQuarterlyAnnualLeaves] = useState({}); 
     const [yearlyMedicalLeaves, setYearlyMedicalLeaves] = useState({});
+    const [modalVisible, setModalVisible] = useState(false);
+    const [leaveCounts, setLeaveCounts] = useState(null); 
 const [yearlyGeneralLeaves, setYearlyGeneralLeaves] = useState({});
 const [yearlyAnnualLeaves, setYearlyAnnualLeaves] = useState({});
 const TabPane = Tabs;
@@ -483,7 +489,24 @@ axios.get('/api/employee/yearly-annual-leaves')
         const [showChart, setShowChart] = useState(true);
     
     }
+    const handleButtonClick = () => {
+        setModalVisible(true);
+      };
     
+      const handleModalCancel = () => {
+        setModalVisible(false);
+      };
+      const handleSecondModalCancel = () => {
+        setSecondModalVisible(false);
+      };
+      const pieChartData2 = leaveCounts ? [
+        { name: 'Annual', value: leaveCounts.annualLeaveCount || 0 },
+        { name: 'Medical', value: leaveCounts.medicalLeaveCount || 0 },
+        { name: 'General', value: leaveCounts.generalLeaveCount || 0 }
+    ] : [];
+
+    const COLORS = ['#8884d8', '#82ca9d', '#ffc658'];
+      
 
     
 
@@ -494,6 +517,21 @@ axios.get('/api/employee/yearly-annual-leaves')
             (item.name.toLowerCase().includes(searchText.toLowerCase()) || 
             item.empid.toLowerCase().includes(searchText.toLowerCase())));
     });
+    const handleButtonClick3 = async () => {
+        try {
+          const response = await axios.get('api/employee/leave-count-dep', {
+            params: {
+              department: selectedDepartment,
+              month: selectedMonth
+            }
+          });
+          setLeaveCounts(response.data);
+          setSecondModalVisible(true); // Open the second modal upon successful response
+        } catch (error) {
+          console.error('Error fetching leave counts:', error);
+        }
+        setModalVisible(false);
+      };
 
     return (
         <Layout>
@@ -523,35 +561,65 @@ axios.get('/api/employee/yearly-annual-leaves')
     </ul>
 </div> */}
             
-             <h3>Leave Overview</h3>
-             <Upload
-    name="csvFile"
-    action={'api/employee/uploadexcelattendance'}
-    beforeUpload={file => {
-        const isCSV = file.type === 'text/csv' || (file.type === 'application/vnd.ms-excel' && file.name.endsWith('.csv'));
-        if (!isCSV) {
-            message.error('You can only upload CSV files!');
-        }
-        return isCSV;
-    }}
->
-<Button className='LinsertEmp' style={{ float: 'right',marginLeft:887 }}>Insert Employee Attendance</Button>
+            <h3>Leave Overview</h3>
+      <Button type="primary" style={{ marginBottom: '30px' , marginLeft: '800px',backgroundColor: '#ffc658',color:"#000000"}} onClick={handleButtonClick}>
+        Generate Department Specific Charts
+      </Button>
+      <Modal visible={secondModalVisible} onCancel={handleSecondModalCancel} width={600}>
+    <h3>{selectedDepartment} Leave Counts</h3>
+    <div style={{ width: '400px', height: '400px' }}>
+        <PieChart width={400} height={400}>
+            <Pie
+                data={pieChartData2}
+                cx={200}
+                cy={200}
+                labelLine={false}
+                outerRadius={140}
+                fill="#8884d8"
+                dataKey="value"
+            >
+                {
+                    pieChartData.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))
+                }
+            </Pie>
+            <Tooltip />
+            <Legend />
+        </PieChart>
+    </div>
+</Modal>
 
 
-</Upload>
-{handleDownloadReport()}
-<Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-       
-        contentLabel="Example Modal"
-      >
-        <h2>Generate Reports</h2>
-        <div>
-          <p>Put your report generation content here.</p>
-          <Button onClick={closeModal}>Close</Button>
+      <Modal visible={modalVisible} onCancel={handleModalCancel}>
+        <p>Select a department and a month to generate department-specific charts:</p>
+        <div style={{ marginBottom: '16px' }}>
+          <Select
+            className="department-select"
+            placeholder="Choose department"
+            style={{ width: '450px', marginBottom: '10px' }}
+            onChange={(value) => setSelectedDepartment(value)}
+          >
+            <Option value="HR">HR</Option>
+            <Option value="Logistics">Logistics</Option>
+            <Option value="Procurement Department">Procurement Department</Option>
+            <Option value="Quality Assurance">Quality Assurance</Option>
+            <Option value="Production Department">Production Department</Option>
+            <Option value="Sales and Marketing">Sales and Marketing</Option>
+            <Option value="Finance and Accounting">Finance and Accounting</Option>
+          </Select>
+          <DatePicker
+            picker="month"
+            style={{ width: '250px' }}
+            onChange={(date, dateString) => setSelectedMonth(dateString)}
+          />
         </div>
+        <Button type="primary" onClick={handleButtonClick3} >Generate Charts</Button>
       </Modal>
+             
+
+
+
              <div className = 'leavecalcomp'>
              <Tabs defaultActiveKey="monthly" onChange={(key) => setActiveTab(key)}>
                 <TabPane tab="Monthly" key="monthly">

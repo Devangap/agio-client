@@ -46,6 +46,8 @@ const LeaveEmp = () => {
     const [form] = Form.useForm();
     const [attendanceData, setAttendanceData] = useState([]);
     const [visible, setVisible] = useState(true);
+    const [warnings, setWarnings] = useState([]);
+    const [warningModalVisible, setWarningModalVisible] = useState(false);
 
     const { user } = useSelector((state) => state.user);
     const dispatch = useDispatch();
@@ -69,23 +71,35 @@ const LeaveEmp = () => {
       
       ];
      
+      // This will get the empid from the URL parameter
 
-    const fetchAttendanceData = async () => {
-        try {
-            const response = await axios.get('api/employee/attendance');
-           
-            const filteredAttendanceData = response.data.filter(
-                (attendance) => attendance.empid === user?.empid
-            );
-            setAttendanceData(filteredAttendanceData);
-        } catch (error) {
-            console.error('Error fetching attendance data:', error);
+// Then, when making the request to fetch warnings, include the empid in the request
+const fetchWarnings = async (user, setWarnings) => {
+    try {
+        if (!user || !user.empid) {
+            console.error('User information missing.');
+            return;
         }
-    };
+        // Make sure to include the empid as a route parameter
+        const response = await axios.get(`api/employee/getWarnings/${user.empid}`);
+        if (response.data.success) {
+            // Update the warnings state directly
+            setWarnings(response.data.warnings);
+            console.log('Warnings:', response.data.warnings);
+        } else {
+            // Handle error response
+            console.error('Failed to fetch warnings:', response.data.error);
+        }
+    } catch (error) {
+        console.error('Error fetching warnings:', error);
+    }
+};
 
-    useEffect(() => {
-        fetchAttendanceData();
-    }, [user]);
+// Call the fetchWarnings function with the user object and setWarnings function
+useEffect(() => {
+    fetchWarnings(user, setWarnings); // Pass the user object and setWarnings function
+}, [user]); // Only user is needed here, not warnings
+    
 
     const getData = async () => {
         try {
@@ -497,10 +511,41 @@ const LeaveEmp = () => {
         }
         return endValue.valueOf() <= moment(form.getFieldValue('startDate')).subtract(1, 'days').valueOf();
     };
+    const handleViewWarnings = () => {
+        setWarningModalVisible(true);
+    };
+    const modalWidth = 600; // Adjust as needed
+    const modalHeight = Math.min(window.innerHeight - 200, 800); // Adjust as needed
+
 
 
     return (
         <Layout>
+           <div>
+            {warnings.length > 0 && (
+                <Button type="primary" onClick={handleViewWarnings}>
+                    View Warnings
+                </Button>
+            )}
+            <Modal
+                title="Warnings"
+                visible={warningModalVisible}
+                onCancel={() => setWarningModalVisible(false)}
+                footer={null}
+                width={modalWidth}
+                style={{ top: 20 }} // Adjust as needed
+            >
+                <div style={{ maxHeight: modalHeight, overflowY: 'auto' }}>
+                    <pre>
+                        <ul>
+                            {warnings.map((warning, index) => (
+                                <li key={index}>{warning.message}</li>
+                            ))}
+                        </ul>
+                    </pre>
+                </div>
+            </Modal>
+        </div>
               
             <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {leaveTypes.map((type, index) => (

@@ -139,6 +139,11 @@ function Layout({ children }) {
             path: '/AnnCalendar',
             icon: 'ri-account-box-line',
         },
+        {
+            name: ' Report',
+            path: '/AnnReport',
+            icon: 'ri-bar-chart-line',
+        },
         
         
     ];
@@ -164,6 +169,11 @@ function Layout({ children }) {
             name: ' Employee Attendance',
             path: '/Leaveempatt',
             icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Report',
+            path: '/LeaveReport',
+            icon: 'ri-bar-chart-line',
         },
         {
             name: 'Announcements',

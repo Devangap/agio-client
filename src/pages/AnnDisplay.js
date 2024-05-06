@@ -31,9 +31,12 @@ function AnnDisplay() {
     const [comments, setComments] = useState([]);
     const [isAddModalVisible, setIsAddModalVisible] = useState(false); 
     const [fileList, setFileList] = useState([]);
+    const [videoList, setVideoList] = useState([]);
+    const [visible, setVisible] = useState(false);
 
     const [expandedRows, setExpandedRows] = useState({});
     const [isDesModalVisible, setIsDesModalVisible] = useState(false);
+    const [IsbuttonModalVisible,  setIsbuttonModalVisible] = useState(false);
     const [modalContent, setModalContent] = useState('');
     function disableNotToday(current) {
       
@@ -106,8 +109,55 @@ const toggleDescription = (key) => {
             toast.error("Something went wrong");
         }
     };
+    const onFinish2 = async (values) => {
+       
+      if (!values.expiredate) {
+          message.error('Please select an expiration date');
+          return;
+      }
+  
+      
+      const formData2 = new FormData();
+      
+      videoList.forEach(video => {
+          formData2.append('video', video);
+          console.log(video)
+      });
+
+      
+      
+      Object.keys(values).forEach(key => {
+          formData2.append(key, values[key]);
+      });
+      
+      formData2.append('userid', user?.userid);
+  
+      try {
+          
+          const response = await axios.post('/api/employee/AnnHRsup2', formData2, {
+              headers: {
+                  'Content-Type': 'multipart/form-data',
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+          });
+  
+         
+          if (response.data.success) {
+              toast.success(response.data.message);
+              handleCancel();
+              window.location.reload();
+             
+              navigate('/AnnDisplay');
+          } else {
+              toast.error(response.data.message);
+          }
+      } catch (error) {
+          toast.error("Something went wrong");
+      }
+  };
 
     const showModal1 = () => {
+      setIsbuttonModalVisible(false);
         setIsAddModalVisible(true);
     };
 
@@ -289,25 +339,40 @@ const toggleDescription = (key) => {
             render: (text) => new Date(text).toLocaleDateString(),
         },
         {
-            title: 'File',
-            dataIndex: 'filePath', // Adjust based on your data structure
-            key: 'file',
-            render: (text, record) => {
-             
-              const filename = record?.file?.filename;
-            
-              const backendUrl = 'http://localhost:5001/';
-          
-              const filePath = filename ? `${backendUrl}uploads/${filename}` : '';
-              console.log(filePath)
-              return filename ? (
+          title: 'File',
+          dataIndex: 'file', // Adjust based on your data structure
+          key: 'file',
+          render: (file, record) => {
+            // Extract filename from video path
+            const filename = file ? file.filename : (record.video ? record.video.substring(record.video.lastIndexOf('/') + 1) : null);
+            const backendUrl = 'http://localhost:5001/';
+            const filePath = filename ? `${backendUrl}uploads/${filename}` : '';
+        
+            if (record.video) {
+              // If video field is available, render video
+              return (
                 <div>
-                <img src={filePath} alt={filename} style={{ width: '100px', height: '100px' }} />
-                <p>{filename}</p>
-            </div>
-              ) : null;
-            },
+                  <video controls style={{ width: '100px', height: '100px' }}>
+                    <source src={filePath} type="video/mp4" /> {/* Adjust type as per your video format */}
+                  </video>
+                  {filename && <p>{filename}</p>} {/* Display video name if available */}
+                </div>
+              );
+            } else if (file) {
+              // If file field is available, render image
+              return (
+                <div>
+                  <img src={filePath} alt={filename} style={{ width: '100px', height: '100px' }} />
+                  {filename && <p>{filename}</p>} {/* Display image name if available */}
+                </div>
+              );
+            } else {
+              return null; // If neither file nor video field is available, render nothing
+            }
           },
+        },
+        
+        
           {
             title: 'Description',
             dataIndex: 'Description',
@@ -390,12 +455,143 @@ const toggleDescription = (key) => {
 const handleRemove = file => {
     setFileList(prevFileList => prevFileList.filter(f => f !== file));
   };
+  const showModal3 = () => {
+    setIsbuttonModalVisible(true);
+};
+const handleCancel3 = () => {
+  setIsbuttonModalVisible(false); // Close the modal
+};
+const handleVideoBeforeUpload = file => {
+  const isMP4 = file.type === 'video/mp4' || (file.type === '' && file.name.endsWith('.mp4'));
+  if (!isMP4) {
+    toast.error('You can only upload MP4 files!');
+  }
+  if (isMP4) {
+    setVideoList([...videoList, file]);
+  }
+  return false; // Prevent automatic upload
+};
+const handleCancel4 = () => {
+  setVisible(false);
+};
+
+const showModal4 = () => {
+  setIsbuttonModalVisible(false);
+  setVisible(true);
+};
 
     
     
 
     return (
         <Layout>
+           <Modal
+                    title="Upload Announcement with Videos"
+                    open={visible}
+                    onCancel={handleCancel4}
+                    footer={null} // Use null here to remove default buttons
+                >
+                    <Form layout='vertical' onFinish={onFinish2}>
+            {/* Announcement Title */}
+            <div className="form-row">
+              <div className="item">
+                <Form.Item label='Announcement Title' name='anntitle' rules={[{ required: true, message: 'Please input announcement title!' }]}>
+                  <Input placeholder='Announcement Title' />
+                </Form.Item>
+              </div>
+            </div>
+            {/* Upload Date and Type */}
+            <div className="form-row">
+              <div className="item">
+              <Form.Item label="Upload Date" name="uploaddate">
+    <DatePicker 
+        className="date" 
+        disabledDate={disableNotToday}  // Use the function here
+    />
+</Form.Item>
+              </div>
+              <div className="item">
+                <Form.Item name="Type" label="Type">
+                  <Select className="Type" placeholder="Select announcement type" onChange={handleTypeChange}>
+                    <Option value="General">General</Option>
+                    <Option value="Specific">Specific</Option>
+                  </Select>
+                </Form.Item>
+              </div>
+            </div>
+          
+            {announcementType === 'Specific' && (
+              <div className="form-row">
+                <div className="item">
+                  <Form.Item label="Department" name="Department">
+                    <Select placeholder="Select department">
+                    <Option value="HR">HR</Option>
+             
+             <Option value="Logistics">Logistics</Option>
+             <Option value="Procurement Department">Procurement Department</Option>
+             <Option value="Quality Assurance">Quality Assurance</Option>
+             <Option value="Production Department">Production Department</Option>
+             <Option value="Sales and Marketing">Sales and Marketing</Option>
+             <Option value="Finance and Accounting ">Finance and Accounting </Option>
+                    </Select>
+                  </Form.Item>
+                </div>
+              </div>
+            )}
+            
+            <div className="form-row">
+              <div className="item">
+              <Form.Item label="Expire Date" name="expiredate">
+    <DatePicker 
+        className="date" 
+        disabledDate={disablePastDates}  
+    />
+</Form.Item>
+
+              </div>
+              <div className="itemUpload">
+              <Form.Item label='Upload Videos' name='video'>
+          <Upload 
+            beforeUpload={handleVideoBeforeUpload} 
+            onRemove={(file) => handleRemove(file, false)} 
+            fileList={videoList} 
+            listType="picture"
+          >
+            <Button icon={<UploadOutlined />}>Select Video</Button>
+          </Upload>
+        </Form.Item>
+              </div>
+            </div>
+            {/* Description */}
+            <div className="item">
+              <Form.Item name="Description" label="Description">
+                <Input.TextArea className='Description' />
+              </Form.Item>
+            </div>
+            
+            <div className="Button-cons">
+              <Button className='primary-button my-2' htmlType='submit'>Submit</Button>
+            </div>
+          </Form>
+                </Modal>
+       <Modal
+    title="Add New Announcement"
+    visible={IsbuttonModalVisible}
+    onCancel={handleCancel3}
+    footer={null} // Use null here to remove default buttons
+    centered // This will center the modal vertically
+>
+    <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column' ,marginRight: "5000px"}}>
+        <Button type="primary" onClick={() => showModal1('image')} className="annadd">
+            Upload Image
+        </Button>
+        <Button type="primary" onClick={() => showModal4('video')} className="annadd">
+            Upload Video
+        </Button>
+        
+    </div>
+    <Button onClick={handleCancel}>Close</Button>
+</Modal>
          
          <h3 >Announcements</h3> 
             <div className="annscrollable-container">
@@ -404,7 +600,7 @@ const handleRemove = file => {
             <Form.Item>
     <Button
         type="primary"
-        onClick={showModal1}
+        onClick={showModal3}
         className="annadd"
     >
         Add Announcement
@@ -473,7 +669,7 @@ const handleRemove = file => {
     </Form>
 </Modal>
 <Modal
-                    title="Add New Announcement"
+                    title="Upload Announcement with Images"
                     open={isAddModalVisible}
                     onCancel={handleCancel}
                     footer={null} // Use null here to remove default buttons
