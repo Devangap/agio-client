@@ -1,4 +1,4 @@
-/* Prefixing all styles with .supplier-form-container */
+
 .supplier-form-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -9,25 +9,25 @@
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   }
   
-  /* Prefixing all styles with .supplier-form */
+
   .supplier-form {
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 0px;
   }
   
-  /* Prefixing all styles with .form-group */
+
   .supplier-form .form-group {
     display: flex;
     flex-direction: column;
   }
   
-  /* Prefixing all styles with .supplier-form-container */
+ 
   .supplier-form-container label {
     margin-bottom: 0px;
   }
   
-  /* Prefixing all styles with .supplier-form-container */
+ 
   .supplier-form-container input,
   .supplier-form-container select,
   .supplier-form-container button,
@@ -37,7 +37,7 @@
     border-radius: px;
   }
   
-  /* Prefixing all styles with .supplier-form-container */
+  
   .supplier-form-container button.supplier-submit-button {
     background-color: #F7B05B !important;
     border: 2px solid #1F1300 !important;
@@ -51,15 +51,15 @@
     margin-top: 10px;
   }
   
-  /* Prefixing all styles with .supplier-form-container */
+  
   .supplier-form-container button.supplier-submit-button:hover {
     background-color: #0056b3;
   }
   
   .company-logo {
-    width: 500px; /* Adjust the width as needed */
-    height: 500px; /* Maintain aspect ratio */
-    position: absolute; /* Position the logo absolutely */
-    top: 130px; /* Adjust the top position as needed */
-    right: 200px; /* Adjust the right position as needed */
+    width: 500px; 
+    height: 500px; 
+    position: absolute; 
+    top: 130px; 
+    right: 200px; 
   }

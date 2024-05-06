@@ -74,7 +74,7 @@ const SupplierForm = () => {
 
   return (
     <Layout>
-      <ToastContainer position="top-center" /> {/* Include ToastContainer component and set position to top-center */}
+      <ToastContainer position="top-center" /> 
       <h1>Supplier Details Form</h1>
       <div className="supplier-form-container">
         <form onSubmit={handleSubmit} className="supplier-form">
