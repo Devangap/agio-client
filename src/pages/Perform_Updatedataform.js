@@ -57,7 +57,7 @@ export default function Updatedataform(){
 
             
             console.log(formData);
-            // Assuming you have an endpoint to save the form data
+            
             await axios.put("/exceldata//update/"+id, formData);
             message.success("Form data submitted successfully!");
             navigate("/view"); // Redirect to homepage or any other route
@@ -80,59 +80,72 @@ export default function Updatedataform(){
 
     return(
         <Layout>
-  <div className="perform">
-  <div className="AnnHRSup_form box p-3">
-    <h3 className='title'>Performance Record Update</h3>
+  <div >
+  <div >
+    <h3 style={{fontSize:"28px",fontWeight:700,textAlign:"center",marginBottom:"50px"}}>Performance Record Update</h3>
     <Form layout='vertical' /*onFinish={onFinish}*/>
-      <div className="form-row">
-      <div className="item">
+      <div style={{display:"flex",justifyContent:"space-between",marginLeft:"20px",paddingRight:70,paddingLeft:70}} >
+      <div  >
           <Form.Item label='Employee ID' >
-            <Input type = 'text' value = {EmployeeID}  readOnly />
+            <Input disabled="true" type = 'text' value = {EmployeeID}  readOnly />
           </Form.Item>
           </div>
-          <div className="item">  
+          <div>  
           <Form.Item label='Employee Name' >
-            <Input type = 'text' value = {EmployeeName}  readOnly />
+            <Input disabled="true" type = 'text' value = {EmployeeName}  readOnly />
           </Form.Item>
         </div>
         
       </div>
       
-      <div className="form-row">
-      <div className="item">
+      <div style={{display:"flex",justifyContent:"space-between",marginLeft:"20px",paddingRight:70,paddingLeft:70}}>
+      <div>
       <Form.Item label='Yield Dry' >
             <Input type = 'Number' value = {YieldDry} onChange={(e) => {setYieldDry(e.target.value);calscore() } } />
       </Form.Item>
+      </div>
+      <div>
       <Form.Item label='Yield Wet' >
             <Input type = 'Number' value = {YieldCutsWet} onChange={(e) =>  {setYieldCutsWet(e.target.value);calscore() } } />
       </Form.Item>
-      
+      </div>
+      </div>
+     
+      <div style={{display:"flex",justifyContent:"space-between",marginLeft:"20px",paddingRight:70,paddingLeft:70}}>
+        <div>
       <Form.Item label='Grade A Cuts' >
             <Input type = 'Number' value = {Grade_A_Cuts}  onChange={(e) =>  {setGrade_A_Cuts(e.target.value);calscore()}} />
       </Form.Item>
-        </div>
-        <div className="item">
+      </div>
+      <div>
       <Form.Item label='Grade B Cuts' >
             <Input type = 'Number' value = {Grade_B_Cuts}  onChange={(e) =>  {setGrade_B_Cuts(e.target.value);calscore()}} />
       </Form.Item>
-      
+      </div>
+      </div>
+        
+
+      <div style={{display:"flex",justifyContent:"space-between",marginLeft:"20px",paddingRight:70,paddingLeft:70}}>
+        <div>
       <Form.Item label='Grade C Cuts' >
             <Input type = 'Number' value = {Grade_C_Cuts}  onChange={(e) =>  {setGrade_C_Cuts(e.target.value);calscore()}} />
       </Form.Item>
-
+      </div>
+      <div>
       <Form.Item label='Grade F Cuts' >
             <Input type = 'Number' value = {Grade_F_Cuts} onChange={(e) => { setGrade_F_Cuts(e.target.value);calscore()} } />
       </Form.Item>
-
+      </div>
+      </div>
       
 
      
 
-        </div>
         
-      </div>
+        
+      
 
-      <div className="Button-cons">
+      <div className="Button-cons" style={{paddingLeft:70}}>
         <Button className='primary-button my-2' htmlType='submit' onClick={handleSubmit}>Submit</Button>
       </div>
     </Form>

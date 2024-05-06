@@ -85,7 +85,7 @@ function Getperformancerecords(){
             key: 'action',
             render: (_, record) => (
                 <>
-                    <Button danger onClick={() => navigate(`/viewemp/${record._id}`)}>View</Button>
+                    <Button danger onClick={() => navigate(`/viewempadmin/${record._id}`)}>View</Button>
                 </>
             ),
         },
