@@ -124,6 +124,7 @@ function AdminInquiries() {
       onOk() {},
     });
   };
+
   const handleDownload = async(record) => {
     
     const doc = new jsPDF({
@@ -212,6 +213,7 @@ function AdminInquiries() {
       dataIndex: 'describe',
       key: 'describe',
       className: 'i-inquiry-column',
+      width: 200,
       render: (text) => (
         <>
           {text.length > 10 ? (
@@ -269,7 +271,7 @@ function AdminInquiries() {
 
   return (
     <Layout>
-      <div className="i-container">
+      <div className="ifixed-container">
         <h1 className="i-title">All Inquiries</h1>
         <Input
           className="i-search-input"
