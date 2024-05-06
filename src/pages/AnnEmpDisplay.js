@@ -199,7 +199,9 @@ function AnnEmpDisplay() {
         <Layout>
         <Tabs defaultActiveKey="notices">
     <TabPane tab="Notices" key="notices">
-        <div className="anncardsss">
+   
+   
+        <div className="anncardsss" style={{ height: '600px', overflowY: 'auto' }}>
             <Card className="notices-card" style={{ border: '1px solid #ccc', borderRadius: '5px' }}>
                 <h2  >Notices</h2>
                 {events.length > 0 ? (
@@ -223,8 +225,8 @@ function AnnEmpDisplay() {
         </div>
     </TabPane>
 
-            <TabPane tab="Announcements" key="announcements">
-            <div style={{ display: 'flex', flexWrap: 'wrap' }}>
+            <TabPane tab="Announcements" key="announcements" style={{ height: '600px', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', marginBottom:'60' }}>
   <h4>Specific Announcements</h4>
   {specificAnnouncements.map(announcement => (
     <Card className='Annspec'
@@ -284,7 +286,7 @@ function AnnEmpDisplay() {
           className='Annspec'
           key={announcement._id}
           title={announcement.anntitle}
-          style={{ width: '800px' ,marginLeft: '290px'}} // Adjust width here
+          style={{ width: '1000px' ,marginLeft: '290px'}} // Adjust width here
           actions={[]}
         >
       <div>
@@ -330,6 +332,8 @@ function AnnEmpDisplay() {
     </Card>
   ))}
 </div>
+
+
 
 
 

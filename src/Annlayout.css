@@ -91,14 +91,14 @@
     font-size: 10px; /* Adjust size as needed */
     color: #333; /* Adjust color as needed */
 }
-/* .annscrollable-container {
+.annscrollable-container {
     overflow-y: auto; 
     height: 400px; 
     width: 100%; 
    
     padding: 16px; 
     max-height: 500px; 
-} */
+}
 
 .annflex-container {
     height: calc(100vh - 120px); /* where 120px accounts for headers, footers, or other components */
