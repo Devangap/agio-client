@@ -295,7 +295,7 @@ function InsuranceManagerDisplay() {
       key: 'action',
       render: (text, record) => (
         <div className="insactbutton">
-          <Button className="update" onClick={() => handleUpdate(record)}>Update</Button>
+          <Button className="insupdate" onClick={() => handleUpdate(record)}>Update</Button>
           <Button className="inscancel"onClick={() => handleDelete(record._id)}>Cancel</Button>
         </div>
       ),

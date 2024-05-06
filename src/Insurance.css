@@ -134,7 +134,8 @@
 .inscancel {
   background-color: transparent; 
   color: #ff0000; 
-  border: 2px solid #ff0000; 
+  border: 2px solid #ff0000;
+  margin-left: 10px; 
 }
 
 .inscancel:hover, .inscancel:focus {
