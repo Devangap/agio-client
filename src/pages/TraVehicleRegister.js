@@ -1,5 +1,3 @@
-// Frontend: TraVehicleRegister.jsx
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Form, Input, Select } from 'antd';
@@ -11,8 +9,9 @@ const { Option } = Select;
 
 function TraVehicleRegister() {
   const navigate = useNavigate();
-  const [numSeats, setNumSeats] = useState(null);
-  const [numBuses, setNumBuses] = useState(1); // State to track the number of buses
+  const [totalSeats, setTotalSeats] = useState(null);
+  const [numBuses, setNumBuses] = useState(0);
+  const [numVans, setNumVans] = useState(0);
 
   const onFinish = async (values) => {
     console.log('Received values of form', values);
@@ -21,6 +20,13 @@ function TraVehicleRegister() {
       const response = await axios.post('/api/employee/Vehicleregister', values);
       if (response.data.success) {
         toast.success(response.data.message);
+        if (values.Type === 'bus') {
+          setNumBuses(numBuses + 1);
+          setTotalSeats(totalSeats + 50);
+        } else if (values.Type === 'van') {
+          setNumVans(numVans + 1);
+          setTotalSeats(totalSeats + 12);
+        }
         navigate('/TraVehicleDetails');
       } else {
         toast.error(response.data.message);
@@ -32,9 +38,9 @@ function TraVehicleRegister() {
 
   const handleVehicleTypeChange = (value) => {
     if (value === 'bus') {
-      setNumSeats(100 * numBuses); // Update total seats for multiple buses
+      setTotalSeats(numBuses * 50 + numVans * 12 + 50);
     } else if (value === 'van') {
-      setNumSeats(24);
+      setTotalSeats(numBuses * 100 + numVans * 12 + 12);
     }
   };
 
@@ -57,11 +63,11 @@ function TraVehicleRegister() {
                   </Select>
                 </Form.Item>
               </div>
-              {numSeats && (
+              {totalSeats && (
                 <div className="bookform-row">
                   <div className="bookitem">
-                    <Form.Item  label="Number of Seats" >
-                      <Input disabled value={numSeats} />
+                    <Form.Item  label="Total Seats" >
+                      <Input disabled value={totalSeats} />
                     </Form.Item>
                   </div>
                 </div>
@@ -83,12 +89,12 @@ function TraVehicleRegister() {
               <div className="bookitem">
                 <Form.Item name="location" label="Select Location">
                   <Select className="Type" placeholder="Select Location">
-                    <Option value="Colombo">Colombo</Option>
+                    <Option value="Moratuwa">Moratuwa</Option>
                     <Option value="Ja-ela">Ja-ela</Option>
                     <Option value="Kollupitiya">Kollupitiya</Option>
                     <Option value="Negambo">Negambo</Option>
                     <Option value="Panadura">Panadura</Option>
-                    <Option value="Kaduwela">Kaduwela</Option>
+                    <Option value="Kaduwela">Katunayake</Option>
                   </Select>
                 </Form.Item>
               </div>

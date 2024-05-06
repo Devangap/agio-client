@@ -90,6 +90,9 @@ function Home() {
       case 'Announcement':
         navigate('/AnnEmpDisplay');
         break;
+        case 'Medical':
+        navigate('/medical-appointments');
+        break;
       case 'Transport':
         navigate('/TraBookingBox');
         break;

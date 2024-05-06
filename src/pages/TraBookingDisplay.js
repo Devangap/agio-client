@@ -222,25 +222,10 @@ function TraBookingDisplay() {
 
     return (
         <Layout>
-            {/* Display Total Seats for Each Vehicle Type */}
-            {/* <div className='traseat'>
-            <div className='seat-count'>
-                <div>Total Bus Seats: {totalSeats.Bus}</div>
-                <div>Remaining Bus Seats: {remainingSeats.Bus}</div>
-                
-            </div>
-            <div  className='seat-count' >
-                <div>Total Van Seats: {totalSeats.Van}</div>
-                <div>Remaining Van Seats: {remainingSeats.Van}</div>
-            </div>
-            </div>*/}
-
             
-
-            {/* Table to display bookings */}
             <Table dataSource={booking} columns={columns} />
 
-            {/* Description Modal */}
+            
             <Modal
                 title="Description"
                 visible={descriptionModalVisible} 

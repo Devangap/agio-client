@@ -38,14 +38,14 @@ function Main_login() {
         }else if (name === "Dulara") {
           navigate("/");
           
-        }else if (name === "Dinura") {
+        }else if (name === "dinuravimukthi66@gmail.com") {
           navigate("/medical-overview");
           
         }else if (name === "Dushan") {
           navigate("/UniformManagerView");
           
         }else if (name === "Banuka") {
-          navigate("/");
+          navigate("/view");
           
         }else if (name === "Minuk") {
           navigate("/inquiryAdmin");
@@ -80,15 +80,14 @@ function Main_login() {
   
   return (
     <div className="mainlog">
-    <div className="main_login_form_log boxx_log p-3">
-      <div className = "logindata">
-      <div className='logoforlogin'>
-                        <img src='logos.png' className='logo'></img>
-                        
-                    </div>
-                    <div className = "logindataform">
-        <Form layout='vertical' onFinish={onFinish}>
-            <div className="content">
+      <div className="main_login_form_log boxx_log p-3">
+        <div className="logindata">
+          <div className='logoforlogin'>
+            <img src='logos.png' className='logo'></img>
+          </div>
+          <div className="logindataform">
+            <Form layout='vertical' onFinish={onFinish}>
+              <div className="logincontent">
                 <div className='login'>
                     <div className='field'>
                     <Form.Item

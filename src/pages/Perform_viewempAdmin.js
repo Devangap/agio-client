@@ -3,17 +3,16 @@ import React,{useState , useEffect} from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Sector } from 'recharts';
-import {Select , Button,Radio, Row} from 'antd';
+import {Select , Button,Radio,message} from 'antd';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import Layout from "../components/Layout";
-import Column from "antd/es/table/Column";
 
 
 
 function Barchart({data}){
   return(
-    <ResponsiveContainer width="100%" height={500}>
+    <ResponsiveContainer width="100%" height={400}>
       <BarChart
         data={data}
         margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
@@ -23,13 +22,13 @@ function Barchart({data}){
         <YAxis />
         <Tooltip />
         
-        <Bar radius={[5,5,0,0]} dataKey="value" fill="#8884d8" shape={Rectangle} activeBar={<Rectangle fill="#8884d8" stroke="blue" />} />
+        <Bar radius={[5,5,0,0]} dataKey="value" fill="#8884d8" shape={Rectangle} activeBar={<Rectangle fill="#aba9d3" stroke="#aba9d3" />} />
       </BarChart>
     </ResponsiveContainer>
   );
 }
 
-function Chart(){
+function Perform_viewempAdmin(){
 
     const {id} = useParams()
     const [ChartData,setChartData] = useState(null);
@@ -69,15 +68,42 @@ function Chart(){
     const firstchart = ChartData.filter(item => item.name === "Grade A" || item.name === "Grade B" || item.name === "Grade C" || item.name === "Grade F")
     const secondchart = ChartData.filter(item => item.name === "Yield Dry" || item.name === "Yield Wet");
     
+    const download = async () => {
+        try{
+  
+          const response = await axios.post("/exceldata/generate_perpdf/"+id,{time:formdata.time},{
+            responseType:'blob',
+          });
+  
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download','Performance_Report.pdf');
+          document.body.appendChild(link);
+          link.click();
+         
+        }catch(error){
+          console.error('Error downloading PDF:',error);
+          message.error('Failed to download PDF');
+        }
+  
+        
+  
+      }
+
+    
+
+
     return(
       
         <Layout>
       <div>
-          <div style={{display: "flex", justifyContent: "center", marginTop:"0px" , marginLeft:"0px", marginRight:"0px",backgroundColor:"#fafaf0",paddingLeft:20,paddingBottom:"10px",paddingTop:"10px",textAlign:"center",flexDirection:"column",borderRadius:20}}>
+          <div style={{display: "flex", justifyContent: "center", marginTop:"0px" , marginLeft:"0px", marginRight:"0px",paddingLeft:20,paddingBottom:"10px",paddingTop:"10px",textAlign:"center",backgroundColor:'#fafaf0',borderRadius:20,flexDirection:"column"}}>
             <div style={{fontSize:"20px"}}>{name}</div>
-            <div style={{display:"flex",justifyContent:"center",marginBottom:"10px"}}>
-          <Button  style={{marginRight:10}} onClick = {() => navigate(`/com/${id}`)}>compare</Button>
-          
+            <div style={{display:"flex",justifyContent:"space-around",marginBottom:"10px",marginTop:"10px"}}>
+
+
+
           <Radio.Group value={formdata} onChange={(e)=>{
                         console.log("lllll")
                         console.log(e.target.value);
@@ -85,13 +111,20 @@ function Chart(){
                         setFormData({...formdata, time: e.target.value})
                     }}
                     style={{ display: 'block' }}>
-            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }} value="week">Week</Radio.Button>
-            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }}value="month">Month</Radio.Button>
-            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }}value="year">Year</Radio.Button>
+            <Radio.Button style={{ backgroundColor:'#ffc658',color:'#000000',fontWeight:'bold'}} value="week">Week</Radio.Button>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'bold' }} value="month">Month</Radio.Button>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'bold' }} value="year">Year</Radio.Button>
           </Radio.Group>
         
+          <Button  onClick={download}>Download</Button>
+
           </div>
+            
           </div>
+         
+
+          
+
           
           <div style={{marginBottom:"40px"}}>
 
@@ -110,7 +143,7 @@ function Chart(){
           </div>
           
         </div>
-        
+
       
       </div>
       </Layout>
@@ -119,4 +152,4 @@ function Chart(){
    
 }
 
-export default Chart;
+export default Perform_viewempAdmin;
