@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, Form, Input, Select, message, Modal } from 'antd'; 
 import { UploadOutlined } from '@ant-design/icons';
 import Layout from '../components/Layout';
@@ -6,6 +6,8 @@ import '../UniformOrder.css';
 import shirt from '../Images/twoshirt.png'
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import axios from 'axios';
+
 
 const { Option } = Select;
 
@@ -17,6 +19,30 @@ function UniformOrder() {
   const [waistSizeOptions, setWaistSizeOptions] = useState([]);
   const [showExtraChargesModal, setShowExtraChargesModal] = useState(false);
   const [extraChargeTotal, setExtraChargeTotal] = useState(0);
+
+  useEffect(() => {
+    const fetchEmployeeId = async () => {
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.post('/api/employee/get-employee-info-by-id', {}, {
+          headers: {
+            Authorization: 'Bearer ' + token,
+          }
+        });
+        if (response.data.success) {
+          setEmployeeNumber(response.data.data.empid);
+        } else {
+          // Handle error if necessary
+        }
+      } catch (error) {
+        // Handle error if necessary
+        console.error(error);
+      }
+    };
+
+    fetchEmployeeId();
+  }, [])
+
 
   const handlePositionChange = value => {
     setPosition(value);
@@ -39,23 +65,22 @@ function UniformOrder() {
 
   const onFinish = async (values) => {
     try {
-      const response = await fetch('/api/uniformOrder', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      });
+      // Include the employeeNumber in the form data
+      values.employeeNumber = employeeNumber;
   
-      const data = await response.json();
-      console.log(data); // Log the response from the server
-  
-      toast.success('Order placed successfully');
+      const response = await axios.post('/api/uniformOrder', values);
+      if (response.data.success) {
+        toast.success('Uniform order submitted successfully');
+      } else {
+        toast.error('Failed to submit uniform order');
+      }
     } catch (error) {
-      console.error('Error submitting form:', error);
-      toast.error('Failed to place order');
+      console.error('Error submitting uniform order:', error);
+      toast.error('Failed to submit uniform order');
     }
   };
+  
+  
   const calculateAmount = () => {
     // Define charges for t-shirts and skirts
     const tshirtCharge = 1250;
@@ -100,13 +125,13 @@ function UniformOrder() {
             <div className="uniform-order-form-row">
               <div className="uniform-order-item">
               <img className="uniformlogo-image" src={shirt} alt="Logo" /> {/* Image */}
-                <Form.Item
-                  label="Employee Number"
-                  name="employeeNumber"
-                  rules={[{ required: true, message: 'Please input Employee Number' }]}
-                >
-                  <Input value={employeeNumber} onChange={handleEmployeeNumberChange} placeholder="Enter Employee Number" />
-                </Form.Item>
+              <Form.Item
+                label="Employee Number"
+                name="employeeNumber"
+              >
+                  <Input placeholder={employeeNumber} disabled />
+              </Form.Item>
+
                 <Form.Item
                   label="Position"
                   name="position"
