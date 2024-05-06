@@ -4,6 +4,7 @@ import axios from 'axios'; // Import Axios
 import Layout from '../components/Layout'; // Assuming Layout is your custom component
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
+import logoImage from "../Images/logo.png"
 
 const { Option } = Select;
 
@@ -39,28 +40,39 @@ function LeaveReport() {
     }
   };
 
-  const downloadPdfReport = () => {
+  const downloadPdfReport = async () => {
     const doc = new jsPDF();
+    const logoWidth = 50;
+    const logoHeight = 50;
+    const logoX = (doc.internal.pageSize.getWidth() - logoWidth) / 2;
+    const logoY = 15;
+    const tableY = 100; // Adjust as needed
+
+    const logo = new Image();
+    logo.src = logoImage;
+    await new Promise(resolve => {
+        logo.onload = () => resolve();
+    });
+    doc.addImage(logo, 'PNG', logoX, logoY, logoWidth, logoHeight);
 
     autoTable(doc, {
-      theme: 'striped',
-      head: [['Description', 'Type', 'Start Date', 'End Date', 'Status']],
-      body: reportData.map(item => [
-        item.leave.Description,
-        item.leave.Type,
-        item.leave.startDate,
-        item.leave.endDate,
-        item.leave.status
-      ]),
-      startY: 20,
-      headStyles: { fillColor: [22, 160, 133] },
-      margin: { top: 20 }
+        theme: 'striped',
+        head: [['Description', 'Type', 'Start Date', 'End Date', 'Status']],
+        body: reportData.map(item => [
+            item.leave.Description,
+            item.leave.Type,
+            item.leave.startDate,
+            item.leave.endDate,
+            item.leave.status
+        ]),
+        startY: tableY,
+        headStyles: { fillColor: [22, 160, 133] },
+        margin: { top: 200 }
     });
 
     doc.text('Leave Report', 14, 15);
     doc.save('LeaveReport.pdf');
-  };
-
+};
   const columns = [
     {
         title: 'Name',

@@ -159,11 +159,12 @@ useEffect(() => {
         try {
             const response = await axios.get('/api/employee/getleavedep', {
                 params: {
-                    department: user?.department // Pass user's department as query parameter
+                    department: user?.department, // Pass user's department as query parameter
+                    status: 'approved' // Filter leaves by status
                 }
             });
             const leaveData = response.data.leave;
-
+    
             const events = leaveData.map((leave) => ({
                 id: leave._id,
                 userid: leave.userid,
@@ -174,17 +175,17 @@ useEffect(() => {
                 employeeId: leave.employeeId,
                 department: leave.department,
             }));
-
+    
             setLeaveEvents(events);
         } catch (error) {
             console.error('Error fetching leave data:', error);
         }
     };
-
+    
     useEffect(() => {
         fetchLeaveData();
     }, [user?.department]);
-
+    
     useEffect(() => {
         const fetchEmployeeDetails = async () => {
             try {
@@ -304,31 +305,50 @@ useEffect(() => {
         console.log('Received values of form', values);
         try {
             dispatch(showLoading());
-
-           
+    
+            // Check if user data includes leave balance information
+            if (values.Type === 'General' && user.general_leave <= 0) {
+                // Show a message to the user indicating insufficient leave balance for General type
+                dispatch(hideLoading());
+                toast.error('You do not have sufficient general leave balance to submit a leave request.');
+                return;
+            }
+    
+            if (values.Type === 'Medical' && user.medical_leave <= 0) {
+                // Show a message to the user indicating insufficient leave balance for Medical type
+                dispatch(hideLoading());
+                toast.error('You do not have sufficient medical leave balance to submit a leave request.');
+                return;
+            }
+    
+            if (values.Type === 'Annual' && user.annual_leave <= 0) {
+                // Show a message to the user indicating insufficient leave balance for Annual type
+                dispatch(hideLoading());
+                toast.error('You do not have sufficient annual leave balance to submit a leave request.');
+                return;
+            }
+    
             const formData = new FormData();
-          
+    
             fileList.forEach(file => {
                 formData.append('file', file);
             });
-           
+    
             Object.keys(values).forEach(key => {
                 formData.append(key, values[key]);
             });
-            
+    
             formData.append('userid', user?.userid);
-
-            
+    
             const response = await axios.post('/api/employee/leaveEmpform', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
             });
-
+    
             dispatch(hideLoading());
-
-           
+    
             if (response.data.success) {
                 toast.success(response.data.message);
                 setSubmissionModalVisible(false)
@@ -342,6 +362,15 @@ useEffect(() => {
             toast.error("Something went wrong");
         }
     };
+    const handleMarkAsRead = () => {
+        // Delete data from local storage
+        localStorage.removeItem('warnings');
+        // Close the modal
+        setWarningModalVisible(false);
+        // Update the state to reflect that warnings are read
+        setWarnings([]);
+    };
+    
     const handleUpdateFinish = async (id, values) => {
         try {
             
@@ -484,6 +513,14 @@ useEffect(() => {
             },
         },
         {
+            title: 'Suggested Date', // New column title
+            dataIndex: 'suggestedDate', // Assuming it's coming from the data as 'suggestedDate'
+            key: 'suggestedDate', // Unique key for the column
+            render: (text) => {
+                return text ? new Date(text).toLocaleDateString('en-US') : ''; // Render the date if it exists
+            }
+        },
+        {
             title: 'Action',
             key: 'action',
             render: (_, record) => (
@@ -523,28 +560,35 @@ useEffect(() => {
         <Layout>
            <div>
             {warnings.length > 0 && (
-                <Button type="primary" onClick={handleViewWarnings}>
+                <Button type="primary" className="leavesub" onClick={handleViewWarnings}>
                     View Warnings
                 </Button>
             )}
-            <Modal
-                title="Warnings"
-                visible={warningModalVisible}
-                onCancel={() => setWarningModalVisible(false)}
-                footer={null}
-                width={modalWidth}
-                style={{ top: 20 }} // Adjust as needed
-            >
-                <div style={{ maxHeight: modalHeight, overflowY: 'auto' }}>
-                    <pre>
-                        <ul>
-                            {warnings.map((warning, index) => (
-                                <li key={index}>{warning.message}</li>
-                            ))}
-                        </ul>
-                    </pre>
-                </div>
-            </Modal>
+           <Modal
+    title="Warnings"
+    visible={warningModalVisible}
+    onCancel={() => setWarningModalVisible(false)}
+    footer={[
+        <Button key="markAsRead" onClick={handleMarkAsRead} type="primary">
+            Mark as Read
+        </Button>,
+        <Button key="close" onClick={() => setWarningModalVisible(false)}>
+            Close
+        </Button>,
+    ]}
+    width={modalWidth}
+    style={{ top: 20 }} // Adjust as needed
+>
+    <div style={{ maxHeight: modalHeight, overflowY: 'auto' }}>
+        <pre>
+            <ul>
+                {warnings.map((warning, index) => (
+                    <li key={index}>{warning.message}</li>
+                ))}
+            </ul>
+        </pre>
+    </div>
+</Modal>
         </div>
               
             <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>

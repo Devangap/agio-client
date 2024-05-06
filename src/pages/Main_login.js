@@ -91,20 +91,19 @@ function Main_login() {
             <div className="content">
                 <div className='login'>
                     <div className='field'>
-                    <Form.Item
-    label='Username'
-    name='username_log'
-    style={{ marginLeft: '450px' }} // Add left margin of 200px
->
-    <Input placeholder='Username' />
-</Form.Item>
+                                   <Form.Item
+                    label='Username'
+                    name='username_log'
+                    className='custom-input' // Add a unique class name
+                    style={{ marginLeft: '450px' }} // Add left margin of 200px
+                >
+                    <Input placeholder='Username' className='custom-input-field' />
+                </Form.Item>
+
                     </div>
-                    <Form.Item label='Password' name='password_log'
-                    style={{ marginLeft: '450px' }}>
-                        <Input placeholder='Password'
-                        />
-                        
-                    </Form.Item>
+                    <Form.Item label='Password' name='password_log' style={{ marginLeft: '450px' }}>
+    <Input.Password placeholder='Password' />
+</Form.Item>
                 </div>
                 <div className="Button-conslog">
                     <Button className='primary-button my-2' htmlType='submit'>LOG IN</Button>
