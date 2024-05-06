@@ -28,6 +28,7 @@ import AnnCalHead from './pages/AnnCalHead';
 
 import AnnCalendar from './pages/AnnCalendar';
 import AnnCalendarForm from './pages/AnnCalendarForm';
+import AnnReport from './pages/AnnReport';
 
 import LeaveCal from './pages/LeaveCal'
 
@@ -46,6 +47,8 @@ import LeaveEmpform from './pages/leaveEmpform';
 import Main_Notifications from './pages/Main_Notifications';
 import LeaveHrsupdisplay from './pages/leaveHrsupdisplay'
 import LeaveUpdate from './pages/leaveUpdate';
+import Leaveempatt from './pages/Leaveempatt';
+import LeaveReport from './pages/LeaveReport';
 
 import TraProtectedRoute from './components/TraProtectedRoute';
 import TraPublicRoute from './components/TraPublicRoute';
@@ -102,11 +105,11 @@ import UniformShirtInventory from './pages/UniformShirtInventory';
 import UniformOrderDetails from './pages/UniformOrderDetails';
 import UniformTotals from './pages/UniformTotals';
 import UniformCharts from './pages/UniformCharts';
-
-
-
-
-
+import UniformStatus from './pages/UniformStatus';
+import UniformCoView from './pages/UniformCoView';
+import UniformSupplier from './pages/UniformSupplier';
+import UniformSupplierInput from './pages/UniformSupplierInput';
+import UniformSupplierHistory from './pages/UniformSupplierHistory';
 
 
 
@@ -134,7 +137,12 @@ import Rank from "./pages/Perform_Rank";
 import Compare1 from "./pages/Perform_Compare1";
 
 import Charta from "./pages/Perform_Chart";
-import Viewprofileadmin from "./pages/Perform_viewemp"; 
+
+import Viewprofileadmin from "./pages/Perform_viewemp";
+import Chartadmin from "./pages/Perform_viewempAdmin" 
+ 
+import TraBookingdisplayAll from './pages/TraBookingdisplayAll';
+
 
 
 
@@ -192,10 +200,7 @@ function App() {
               </ProtectedRoute>
             }
           />
-          <Route path="/AnnHRsup" element={<AnnHRsup />} />
-          <Route path="/AnnDisplay" element={<AnnDisplay />} />
-          <Route path="/AnnUpdate/:id" element={<AnnUpdate />} />
-          <Route path="/LeaveHRsup" element={<LeaveHRsup />} />
+         
 
           <Route path="/home" element={<TraHome />} />
           <Route path="/dregister" element={<TraDriverRegister />} />
@@ -253,12 +258,15 @@ function App() {
         
           <Route path='/meddash' element={<ProtectedRoute><meddash/></ProtectedRoute>} />
           <Route path='/LeaveEmp' element={<ProtectedRoute><LeaveEmp /></ProtectedRoute>} />
-          <Route path='/LeaveEmpform' element={<ProtectedRoute><LeaveEmpform /></ProtectedRoute>} />
+          
           <Route path='/LeaveHrsupdisplay' element={<ProtectedRoute><LeaveHrsupdisplay /></ProtectedRoute>} />
           <Route path='/Main_Notifications' element={<ProtectedRoute><Main_Notifications /></ProtectedRoute>} />
           <Route path='/LeaveUpdate/:id' element={<ProtectedRoute><LeaveUpdate/></ProtectedRoute>} />
           <Route path='/Leaveoverview' element={<ProtectedRoute><Leaveoverview/></ProtectedRoute>} />
           <Route path='/LeaveCal' element={<ProtectedRoute><LeaveCal/></ProtectedRoute>} />
+          <Route path='/Leaveempatt' element={<ProtectedRoute><Leaveempatt/></ProtectedRoute>} />
+          
+          <Route path='/LeaveReport' element={<ProtectedRoute><LeaveReport/></ProtectedRoute>} />
 
           <Route path='/Main_Register' element={<Main_register />} />
           <Route path='/Main_Login' element={<Main_login />} />
@@ -276,6 +284,7 @@ function App() {
 
           <Route path="/AnnCalendar"element={<ProtectedRoute><AnnCalendar /></ProtectedRoute>} />
           <Route path="/AnnCalendarForm"element={<ProtectedRoute><AnnCalendarForm /></ProtectedRoute>} />
+          <Route path="/AnnReport"element={<ProtectedRoute><AnnReport /></ProtectedRoute>} />
 
           <Route path='/LeaveHRsup' element={< LeaveHRsup/>} />
 
@@ -289,7 +298,13 @@ function App() {
           <Route path='/UniformShirtInventory' element={<ProtectedRoute><UniformShirtInventory/></ProtectedRoute>} />
           <Route path='/UniformOrderDetails' element={<ProtectedRoute><UniformOrderDetails/></ProtectedRoute>} />
           <Route path='/UniformTotals' element={<ProtectedRoute><UniformTotals/></ProtectedRoute>}/>
-          <Route path='/UniformCharts' element={<UniformCharts/>}/>
+          <Route path='/UniformCharts' element={<ProtectedRoute><UniformCharts/></ProtectedRoute>}/>
+          <Route path='/UniformStatus' element={<ProtectedRoute><UniformStatus/></ProtectedRoute>}/>
+          <Route path='/UniformCoView' element={<ProtectedRoute><UniformCoView/></ProtectedRoute>}/>
+          <Route path='/UniformSupplier' element={<ProtectedRoute><UniformSupplier/></ProtectedRoute>}/>
+          <Route path='/UniformSupplierInput' element={<ProtectedRoute><UniformSupplierInput/></ProtectedRoute>}/>
+          <Route path='/UniformSupplierHistory' element={<ProtectedRoute><UniformSupplierHistory/></ProtectedRoute>}/>
+
 
         
             /*transport  Navigation*/
@@ -310,6 +325,7 @@ function App() {
           <Route path='/TraVehicleviwe' element={<ProtectedRoute><TraVehicleviwe/></ProtectedRoute>} />
           <Route path='/TraDriverViwe' element={<ProtectedRoute><TraDriverViwe/></ProtectedRoute>} />
           <Route path='/TraPayment' element={<ProtectedRoute><TraPayment/></ProtectedRoute>} />
+          <Route path='/TraBookingdisplayAll' element={<ProtectedRoute><TraBookingdisplayAll/></ProtectedRoute>} />
 
 
 
@@ -345,6 +361,7 @@ function App() {
           <Route path="/rank" element = {<Rank/>}/>
           <Route path="/com/:id" element = {<ProtectedRoute><Compare1/></ProtectedRoute>}/> 
           <Route path="/viewemp/:id" element = {<ProtectedRoute><Charta/></ProtectedRoute>}/> 
+          <Route path="/viewempadmin/:id" element = {<ProtectedRoute><Chartadmin/></ProtectedRoute>}/> 
           <Route path="/viewempbyname" element = {<ProtectedRoute><Viewprofileadmin/></ProtectedRoute>}/>
 
          

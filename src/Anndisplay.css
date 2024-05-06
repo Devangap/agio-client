@@ -1,12 +1,12 @@
 /* Anndisplay.css */
 
-.update {
+.Annupdate {
     margin-right: 16px; /* Adjust the gap as desired */
-    background-color: #4096ff;
+    background-color: rgb(255, 198, 88);
     color: white;
 }
 
-.update:hover, .update:focus {
+.Annupdate:hover, .Annupdate:focus {
     background-color: #CA9220; /* Darker shade for hover/focus */
     border-color: #CA9220;
 }

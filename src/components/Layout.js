@@ -123,11 +123,7 @@ function Layout({ children }) {
         },
       ];
     const Annhrsupmenu = [
-        {
-            name: 'Home',
-            path: '/AnnHRsup',
-            icon: 'ri-home-line',
-        },
+       
         {
             name: ' Announcements',
             path: '/AnnDisplay',
@@ -144,15 +140,16 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
-            name: ' Profile',
-            path: '/profile',
-            icon: 'ri-account-box-line',
+            name: ' Report',
+            path: '/AnnReport',
+            icon: 'ri-bar-chart-line',
         },
+        
         
     ];
     const leavemenu = [
         {
-            name: ' Overview',
+            name: 'Leave Overview',
             path: '/leaveoverview',
             icon: 'ri-account-box-line',
         },
@@ -167,6 +164,21 @@ function Layout({ children }) {
             name: ' Calendar',
             path: '/LeaveCal',
             icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Employee Attendance',
+            path: '/Leaveempatt',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Report',
+            path: '/LeaveReport',
+            icon: 'ri-bar-chart-line',
+        },
+        {
+            name: 'Announcements',
+            path: '/AnnEmpDisplay',
+            icon: 'ri-survey-line',
         },
        
        
@@ -226,6 +238,11 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
+            name: ' Uniform Suppliers ',
+            path: '/UniformSupplier',
+            icon: 'ri-account-box-line',
+        },
+        {
             name: 'Leave',
             path: '/leaveEmp',
             icon: 'ri-calendar-line',
@@ -262,7 +279,9 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
+
             name: ' Insurance Overview',
+
             path: '/InsuranceStatus',
             icon: 'ri-account-box-line',
         },
@@ -297,29 +316,25 @@ function Layout({ children }) {
 
     let menuToBeRendered = userMenu;
 
-    if (user?.isAdmin) {
-       
-        menuToBeRendered = adminMenu;
-    } else if (user?.isDoctor) {
-        menuToBeRendered = doctorMenu;
-    }
-else if (user?.isAnnHrsup) {
-    menuToBeRendered = Annhrsupmenu ;
-}else if (user?.isLeaveHrsup) {
-    
-    menuToBeRendered = leavemenu ;
-}else if (user?.islogisticsMan) {
-    menuToBeRendered = logisticmenu ;
-}else if (user?.isuniform) {
-    menuToBeRendered = uniformmenu ;
-}else if (user?.isinsu) {
-    menuToBeRendered = insuarancemenu ;
-}else if (user?.isinquiry) {
-    menuToBeRendered = inquirymenu  ;
-}else if (user?.isperfomace) {
-    menuToBeRendered = performancemenu ;
+if (user?.isAdmin) {
+    menuToBeRendered = adminMenu;
+} else if (user?.isDoctor) {
+    menuToBeRendered = doctorMenu;
+} else if (user?.isAnnHrsup) {
+    menuToBeRendered = Annhrsupmenu;
+} else if (user?.isLeaveHrsup) {
+    menuToBeRendered = leavemenu;
+} else if (user?.islogisticsMan) {
+    menuToBeRendered = logisticmenu;
+} else if (user?.isuniform) {
+    menuToBeRendered = uniformmenu;
+} else if (user?.isinsu) {
+    menuToBeRendered = insuarancemenu;
+} else if (user?.isinquiry) {
+    menuToBeRendered = inquirymenu;
+} else if (user?.isperfomace) {
+    menuToBeRendered = performancemenu;
 }
-
 
 useEffect(() => {
     // Check for authentication status on component mount

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import "../bars2.css";
 import Layout from "../components/Layout"
-import { Button, Divider, Flex, Radio } from 'antd';
+import { Button, Divider, Flex, Radio,message } from 'antd';
 
 
 function AreaProgressChartdrywet({dataC , max ,targetstate}) {
@@ -54,7 +54,7 @@ function AreaProgressChartdrywet({dataC , max ,targetstate}) {
 
 function Barchart({data}){
   return(
-    <ResponsiveContainer width={450} height={320}>
+    <ResponsiveContainer width={650} height={450}>
       <BarChart
         data={data}
         margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
@@ -64,7 +64,7 @@ function Barchart({data}){
         <YAxis />
         <Tooltip />
         
-        <Bar dataKey="value" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+        <Bar dataKey="value" fill="#8884d8" activeBar={<Rectangle fill="#8884d8" stroke="8884d8" />} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -102,7 +102,7 @@ function Profile(){
               }
             ];
             setChartData(data);
-            //setName(res.data[0].Name)
+            setName(res.data[0].Name)
             console.log(data)
             
     })
@@ -143,6 +143,32 @@ function Profile(){
 
     },[formdata.time])
 
+
+    const download = async () => {
+      try{
+
+        const response = await axios.post("/exceldata/generate_perpdf",{time:formdata.time},{
+          headers: {
+            Authorization :`Bearer ${localStorage.getItem("token")}`,
+          },responseType:'blob',
+        });
+
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download','Performance_Report.pdf');
+        document.body.appendChild(link);
+        link.click();
+       
+      }catch(error){
+        console.error('Error downloading PDF:',error);
+        message.error('Failed to download PDF');
+      }
+
+      
+
+    }
+
     console.log(targetVal);
     if (!ChartData) {
       return <div>Loading...</div>;
@@ -154,9 +180,10 @@ function Profile(){
     return(
       <Layout>
       <div>
-          <div style={{display: "flex", justifyContent: "space-between", marginTop:"20px" , marginLeft:"0px", marginRight:"0px",backgroundColor:"#fafaf0",paddingLeft:20}}>
+          <div style={{display: "flex", justifyContent: "space-between", marginTop:"0px" , marginLeft:"0px", marginRight:"0px",marginBottom:"0px",backgroundColor:"#fafaf0",paddingLeft:20,paddingBottom:10,borderRadius:20}}>
             <div style={{ flex:1 , marginTop:20}}> 
-            {name}
+            <div style={{fontSize:"22px"}}>{name}</div>
+
             <Radio.Group value={formdata} onChange={(e)=>{
                         console.log("lllll")
                         console.log(e.target.value);
@@ -164,12 +191,16 @@ function Profile(){
                         setFormData({...formdata, time: e.target.value})
                     }}
                     style={{ display: 'block' }}>
-            <Radio.Button  value="week">Week</Radio.Button>
-            <Radio.Button value="month">Month</Radio.Button>
-            <Radio.Button value="year">Year</Radio.Button>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'bold'}}  value="week">Week</Radio.Button>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'bold'}} value="month">Month</Radio.Button>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'bold'}} value="year">Year</Radio.Button>
           </Radio.Group>
+          <div style={{marginTop:10}}>
+              <Button onClick={download}>Download</Button>
              </div>
-            <div style={{ flex:0.6}}>
+             </div>
+             
+            <div style={{ flex:0.6,marginTop:0}}>
             <AreaProgressChartdrywet dataC={targetcurrent} max={targetVal} targetstate = {targetstate}/>
             </div>
             
@@ -181,7 +212,7 @@ function Profile(){
         </div>
           
       
-        <div style={{ display: "flex", justifyContent: "space-between"}}>
+        <div style={{ display: "flex", justifyContent: "space-between",paddingTop:40}}>
         
           <div style={{ flex:1}}>
             <div style={{textAlign:"center"}}> Cut Grades Metarics</div>

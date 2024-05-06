@@ -38,9 +38,11 @@
     padding: 0 20px; /* Ensures content is not flush against edges */
 }
 .logo{
+
     height: 90px;
     width: 220px;
     margin-left: 20px;
+
 }
 
 .laybody {
@@ -48,7 +50,9 @@
     border: none !important;
     height: 80vh;
     width: 100%;
+
     margin-bottom: 10px !important;
+
 }
 
 .menu {
@@ -57,7 +61,9 @@
 }
 
 .menu-item {
+
     margin-top: 22px !important;
+
 }
 
 .menu-item a, .menu-item i {
@@ -86,17 +92,14 @@
     font-size: 10px; /* Adjust size as needed */
     color: #333; /* Adjust color as needed */
 }
-.annscrollable-container {
-    overflow-y: auto; /* Enables vertical scrolling if content overflows */
-    height: 400px; /* Fixed height */
-    width: 100%; /* Full width of the flex container */
-    /* Light grey border */
-    padding: 16px; /* Padding around the content */
-    max-height: 500px; /* Set a maximum height */
-   /* Margin around the container */
-     
-    /*  */
-}
+/* .annscrollable-container {
+    overflow-y: auto; 
+    height: 400px; 
+    width: 100%; 
+   
+    padding: 16px; 
+    max-height: 500px; 
+} */
 
 .annflex-container {
     height: calc(100vh - 120px); /* where 120px accounts for headers, footers, or other components */

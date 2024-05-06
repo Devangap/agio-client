@@ -3,16 +3,17 @@ import React,{useState , useEffect} from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import axios from 'axios';
 import { BarChart, Bar, Rectangle, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Sector } from 'recharts';
-import {Select , Button} from 'antd';
+import {Select , Button,Radio, Row} from 'antd';
 import { Provider } from 'react-redux';
 import store from '../redux/store';
 import Layout from "../components/Layout";
+import Column from "antd/es/table/Column";
 
 
 
 function Barchart({data}){
   return(
-    <ResponsiveContainer width="100%" height={400}>
+    <ResponsiveContainer width="100%" height={500}>
       <BarChart
         data={data}
         margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
@@ -22,7 +23,7 @@ function Barchart({data}){
         <YAxis />
         <Tooltip />
         
-        <Bar radius={[5,5,0,0]} dataKey="value" fill="#8884d8" shape={Rectangle} activeBar={<Rectangle fill="yellow" stroke="blue" />} />
+        <Bar radius={[5,5,0,0]} dataKey="value" fill="#8884d8" shape={Rectangle} activeBar={<Rectangle fill="#8884d8" stroke="blue" />} />
       </BarChart>
     </ResponsiveContainer>
   );
@@ -72,27 +73,26 @@ function Chart(){
       
         <Layout>
       <div>
-          <div style={{fontSize:20,textAlign:"center" , marginTop:"10px",marginBottom:"20px",boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)"}}>
-            {name}
-          </div>
-          <div style={{display:"flex",justifyContent:"center",marginBottom:"10px"}}>
-          <Button type="primary" onClick = {() => navigate(`/com/${id}`)}>compare</Button>
+          <div style={{display: "flex", justifyContent: "center", marginTop:"0px" , marginLeft:"0px", marginRight:"0px",backgroundColor:"#fafaf0",paddingLeft:20,paddingBottom:"10px",paddingTop:"10px",textAlign:"center",flexDirection:"column",borderRadius:20}}>
+            <div style={{fontSize:"20px"}}>{name}</div>
+            <div style={{display:"flex",justifyContent:"center",marginBottom:"10px"}}>
+          <Button  style={{marginRight:10}} onClick = {() => navigate(`/com/${id}`)}>compare</Button>
           
-        <Select style={{width:"150px"}}
-                placeholder="Select a Time period"
-                onChange={(value)=>{
-                    console.log(value);
-                    setFormData({...formdata, time: value})
-                }}
-                
-            >
-                <option value="week">Week</option>
-                <option value="month">Month</option>
-                <option value="year">Year</option>
-
-            </Select>
+          <Radio.Group value={formdata} onChange={(e)=>{
+                        console.log("lllll")
+                        console.log(e.target.value);
+                        console.log("llllll")
+                        setFormData({...formdata, time: e.target.value})
+                    }}
+                    style={{ display: 'block' }}>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }} value="week">Week</Radio.Button>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }}value="month">Month</Radio.Button>
+            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }}value="year">Year</Radio.Button>
+          </Radio.Group>
         
           </div>
+          </div>
+          
           <div style={{marginBottom:"40px"}}>
 
           

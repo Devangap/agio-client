@@ -29,6 +29,8 @@ function TraDriverDetailsDisplay() {
     fetchDregister();
   }, []);
 
+
+  // handle delete
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/api/employee/deletedrivers/${id}`);
@@ -40,6 +42,8 @@ function TraDriverDetailsDisplay() {
     }
   };
 
+
+  // handle update part
   const handleUpdate = async (values) => {
     try {
       const response = await axios.put(`/api/employee/updatedrivers/${currentDregister._id}`, values);
@@ -55,14 +59,7 @@ function TraDriverDetailsDisplay() {
     }
   };
 
-  /*const handleSearch = (value) => {
-    setSearchText(value);
-  };
-
-  const filteredDriver = Dregister.filter((driver) =>
-    driver.driName.toLowerCase().includes(searchText.toLowerCase())
-  );*/
-
+// Searching filter
   const filteredDriver = Dregister.filter((driver) =>
   driver.driName.toLowerCase().includes(searchText.toLowerCase())
   

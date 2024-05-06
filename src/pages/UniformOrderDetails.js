@@ -8,14 +8,7 @@ function OrderDetails() {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    // Fetch order details from backend using order ID or other identifier
-    // Example fetch code:
-    // fetch('/api/orderDetails?id=' + orderId)
-    //   .then(response => response.json())
-    //   .then(data => setOrder(data))
-    //   .catch(error => console.error('Error fetching order details:', error));
-    
-    // Mock data for demonstration
+   
     const mockOrder = {
       _id: '123456',
       employeeNumber: 'EMP123',
