@@ -141,7 +141,7 @@ function Layout({ children }) {
         },
         {
             name: ' Report',
-            path: '/LeaveReport',
+            path: '/AnnReport',
             icon: 'ri-bar-chart-line',
         },
         
@@ -172,7 +172,7 @@ function Layout({ children }) {
         },
         {
             name: ' Report',
-            path: '/AnnReport',
+            path: '/LeaveReport',
             icon: 'ri-bar-chart-line',
         },
         {
