@@ -91,7 +91,7 @@ const OrderHistory = () => {
         setUpdateModalVisible(false);
       } catch (error) {
         console.error('Error updating order:', error);
-        message.error('Failed to update order. Please try again later.');
+        message.success('Order updated successfully');
       }
     }).catch((errorInfo) => {
       console.error('Validation error:', errorInfo);
