@@ -50,7 +50,7 @@ function Getperformancerecords(){
             if (response.data.success) {
                 message.success('Announcement updated successfully');
                 setIsModalVisible(false);
-                // Refresh the announcements list to reflect the update
+                
                 
             } else {
                 message.error(response.data.message);
@@ -89,8 +89,7 @@ function Getperformancerecords(){
             title: 'Date',
             dataIndex: 'date',
             key: 'date',
-            sorter: (a, b) => new Date(a.date) - new Date(b.date), // Add sorter function for sorting
-            //render: date => new Date(date).toLocaleDateString(), // Render dates in a readable format
+            
 
         },
 
@@ -116,7 +115,7 @@ function Getperformancerecords(){
 
             
             console.log("showmodel");
-            // Assuming you have an endpoint to save the form data
+           
             const t = await axios.get("/exceldata/targetget");
             console.log(t)
             if(t.data){
@@ -141,7 +140,7 @@ function Getperformancerecords(){
 
     const handleClickt = async () =>{
         try{
-            await axios.delete(`/exceldata/deletetarget`);
+            await axios.delete('/exceldata/deletetarget');
             message.success("Target deleted sucessfuly");
             window.location.reload();
             
@@ -162,7 +161,7 @@ function Getperformancerecords(){
 
             
             console.log(formDatat);
-            // Assuming you have an endpoint to save the form data
+            
             await axios.post("/exceldata/settarget",formDatat);
             message.success("Form data submitted successfully!");
             navigate("/view"); // Redirect to homepage or any other route
@@ -221,10 +220,10 @@ function Getperformancerecords(){
                                 setFormData({...formdata, time: e.target.value})
                             }}
                             >
-                            <Radio.Button  value="week">Week</Radio.Button>
-                            <Radio.Button value="month">Month</Radio.Button>
-                            <Radio.Button  value="year">Year</Radio.Button>
-                            <Radio.Button  value="o">Overall</Radio.Button>
+                            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }} value="week">Week</Radio.Button>
+                            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }} value="month">Month</Radio.Button>
+                            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }} value="year">Year</Radio.Button>
+                            <Radio.Button style={{ backgroundColor: '#ffc658',color:'#000000',fontWeight:'500' }} value="o">Overall</Radio.Button>
                             </Radio.Group>
                           
                             
@@ -261,7 +260,7 @@ function Getperformancerecords(){
         
         
             </div>
-            <Table dataSource={performanceRecords} columns={columns} pagination={{ pageSize: 4 }} />
+            <Table dataSource={performanceRecords} columns={columns} pagination={{ pageSize: 10 }} />
             <Modal
                 title="Set a Goal"
                 open={isModalVisible3}
