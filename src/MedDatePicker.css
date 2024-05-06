@@ -233,7 +233,6 @@ Employee
 
  .ant-tabs-tabpane {
     max-height: 65vh;
-    overflow-y: auto;
  }
 
  .ant-tabs-nav-list {
