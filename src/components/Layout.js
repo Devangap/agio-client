@@ -279,7 +279,9 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
-            name: ' Insurance Status ',
+
+            name: ' Insurance Overview',
+
             path: '/InsuranceStatus',
             icon: 'ri-account-box-line',
         },

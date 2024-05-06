@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { PDFDownloadLink } from '@react-pdf/renderer'; 
 import InventoryPDFDocument from './InventoryPDFDocument'; 
 
+
 const InventoryPage = () => {
   const [shirtInventory, setShirtInventory] = useState([]);
   const [skirtInventory, setSkirtInventory] = useState([]);
@@ -116,6 +117,7 @@ const InventoryPage = () => {
     window.location.href = '/UniformCoView'; 
   };
 
+
   // Function to handle downloading inventory report
   const handleDownloadReport = () => {
     console.log('Downloading report...');
@@ -221,4 +223,6 @@ const InventoryPage = () => {
   );
 };
 
+
 export default InventoryPage;
+
