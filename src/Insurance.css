@@ -22,7 +22,7 @@
   }
   
   .ins-title {
-    padding-left: 19px;
+    padding-left: 14px;
     margin-top: 140px;
   }
 
@@ -143,6 +143,8 @@
 }
 
 .insStatusButton {
+  background-color: #ffc658;
+  color: white;
   text-Align: "center"; 
   margin-Top: "20px";
 }
@@ -188,4 +190,64 @@
 .insSearch{
   margin-left: 15px;
   margin-bottom: 10px;
+}
+
+.insadditional-info {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.insinfo-card {
+  width: 200px;
+  margin: 0 10px;
+}
+
+.insinfo-value {
+  font-size: 36px;
+  font-weight: bold;
+  text-align: center;
+  margin: 10px 0;
+  color: blue;
+}
+
+.insinfo-title {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #666;
+  font-size: 18px;
+}
+
+.inschart-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.inschart-wrapper {
+  width: 49%;  
+}
+
+.insdownloadbutton{
+  margin-Bottom: '20px'; 
+  margin-Left: '14px';
+  margin-Top: '5px';
+}
+
+.right-button-container {
+  position: fixed;
+  bottom: 20px; 
+  right: 20px; 
+}
+
+.insreport {
+  margin-right: 8px; 
+}
+
+.insreportdownload {
+  margin-right: 16px; 
+  background-color: #ffc658;
+  color: white;
 }

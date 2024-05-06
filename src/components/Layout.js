@@ -4,7 +4,7 @@ import '../Annlayout.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { setUser } from '../redux/userSlice';
-import  { useEffect } from 'react';
+import  { useEffect} from 'react';
 import { Badge ,Avatar} from 'antd';
 import axios from 'axios';
 
@@ -38,7 +38,7 @@ function Layout({ children }) {
                             
                                 useEffect(() => {
                                     getData();
-                                }, []);                                                      
+                                }, []); 
     
     const userMenu = [
         {
@@ -252,13 +252,18 @@ function Layout({ children }) {
     ];
     const insuarancemenu = [
         {
-            name: 'Home',
-            path: '/',
-            icon: 'ri-home-line',
+            name: 'Insurance',
+            path: '/InsuranceManager',
+            icon: 'ri-account-box-line',
         },
         {
-            name: ' Insuarance ',
-            path: '/InsuranceManager',
+            name: ' Insurance Display ',
+            path: '/InsuranceManagerDisplay',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Insurance Overview',
+            path: '/InsuranceStatus',
             icon: 'ri-account-box-line',
         },
         {
@@ -369,7 +374,7 @@ useEffect(() => {
                             
                         </div>
                     </div>
-                    <div className='body'>{children}</div>
+                    <div style={{ border: 'none' }}>{children}</div>
                 </div>
             </div>
         </div>

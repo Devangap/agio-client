@@ -16,26 +16,52 @@ function InsEmployee() {
   const dispatch = useDispatch();
   const token = localStorage.getItem("token");
   const { userId } = useParams();
+  
+  const getEmployeeData = async () => {
+    try {
+        dispatch(showLoading());
+        const response = await axios.post(
+            '/api/employee/get-employee-info-by-id',
+            {},
+            {
+                headers: {
+                    Authorization: "Bearer " + token,
+                },
+            }
+        );
+        dispatch(hideLoading());
+        if (response.data.success) {
+            return response.data.data.empid;
+        } else {
+            throw new Error("Failed to fetch employee data");
+        }
+    } catch (error) {
+        dispatch(hideLoading());
+        console.error("Error fetching employee data:", error);
+        throw error;
+    }
+  };
 
   const getInsuranceData = async () => {
     try {
-      dispatch(showLoading());
-      const response = await axios.get(
-        `/api/insurance/getInsuranceEmployee/${userId}`,
-        {
-          headers: {
-            Authorization: "Bearer " + token, 
-          },
+        dispatch(showLoading());
+        const empid = await getEmployeeData();
+        const response = await axios.get(
+            `/api/insurance/getInsuranceEmployee/${empid}`,
+            {
+                headers: {
+                    Authorization: "Bearer " + token, 
+                },
+            }
+        );
+        console.log(response)
+        dispatch(hideLoading());
+        if (response.data.success) {
+            setInsuranceData(response.data.insuranceData);
         }
-      );
-      console.log(response)
-      dispatch(hideLoading());
-      if (response.data.success) {
-        setInsuranceData(response.data.insuranceData);
-      }
     } catch (error) {
-      dispatch(hideLoading());
-      console.error("Error fetching insurance data:", error);
+        dispatch(hideLoading());
+        console.error("Error fetching insurance data:", error);
     }
   };
 

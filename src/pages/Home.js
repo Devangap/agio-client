@@ -97,7 +97,7 @@ function Home() {
         navigate('/inquiry');
         break;
       case 'Insurance':
-        navigate('/InsuranceManager');
+        navigate('/insEmployee');
         break;
       // Add other cases for each announcement
       default:

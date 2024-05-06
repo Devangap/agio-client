@@ -80,7 +80,7 @@ function Main_login() {
           </div>
           <div className="logindataform">
             <Form layout='vertical' onFinish={onFinish}>
-              <div className="content">
+              <div className="logincontent">
                 <div className='login'>
                   <div className='field'>
                     <Form.Item label='Username' name='username_log'>
