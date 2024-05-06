@@ -709,8 +709,8 @@ const MedReports = () => {
                 <table style={{border: "1px solid #dfdfdf", borderCollapse: "collapse"}}>
                   <tr>
                     <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Month</th>
-                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Dates</th>
-                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Change %</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 168}}>Dates</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Change</th>
                   </tr>
 
                   {monthObjects?.map((month, index) => (
@@ -777,7 +777,7 @@ const MedReports = () => {
                       <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.monthName}</td>
                       <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.appointmentCount}</td>
                       <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.totalMaxAppointments}</td>
-                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{`${(month.appointmentCount/month.totalMaxAppointments).toFixed(2)}%`}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{`${month.appointmentCount > 0 ? (month.appointmentCount/month.totalMaxAppointments).toFixed(2) : Number(0).toFixed(2)}%`}</td>
                     </tr>
                   ))}
                 </table>
@@ -921,7 +921,7 @@ const MedReports = () => {
                     <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Month</th>
                     <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Completed</th>
                     <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Incompleted</th>
-                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>Completed %</th>
+                    <th style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", backgroundColor: "#eeeeee", textAlign: "center", fontWeight: 500, height: 40, width: 84}}>C / A</th>
                   </tr>
 
                   {monthObjects?.map((month, index) => (
@@ -929,7 +929,7 @@ const MedReports = () => {
                       <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.monthName}</td>
                       <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.completedAppointmentCount}</td>
                       <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{month.missedAppointmentCount}</td>
-                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{`${month.appointmentCount !== 0 ? ((month.completedAppointmentCount)* 100)/(month.appointmentCount) : 0}%`}</td>
+                      <td style={{border: "1px solid #dfdfdf", borderCollapse: "collapse", width: 84}}>{`${month.appointmentCount !== 0 ? (((month.completedAppointmentCount)* 100)/(month.appointmentCount)).toFixed(2) : Number(0).toFixed(2)}%`}</td>
                     </tr>
                   ))}
                 </table>
