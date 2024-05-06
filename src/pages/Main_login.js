@@ -40,7 +40,7 @@ function Main_login() {
           navigate("/InsuranceManager");
 
           
-        }else if (name === "Dinura") {
+        }else if (name === "dinuravimukthi66@gmail.com") {
           navigate("/medical-overview");
           
         }else if (name === "Dushan") {
