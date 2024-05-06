@@ -5,15 +5,13 @@ import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 
-// Destructure Select Option from Ant Design
 const { Option } = Select;
 
 function TraVehicleRegister() {
   const navigate = useNavigate();
-  const { Option } = Select;
-  
-
-  const [numSeats, setNumSeats] = useState(null); // State to hold the number of seats
+  const [totalSeats, setTotalSeats] = useState(null);
+  const [numBuses, setNumBuses] = useState(0);
+  const [numVans, setNumVans] = useState(0);
 
   const onFinish = async (values) => {
     console.log('Received values of form', values);
@@ -22,6 +20,13 @@ function TraVehicleRegister() {
       const response = await axios.post('/api/employee/Vehicleregister', values);
       if (response.data.success) {
         toast.success(response.data.message);
+        if (values.Type === 'bus') {
+          setNumBuses(numBuses + 1);
+          setTotalSeats(totalSeats + 50);
+        } else if (values.Type === 'van') {
+          setNumVans(numVans + 1);
+          setTotalSeats(totalSeats + 12);
+        }
         navigate('/TraVehicleDetails');
       } else {
         toast.error(response.data.message);
@@ -32,11 +37,10 @@ function TraVehicleRegister() {
   };
 
   const handleVehicleTypeChange = (value) => {
-    // Update number of seats based on selected vehicle type
     if (value === 'bus') {
-      setNumSeats(50);
+      setTotalSeats(numBuses * 50 + numVans * 12 + 50);
     } else if (value === 'van') {
-      setNumSeats(12);
+      setTotalSeats(numBuses * 100 + numVans * 12 + 12);
     }
   };
 
@@ -59,15 +63,15 @@ function TraVehicleRegister() {
                   </Select>
                 </Form.Item>
               </div>
-              {numSeats && (
-              <div className="bookform-row">
-                <div className="bookitem">
-                  <Form.Item  label="Number of Seats" >
-                    <Input disabled value={numSeats} />
-                  </Form.Item>
+              {totalSeats && (
+                <div className="bookform-row">
+                  <div className="bookitem">
+                    <Form.Item  label="Total Seats" >
+                      <Input disabled value={totalSeats} />
+                    </Form.Item>
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             </div>
 
             <div className="bookform-row">
@@ -85,22 +89,22 @@ function TraVehicleRegister() {
               <div className="bookitem">
                 <Form.Item name="location" label="Select Location">
                   <Select className="Type" placeholder="Select Location">
-                  <Option value="Colombo">Colombo</Option>
-              <Option value="Ja-ela">Ja-ela</Option>
-              <Option value="Kollupitiya">Kollupitiya</Option>
-              <Option value="Negambo">Negambo</Option>
-              <Option value="Panadura">Panadura</Option>
-              <Option value="Kaduwela">Kaduwela</Option>
+                    <Option value="Colombo">Colombo</Option>
+                    <Option value="Ja-ela">Ja-ela</Option>
+                    <Option value="Kollupitiya">Kollupitiya</Option>
+                    <Option value="Negambo">Negambo</Option>
+                    <Option value="Panadura">Panadura</Option>
+                    <Option value="Kaduwela">Kaduwela</Option>
                   </Select>
                 </Form.Item>
               </div>
             </div>
             
-              <div className="bookitem">
-                <Form.Item name="LicenceDetails" label="Licence Details">
-                  <Input.TextArea className="Description" />
-                </Form.Item>
-              </div>
+            <div className="bookitem">
+              <Form.Item name="LicenceDetails" label="Licence Details">
+                <Input.TextArea className="Description" />
+              </Form.Item>
+            </div>
             
             <div className="bookitem">
               <Form.Item name="OwnerDetails" label="Owner Details">
@@ -112,7 +116,7 @@ function TraVehicleRegister() {
               <Button className="bookprimary-button my-2" htmlType="submit">
                 Submit
               </Button>
-              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraVehicleDetails`)}>Viwe Details</Button>
+              <Button className='bookprimary-button my-2' htmlType='submit' onClick={() => navigate(`/TraVehicleDetails`)}>View Details</Button>
             </div>
           </Form>
         </div>

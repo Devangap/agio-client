@@ -1,21 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { Button, Form, Input, Select, DatePicker } from 'antd';
 import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+import moment from 'moment'; // Import moment library for date manipulation
 
 function TraDriverRegister() {
   const navigate = useNavigate();
   const { Option } = Select;
 
+  const [defaultDate] = useState(moment()); // Use moment() to get the current date
+
   // Custom validator function for phone number
   const validatePhoneNumber = (_, value) => {
-    const phoneNumber = value.replace(/\D/g, ''); // Remove non-numeric characters
+    const phoneNumber = value.replace(/\D/g, ''); // Remove non-digit characters
     if (phoneNumber.length !== 10) {
       return Promise.reject('Please enter a 10-digit phone number');
     }
     return Promise.resolve();
+  };
+
+  // Function to disable past dates (allow only today and future dates)
+  const disabledDate = (current) => {
+    // Disable dates before today (including today)
+    return current && current < moment().startOf('day');
   };
 
   const onFinish = async (values) => {
@@ -45,9 +54,7 @@ function TraDriverRegister() {
                 <Form.Item
                   label='Driver Name'
                   name='driName'
-                  rules={[
-                    { required: true, message: 'Please enter Driver Name' }
-                  ]}
+                  rules={[{ required: true, message: 'Please enter Driver Name' }]}
                 >
                   <Input placeholder='Driver Name' />
                 </Form.Item>
@@ -85,9 +92,10 @@ function TraDriverRegister() {
                 <Form.Item
                   label="Select Register Date"
                   name="regdate"
+                  initialValue={defaultDate} // Set initial value to current date
                   rules={[{ required: true, message: 'Please select Register Date' }]}
                 >
-                  <DatePicker className="date" />
+                  <DatePicker className="date" disabledDate={disabledDate} />
                 </Form.Item>
               </div>
             </div>

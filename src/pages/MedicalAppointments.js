@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import { Button, Descriptions, Modal, Tabs, message, List } from "antd";
+import { Button, Descriptions, Modal, Tabs, message, List, Input, Form, ConfigProvider } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { showLoading, hideLoading } from "../redux/empalerts";
 import { toast } from "react-hot-toast";
@@ -10,6 +10,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "../MedDatePicker.css";
 import Swal from "sweetalert2";
+import { SearchOutlined } from '@ant-design/icons';
 
 function currentMonthLength() {
   const thirtyOneDayMonths = [0, 2, 4, 6, 7, 9, 11];
@@ -145,7 +146,7 @@ const MedicalAppointments = () => {
       );
 
       if (response.data.success) {
-        setUserId(response.data.data._id);
+        setUserId(response.data.data.userid);
       }
       dispatch(hideLoading());
 
@@ -840,6 +841,53 @@ const MedicalAppointments = () => {
     retrieveHistory();
   }, [userId]);
 
+
+
+
+  // ****** Search bar ********** //
+  const [form] = Form.useForm();
+  const [searchTerm, setSearchTerm] = useState('');
+
+  // Regular expressions for YYYY, YYYY/MM, and YYYY/MM/DD formats
+  const yearRegex = /^\d{4}$/;
+  const yearMonthRegex = /^\d{4}\/(0?[1-9]|1[0-2])$/;
+  const yearMonthDayRegex = /^\d{4}\/(0?[1-9]|1[0-2])\/(0?[1-9]|[12][0-9]|3[01])$/;
+
+
+  // Ensure the input matches the desired formats
+  const handleSearchInputChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    console.log(`@handleSearchInputChange() value => ${value}`);
+
+    // if (value && !yearRegex.test(value) && !monthYearRegex.test(value) && !dateRegex.test(value))
+    if (value && !yearRegex.test(value) && !yearMonthRegex.test(value) && !yearMonthDayRegex.test(value)) {
+      form.setFields([
+        {
+          name: 'searchTerm',
+          errors: ['Please enter a valid date format (e.g., YYYY, YYYY/MM, or YYYY/MM/DD)'],
+        },
+      ]);
+    } else {
+      form.setFields([
+        {
+          name: 'searchTerm',
+          errors: [],
+        },
+      ]);
+    }
+  };
+  
+  // Filter the histroy list
+  const filteredHistoryList = historyList != null ? historyList.filter((item) => 
+    new Date(item.appointmentDate).toLocaleString("en-ZA").includes(searchTerm)
+  ) : [];
+
+
+  useEffect(() => {
+    console.log("filterdHistoryList: ", filteredHistoryList);
+  }, [searchTerm]);
+
   return (
     <Layout>
       <Tabs className="emp-tab">
@@ -1026,11 +1074,31 @@ const MedicalAppointments = () => {
       * 
       */}
         <Tabs.TabPane tab="History" key={1} className="emp-history-tabpane">
+        <Form form={form} layout="inline" style={{marginLeft: 10}}>
+          <Form.Item
+            name="searchTerm"
+            validateStatus={form.getFieldError('searchTerm') ? 'error' : ''}
+            help={form.getFieldError('searchTerm') ? form.getFieldError('searchTerm')[0] : ''}
+          >
+            <div className="search-input">
+            <p className="search-input-text"><SearchOutlined /></p>
+            <Input
+              placeholder="Search by date (e.g., YYYY, YYYY/MM, or YYYY/MM/DD)"
+              value={searchTerm}
+              onChange={handleSearchInputChange}
+              variant="filled"
+              width={50}
+              style={{backgroundColor: "#eeeeee", color: "black"}}
+            />
+            </div>
+          </Form.Item>
+          
+        </Form>
           <div className="emp-history-list">
             <List
-              key={historyList !== null ? historyList.length : "hl0"}
+              key={filteredHistoryList !== null ? filteredHistoryList.length : "hl0"}
               size="large"
-              dataSource={historyList !== null ? historyList : []}
+              dataSource={filteredHistoryList !== null ? filteredHistoryList : []}
               renderItem={(item) => (
                 <List.Item>
                   <List.Item.Meta

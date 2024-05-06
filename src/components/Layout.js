@@ -123,11 +123,7 @@ function Layout({ children }) {
         },
       ];
     const Annhrsupmenu = [
-        {
-            name: 'Home',
-            path: '/AnnHRsup',
-            icon: 'ri-home-line',
-        },
+       
         {
             name: ' Announcements',
             path: '/AnnDisplay',
@@ -144,10 +140,11 @@ function Layout({ children }) {
             icon: 'ri-account-box-line',
         },
         {
-            name: ' Profile',
-            path: '/profile',
-            icon: 'ri-account-box-line',
+            name: ' Report',
+            path: '/AnnReport',
+            icon: 'ri-bar-chart-line',
         },
+        
         
     ];
     const leavemenu = [
@@ -167,6 +164,16 @@ function Layout({ children }) {
             name: ' Calendar',
             path: '/LeaveCal',
             icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Employee Attendance',
+            path: '/Leaveempatt',
+            icon: 'ri-account-box-line',
+        },
+        {
+            name: ' Report',
+            path: '/LeaveReport',
+            icon: 'ri-bar-chart-line',
         },
         {
             name: 'Announcements',

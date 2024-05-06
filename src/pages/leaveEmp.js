@@ -18,6 +18,7 @@ import '../leaveEmpform.css';
 import toast from 'react-hot-toast';
 import moment from 'moment';
 import '../calendar.css';
+import { Document, Page, Text, PDFDownloadLink } from '@react-pdf/renderer';
 
 const LeaveEmp = () => {
     const locales = {
@@ -43,6 +44,10 @@ const LeaveEmp = () => {
     const [updateModalVisible, setUpdateModalVisible] = useState(false);
     const { id } = useParams();
     const [form] = Form.useForm();
+    const [attendanceData, setAttendanceData] = useState([]);
+    const [visible, setVisible] = useState(true);
+    const [warnings, setWarnings] = useState([]);
+    const [warningModalVisible, setWarningModalVisible] = useState(false);
 
     const { user } = useSelector((state) => state.user);
     const dispatch = useDispatch();
@@ -63,8 +68,38 @@ const LeaveEmp = () => {
           allDay: true,
           resource: 'holiday'
         }
-        // Add more holiday events as needed
+      
       ];
+     
+      // This will get the empid from the URL parameter
+
+// Then, when making the request to fetch warnings, include the empid in the request
+const fetchWarnings = async (user, setWarnings) => {
+    try {
+        if (!user || !user.empid) {
+            console.error('User information missing.');
+            return;
+        }
+        // Make sure to include the empid as a route parameter
+        const response = await axios.get(`api/employee/getWarnings/${user.empid}`);
+        if (response.data.success) {
+            // Update the warnings state directly
+            setWarnings(response.data.warnings);
+            console.log('Warnings:', response.data.warnings);
+        } else {
+            // Handle error response
+            console.error('Failed to fetch warnings:', response.data.error);
+        }
+    } catch (error) {
+        console.error('Error fetching warnings:', error);
+    }
+};
+
+// Call the fetchWarnings function with the user object and setWarnings function
+useEffect(() => {
+    fetchWarnings(user, setWarnings); // Pass the user object and setWarnings function
+}, [user]); // Only user is needed here, not warnings
+    
 
     const getData = async () => {
         try {
@@ -83,8 +118,8 @@ const LeaveEmp = () => {
         getData();
     }, []);
     const handleUpdateLeave = async (record) => {
-        setUpdateModalVisible(true); // Show update modal
-        setSelectedEvent(record); // Set selected event for the modal
+        setUpdateModalVisible(true); 
+        setSelectedEvent(record); 
     };
     
     useEffect(() => {
@@ -94,7 +129,7 @@ const LeaveEmp = () => {
                     const response = await axios.get(`/api/employee/getleave3/${selectedEvent._id}`);
                     if (response.data.success) {
                         const data = response.data.leave;
-                        // Set form fields with retrieved leave data
+                       
                         form.setFieldsValue({
                             name: data.name,
                             Type: data.Type,
@@ -220,7 +255,7 @@ const LeaveEmp = () => {
 
     const handleEventClick = (event) => {
         setSelectedEvent(event);
-        setModalVisible(true); // Set modal visibility to true when an event is clicked
+        setModalVisible(true); 
     };
 
     const handleClosePopup = () => {
@@ -230,9 +265,10 @@ const LeaveEmp = () => {
 
     const handleLeaveSubmission = () => {
         form.resetFields();
-        setSubmissionModalVisible(true); // Show submission modal
+        setSubmissionModalVisible(true); 
     };
 
+    
    
 
     const handleDelete = async (id) => {
@@ -247,21 +283,21 @@ const LeaveEmp = () => {
     };
 
     const handleCloseModal = () => {
-        // Reset selected event and employee details when closing the modal
+      
         setSelectedEvent(null);
         setEmployeeDetails(null);
-        setModalVisible(false); // Hide modal
+        setModalVisible(false); 
     };
 
     const handleCloseSubmissionModal = () => {
-        setSubmissionModalVisible(false); // Hide submission modal
+        setSubmissionModalVisible(false); 
     };
 
     const handleCloseUpdateModal = () => {
-        // Reset selected event and employee details when closing the modal
+        
         setSelectedEvent(null);
         setEmployeeDetails(null);
-        setUpdateModalVisible(false); // Hide update modal
+        setUpdateModalVisible(false); 
     };
 
     const onFinish = async (values) => {
@@ -269,20 +305,20 @@ const LeaveEmp = () => {
         try {
             dispatch(showLoading());
 
-            // Create a new FormData instance
+           
             const formData = new FormData();
-            // Append each file to FormData
+          
             fileList.forEach(file => {
                 formData.append('file', file);
             });
-            // Append other form values to FormData
+           
             Object.keys(values).forEach(key => {
                 formData.append(key, values[key]);
             });
-            // Append user ID to FormData
+            
             formData.append('userid', user?.userid);
 
-            // Make POST request to upload the form data
+            
             const response = await axios.post('/api/employee/leaveEmpform', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
@@ -292,7 +328,7 @@ const LeaveEmp = () => {
 
             dispatch(hideLoading());
 
-            // Handle response
+           
             if (response.data.success) {
                 toast.success(response.data.message);
                 setSubmissionModalVisible(false)
@@ -308,7 +344,7 @@ const LeaveEmp = () => {
     };
     const handleUpdateFinish = async (id, values) => {
         try {
-            // Extracting values from individual date pickers
+            
             const startDate = values?.startDate;
             const endDate = values?.endDate;
     
@@ -352,14 +388,14 @@ const LeaveEmp = () => {
             return false;
         }
 
-        // Get additional information about the file
+        
         const fileInfo = {
             name: file.name,
             type: file.type,
             size: file.size,
         };
 
-        // Log or use the fileInfo object as needed
+      
         console.log('File information:', fileInfo);
 
         setFileList([file]);
@@ -425,7 +461,7 @@ const LeaveEmp = () => {
     
         {
             title: 'Documents',
-            dataIndex: 'filePath', // Adjust based on your data structure
+            dataIndex: 'filePath', 
             key: 'file',
             render: (_, record) => {
                 const filename = record?.file?.filename;
@@ -434,13 +470,13 @@ const LeaveEmp = () => {
 
                 const filePath = filename ? `${backendUrl}uploads/${filename}` : '';
 
-                // Render a download button if a file exists
+               
                 return filename ? (
                     <Button
                         type="link"
                         href={filePath}
                         target="_blank"
-                        download={filename} // Add the download attribute
+                        download={filename} 
                     >
                         View PDF
                     </Button>
@@ -465,10 +501,52 @@ const LeaveEmp = () => {
         { title: <div style={{ marginLeft: '20px', color: 'rgb(66, 34, 2)' }}>Remaining<br/>Medical Leaves</div>, description: `${user ? user.medical_leave : ''}` },
     ];
     const allEvents = [...leaveEvents, ...holidayEvents];
+    const handleClose = () => {
+        setVisible(false);
+    };
+    
+    const disabledEndDate = (endValue) => {
+        if (!endValue || !form.getFieldValue('startDate')) {
+            return false;
+        }
+        return endValue.valueOf() <= moment(form.getFieldValue('startDate')).subtract(1, 'days').valueOf();
+    };
+    const handleViewWarnings = () => {
+        setWarningModalVisible(true);
+    };
+    const modalWidth = 600; // Adjust as needed
+    const modalHeight = Math.min(window.innerHeight - 200, 800); // Adjust as needed
+
 
 
     return (
         <Layout>
+           <div>
+            {warnings.length > 0 && (
+                <Button type="primary" onClick={handleViewWarnings}>
+                    View Warnings
+                </Button>
+            )}
+            <Modal
+                title="Warnings"
+                visible={warningModalVisible}
+                onCancel={() => setWarningModalVisible(false)}
+                footer={null}
+                width={modalWidth}
+                style={{ top: 20 }} // Adjust as needed
+            >
+                <div style={{ maxHeight: modalHeight, overflowY: 'auto' }}>
+                    <pre>
+                        <ul>
+                            {warnings.map((warning, index) => (
+                                <li key={index}>{warning.message}</li>
+                            ))}
+                        </ul>
+                    </pre>
+                </div>
+            </Modal>
+        </div>
+              
             <div className="leave-types" style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {leaveTypes.map((type, index) => (
                     <Card key={index} className="leave-type-card" title={type.title} bordered={false}>
@@ -496,12 +574,34 @@ const LeaveEmp = () => {
                 />
             </div>
             </div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '150px' }}>
+           
+            {attendanceData
+                .filter((attendance) => attendance.empid === user.empid)
+                .map((attendance, index) => (
+                    visible && (
+                        <Card key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' ,width: "1000px",backgroundColor:'#ebe8e4'}} >
+                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' ,width: "900px"}}>
+                                <p>You were absent on {new Date(attendance.createdAt).toLocaleDateString()}</p>
+                                <div>
+                                    <Button type="primarysubl" style={{ marginRight: '8px' ,backgroundColor:'#ebe8e4'}} onClick={handleLeaveSubmission} >
+                                        Submit Leave
+                                    </Button>
+                                    <Button type="default" onClick={handleClose}>
+                                        Close
+                                    </Button>
+                                </div>
+                            </div>
+                        </Card>
+                    )
+                ))}
+        </div>
           
 
             <Modal
                 title="Leave Details"
-                visible={modalVisible} // Control modal visibility
-                onCancel={handleCloseModal} // Handle modal close
+                visible={modalVisible} 
+                onCancel={handleCloseModal} 
                 footer={[
                     <Button key="close" onClick={handleCloseModal} style={{  borderColor: 'red', color: 'red' }}>Close</Button>,
                 ]}
@@ -511,107 +611,117 @@ const LeaveEmp = () => {
                     <>
                         <p>Employee ID: {employeeDetails.empid}</p>
                         <p>Department: {employeeDetails.department}</p>
-                        {/* Add more employee details as needed */}
+                        
                     </>
                 )}
             </Modal>
 
             <Modal
-                title="Leave Submission Form"
-                visible={submissionModalVisible} // Control submission modal visibility
-                onCancel={handleCloseSubmissionModal} // Handle submission modal close
-                footer={[
-                    <Button key="close" onClick={handleCloseSubmissionModal}>Close</Button>,
-                ]}
-            >
-                <div className="leaveform">
-                    <div className="leave_formbox p-3">
-                    <Form layout='vertical' onFinish={onFinish}>
-                    <div className="leave_form-row">
+            title="Leave Submission Form"
+            visible={submissionModalVisible}
+            onCancel={handleCloseSubmissionModal}
+            footer={[
+                <Button key="close" onClick={handleCloseSubmissionModal}>
+                    Close
+                </Button>,
+            ]}
+        >
+            <div className="leaveform">
+                <div className="leave_formbox p-3">
+                    <Form form={form} layout="vertical" onFinish={onFinish}>
+                        <div className="leave_form-row">
+                            <div className="leave_item">
+                                <Form.Item
+                                    label="Employee Name"
+                                    name="name"
+                                    rules={[{ required: true, message: 'Please input employee name!' }]}
+                                >
+                                    <Input placeholder="Employee name" />
+                                </Form.Item>
+                            </div>
+                        </div>
+                        <div className="leave_form-row">
+                            <div className="leave_item">
+                                <Form.Item
+                                    label="Start Date"
+                                    name="startDate"
+                                    rules={[{ required: true, message: 'Please select start date!' }]}
+                                >
+                                    <DatePicker />
+                                </Form.Item>
+                                <Form.Item
+                                    label="End Date"
+                                    name="endDate"
+                                    rules={[
+                                        { required: true, message: 'Please select end date!' },
+                                       
+                                    ]}
+                                >
+                                    <DatePicker disabledDate={disabledEndDate} />
+                                </Form.Item>
+                            </div>
+                        </div>
+                        <div className="leave_form-row">
+                            <div className="leave_item">
+                                <Form.Item
+                                    name="Type"
+                                    label="Select leave type"
+                                    className="leavet"
+                                    rules={[{ required: true, message: 'Please select leave type!' }]}
+                                >
+                                    <Select
+                                        className="leave_Type"
+                                        placeholder="Select leave type"
+                                        onChange={handleLeaveTypeChange}
+                                    >
+                                        <Option value="General">General</Option>
+                                        <Option value="Annual">Annual</Option>
+                                        <Option value="Medical">Medical</Option>
+                                    </Select>
+                                </Form.Item>
+                            </div>
+                        </div>
+                        {leaveType === 'Medical' && (
+                            <Form.Item
+                                label="Upload Medical Documents"
+                                name="file"
+                                rules={[
+                                    { required: true, message: 'Please upload a document' },
+                                    { validator: validateUploadField },
+                                ]}
+                                dependencies={['Type']}
+                            >
+                                <Upload
+                                    beforeUpload={handleBeforeUpload}
+                                    onRemove={handleRemove}
+                                    fileList={fileList}
+                                    listType="picture"
+                                >
+                                    <Button icon={<UploadOutlined />}>Select File</Button>
+                                </Upload>
+                            </Form.Item>
+                        )}
+                        <div className="leave_form-row">
+                            <div className="leave_item"></div>
+                        </div>
                         <div className="leave_item">
                             <Form.Item
-                                label='Employee Name'
-                                name='name'
-                                rules={[{ required: true, message: 'Please input employee name!' }]}
+                                name="Description"
+                                label="Description"
+                                rules={[{ required: true, message: 'Please input description!' }]}
                             >
-                                <Input placeholder='Employee name' />
+                                <Input.TextArea className="leave_Description" />
                             </Form.Item>
                         </div>
-                    </div>
-                    <div className="leave_form-row">
-                        <div className="leave_item">
-                            <Form.Item
-                                label="Start Date"
-                                name="startDate"
-                                rules={[{ required: true, message: 'Please select start date!' }]}
-                            >
-                                <DatePicker />
-                            </Form.Item>
-                            <Form.Item
-                                label="End Date"
-                                name="endDate"
-                                rules={[{ required: true, message: 'Please select end date!' }]}
-                            >
-                                <DatePicker />
-                            </Form.Item>
+                        <div className="leave_Button-cons">
+                            <Button className="leave_primary-button my-2" htmlType="submit">
+                                Submit
+                            </Button>
                         </div>
-                    </div>
-                    <div className="leave_form-row">
-                        <div className="leave_item">
-                            <Form.Item
-                                name="Type"
-                                label="Select leave type"
-                                className='leavet'
-                                rules={[{ required: true, message: 'Please select leave type!' }]}
-                            >
-                                <Select className="leave_Type" placeholder="Select leave type" onChange={handleLeaveTypeChange}>
-                                    <Option value="General">General</Option>
-                                    <Option value="Annual">Annual</Option>
-                                    <Option value="Medical">Medical</Option>
-                                </Select>
-                            </Form.Item>
-                        </div>
-                    </div>
-                    {leaveType === 'Medical' && (
-                        <Form.Item
-                            label='Upload Medical Documents'
-                            name='file'
-                            rules={[
-                                { required: true, message: 'Please upload a document' },
-                                { validator: validateUploadField }
-                            ]}
-                            dependencies={['Type']}
-                        >
-                            <Upload
-                                beforeUpload={handleBeforeUpload}
-                                onRemove={handleRemove}
-                                fileList={fileList}
-                                listType="picture"
-                            >
-                                <Button icon={<UploadOutlined />}>Select File</Button>
-                            </Upload>
-                        </Form.Item>
-                    )}
-                    <div className="leave_form-row">
-                        <div className="leave_item">
-                        </div>
-                    </div>
-                    <div className="leave_item">
-                        <Form.Item
-                            name="Description"
-                            label="Description"
-                            rules={[{ required: true, message: 'Please input description!' }]}
-                        >
-                            <Input.TextArea className='leave_Description' />
-                        </Form.Item>
-                    </div>
-                    <div className="leave_Button-cons">
-                        <Button className='leave_primary-button my-2' htmlType='submit'>Submit</Button>
-                    </div>
-                </Form>
-                    </div>
+                    </Form>
                 </div>
-            </Modal>
+            </div>
+        </Modal>
 
             <Modal
                 title="Update Leave Form"

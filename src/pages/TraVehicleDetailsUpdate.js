@@ -4,12 +4,12 @@ import { Button, Form, Input, Select, DatePicker} from 'antd';
 import Layout from '../components/Layout';
 import toast from 'react-hot-toast';
 import { useNavigate, useParams } from 'react-router-dom';
-import moment from 'moment';
+
 
 function TraVehicleDetailsUpdate() {
 
   const navigate = useNavigate();
-  const { id } = useParams(); // Assuming you're using react-router-dom v5 or v6
+  const { id } = useParams(); 
   const { Option } = Select;
   const [form] = Form.useForm();
 
@@ -93,12 +93,12 @@ function TraVehicleDetailsUpdate() {
               <div className="bookitem">
           <Form.Item name="location" label="Select Location">
             <Select className="Type" placeholder="Select Location">
-              <Option value="Colombo">Colombo</Option>
+              <Option value="Moratuwa">Moratuwa</Option>
               <Option value="Ja-ela">Ja-ela</Option>
               <Option value="Kollupitiya">Kollupitiya</Option>
               <Option value="Negambo">Negambo</Option>
               <Option value="Panadura">Panadura</Option>
-              <Option value="Kaduwela">Kaduwela</Option>
+              <Option value="Katunayake">Katunayake</Option>
             </Select>
           </Form.Item>
         </div>
