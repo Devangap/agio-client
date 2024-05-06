@@ -105,11 +105,11 @@ import UniformShirtInventory from './pages/UniformShirtInventory';
 import UniformOrderDetails from './pages/UniformOrderDetails';
 import UniformTotals from './pages/UniformTotals';
 import UniformCharts from './pages/UniformCharts';
-
-
-
-
-
+import UniformStatus from './pages/UniformStatus';
+import UniformCoView from './pages/UniformCoView';
+import UniformSupplier from './pages/UniformSupplier';
+import UniformSupplierInput from './pages/UniformSupplierInput';
+import UniformSupplierHistory from './pages/UniformSupplierHistory';
 
 
 
@@ -137,8 +137,12 @@ import Rank from "./pages/Perform_Rank";
 import Compare1 from "./pages/Perform_Compare1";
 
 import Charta from "./pages/Perform_Chart";
-import Viewprofileadmin from "./pages/Perform_viewemp"; 
+
+import Viewprofileadmin from "./pages/Perform_viewemp";
+import Chartadmin from "./pages/Perform_viewempAdmin" 
+ 
 import TraBookingdisplayAll from './pages/TraBookingdisplayAll';
+
 
 
 
@@ -287,7 +291,20 @@ function App() {
 
 
 
-          
+          <Route path='/UniformOrder' element={<ProtectedRoute><UniformOrder/></ProtectedRoute>} />
+          <Route path='/UniformManagerView' element={<ProtectedRoute><UniformManagerView/></ProtectedRoute>} />
+          <Route path='/UniformShirt' element={<ProtectedRoute><UniformShirt/></ProtectedRoute>} />
+          <Route path='/UniformSkirt' element={<ProtectedRoute><UniformSkirt/></ProtectedRoute>} />
+          <Route path='/UniformShirtInventory' element={<ProtectedRoute><UniformShirtInventory/></ProtectedRoute>} />
+          <Route path='/UniformOrderDetails' element={<ProtectedRoute><UniformOrderDetails/></ProtectedRoute>} />
+          <Route path='/UniformTotals' element={<ProtectedRoute><UniformTotals/></ProtectedRoute>}/>
+          <Route path='/UniformCharts' element={<ProtectedRoute><UniformCharts/></ProtectedRoute>}/>
+          <Route path='/UniformStatus' element={<ProtectedRoute><UniformStatus/></ProtectedRoute>}/>
+          <Route path='/UniformCoView' element={<ProtectedRoute><UniformCoView/></ProtectedRoute>}/>
+          <Route path='/UniformSupplier' element={<ProtectedRoute><UniformSupplier/></ProtectedRoute>}/>
+          <Route path='/UniformSupplierInput' element={<ProtectedRoute><UniformSupplierInput/></ProtectedRoute>}/>
+          <Route path='/UniformSupplierHistory' element={<ProtectedRoute><UniformSupplierHistory/></ProtectedRoute>}/>
+
 
         
             /*transport  Navigation*/
@@ -344,6 +361,7 @@ function App() {
           <Route path="/rank" element = {<Rank/>}/>
           <Route path="/com/:id" element = {<ProtectedRoute><Compare1/></ProtectedRoute>}/> 
           <Route path="/viewemp/:id" element = {<ProtectedRoute><Charta/></ProtectedRoute>}/> 
+          <Route path="/viewempadmin/:id" element = {<ProtectedRoute><Chartadmin/></ProtectedRoute>}/> 
           <Route path="/viewempbyname" element = {<ProtectedRoute><Viewprofileadmin/></ProtectedRoute>}/>
 
          

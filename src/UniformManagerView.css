@@ -1,19 +1,17 @@
-/* UniformManagerView.css */
 
-/* Styles for the main container */
 .uniform-manager-view-container {
   margin-top: 20px;
 }
 
-/* Styles for the search input and button */
+
 .uniform-manager-view-search-container {
   margin-bottom: 10px;
 }
 
 
-/* Scope CSS rules to the parent container */
+
 .uniform-manager-view-container .custom-search-button {
-  /* Your custom CSS rules for the search button */
+ 
   background-color: #F7B05B;
   border-color: #1F1300;
   height: 40px;
@@ -36,7 +34,7 @@
 
 
 
-/* Styles for the download report button */
+
 .uniform-manager-view-download-report-button {
   background-color: #F7B05B !important;
   border-color: #1F1300 !important;
@@ -50,17 +48,17 @@
   margin-left: 10px !important;
 }
 
-/* Styles for the modal */
+
 .uniform-manager-view-update-modal {
   width: 400px;
 }
 
-/* Styles for form items in the modal */
+
 .uniform-manager-view-form-item-label {
   margin-bottom: 8px;
 }
 
-/* Styles for action buttons in the table */
+
 .uniform-manager-view-action-buttons {
   background-color: #F7B05B !important;
   border-color: #1F1300 !important;

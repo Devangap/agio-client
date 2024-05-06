@@ -90,11 +90,17 @@ function Home() {
       case 'Announcement':
         navigate('/AnnEmpDisplay');
         break;
+        case 'Medical':
+        navigate('/medical-appointments');
+        break;
       case 'Transport':
         navigate('/TraBookingBox');
         break;
         case 'Inquiry':
         navigate('/inquiry');
+        break;
+      case 'Insurance':
+        navigate('/insEmployee');
         break;
       // Add other cases for each announcement
       default:

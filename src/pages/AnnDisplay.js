@@ -598,13 +598,26 @@ const showModal4 = () => {
             
             <Form.Item>
             <Form.Item>
-    <Button
-        type="primary"
-        onClick={showModal3}
-        className="annadd"
-    >
-        Add Announcement
-    </Button>
+            <Button
+    type="primary"
+    onClick={showModal3}
+    className="leavesub"
+    name='annadd'
+    // style={{ // Green background
+    //     color: 'black', // White text
+    //     padding: '10px 20px', // Padding around the text
+    //     border: 'none', // No border
+    //     borderRadius: '5px', // Rounded corners
+    //     fontSize: '16px', // Text size
+    //     cursor: 'pointer', // Pointer cursor on hover
+    //     outline: 'none',
+    //     marginRight: '8px' ,
+    //     backgroundColor:'#ebe8e4' // Remove focus outline
+    // }}
+>
+    Add Announcement
+</Button>
+
 </Form.Item>
         </Form.Item>
 
