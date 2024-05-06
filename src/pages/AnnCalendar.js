@@ -226,7 +226,7 @@ function AnnCalendar() {
                     style={{ height: '100%', fontFamily: 'Patrick Hand' }}
                     onSelectEvent={handleEventClick}
                 />
-                <Button type="primary" onClick={handleAddNotice} style={{ marginBottom:70}} >
+                <Button type="primary" onClick={handleAddNotice} style={{ marginBottom:70}} className='leavesub' >
                     Add Notice
                 </Button>
                 <Modal
