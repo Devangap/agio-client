@@ -1,4 +1,4 @@
-/*import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 
@@ -80,4 +80,4 @@ const InventoryPage = () => {
   );
 };
 
-export default InventoryPage;*/
+export default InventoryPage;
