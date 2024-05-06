@@ -28,7 +28,7 @@ function ShirtInventory() {
       });
   
       const data = await response.json();
-      console.log(data); // Log the response from the server
+      console.log(data); 
   
       
       message.success('Inventory updated successfully');

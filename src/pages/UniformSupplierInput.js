@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import DatePicker from 'react-datepicker';
 import Layout from '../components/Layout';
-import { ToastContainer, toast } from 'react-toastify'; // Import toast components
+import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-datepicker/dist/react-datepicker.css';
-import 'react-toastify/dist/ReactToastify.css'; // Import toast styles
+import 'react-toastify/dist/ReactToastify.css'; 
 import '../uniforminput.css';
 import oneclicklogo from '../Images/oneclick.png';
 import runwaylogo from '../Images/runway.png';
@@ -46,11 +46,11 @@ const SupplierForm = () => {
     try {
       const cost = calculateCost();
       const res = await axios.post('/api/supplierDetails/supplierDetails', { ...formData, cost });
-      console.log(res.data); // Handle response as needed
+      console.log(res.data); 
       // Show confirmation toast message
       toast.success('Supplier detail submitted successfully!', {
-        position: "top-center", // Adjusted position to top-center
-        autoClose: 3000, // Close the toast after 3 seconds
+        position: "top-center", 
+        autoClose: 3000, 
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -58,8 +58,8 @@ const SupplierForm = () => {
         progress: undefined,
       });
     } catch (error) {
-      console.error(error.response.data); // Handle error response
-      // Show error message
+      console.error(error.response.data); 
+      
       toast.error('Error submitting supplier detail. Please try again.');
     }
   };

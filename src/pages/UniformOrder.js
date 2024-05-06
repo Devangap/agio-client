@@ -32,10 +32,10 @@ function UniformOrder() {
         if (response.data.success) {
           setEmployeeNumber(response.data.data.empid);
         } else {
-          // Handle error if necessary
+          
         }
       } catch (error) {
-        // Handle error if necessary
+        
         console.error(error);
       }
     };

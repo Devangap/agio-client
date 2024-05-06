@@ -48,8 +48,8 @@ const UniformInventoryChart = () => {
         datasets: [{
           label: label,
           data: data.quantities,
-          backgroundColor: '#F7B05B', // Brand background color
-          borderColor: '#1F1300', // Brand border color
+          backgroundColor: '#F7B05B', 
+          borderColor: '#1F1300', 
           borderWidth: 1
         }]
       },

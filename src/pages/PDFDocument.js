@@ -1,11 +1,11 @@
 import React from 'react';
 import { Document, Page, Text, View, Image, StyleSheet } from '@react-pdf/renderer';
-import logoImage from '../Images/logo.png'; // Ensure the correct path to the logo image
+import logoImage from '../Images/logo.png'; 
 
 const styles = StyleSheet.create({
   page: {
     flexDirection: 'column',
-    backgroundColor: '#FFFFFF', // White background color
+    backgroundColor: '#FFFFFF', 
     padding: 40,
   },
   logo: {
@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginBottom: 20,
     fontWeight: 'bold',
-    textAlign: 'center', // Center align the title
-    color: '#1F1300', // Dark brown color
+    textAlign: 'center', 
+    color: '#1F1300', 
   },
   section: {
     marginBottom: 20,
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginBottom: 10,
     fontWeight: 'bold',
-    color: '#1F1300', // Dark brown color
+    color: '#1F1300', 
   },
   listItem: {
     fontSize: 12,
@@ -42,13 +42,13 @@ const styles = StyleSheet.create({
   },
   signatureField: {
     marginBottom: 10,
-    color: '#1F1300', // Dark brown color
+    color: '#1F1300', 
   },
   date: {
     position: 'absolute',
     bottom: 40,
     right: 40,
-    color: '#1F1300', // Dark brown color
+    color: '#1F1300', 
   },
 });
 

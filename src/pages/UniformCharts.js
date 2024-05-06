@@ -1,4 +1,4 @@
-// UniformOrdersChart.js
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Chart from 'chart.js/auto';
@@ -54,8 +54,8 @@ const UniformOrdersChart = () => {
         datasets: [{
           label: label,
           data: data.counts,
-          backgroundColor: '#F7B05B', // Brand background color
-          borderColor: '#1F1300', // Brand border color
+          backgroundColor: '#F7B05B', 
+          borderColor: '#1F1300', 
           borderWidth: 1
         }]
       },

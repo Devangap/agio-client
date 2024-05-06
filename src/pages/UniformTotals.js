@@ -7,7 +7,7 @@ import shirtImage2 from '../Images/shirt3.png'
 import skirtImage from '../Images/skirt3.png';
 import Layout from '../components/Layout';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import PDFDocument from './PDFDocument'; // Import the PDFDocument component
+import PDFDocument from './PDFDocument'; 
 
 
 function UniformTotals() {
@@ -31,7 +31,7 @@ function UniformTotals() {
   };
   const handleStatusButtonClick = () => {
     // Redirect to the UniformStatus page
-    window.location.href = '/UniformCharts'; // Replace '/uniform-status' with the path of your UniformStatus.js page
+    window.location.href = '/UniformCharts'; 
   };
 
   const sortByTShirtSize = (data) => {

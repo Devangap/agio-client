@@ -1,7 +1,7 @@
 import React from 'react';
 import Layout from '../components/Layout';
 import apparel from '../Images/oneclick.png';
-import runway from '../Images/runway.png'; // Import Runway logo
+import runway from '../Images/runway.png'; 
 import '../supplierdetails.css';
 
 const SupplierDetails = () => {

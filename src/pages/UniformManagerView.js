@@ -120,8 +120,8 @@ function UniformOrders() {
       fontSize: 24,
       marginBottom: 20,
       fontWeight: 'bold',
-      textAlign: 'center', // Center align the title
-      color: '#1F1300', // Dark brown color
+      textAlign: 'center', 
+      color: '#1F1300', 
     },
     section: {
       marginBottom: 20,
@@ -130,7 +130,7 @@ function UniformOrders() {
       fontSize: 18,
       marginBottom: 10,
       fontWeight: 'bold',
-      color: '#1F1300', // Dark brown color
+      color: '#1F1300', 
     },
     listItem: {
       fontSize: 12,
@@ -145,13 +145,13 @@ function UniformOrders() {
     },
     signatureField: {
       marginBottom: 10,
-      color: '#1F1300', // Dark brown color
+      color: '#1F1300', 
     },
     date: {
       position: 'absolute',
       bottom: 40,
       right: 40,
-      color: '#1F1300', // Dark brown color
+      color: '#1F1300', 
     },
     table: {
       display: 'table',
