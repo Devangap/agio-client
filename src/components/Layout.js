@@ -225,6 +225,12 @@ function Layout({ children }) {
             path: '/UniformShirtInventory',
             icon: 'ri-account-box-line',
         },
+
+        {
+            name: ' Uniform Suppliers ',
+            path: '/UniformSupplier',
+            icon: 'ri-account-box-line',
+        },
         {
             name: 'Leave',
             path: '/leaveEmp',

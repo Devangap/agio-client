@@ -102,6 +102,9 @@ function Home() {
       case 'Insurance':
         navigate('/insEmployee');
         break;
+      case 'Performance':
+        navigate('/rank');
+        break; 
       // Add other cases for each announcement
       default:
         navigate('/default-page');
