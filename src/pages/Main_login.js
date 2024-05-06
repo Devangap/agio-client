@@ -36,7 +36,9 @@ function Main_login() {
           navigate('/TraBookingDisplayAdmin');
           
         }else if (name === "Dulara") {
-          navigate("/");
+
+          navigate("/InsuranceManager");
+
           
         }else if (name === "dinuravimukthi66@gmail.com") {
           navigate("/medical-overview");
