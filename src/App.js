@@ -105,11 +105,11 @@ import UniformShirtInventory from './pages/UniformShirtInventory';
 import UniformOrderDetails from './pages/UniformOrderDetails';
 import UniformTotals from './pages/UniformTotals';
 import UniformCharts from './pages/UniformCharts';
-
-
-
-
-
+import UniformStatus from './pages/UniformStatus';
+import UniformCoView from './pages/UniformCoView';
+import UniformSupplier from './pages/UniformSupplier';
+import UniformSupplierInput from './pages/UniformSupplierInput';
+import UniformSupplierHistory from './pages/UniformSupplierHistory';
 
 
 
@@ -287,7 +287,20 @@ function App() {
 
 
 
-          
+          <Route path='/UniformOrder' element={<ProtectedRoute><UniformOrder/></ProtectedRoute>} />
+          <Route path='/UniformManagerView' element={<ProtectedRoute><UniformManagerView/></ProtectedRoute>} />
+          <Route path='/UniformShirt' element={<ProtectedRoute><UniformShirt/></ProtectedRoute>} />
+          <Route path='/UniformSkirt' element={<ProtectedRoute><UniformSkirt/></ProtectedRoute>} />
+          <Route path='/UniformShirtInventory' element={<ProtectedRoute><UniformShirtInventory/></ProtectedRoute>} />
+          <Route path='/UniformOrderDetails' element={<ProtectedRoute><UniformOrderDetails/></ProtectedRoute>} />
+          <Route path='/UniformTotals' element={<ProtectedRoute><UniformTotals/></ProtectedRoute>}/>
+          <Route path='/UniformCharts' element={<ProtectedRoute><UniformCharts/></ProtectedRoute>}/>
+          <Route path='/UniformStatus' element={<ProtectedRoute><UniformStatus/></ProtectedRoute>}/>
+          <Route path='/UniformCoView' element={<ProtectedRoute><UniformCoView/></ProtectedRoute>}/>
+          <Route path='/UniformSupplier' element={<ProtectedRoute><UniformSupplier/></ProtectedRoute>}/>
+          <Route path='/UniformSupplierInput' element={<ProtectedRoute><UniformSupplierInput/></ProtectedRoute>}/>
+          <Route path='/UniformSupplierHistory' element={<ProtectedRoute><UniformSupplierHistory/></ProtectedRoute>}/>
+
 
         
             /*transport  Navigation*/

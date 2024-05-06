@@ -1,83 +1,88 @@
+
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { Bar } from 'react-chartjs-2';
+import Chart from 'chart.js/auto';
+import Layout from '../components/Layout';
 
-const InventoryPage = () => {
-  const [shirtInventory, setShirtInventory] = useState([]);
-  const [skirtInventory, setSkirtInventory] = useState([]);
+const UniformOrdersChart = () => {
+  const [executiveData, setExecutiveData] = useState(null);
+  const [factoryWorkerShirtData, setFactoryWorkerShirtData] = useState(null);
+  const [factoryWorkerSkirtData, setFactoryWorkerSkirtData] = useState(null);
 
   useEffect(() => {
-    const fetchShirtInventory = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get('/api/uniformShirt');
-        setShirtInventory(response.data);
+        const response = await axios.get('/api/UniformTotals/totals');
+        const executiveShirtData = prepareChartData(response.data.executiveShirtTotals);
+        const factoryWorkerShirtData = prepareChartData(response.data.factoryWorkerShirtTotals);
+        const factoryWorkerSkirtData = prepareChartData(response.data.factoryWorkerSkirtTotals);
+        setExecutiveData(executiveShirtData);
+        setFactoryWorkerShirtData(factoryWorkerShirtData);
+        setFactoryWorkerSkirtData(factoryWorkerSkirtData);
       } catch (error) {
-        console.error('Error fetching shirt inventory:', error);
+        console.error('Error fetching uniform totals:', error);
       }
     };
 
-    const fetchSkirtInventory = async () => {
-      try {
-        const response = await axios.get('/api/uniformSkirt');
-        setSkirtInventory(response.data);
-      } catch (error) {
-        console.error('Error fetching skirt inventory:', error);
-      }
-    };
-
-    fetchShirtInventory();
-    fetchSkirtInventory();
+    fetchData();
   }, []);
 
-  // Process inventory data for Chart.js
-  const getInventoryChartData = (inventory) => {
-    const labels = inventory.map(item => item.size || item.waistSize).map(String);
-    const data = inventory.map(item => item.quantity);
-  
-    return {
-      labels,
-      datasets: [{
-        label: 'Quantity',
-        data,
-        backgroundColor: 'rgba(54, 162, 235, 0.5)',
-        borderColor: 'rgba(54, 162, 235, 1)',
-        borderWidth: 1,
-      }],
-    };
+  useEffect(() => {
+    if (executiveData) {
+      renderChart('executiveChart', 'Executive T-shirts', executiveData);
+    }
+    if (factoryWorkerShirtData) {
+      renderChart('factoryWorkerShirtChart', 'Factory Worker T-shirts', factoryWorkerShirtData);
+    }
+    if (factoryWorkerSkirtData) {
+      renderChart('factoryWorkerSkirtChart', 'Factory Worker Skirts', factoryWorkerSkirtData);
+    }
+  }, [executiveData, factoryWorkerShirtData, factoryWorkerSkirtData]);
+
+  const prepareChartData = (data) => {
+    const labels = data.map(item => item._id);
+    const counts = data.map(item => item.totalShirts || item.totalSkirts);
+    return { labels, counts };
   };
-  
+
+  const renderChart = (chartId, label, data) => {
+    const ctx = document.getElementById(chartId).getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: data.labels,
+        datasets: [{
+          label: label,
+          data: data.counts,
+          backgroundColor: '#F7B05B', 
+          borderColor: '#1F1300', 
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+  };
 
   return (
-    <div>
-      <h2>Shirt Inventory</h2>
-      <Bar
-        data={getInventoryChartData(shirtInventory)}
-        options={{
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-              },
-            }],
-          },
-        }}
-      />
+    <Layout>
+      <div style={{ height: '500px', overflowY: 'auto', backgroundColor: 'rgba(255, 255, 255, 0.8)', borderRadius: '10px', padding: '20px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+        <h2>Executive T-shirts</h2>
+        <canvas id="executiveChart" style={{ width: '100%', height: '400px' }} />
 
-      <h2>Skirt Inventory</h2>
-      <Bar
-        data={getInventoryChartData(skirtInventory)}
-        options={{
-          scales: {
-            yAxes: [{
-              ticks: {
-                beginAtZero: true,
-              },
-            }],
-          },
-        }}
-      />
-    </div>
+        <h2>Factory Worker T-shirts</h2>
+        <canvas id="factoryWorkerShirtChart" style={{ width: '100%', height: '400px' }} />
+
+        <h2>Factory Worker Skirts</h2>
+        <canvas id="factoryWorkerSkirtChart" style={{ width: '100%', height: '400px' }} />
+      </div>
+    </Layout>
   );
 };
 
-export default InventoryPage;
+export default UniformOrdersChart;

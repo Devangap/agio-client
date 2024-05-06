@@ -80,15 +80,14 @@ function Main_login() {
   
   return (
     <div className="mainlog">
-    <div className="main_login_form_log boxx_log p-3">
-      <div className = "logindata">
-      <div className='logoforlogin'>
-                        <img src='logos.png' className='logo'></img>
-                        
-                    </div>
-                    <div className = "logindataform">
-        <Form layout='vertical' onFinish={onFinish}>
-            <div className="content">
+      <div className="main_login_form_log boxx_log p-3">
+        <div className="logindata">
+          <div className='logoforlogin'>
+            <img src='logos.png' className='logo'></img>
+          </div>
+          <div className="logindataform">
+            <Form layout='vertical' onFinish={onFinish}>
+              <div className="logincontent">
                 <div className='login'>
                     <div className='field'>
                     <Form.Item

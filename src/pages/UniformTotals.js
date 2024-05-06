@@ -1,4 +1,3 @@
-// UniformTotals.js
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -8,7 +7,8 @@ import shirtImage2 from '../Images/shirt3.png'
 import skirtImage from '../Images/skirt3.png';
 import Layout from '../components/Layout';
 import { PDFDownloadLink } from '@react-pdf/renderer';
-import PDFDocument from './PDFDocument'; // Import the PDFDocument component
+import PDFDocument from './PDFDocument'; 
+
 
 function UniformTotals() {
   const [factoryWorkerShirtTotals, setFactoryWorkerShirtTotals] = useState([]);
@@ -29,6 +29,10 @@ function UniformTotals() {
       console.error('Error fetching uniform totals:', error);
     }
   };
+  const handleStatusButtonClick = () => {
+    // Redirect to the UniformStatus page
+    window.location.href = '/UniformCharts'; 
+  };
 
   const sortByTShirtSize = (data) => {
     return data.sort((a, b) => {
@@ -40,6 +44,8 @@ function UniformTotals() {
   const sortByWaistSize = (data) => {
     return data.sort((a, b) => parseInt(a._id) - parseInt(b._id));
   };
+
+  
 
   return (
     <Layout>
@@ -88,7 +94,7 @@ function UniformTotals() {
         </div>
       </div>
       <div className="buttons-container">
-                  <button className="history-button">View History</button>
+                  <button className="history-button" onClick={handleStatusButtonClick} >View Graphically</button>
                   <PDFDownloadLink
     document={<PDFDocument executiveShirtTotals={executiveShirtTotals} factoryWorkerShirtTotals={factoryWorkerShirtTotals} factoryWorkerSkirtTotals={factoryWorkerSkirtTotals} />}
     fileName="uniform_report.pdf"

@@ -1,0 +1,65 @@
+
+.supplier-form-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    height: 490px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  .supplier-form {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 0px;
+  }
+  
+
+  .supplier-form .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+ 
+  .supplier-form-container label {
+    margin-bottom: 0px;
+  }
+  
+ 
+  .supplier-form-container input,
+  .supplier-form-container select,
+  .supplier-form-container button,
+  .supplier-form-container .react-datepicker-wrapper {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: px;
+  }
+  
+  
+  .supplier-form-container button.supplier-submit-button {
+    background-color: #F7B05B !important;
+    border: 2px solid #1F1300 !important;
+    height: 40px !important;
+    width: 300px !important;
+    color: #000000 !important;
+    font-size: 16px !important;
+    font-weight: bold;
+    border-radius: 10px !important;
+    margin-right: 10px; 
+    margin-top: 10px;
+  }
+  
+  
+  .supplier-form-container button.supplier-submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .company-logo {
+    width: 500px; 
+    height: 500px; 
+    position: absolute; 
+    top: 130px; 
+    right: 200px; 
+  }
